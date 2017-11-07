@@ -4,7 +4,7 @@
     "description": "Creating a unified config for your sources",
     "duration": "10 minutes",
     "audience": "developer",
-    "repo": "https://github.com/OpenLiberty/iguide-circuit-breaker",
+    "repo": "https://github.com/OpenLiberty/iguide-microprofile-config",
     "steps": [
         {
             "name": "Intro",
@@ -12,6 +12,43 @@
             "guide_duration" : "25 minutes",
             "description": [
               "temp"
+            ]
+        },
+        {
+            "name": "ConfigureAsEnvVar",
+            "title": "Configuring as an Environment Variable",
+            "description": [
+                "In Websphere Liberty, environment variables can be configured in the ${server.config.dir}/server.env file to customize the Liberty environment.",
+                "",
+                "After you add your <code>/META-INF/microprofile-config.properties</code> file to override the download-url, add the download-url to the server.env file. The server.env contains the environment settings with the default ordinal of 300 which is higher than the 100 for the microprofile-config.properties. If a property appears in more than one source, then the property value from the source with the highest ordinal takes precedence. The download-url property in the server.env will be used."
+            ],
+            "instruction": [
+              "Add the <code>download-url=ftp://music.com/asia/download</code> on line 2, after the WLP_SKIP_MAXPERMSIXE=true or click <action title='Configure download-url in server.env' onclick=\"microprofileConfigCallBack.addPropToServerEnvButton(event)\"><b>download-url=ftp://music.com/asia/download</b></action>. Then, click <action title='Save' onclick=\"microprofileConfigCallBack.saveServerEnvButton(event)\"><b>Save</b></action> on the editor menu pane.",
+              "Click <action title='Refresh' onclick=\"microprofileConfigCallBack.serverEnvRefreshBrowserButton(event)\"><b>Refresh</b></action> in the following browser to see the download-url in the server.env file is used.<br/>"
+            ],
+            "content":[
+              {
+                "displayType":"fileEditor",
+                "fileName": "server.env",
+                "preload": [
+                    "WLP_SKIP_MAXPERMSIZE=true",
+                    ""
+                ],
+                "readonly": [
+                  {
+                      "from": "1",
+                      "to": "1"
+                  }
+                ],
+                "save": true,
+                "callback": "(function test(editor) {microprofileConfigCallBack.listenToEditorForServerEnv(editor); })"
+              },
+              {
+                "displayType":"webBrowser",
+                "url": "https://music.com/download",
+                "browserContent": "/guides/iguide-microprofile-config/html/interactive-guides/microprofile-config/download-from-properties-file.html",
+                "callback": "(function test(webBrowser) {microprofileConfigCallBack.listenToBrowserForServerEnvConfig(webBrowser); })"
+              }
             ]
         }
     ]
