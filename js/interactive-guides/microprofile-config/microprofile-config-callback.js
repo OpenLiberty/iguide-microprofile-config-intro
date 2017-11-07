@@ -58,7 +58,7 @@ var microprofileConfigCallBack = (function() {
                 // unbind the previous click of this button id
                 // before bind it to a new onclick
                 $("#" + idHere).unbind("click");
-                $("#" + idHere).bind("click", handleOnClickAnnotation);
+                $("#" + idHere).bind("click", handleOnClickFixContent);
             } else {
 
                 var hereButton = __createEditorErrorButton(idHere, messages.hereButton, "here_button_error_editor", handleOnClickFixContent, "Here");
