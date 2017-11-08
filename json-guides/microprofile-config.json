@@ -23,7 +23,7 @@
                 "After you add your <code>/META-INF/microprofile-config.properties</code> file to override the download-url, add the download-url to the server.env file. The server.env contains the environment settings with the default ordinal of 300 which is higher than the 100 for the microprofile-config.properties. If a property appears in more than one source, then the property value from the source with the highest ordinal takes precedence. The download-url property in the server.env will be used."
             ],
             "instruction": [
-              "Add the <code>download-url=ftp://music.com/asia/download</code> on line 2, after the WLP_SKIP_MAXPERMSIXE=true or click <action title='Configure download-url in server.env' onclick=\"microprofileConfigCallBack.addPropToServerEnvButton(event)\"><b>download-url=ftp://music.com/asia/download</b></action>. Then, click <action title='Save' onclick=\"microprofileConfigCallBack.saveServerEnvButton(event)\"><b>Save</b></action> on the editor menu pane.",
+              "Add the <code>download-url=ftp://music.com/asia/download</code> on line 2, after the WLP_SKIP_MAXPERMSIXE=true or click <action title='Configure download-url in server.env' onclick=\"microprofileConfigCallBack.addPropToServerEnvButton(event)\"><b>download-url=ftp://music.com/asia/download</b></action>. Then, click <action title='Run' onclick=\"microprofileConfigCallBack.saveServerEnvButton(event)\"><b>Run</b></action> on the editor menu pane.",
               "Click <action title='Refresh' onclick=\"microprofileConfigCallBack.serverEnvRefreshBrowserButton(event)\"><b>Refresh</b></action> in the following browser to see the download-url in the server.env file is used.<br/>"
             ],
             "content":[
@@ -40,7 +40,7 @@
                       "to": "1"
                   }
                 ],
-                "save": true,
+                "save": false,
                 "callback": "(function test(editor) {microprofileConfigCallBack.listenToEditorForServerEnv(editor); })"
               },
               {
