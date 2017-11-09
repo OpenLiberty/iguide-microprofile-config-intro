@@ -15,6 +15,65 @@
             ]
         },
         {
+            "name": "ConfigureViaInject",
+            "title": "Configuring ConfigProperties through Injection",
+            "description": [
+                "Microprofile-Config provides ways to inject configured values into your beans using the <code>@Inject</code> and the <code>@ConfigProperty</code> qualifier"
+            ],
+            "instruction": [
+              "Add the <code>@Inject @ConfigProperty(name=\"download-url\", defaultValue=\"ftp://music.com/us/download\")</code> on line 8, after the <code>private Config config</code> or click <action title='Configure inject using ConfigProperty' onclick=\"microprofileConfigCallBack.addConfigInjectButton(event)\"><b>@Inject @ConfigProperty(name=\"download-url\", defaultValue=\"ftp://music.com/us/download\")</b></action>. Then, click <action title='Save' onclick=\"microprofileConfigCallBack.saveButton(event)\"><b>Save</b></action> on the editor menu pane."
+            ],
+            "content":[
+              {
+                "displayType":"fileEditor",
+                "fileName": "SampleConfigInject.java",
+                "preload": [
+                    "package com.music.download;",
+                    "import javax.inject.Inject;",
+                    "import org.eclipse.microprofile.config.inject.ConfigProperty;",
+                    "", 
+                    "public class SampleConfigInject {",
+                    "    @Inject",
+                    "    private Config config;",
+                    "",
+                    "    private String downloadUrl;",
+                    "}"                
+                ],
+                "readonly": [
+                  {
+                      "from": "1",
+                      "to": "7"
+                  },
+                  {
+                      "from": "9",
+                      "to": "10"
+                  }
+                ],
+                "save": true,
+                "callback": "(function test(editor) {microprofileConfigCallBack.listenToEditorForInjectConfig(editor); })"
+              }
+            ]
+        },
+        {
+            "name": "ConfigureDefaultConfigSources",
+            "title": "Configuring ConfigProperties using Default ConfigSources",
+            "description": [
+                "A Microprofile-Config implementation must provide ConfigSources for the following data out of the box:",               
+                "<ul><li>System properties (default ordinal=400).</li><li>Environment variables (default ordinal=300).</li><li>A ConfigSource for each property file META-INF/microprofile-config.properties found on the classpath. (default ordinal = 100).</li></ul>"
+            ],
+            "instruction": [
+                "Empty instruction"           
+            ],
+            "content":[
+              {
+                "displayType":"webBrowser",
+                "url": "https://music.com/download",
+                "browserContent": "/guides/iguide-microprofile-config/html/interactive-guides/microprofile-config/download-from-injection.html",
+                "callback": "(function test(webBrowser) {microprofileConfigCallBack.listenToBrowserForDefaultConfig(webBrowser); })"
+              }
+            ]
+        },
+        {
             "name": "ConfigureAsEnvVar",
             "title": "Configuring as an Environment Variable",
             "description": [
@@ -23,8 +82,8 @@
                 "After you add your <code>/META-INF/microprofile-config.properties</code> file to override the download-url, add the download-url to the server.env file. The server.env contains the environment settings with the default ordinal of 300 which is higher than the 100 for the microprofile-config.properties. If a property appears in more than one source, then the property value from the source with the highest ordinal takes precedence. The download-url property in the server.env will be used."
             ],
             "instruction": [
-              "Add the <code>download-url=ftp://music.com/asia/download</code> on line 2, after the WLP_SKIP_MAXPERMSIXE=true or click <action title='Configure download-url in server.env' onclick=\"microprofileConfigCallBack.addPropToServerEnvButton(event)\"><b>download-url=ftp://music.com/asia/download</b></action>. Then, click <action title='Save' onclick=\"microprofileConfigCallBack.saveServerEnvButton(event)\"><b>Save</b></action> on the editor menu pane.",
-              "Click <action title='Refresh' onclick=\"microprofileConfigCallBack.serverEnvRefreshBrowserButton(event)\"><b>Refresh</b></action> in the following browser to see the download-url in the server.env file is used.<br/>"
+              "Add the <code>download-url=ftp://music.com/asia/download</code> on line 2, after the WLP_SKIP_MAXPERMSIXE=true or click <action title='Configure download-url in server.env' onclick=\"microprofileConfigCallBack.addPropToServerEnvButton(event)\"><b>download-url=ftp://music.com/asia/download</b></action>. Then, click <action title='Save' onclick=\"microprofileConfigCallBack.saveButton(event)\"><b>Save</b></action> on the editor menu pane.",
+              "Click <action title='Refresh' onclick=\"microprofileConfigCallBack.refreshBrowserButton(event)\"><b>Refresh</b></action> in the following browser to see the download-url in the server.env file is used.<br/>"
             ],
             "content":[
               {
