@@ -76,6 +76,9 @@ var microprofileConfigCallBack = (function() {
     };
 
     var __correctEditorError = function(stepName, isSave) {
+        if(stepName === "ConfigurePropsFile"){
+            __addPropToConfigProps(stepName);
+        }
         // correct annotation/method
         if (stepName === "ConfigureAsEnvVar") {
             __addPropToServerEnv(stepName);
@@ -88,6 +91,20 @@ var microprofileConfigCallBack = (function() {
         if (isSave === true) {
             contentManager.saveEditor(stepName);
         }
+    };
+
+    var propsFileConfig = "download-url=ftp://music.com/canada/download";
+    var __checkConfigPropsFile = function(content) {
+        var match = false;
+        try {
+            if(content.match(/\s*download-url=ftp:\/\/music.com\/canada\/download\s*/g)){
+                match = true;
+            }
+        }
+        catch (e) {
+
+        }
+        return match;
     };
 
     /*
@@ -107,6 +124,27 @@ var microprofileConfigCallBack = (function() {
         return match;
     };
 
+    var __listenToEditorForPropConfig = function(editor) {
+        var __showWebBrowser = function() {
+            var stepName = editor.getStepName();
+            var content = contentManager.getEditorContents(stepName);
+            if (__checkConfigPropsFile(content)) {
+                __closeEditorErrorBox(stepName);                                
+                contentManager.showBrowser(stepName, 0);
+                contentManager.addRightSlideClassToBrowser(stepName, 0);
+                var index = contentManager.getCurrentInstructionIndex();
+                if(index === 0){
+                    contentManager.markCurrentInstructionComplete(stepName);
+                    contentManager.updateWithNewInstructionNoMarkComplete(stepName);
+                }                
+            } else {
+                // display error and provide link to fix it
+                __createErrorLinkForCallBack(stepName, true);
+            }
+        };
+        editor.addSaveListener(__showWebBrowser);
+    };
+
     var __listenToEditorForServerEnv = function(editor) {
         var __showWebBrowser = function() {
             var stepName = editor.getStepName();
@@ -115,14 +153,29 @@ var microprofileConfigCallBack = (function() {
                 __closeEditorErrorBox(stepName);
                 contentManager.showBrowser(stepName, 0);
                 contentManager.addRightSlideClassToBrowser(stepName, 0);
-                contentManager.markCurrentInstructionComplete(stepName);
-                contentManager.updateWithNewInstructionNoMarkComplete(stepName);
+
+                var index = contentManager.getCurrentInstructionIndex();  
+                if(index === 0){
+                    contentManager.markCurrentInstructionComplete(stepName);
+                    contentManager.updateWithNewInstructionNoMarkComplete(stepName);
+                }                
             } else {
                 // display error and provide link to fix it
                 __createErrorLinkForCallBack(stepName, true);
             }
         };
         editor.addSaveListener(__showWebBrowser);
+    };
+
+    var __addPropToConfigProps = function() {
+        var stepName = stepContent.getCurrentStepName();
+        // reset content every time property is added through the button so as to clear out any
+        // manual editing
+        __closeEditorErrorBox(stepName);
+        contentManager.resetEditorContents(stepName);
+        var content = contentManager.getEditorContents(stepName);
+
+        contentManager.replaceEditorContents(stepName, 1, 1, propsFileConfig);
     };
 
     var __addPropToServerEnv = function() {     
@@ -140,6 +193,16 @@ var microprofileConfigCallBack = (function() {
             to: 1
         });
         contentManager.markEditorReadOnlyLines(stepName, readOnlyLines);
+    };
+
+    var __listenToBrowserForPropFileConfig = function(webBrowser) {
+        var setBrowserContent = function(currentURL) {
+            webBrowser.setBrowserContent("/guides/iguide-microprofile-config/html/interactive-guides/microprofile-config/download-from-properties-file.html");
+            contentManager.markCurrentInstructionComplete(webBrowser.getStepName());
+        }
+        // Cannot use contentManager.hideBrowser as the browser is still going thru initialization 
+        webBrowser.contentRootElement.addClass("hidden");
+        webBrowser.addUpdatedURLListener(setBrowserContent);
     };
 
     var __listenToBrowserForServerEnvConfig = function(webBrowser) {
@@ -321,8 +384,11 @@ var microprofileConfigCallBack = (function() {
     };
 
     return {
+        listenToEditorForPropConfig: __listenToEditorForPropConfig,
         listenToEditorForServerEnv: __listenToEditorForServerEnv,
+        listenToBrowserForPropFileConfig: __listenToBrowserForPropFileConfig,
         listenToBrowserForServerEnvConfig: __listenToBrowserForServerEnvConfig,
+        addPropToConfigProps: __addPropToConfigProps,
         addPropToServerEnvButton: __addPropToServerEnvButton,
         refreshBrowserButton: __refreshBrowserButton,
         saveButton: __saveButton,
