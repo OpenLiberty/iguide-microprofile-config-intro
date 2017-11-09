@@ -76,11 +76,10 @@ var microprofileConfigCallBack = (function() {
     };
 
     var __correctEditorError = function(stepName, isSave) {
-        if(stepName === "ConfigurePropsFile"){
-            __addPropToConfigProps(stepName);
-        }
         // correct annotation/method
-        if (stepName === "ConfigureAsEnvVar") {
+        if (stepName === "ConfigurePropsFile"){
+            __addPropToConfigProps(stepName);
+        } else if (stepName === "ConfigureAsEnvVar") {
             __addPropToServerEnv(stepName);
         } else if (stepName === "ConfigureViaInject") {
             __addInjectConfigToEditor(stepName);
