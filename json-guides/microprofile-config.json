@@ -15,6 +15,35 @@
             ]
         },
         {
+            "name": "ConfigurePropsFile",
+            "title": "Configure using a Properties File",
+            "description": [
+                "In Websphere Liberty, you can provide a properties file as part of your Liberty environment configuration. This properties file lets you specify configuration for overriding injected values.",
+                "",
+                "Add the download-url property to the microprofile-config.properties file to override the injected value of the download-url. The properties file contains settings with a default ordinal of 100 which overrides the injected properties with the same name. If a property appears in more than one source, then the property value from the source with the highest ordinal takes precedence. The download-url property in the microprofile-config.properties will be used because the injected default value is only used when no other config sources are provided."
+            ],
+            "instruction": [
+              "Add the <code>download-url=ftp://music.com/canada/download</code> on line 1 or click <action title='Configure download-url in microprofile-config.properties' onclick=\"microprofileConfigCallBack.addPropToConfigProps(event)\"><b>download-url=ftp://music.com/canada/download</b></action>. Then, click <action title='Save' onclick=\"microprofileConfigCallBack.saveServerEnvButton(event)\"><b>Save</b></action> on the editor menu pane.",
+              "Click <action title='Refresh' onclick=\"microprofileConfigCallBack.serverEnvRefreshBrowserButton(event)\"><b>Refresh</b></action> in the following browser to see that the download-url in the microprofile-config.properties file is used.<br/>"
+            ],
+            "content":[
+              {
+                "displayType":"fileEditor",
+                "fileName": "microprofile-config.properties",
+                "preload": [
+                ],
+                "save": true,
+                "callback": "(function test(editor) {microprofileConfigCallBack.listenToEditorForPropConfig(editor); })"
+              },
+              {
+                "displayType":"webBrowser",
+                "url": "https://music.com/download",
+                "browserContent": "/guides/iguide-microprofile-config/html/interactive-guides/microprofile-config/download-from-injection.html",
+                "callback": "(function test(webBrowser) {microprofileConfigCallBack.listenToBrowserForPropFileConfig(webBrowser); })"
+              }
+            ]
+        },
+        {
             "name": "ConfigureAsEnvVar",
             "title": "Configuring as an Environment Variable",
             "description": [
