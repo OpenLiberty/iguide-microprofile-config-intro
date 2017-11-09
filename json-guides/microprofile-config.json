@@ -26,14 +26,14 @@
             "content":[
               {
                 "displayType":"fileEditor",
-                "fileName": "SampleConfigInject.java",
+                "fileName": "Music-download.java",
                 "preload": [
                     "package com.music.download;",
                     "import javax.inject.Inject;",
                     "import org.eclipse.microprofile.config.Config;",
                     "import org.eclipse.microprofile.config.inject.ConfigProperty;",
                     "", 
-                    "public class SampleConfigInject {",
+                    "public class Music-download {",
                     "    @Inject",
                     "    private Config config;",
                     "",
@@ -43,11 +43,11 @@
                 "readonly": [
                   {
                       "from": "1",
-                      "to": "7"
+                      "to": "8"
                   },
                   {
-                      "from": "9",
-                      "to": "10"
+                      "from": "10",
+                      "to": "11"
                   }
                 ],
                 "save": true,
