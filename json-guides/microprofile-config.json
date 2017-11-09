@@ -16,7 +16,7 @@
         },
         {
             "name": "ConfigureViaInject",
-            "title": "Configuring ConfigProperties through Injection",
+            "title": "Configuring with Default Injection Value",
             "description": [
                 "Microprofile-Config provides ways to inject configured values into your beans using the <code>@Inject</code> and the <code>@ConfigProperty</code> qualifier"
             ],
