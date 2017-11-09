@@ -18,7 +18,7 @@
             "name": "ConfigurePropsFile",
             "title": "Configure using a Properties File",
             "description": [
-                "In Websphere Liberty, you can provide a properties file as part of your Liberty environment configuration. This properties file lets you specify configuration for overriding injected values.",
+                "In Websphere Liberty, you can provide a properties file as part of your packaged application. This properties file lets you specify configuration for overriding injected values.",
                 "",
                 "Add the download-url property to the microprofile-config.properties file to override the injected value of the download-url. The properties file contains settings with a default ordinal of 100 which overrides the injected properties with the same name. If a property appears in more than one source, then the property value from the source with the highest ordinal takes precedence. The download-url property in the microprofile-config.properties will be used because the injected default value is only used when no other config sources are provided."
             ],
@@ -29,7 +29,7 @@
             "content":[
               {
                 "displayType":"fileEditor",
-                "fileName": "microprofile-config.properties",
+                "fileName": "META-INF/microprofile-config.properties",
                 "preload": [
                 ],
                 "save": false,
