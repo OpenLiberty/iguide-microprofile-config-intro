@@ -21,7 +21,7 @@
                 "Microprofile-Config provides ways to inject configured values into your beans using the <code>@Inject</code> and the <code>@ConfigProperty</code> qualifier"
             ],
             "instruction": [
-                "Add the <code>@ConfigProperty(name=\"download-url\", defaultValue=\"ftp://music.com/us/download\")</code> on line 9, after the <code>private Config config</code> or click <action title='Configure inject using ConfigProperty' onclick=\"microprofileConfigCallBack.addConfigInjectButton(event)\"><b>@ConfigProperty(name=\"download-url\", defaultValue=\"ftp://music.com/us/download\")</b></action>. Then, click <action title='Save' onclick=\"microprofileConfigCallBack.saveButton(event)\"><b>Save</b></action> on the editor menu pane."
+                "Add the <code>@Inject @ConfigProperty(name=\"download-url\", defaultValue=\"ftp://music.com/us/download\")</code> on line 9, after the <code>private Config config</code> or click <action title='Configure inject using ConfigProperty' onclick=\"microprofileConfigCallBack.addConfigInjectButton(event)\"><b>@Inject @ConfigProperty(name=\"download-url\", defaultValue=\"ftp://music.com/us/download\")</b></action>. Then, click <action title='Save' onclick=\"microprofileConfigCallBack.saveButton(event)\"><b>Save</b></action> on the editor menu pane."
             ],
             "content":[
               {
