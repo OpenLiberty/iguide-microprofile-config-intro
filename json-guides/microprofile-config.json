@@ -124,10 +124,10 @@
                     ""
                 ],
                 "readonly": [
-                  {
-                      "from": "1",
-                      "to": "1"
-                  }
+                    {
+                        "from": "1",
+                        "to": "1"
+                    }
                 ],
                 "save": false,
                 "callback": "(function test(editor) {microprofileConfigCallBack.listenToEditorForServerEnv(editor); })"
@@ -138,6 +138,68 @@
                 "browserContent": "/guides/iguide-microprofile-config/html/interactive-guides/microprofile-config/download-from-properties-file.html",
                 "callback": "(function test(webBrowser) {microprofileConfigCallBack.listenToBrowserForServerEnvConfig(webBrowser); })"
               }
+            ]
+        },
+        {
+            "name": "Playground",
+            "title": "Playground",
+            "description": [
+                "temp"
+            ],
+            "content": [
+                {
+                    "displayType": "tabbedEditor",
+                    "editorList": [
+                        {
+                            "displayType": "fileEditor",
+                            "fileName": "Injection",
+                            "preload": [
+                                "package com.music.download;",
+                                "import javax.inject.Inject;",
+                                "import org.eclipse.microprofile.config.Config;",
+                                "import org.eclipse.microprofile.config.inject.ConfigProperty;",
+                                "",
+                                "public class MusicDownload {",
+                                "",
+                                "    @Inject",
+                                "    private Config config;",
+                                "",
+                                "    @Inject @ConfigProperty(name=\"download-url\", defaultValue=\"ftp://music.com/us/download\");",
+                                "    private String downloadUrl;",
+                                "",
+                                "}"
+                            ],
+                            "readonly": [
+                                {
+                                    "from": "1",
+                                    "to": "5"
+                                }
+                            ]
+                        },
+                        {
+                            "displayType": "fileEditor",
+                            "fileName": "Properties", 
+                            "preload": [
+                                "download-url=ftp://music.com/canada/download"
+                            ]
+                        },
+                        {
+                            "displayType": "fileEditor",
+                            "fileName": "Environment Property",
+                            "preload": [
+                                
+                            ]
+                        },
+                        {
+                            "displayType": "fileEditor",
+                            "fileName": "System Property",
+                            "preload": [
+                                "WLP_SKIP_MAXPERMSIZE=true",
+                                "download-url=ftp://music.com/asia/download"
+                            ]
+                        }
+                    ]
+                }
             ]
         }
     ]
