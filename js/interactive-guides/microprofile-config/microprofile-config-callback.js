@@ -314,8 +314,8 @@ var microprofileConfigCallBack = (function() {
             var content = contentManager.getEditorContents(stepName);
             if (__checkInjectionEditorContent(content)) {
                 __closeEditorErrorBox(stepName);
-                contentManager.showBrowser(stepName, 0);
-                contentManager.addRightSlideClassToBrowser(stepName, 0);
+                //contentManager.showBrowser(stepName, 0);
+                //contentManager.addRightSlideClassToBrowser(stepName, 0);
                 contentManager.markCurrentInstructionComplete(stepName);
                 //contentManager.updateWithNewInstructionNoMarkComplete(stepName);
             } else {
