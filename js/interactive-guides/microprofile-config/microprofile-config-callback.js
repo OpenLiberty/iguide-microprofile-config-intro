@@ -278,12 +278,12 @@ var microprofileConfigCallBack = (function() {
             //regExpr2 = "\s*defaultValue\s*=\s*\"ftp:\/\/music.com\/us\/download\"\s*\)\s*";       
             if (param1.match(/\s*name\s*=\s*\"download-url\"\s*/) &&
                 param2.match(/\s*defaultValue\s*=\s*\"ftp:\/\/music.com\/us\/download\"\s*\)\s*/)) {
-                console.log("match a ");
+                //console.log("match a ");
                 allMatch = 1;
             }
             else if (param2.match(/\s*name\s*=\s*\"download-url\"\s*/) &&
                 param1.match(/\s*defaultValue\s*=\s*\"ftp:\/\/music.com\/us\/download\"\s*\)\s*/)) {
-                console.log("match b ");
+                //console.log("match b ");
                 allMatch = 1;
             }
         }
