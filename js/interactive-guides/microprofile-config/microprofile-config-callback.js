@@ -237,8 +237,6 @@ var microprofileConfigCallBack = (function() {
             contentManager.saveEditor(stepContent.getCurrentStepName());
         }
     };
-   
-    //var injectConfigDefault = "download-url=ftp://music.com/us/download";
 
     var __getInjectionConfigContent = function(content) {
         var editorContents = {};
@@ -268,65 +266,45 @@ var microprofileConfigCallBack = (function() {
         return editorContents;
     };
 
-    /*
-      Match the parameters. Returns
-        0 for no match
-        1 for exact match
-        2 for extra parameters
-    */
-    var __isParamInAnnotation = function(annotationParams, paramsToCheck) {
-        var params = [];
-        var allMatch = 1;  // assume matching to begin with
-
-        // for each parameter, break it down to name and value so as to make it easier to compare
-        $(annotationParams).each(function(index, element){
-            if (element.indexOf("=") !== -1) {
-                params[index] = {};
-                params[index].value = element.trim().substring(element.indexOf('=') + 1);
-                params[index].name = element.trim().substring(0, element.indexOf('='));
+    var __isParamInAnnotation = function(annotationParams) {
+        var allMatch = 2; 
+        if (annotationParams.length === 2) {
+            var param1 = annotationParams[0];
+            var param2 = annotationParams[1];
+            
+            //console.log("param1 ", param1);
+            //console.log("param2 ", param2);
+            //regExpr1 = "\s*name\s*=\s*\"download-url\"\s*"
+            //regExpr2 = "\s*defaultValue\s*=\s*\"ftp:\/\/music.com\/us\/download\"\s*\)\s*";       
+            if (param1.match(/\s*name\s*=\s*\"download-url\"\s*/) &&
+                param2.match(/\s*defaultValue\s*=\s*\"ftp:\/\/music.com\/us\/download\"\s*\)\s*/)) {
+                console.log("match a ");
+                allMatch = 1;
             }
-        });
-        // now compare with the passed in expected params
-        $(paramsToCheck).each(function(index, element){
-            if (element.indexOf("=") !== -1) {
-                var value = element.trim().substring(element.indexOf('=') + 1);
-                var name = element.trim().substring(0, element.indexOf('='));
-                var eachMatch = false;
-                $(params).each(function(paramsIndex, annotationInEditor) {
-                    if (annotationInEditor.name === name && annotationInEditor.value === value) {
-                        eachMatch = true;
-                        return false;  // break out of each loop
-                    }
-                });
-                if (eachMatch === false) {
-                    allMatch = 0;
-                    return false; // break out of each loop
-                }
+            else if (param2.match(/\s*name\s*=\s*\"download-url\"\s*/) &&
+                param1.match(/\s*defaultValue\s*=\s*\"ftp:\/\/music.com\/us\/download\"\s*\)\s*/)) {
+                console.log("match b ");
+                allMatch = 1;
             }
-        });
-
-        if (allMatch === 1 && annotationParams.length > paramsToCheck.length) {
-            allMatch = 2; // extra parameters
         }
-        console.log("allMatch ", allMatch);
-        return allMatch;
-    };
+        //console.log("allMatch ", allMatch);
+        return allMatch;      
+    }
 
     var __checkInjectionEditorContent = function(content) {
         var annotationIsThere = true;
         var editorContentBreakdown = __getInjectionConfigContent(content);
         if (editorContentBreakdown.hasOwnProperty("annotationParams")) {
-            var paramsToCheck = [];
-            paramsToCheck[0] = "name=\"download-url\"";
-            paramsToCheck[1] = "defaultValue=\"ftp://music.com/us/download\"";
-            var isParamInAnnotation = __isParamInAnnotation(editorContentBreakdown.annotationParams, paramsToCheck);
+            //var paramsToCheck = [];
+            //paramsToCheck[0] = "name=\"download-url\"";
+            //paramsToCheck[1] = "defaultValue=\"ftp://music.com/us/download\"";
+            var isParamInAnnotation = __isParamInAnnotation(editorContentBreakdown.annotationParams);
             if (isParamInAnnotation !== 1) {
                 annotationIsThere = false;
             }
         } else {
             annotationIsThere = false;
         }
-        //console.log("")
         return annotationIsThere;
     };
 
