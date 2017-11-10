@@ -63,13 +63,13 @@
                 "<ul><li>System properties (default ordinal=400).</li><li>Environment variables (default ordinal=300).</li><li>A ConfigSource for each property file META-INF/microprofile-config.properties found on the classpath. (default ordinal = 100).</li></ul>"
             ],
             "instruction": [
-                "Empty instruction"           
+                "Enter the following URL into the browser that follows, or click <action title='URL' onclick=\"microprofileConfigCallBack.populateURL(event, 'ConfigureDefaultConfigSources')\"><b>https://music.com/download</b></action> and then press <action title='Enter' onclick=\"microprofileConfigCallBack.enterButtonURL(event, 'ConfigureDefaultConfigSources')\"><b>Enter</b></action>."           
             ],
             "content":[
               {
                 "displayType":"webBrowser",
-                "url": "https://music.com/download",
-                "browserContent": "/guides/iguide-microprofile-config/html/interactive-guides/microprofile-config/download-from-injection.html",
+                "url": "",
+                "browserContent": "",
                 "callback": "(function test(webBrowser) {microprofileConfigCallBack.listenToBrowserForDefaultConfig(webBrowser); })"
               }
             ]
