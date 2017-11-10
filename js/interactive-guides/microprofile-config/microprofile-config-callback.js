@@ -367,10 +367,28 @@ var microprofileConfigCallBack = (function() {
         contentManager.resetEditorContents(stepName);
         var content = contentManager.getEditorContents(stepName);
 
-        contentManager.insertEditorContents(stepName, 9, injectConfig);
+        contentManager.insertEditorContents(stepName, 10, injectConfig);
         var readOnlyLines = [];
-        readOnlyLines.push({from: 1, to: 7}, {from: 10, to: 11});
+        readOnlyLines.push({from: 1, to: 8}, {from: 11, to: 12});
         contentManager.markEditorReadOnlyLines(stepName, readOnlyLines);       
+    };
+    
+    var downloadMusicUrl = "https://music.com/download";
+
+    var __populateURL = function(event, stepName) {
+        if (event.type === "click" ||
+           (event.type === "keypress" && (event.which === 13 || event.which === 32))) {
+               // Click or 'Enter' or 'Space' key event...
+            contentManager.setBrowserURL(stepName, downloadMusicUrl);
+        }
+    };
+
+    var __enterButtonURL = function(event, stepName) {
+        if (event.type === "click" ||
+        (event.type === "keypress" && (event.which === 13 || event.which === 32))) {
+            // Click or 'Enter' or 'Space' key event...
+            contentManager.refreshBrowser(stepName);
+        }
     };
 
     var __listenToBrowserForDefaultConfig = function(webBrowser) {
@@ -393,7 +411,9 @@ var microprofileConfigCallBack = (function() {
         saveButton: __saveButton,
         listenToEditorForInjectConfig: __listenToEditorForInjectConfig,
         addConfigInjectButton: __addConfigInjectButton,
-        listenToBrowserForDefaultConfig:  __listenToBrowserForDefaultConfig    
+        listenToBrowserForDefaultConfig:  __listenToBrowserForDefaultConfig,
+        populateURL:  __populateURL,
+        enterButtonURL: __enterButtonURL
     };
 
 })();
