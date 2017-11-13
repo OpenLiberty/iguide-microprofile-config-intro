@@ -10,87 +10,7 @@
 *******************************************************************************/
 var microprofileConfigCallBack = (function() {
 
-    // ToDo: fixing editor error prompt should be moved to common codes
-    var __createEditorErrorButton = function(buttonId, buttonName, className, method, ariaLabel) {
-        return $('<button/>', {
-            type: 'button',
-            text: buttonName,
-            id: buttonId,
-            class: className,
-            click: method,
-            'aria-label': ariaLabel
-        });
-    };
-
-    var __closeEditorErrorBox = function(stepName) {
-        var step = $("[data-step=" + stepName + "]");
-        var editorError = step.find(".alertFrame").first();
-
-        if (editorError.length) {
-            editorError.addClass("hidden");
-        }
-    };
-
-    var __createErrorLinkForCallBack = function(stepName, isSave) {
-        var idHere = "here_button_error_editor_" + stepName;
-        var idClose = "close_button_error_editor_" + stepName;
-        var idError = "error_" + stepName;
-
-        var thisStepName = stepName;
-        var thisIsSave = isSave;
-
-        var handleOnClickFixContent = function() {
-            __correctEditorError(thisStepName, thisIsSave);
-        };
-
-        var handleOnClickClose = function() {
-            __closeEditorErrorBox(thisStepName);
-        };
-
-        var step = $("[data-step=" + stepName + "]");
-        var editorError = step.find(".alertFrame").first();
-        if (editorError.length) {
-            editorError.removeClass("hidden");
-
-            var errorLink = editorError.find("#" + idError).first();
-            if (errorLink.length) {
-                // button exists
-                // unbind the previous click of this button id
-                // before bind it to a new onclick
-                $("#" + idHere).unbind("click");
-                $("#" + idHere).bind("click", handleOnClickFixContent);
-            } else {
-
-                var hereButton = __createEditorErrorButton(idHere, messages.hereButton, "here_button_error_editor", handleOnClickFixContent, "Here");
-                var closeButton = __createEditorErrorButton(idClose, "", "glyphicon glyphicon-remove-circle close_button_error_editor", handleOnClickClose, "Close error");
-                var strMsg = "Error detected. To fix the error click ";
-                //var strMsg = utils.formatString(messages.editorErrorLink, [hereButton]);
-
-                var spanStr = '<span id=\"' + idError + '\">' + strMsg;
-                editorError.append(spanStr);
-                editorError.append(hereButton);
-                editorError.append(closeButton);
-                editorError.append('</span>');
-            }
-        }
-    };
-
-    var __correctEditorError = function(stepName, isSave) {
-        // correct annotation/method
-        if (stepName === "ConfigurePropsFile"){
-            __addPropToConfigProps(stepName);
-        } else if (stepName === "ConfigureAsEnvVar") {
-            __addPropToServerEnv(stepName);
-        } else if (stepName === "ConfigureViaInject") {
-            __addInjectConfigToEditor(stepName);
-        }
-        // hide the error box
-        __closeEditorErrorBox(stepName);
-        // call save editor
-        if (isSave === true) {
-            contentManager.saveEditor(stepName);
-        }
-    };
+    
 
     var propsFileConfig = "download-url=ftp://music.com/canada/download";
     var __checkConfigPropsFile = function(content) {
@@ -128,7 +48,7 @@ var microprofileConfigCallBack = (function() {
             var stepName = editor.getStepName();
             var content = contentManager.getEditorContents(stepName);
             if (__checkConfigPropsFile(content)) {
-                __closeEditorErrorBox(stepName);                                
+                editor.closeEditorErrorBox(stepName);                                
                 contentManager.showBrowser(stepName, 0);
                 contentManager.addRightSlideClassToBrowser(stepName, 0);
                 var index = contentManager.getCurrentInstructionIndex();
@@ -138,7 +58,7 @@ var microprofileConfigCallBack = (function() {
                 }                
             } else {
                 // display error and provide link to fix it
-                __createErrorLinkForCallBack(stepName, true);
+                editor.createErrorLinkForCallBack(stepName, true, __addPropToConfigProps);
             }
         };
         editor.addSaveListener(__showWebBrowser);
@@ -149,7 +69,7 @@ var microprofileConfigCallBack = (function() {
             var stepName = editor.getStepName();
             var content = contentManager.getEditorContents(stepName);
             if (__checkServerEnvContent(content)) {
-                __closeEditorErrorBox(stepName);
+                editor.closeEditorErrorBox(stepName);
                 contentManager.showBrowser(stepName, 0);
                 contentManager.addRightSlideClassToBrowser(stepName, 0);
 
@@ -160,7 +80,7 @@ var microprofileConfigCallBack = (function() {
                 }                
             } else {
                 // display error and provide link to fix it
-                __createErrorLinkForCallBack(stepName, true);
+                editor.createErrorLinkForCallBack(stepName, true, __addPropToServerEnv);
             }
         };
         editor.addSaveListener(__showWebBrowser);
@@ -168,9 +88,7 @@ var microprofileConfigCallBack = (function() {
 
     var __addPropToConfigProps = function() {
         var stepName = stepContent.getCurrentStepName();
-        // reset content every time property is added through the button so as to clear out any
-        // manual editing
-        __closeEditorErrorBox(stepName);
+        // reset content every time property is added through the button so as to clear out any manual editing
         contentManager.resetEditorContents(stepName);
         var content = contentManager.getEditorContents(stepName);
 
@@ -179,9 +97,7 @@ var microprofileConfigCallBack = (function() {
 
     var __addPropToServerEnv = function() {     
         var stepName = stepContent.getCurrentStepName();
-        // reset content every time property is added through the button so as to clear out any
-        // manual editing
-        __closeEditorErrorBox(stepName);
+        // reset content every time property is added through the button so as to clear out any manual editing
         contentManager.resetEditorContents(stepName);
         var content = contentManager.getEditorContents(stepName);
 
@@ -313,14 +229,14 @@ var microprofileConfigCallBack = (function() {
             var stepName = editor.getStepName();
             var content = contentManager.getEditorContents(stepName);
             if (__checkInjectionEditorContent(content)) {
-                __closeEditorErrorBox(stepName);
+                editor.closeEditorErrorBox(stepName);
                 //contentManager.showBrowser(stepName, 0);
                 //contentManager.addRightSlideClassToBrowser(stepName, 0);
                 contentManager.markCurrentInstructionComplete(stepName);
                 //contentManager.updateWithNewInstructionNoMarkComplete(stepName);
             } else {
                 // display error and provide link to fix it
-                __createErrorLinkForCallBack(stepName, true);
+                editor.createErrorLinkForCallBack(stepName, true, __addInjectConfigToEditor);
             }
         };
         editor.addSaveListener(__showWebBrowser);
@@ -339,9 +255,7 @@ var microprofileConfigCallBack = (function() {
         if (!stepName) {   
            stepName = stepContent.getCurrentStepName();
         }
-        // reset content every time property is added through the button so as to clear out any
-        // manual editing
-        __closeEditorErrorBox(stepName);
+        // reset content every time property is added through the button so as to clear out any manual editing
         contentManager.resetEditorContents(stepName);
         var content = contentManager.getEditorContents(stepName);
 
