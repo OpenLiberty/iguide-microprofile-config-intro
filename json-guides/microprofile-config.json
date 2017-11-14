@@ -42,7 +42,7 @@
         },
         {
             "name": "ConfigureViaInject",
-            "title": "Injecting config properties through annotations",
+            "title": "Injecting configuration properties through annotations",
             "description": [
                 "After you modify your <code>server.xml</code> file to <a>include the mpConfig feature</a>, a single configuration property value can be injected directly into your code using the <code>@Inject</code> and the <code>@ConfigProperty</code> annotations. The injected value is set when the application starts and is static.<br>", 
                 "Injecting a configuration value this way is recommended for mandatory properties. If no configured value exists for this property, a <code>DeploymentException</code> will be thrown during startup."
