@@ -155,7 +155,7 @@ var microprofileConfigCallBack = (function() {
     };
 
     var __getInjectionConfigContent = function(content) {
-        var editorContents = {};
+        var annotationParams = null;
         try {
             // match
             // private Config config;
@@ -174,12 +174,12 @@ var microprofileConfigCallBack = (function() {
             } else {
                 params = [];
             }
-            editorContents.annotationParams = params;           
+            annotationParams = params;           
         }
         catch (e) {
 
         }
-        return editorContents;
+        return annotationParams;
     };
 
     var __isParamInAnnotation = function(annotationParams) {
@@ -188,12 +188,10 @@ var microprofileConfigCallBack = (function() {
             var param1 = annotationParams[0];
             var param2 = annotationParams[1];
                   
-            if (param1 === "name=\"download-url\"" &&
-                param2 === "defaultValue=\"ftp:\/\/music.com\/us\/download\"") {
-                allMatch = 1;
-            }
-            else if (param2 === "name=\"download-url\"" &&
-                     param1 === "defaultValue=\"ftp:\/\/music.com\/us\/download\"") {
+            if ((param1 === "name=\"download-url\"" &&
+                 param2 === "defaultValue=\"ftp:\/\/music.com\/us\/download\"") ||
+                (param2 === "name=\"download-url\"" &&
+                 param1 === "defaultValue=\"ftp:\/\/music.com\/us\/download\"")) {
                 allMatch = 1;
             }
         }
@@ -203,8 +201,8 @@ var microprofileConfigCallBack = (function() {
     var __checkInjectionEditorContent = function(content) {
         var annotationIsThere = true;
         var editorContentBreakdown = __getInjectionConfigContent(content);
-        if (editorContentBreakdown.hasOwnProperty("annotationParams")) {
-            var isParamInAnnotation = __isParamInAnnotation(editorContentBreakdown.annotationParams);
+        if (editorContentBreakdown !== null) {
+            var isParamInAnnotation = __isParamInAnnotation(editorContentBreakdown);
             if (isParamInAnnotation !== 1) {
                 annotationIsThere = false;
             }
