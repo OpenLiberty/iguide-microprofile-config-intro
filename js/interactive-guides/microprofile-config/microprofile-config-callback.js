@@ -162,7 +162,7 @@ var microprofileConfigCallBack = (function() {
             //   <space or newline here>
             // @Inject @ConfigProperty(name=\"download-url\", defaultValue=\"ftp://music.com/us/download\")
             // private String downloadUrl;
-            var contentToMatch = "[\\s\\S]*private Config config;\\s*@Inject\\s*@ConfigProperty\\s*\(([\\s\\S]*)\)\\s*private String downloadUrl;";
+            var contentToMatch = "[\\s\\S]*private Config config;\\s*@Inject\\s*@ConfigProperty\\s*\\(([\\s\\S]*)\\)\\s*private String downloadUrl;";
             var regExpToMatch = new RegExp(contentToMatch, "g");
             var groups = regExpToMatch.exec(content);
             
@@ -187,23 +187,16 @@ var microprofileConfigCallBack = (function() {
         if (annotationParams.length === 2) {
             var param1 = annotationParams[0];
             var param2 = annotationParams[1];
-            
-            //console.log("param1 ", param1);
-            //console.log("param2 ", param2);
-            //regExpr1 = "\s*name\s*=\s*\"download-url\"\s*"
-            //regExpr2 = "\s*defaultValue\s*=\s*\"ftp:\/\/music.com\/us\/download\"\s*\)\s*";       
-            if (param1.match(/\s*name\s*=\s*\"download-url\"\s*/) &&
-                param2.match(/\s*defaultValue\s*=\s*\"ftp:\/\/music.com\/us\/download\"\s*\)\s*/)) {
-                //console.log("match a ");
+                  
+            if (param1 === "name=\"download-url\"" &&
+                param2 === "defaultValue=\"ftp:\/\/music.com\/us\/download\"") {
                 allMatch = 1;
             }
-            else if (param2.match(/\s*name\s*=\s*\"download-url\"\s*/) &&
-                param1.match(/\s*defaultValue\s*=\s*\"ftp:\/\/music.com\/us\/download\"\s*\)\s*/)) {
-                //console.log("match b ");
+            else if (param2 === "name=\"download-url\"" &&
+                     param1 === "defaultValue=\"ftp:\/\/music.com\/us\/download\"") {
                 allMatch = 1;
             }
         }
-        //console.log("allMatch ", allMatch);
         return allMatch;      
     }
 
@@ -211,9 +204,6 @@ var microprofileConfigCallBack = (function() {
         var annotationIsThere = true;
         var editorContentBreakdown = __getInjectionConfigContent(content);
         if (editorContentBreakdown.hasOwnProperty("annotationParams")) {
-            //var paramsToCheck = [];
-            //paramsToCheck[0] = "name=\"download-url\"";
-            //paramsToCheck[1] = "defaultValue=\"ftp://music.com/us/download\"";
             var isParamInAnnotation = __isParamInAnnotation(editorContentBreakdown.annotationParams);
             if (isParamInAnnotation !== 1) {
                 annotationIsThere = false;
