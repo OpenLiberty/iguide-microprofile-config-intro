@@ -10,8 +10,6 @@
 *******************************************************************************/
 var microprofileConfigCallBack = (function() {
 
-    
-
     var propsFileConfig = "download-url=ftp://music.com/canada/download";
     var __checkConfigPropsFile = function(content) {
         var match = false;
@@ -250,7 +248,7 @@ var microprofileConfigCallBack = (function() {
         }        
     };
 
-    var __addInjectConfigToEditor = function(stepName) {
+    var __addInjectConfigToEditor = function(stepName) {      
         var injectConfig = "    @Inject @ConfigProperty(name=\"download-url\", defaultValue=\"ftp://music.com/us/download\")";
         if (!stepName) {   
            stepName = stepContent.getCurrentStepName();
@@ -259,9 +257,9 @@ var microprofileConfigCallBack = (function() {
         contentManager.resetEditorContents(stepName);
         var content = contentManager.getEditorContents(stepName);
 
-        contentManager.insertEditorContents(stepName, 10, injectConfig);
+        contentManager.replaceEditorContents(stepName, 10, 10, injectConfig, 1);
         var readOnlyLines = [];
-        readOnlyLines.push({from: 1, to: 8}, {from: 11, to: 12});
+        readOnlyLines.push({from: 1, to: 9}, {from: 11, to: 12});
         contentManager.markEditorReadOnlyLines(stepName, readOnlyLines);       
     };
     
