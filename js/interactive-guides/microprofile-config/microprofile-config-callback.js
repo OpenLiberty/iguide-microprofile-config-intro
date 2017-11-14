@@ -183,7 +183,7 @@ var microprofileConfigCallBack = (function() {
     };
 
     var __isParamInAnnotation = function(annotationParams) {
-        var allMatch = 2; 
+        var allMatch = false; 
         if (annotationParams.length === 2) {
             var param1 = annotationParams[0];
             var param2 = annotationParams[1];
@@ -192,23 +192,18 @@ var microprofileConfigCallBack = (function() {
                  param2 === "defaultValue=\"ftp:\/\/music.com\/us\/download\"") ||
                 (param2 === "name=\"download-url\"" &&
                  param1 === "defaultValue=\"ftp:\/\/music.com\/us\/download\"")) {
-                allMatch = 1;
+                allMatch = true;
             }
         }
         return allMatch;      
     }
 
     var __checkInjectionEditorContent = function(content) {
-        var annotationIsThere = true;
+        var annotationIsThere = false;
         var editorContentBreakdown = __getInjectionConfigContent(content);
         if (editorContentBreakdown !== null) {
-            var isParamInAnnotation = __isParamInAnnotation(editorContentBreakdown);
-            if (isParamInAnnotation !== 1) {
-                annotationIsThere = false;
-            }
-        } else {
-            annotationIsThere = false;
-        }
+            annotationIsThere = __isParamInAnnotation(editorContentBreakdown);
+        } 
         return annotationIsThere;
     };
 
