@@ -24,6 +24,13 @@
             ]
         },
         {
+            "name": "ExampleScenario",
+            "title": "Example: xxx",
+            "description": [
+                "temp"
+            ]
+        },
+        {
             "name": "EnableMPConfig",
             "title": "Enabling the MicroProfile Config feature",
             "description": [
@@ -59,23 +66,6 @@
                 "save": true,
                 "callback": "(function test(editor) {microprofileConfigCallBack.listenToEditorForFeatureInServerXML(editor); })"
               }
-            ]
-        },
-        {
-            "name": "ConfigureViaInject",
-            "title": "Configuring with Default Injection Value",
-            "description": [
-                "temp"
-            ]
-        },
-        {
-            "name": "AddLibertyMPFaultTolerance",
-            "title": "Enabling MicroProfile Config",
-            "description": [
-                "Begin by enabling the MicroProfile Config feature in your <code>server.xml</code> file."
-            ],
-            "instruction": [
-              "Add <b>&lt;feature>mpConfig-1.1&lt;/feature>."
             ]
         },
         {
