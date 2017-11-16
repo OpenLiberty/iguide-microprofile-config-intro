@@ -11,6 +11,10 @@
 var microprofileConfigCallBack = (function() {
 
     var propsFileConfig = "download_url=ftp://music.com/us-south/download";
+    var propsFileName = "META-INF/microprofile-config.properties";
+    /*
+    *  Checks that the correct content was entered in META-INF/microprofile-config.properties
+    */
     var __checkConfigPropsFile = function(content) {
         var match = false;
         try {
@@ -22,6 +26,31 @@ var microprofileConfigCallBack = (function() {
 
         }
         return match;
+    };
+
+    /*
+    *  Adds a save listener to the editor, and gives a callback to handle changing the browser and instructions if the content entered in the
+    *  META-INF/microprofile-config.properties editor was right.
+    */
+    var __listenToEditorForPropConfig = function(editor) {
+        var __showWebBrowser = function() {
+            var stepName = editor.getStepName();
+            var content = contentManager.getTabbedEditorContents(stepName, propsFileName);
+            if (__checkConfigPropsFile(content)) {
+                editor.closeEditorErrorBox(stepName);                                
+                contentManager.showBrowser(stepName, 0);
+                contentManager.addRightSlideClassToBrowser(stepName, 0);
+                var index = contentManager.getCurrentInstructionIndex();
+                if(index === 0){
+                    contentManager.markCurrentInstructionComplete(stepName);
+                    contentManager.updateWithNewInstructionNoMarkComplete(stepName);
+                }                
+            } else {
+                // display error and provide link to fix it
+                editor.createErrorLinkForCallBack(true, __addPropToConfigProps);
+            }
+        };
+        editor.addSaveListener(__showWebBrowser);
     };
 
     /*
@@ -40,28 +69,7 @@ var microprofileConfigCallBack = (function() {
 
         }
         return match;
-    };
-
-    var __listenToEditorForPropConfig = function(editor) {
-        var __showWebBrowser = function() {
-            var stepName = editor.getStepName();
-            var content = contentManager.getEditorContents(stepName);
-            if (__checkConfigPropsFile(content)) {
-                editor.closeEditorErrorBox(stepName);                                
-                contentManager.showBrowser(stepName, 0);
-                contentManager.addRightSlideClassToBrowser(stepName, 0);
-                var index = contentManager.getCurrentInstructionIndex();
-                if(index === 0){
-                    contentManager.markCurrentInstructionComplete(stepName);
-                    contentManager.updateWithNewInstructionNoMarkComplete(stepName);
-                }                
-            } else {
-                // display error and provide link to fix it
-                editor.createErrorLinkForCallBack(true, __addPropToConfigProps);
-            }
-        };
-        editor.addSaveListener(__showWebBrowser);
-    };
+    };    
 
     var __listenToEditorForServerEnv = function(editor) {
         var __showWebBrowser = function() {
@@ -88,10 +96,8 @@ var microprofileConfigCallBack = (function() {
     var __addPropToConfigProps = function() {
         var stepName = stepContent.getCurrentStepName();
         // reset content every time property is added through the button so as to clear out any manual editing
-        contentManager.resetEditorContents(stepName);
-        var content = contentManager.getEditorContents(stepName);
-
-        contentManager.replaceEditorContents(stepName, 1, 1, propsFileConfig);
+        contentManager.resetTabbedEditorContents(stepName, propsFileName);
+        contentManager.replaceTabbedEditorContents(stepName, propsFileName, 1, 1, propsFileConfig);
     };
 
     var __addPropToServerEnv = function() {     
@@ -162,7 +168,7 @@ var microprofileConfigCallBack = (function() {
             if (stepName === "ConfigureAsEnvVar") {
                 editorFileName = serverEnvFileName;
             } else if (stepName === "ConfigurePropsFile") {
-                editorFileName = "META-INF/microprofile-config.props";
+                editorFileName = "META-INF/microprofile-config.properties";
             } else if (stepName === "ConfigureViaInject") {
                 editorFileName === "Music-download.java";
             }
