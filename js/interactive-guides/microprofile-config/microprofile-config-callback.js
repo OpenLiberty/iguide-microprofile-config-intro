@@ -10,11 +10,11 @@
 *******************************************************************************/
 var microprofileConfigCallBack = (function() {
 
-    var propsFileConfig = "download-url=ftp://music.com/canada/download";
+    var propsFileConfig = "download_url=ftp://music.com/us-south/download";
     var __checkConfigPropsFile = function(content) {
         var match = false;
         try {
-            if(content.match(/\s*download-url=ftp:\/\/music.com\/canada\/download\s*/g)){
+            if(content.match(/\s*download_url=ftp:\/\/music.com\/us-south\/download\s*/g)){
                 match = true;
             }
         }
@@ -27,12 +27,12 @@ var microprofileConfigCallBack = (function() {
     /*
      * Callback and functions to support Configuring steps.
      */
-    var serverEnvDownloadUrlConfig = "download-url=ftp://music.com/us-west/download";
+    var serverEnvDownloadUrlConfig = "download_url=ftp://music.com/us-west/download";
     var serverEnvFileName = "server.env";
     var __checkServerEnvContent = function(content) {
         var match = false;
         try {
-            if (content.match(/WLP_SKIP_MAXPERMSIZE=true\s*download-url=ftp:\/\/music.com\/us-west\/download\s*/g)) {
+            if (content.match(/WLP_SKIP_MAXPERMSIZE=true\s*download_url=ftp:\/\/music.com\/us-west\/download\s*/g)) {
                 match = true;
             }
         }
@@ -202,7 +202,7 @@ var microprofileConfigCallBack = (function() {
             // match
             // private Config config;
             //   <space or newline here>
-            // @Inject @ConfigProperty(name=\"download-url\", defaultValue=\"ftp://music.com/us/download\")
+            // @Inject @ConfigProperty(name=\"download_url\", defaultValue=\"ftp://music.com/us-east/download\")
             // private String downloadUrl;
             var contentToMatch = "[\\s\\S]*private Config config;\\s*@Inject\\s*@ConfigProperty\\s*\\(([\\s\\S]*)\\)\\s*private String downloadUrl;";
             var regExpToMatch = new RegExp(contentToMatch, "g");
@@ -230,9 +230,9 @@ var microprofileConfigCallBack = (function() {
             var param1 = annotationParams[0];
             var param2 = annotationParams[1];
                   
-            if ((param1 === "name=\"download-url\"" &&
+            if ((param1 === "name=\"download_url\"" &&
                  param2 === "defaultValue=\"ftp:\/\/music.com\/us\/download\"") ||
-                (param2 === "name=\"download-url\"" &&
+                (param2 === "name=\"download_url\"" &&
                  param1 === "defaultValue=\"ftp:\/\/music.com\/us\/download\"")) {
                 allMatch = true;
             }
@@ -276,7 +276,7 @@ var microprofileConfigCallBack = (function() {
     };
 
     var __addInjectConfigToEditor = function(stepName) {      
-        var injectConfig = "    @Inject @ConfigProperty(name=\"download-url\", defaultValue=\"ftp://music.com/us/download\")";
+        var injectConfig = "    @Inject @ConfigProperty(name=\"download_url\", defaultValue=\"ftp://music.com/us-east/download\")";
         if (!stepName) {   
            stepName = stepContent.getCurrentStepName();
         }
@@ -290,7 +290,7 @@ var microprofileConfigCallBack = (function() {
         contentManager.markEditorReadOnlyLines(stepName, readOnlyLines);       
     };
     
-    var downloadMusicUrl = "https://music.com/download";
+    var downloadMusicUrl = "https://music.com/play";
 
     var __populateURL = function(event, stepName) {
         if (event.type === "click" ||
