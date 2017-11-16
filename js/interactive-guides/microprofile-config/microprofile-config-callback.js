@@ -10,11 +10,11 @@
 *******************************************************************************/
 var microprofileConfigCallBack = (function() {
 
-    var propsFileConfig = "download-url=ftp://music.com/canada/download";
+    var propsFileConfig = "download_url=ftp://music.com/us-south/download";
     var __checkConfigPropsFile = function(content) {
         var match = false;
         try {
-            if(content.match(/\s*download-url=ftp:\/\/music.com\/canada\/download\s*/g)){
+            if(content.match(/\s*download_url=ftp:\/\/music.com\/us-south\/download\s*/g)){
                 match = true;
             }
         }
@@ -25,13 +25,14 @@ var microprofileConfigCallBack = (function() {
     };
 
     /*
-     * Callback and functions to support Configuring as an Environment Variable step.
+     * Callback and functions to support Configuring steps.
      */
-    var serverEnvDownloadUrlConfig = "download-url=ftp://music.com/asia/download";
+    var serverEnvDownloadUrlConfig = "download_url=ftp://music.com/us-west/download";
+    var serverEnvFileName = "server.env";
     var __checkServerEnvContent = function(content) {
         var match = false;
         try {
-            if (content.match(/WLP_SKIP_MAXPERMSIZE=true\s*download-url=ftp:\/\/music.com\/asia\/download\s*/g)) {
+            if (content.match(/WLP_SKIP_MAXPERMSIZE=true\s*download_url=ftp:\/\/music.com\/us-west\/download\s*/g)) {
                 match = true;
             }
         }
@@ -56,7 +57,7 @@ var microprofileConfigCallBack = (function() {
                 }
             } else {
                 // display error and provide link to fix it
-                editor.createErrorLinkForCallBack(stepName, true, __addPropToConfigProps);
+                editor.createErrorLinkForCallBack(true, __addPropToConfigProps);
             }
         };
         editor.addSaveListener(__showWebBrowser);
@@ -65,7 +66,7 @@ var microprofileConfigCallBack = (function() {
     var __listenToEditorForServerEnv = function(editor) {
         var __showWebBrowser = function() {
             var stepName = editor.getStepName();
-            var content = contentManager.getEditorContents(stepName);
+            var content = contentManager.getTabbedEditorContents(stepName, serverEnvFileName);
             if (__checkServerEnvContent(content)) {
                 editor.closeEditorErrorBox(stepName);
                 contentManager.showBrowser(stepName, 0);
@@ -78,7 +79,7 @@ var microprofileConfigCallBack = (function() {
                 }
             } else {
                 // display error and provide link to fix it
-                editor.createErrorLinkForCallBack(stepName, true, __addPropToServerEnv);
+                editor.createErrorLinkForCallBack(true, __addPropToServerEnv);
             }
         };
         editor.addSaveListener(__showWebBrowser);
@@ -96,16 +97,16 @@ var microprofileConfigCallBack = (function() {
     var __addPropToServerEnv = function() {
         var stepName = stepContent.getCurrentStepName();
         // reset content every time property is added through the button so as to clear out any manual editing
-        contentManager.resetEditorContents(stepName);
-        var content = contentManager.getEditorContents(stepName);
+        contentManager.resetTabbedEditorContents(stepName, serverEnvFileName);
+        contentManager.replaceTabbedEditorContents(stepName, serverEnvFileName, 2, 2, serverEnvDownloadUrlConfig);
 
-        contentManager.replaceEditorContents(stepName, 2, 2, serverEnvDownloadUrlConfig);
         var readOnlyLines = [];
         readOnlyLines.push({
             from: 1,
             to: 1
         });
-        contentManager.markEditorReadOnlyLines(stepName, readOnlyLines);
+
+        contentManager.markTabbedEditorReadOnlyLines(stepName, serverEnvFileName, readOnlyLines);
     };
 
     var __listenToBrowserForPropFileConfig = function(webBrowser) {
@@ -152,13 +153,56 @@ var microprofileConfigCallBack = (function() {
         }
     };
 
+    var __saveTabbedEditorButton = function(event) {
+        if (event.type === "click" ||
+           (event.type === "keypress" && (event.which === 13 || event.which === 32))) {
+            // Click or 'Enter' or 'Space' key event...
+            var stepName = stepContent.getCurrentStepName();
+            var editorFileName;
+            if (stepName === "ConfigureAsEnvVar") {
+                editorFileName = serverEnvFileName;
+            } else if (stepName === "ConfigurePropsFile") {
+                editorFileName = "META-INF/microprofile-config.props";
+            } else if (stepName === "ConfigureViaInject") {
+                editorFileName === "Music-download.java";
+            }
+            if (editorFileName) {
+                contentManager.saveTabbedEditor(stepName, editorFileName);
+            }
+        }
+    };
+
+    var __listenToEditorTabChange = function(tabbedEditor, instructionIndexToMarkUnavailable, fileNameToCheck) {
+        var __handleInstruction = function() {
+            var instructionId = '#' + stepContent.getCurrentStepName() + '-instruction-' + instructionIndexToMarkUnavailable;
+            if (!contentManager.isInstructionComplete(stepContent.getCurrentStepName(), instructionIndexToMarkUnavailable)) {
+                var newActiveTabFileName = tabbedEditor.getActiveTabFileName();
+                var instr = $(instructionId);
+                if (newActiveTabFileName !== fileNameToCheck) {
+                    // "Dim" out non-completed instructions when moving to a readonly editor tab
+                    if (instr.length > 0) {
+                        // Make it dim temporarily
+                        instr.addClass('unavailable');
+                    }
+                } else {
+                    if (instr.length > 0) {
+                        // Make it available again
+                        instr.removeClass('unavailable');
+                    }
+                }
+            }
+        };
+
+        tabbedEditor.addActiveTabChangeListener(__handleInstruction);
+    };
+    
     var __getInjectionConfigContent = function(content) {
         var annotationParams = null;
         try {
             // match
             // private Config config;
             //   <space or newline here>
-            // @Inject @ConfigProperty(name=\"download-url\", defaultValue=\"ftp://music.com/us/download\")
+            // @Inject @ConfigProperty(name=\"download_url\", defaultValue=\"ftp://music.com/us-east/download\")
             // private String downloadUrl;
             var contentToMatch = "[\\s\\S]*private Config config;\\s*@Inject\\s*@ConfigProperty\\s*\\(([\\s\\S]*)\\)\\s*private String downloadUrl;";
             var regExpToMatch = new RegExp(contentToMatch, "g");
@@ -185,10 +229,15 @@ var microprofileConfigCallBack = (function() {
         if (annotationParams.length === 2) {
             var param1 = annotationParams[0];
             var param2 = annotationParams[1];
+<<<<<<< HEAD
 
             if ((param1 === "name=\"download-url\"" &&
+=======
+                  
+            if ((param1 === "name=\"download_url\"" &&
+>>>>>>> origin/dev
                  param2 === "defaultValue=\"ftp:\/\/music.com\/us\/download\"") ||
-                (param2 === "name=\"download-url\"" &&
+                (param2 === "name=\"download_url\"" &&
                  param1 === "defaultValue=\"ftp:\/\/music.com\/us\/download\"")) {
                 allMatch = true;
             }
@@ -244,7 +293,7 @@ var microprofileConfigCallBack = (function() {
                 //contentManager.updateWithNewInstructionNoMarkComplete(stepName);
             } else {
                 // display error and provide link to fix it
-                editor.createErrorLinkForCallBack(stepName, true, __addInjectConfigToEditor);
+                editor.createErrorLinkForCallBack(true, __addInjectConfigToEditor);
             }
         };
         editor.addSaveListener(__showWebBrowser);
@@ -349,9 +398,15 @@ var microprofileConfigCallBack = (function() {
         }
     };
 
+<<<<<<< HEAD
     var __addInjectConfigToEditor = function(stepName) {
         var injectConfig = "    @Inject @ConfigProperty(name=\"download-url\", defaultValue=\"ftp://music.com/us/download\")";
         if (!stepName) {
+=======
+    var __addInjectConfigToEditor = function(stepName) {      
+        var injectConfig = "    @Inject @ConfigProperty(name=\"download_url\", defaultValue=\"ftp://music.com/us-east/download\")";
+        if (!stepName) {   
+>>>>>>> origin/dev
            stepName = stepContent.getCurrentStepName();
         }
         // reset content every time property is added through the button so as to clear out any manual editing
@@ -363,8 +418,13 @@ var microprofileConfigCallBack = (function() {
         readOnlyLines.push({from: 1, to: 9}, {from: 11, to: 12});
         contentManager.markEditorReadOnlyLines(stepName, readOnlyLines);
     };
+<<<<<<< HEAD
 
     var downloadMusicUrl = "https://music.com/download";
+=======
+    
+    var downloadMusicUrl = "https://music.com/play";
+>>>>>>> origin/dev
 
     var __populateURL = function(event, stepName) {
         if (event.type === "click" ||
@@ -400,6 +460,8 @@ var microprofileConfigCallBack = (function() {
         addPropToServerEnvButton: __addPropToServerEnvButton,
         refreshBrowserButton: __refreshBrowserButton,
         saveButton: __saveButton,
+        saveTabbedEditorButton: __saveTabbedEditorButton,
+        listenToEditorTabChange: __listenToEditorTabChange,
         listenToEditorForInjectConfig: __listenToEditorForInjectConfig,
         addConfigInjectButton: __addConfigInjectButton,
         listenToEditorForFeatureInServerXML: __listenToEditorForFeatureInServerXML,
