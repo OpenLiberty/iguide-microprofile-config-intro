@@ -401,15 +401,6 @@ var microprofileConfigCallBack = (function() {
         contentManager.markEditorReadOnlyLines(stepName, readOnlyLines);       
     };
 
-    var __listenToBrowserForDefaultConfig = function(webBrowser) {
-        var setBrowserContent = function(currentURL) {
-            webBrowser.setBrowserContent("/guides/iguide-microprofile-config/html/interactive-guides/microprofile-config/download-from-injection.html");
-            contentManager.markCurrentInstructionComplete(webBrowser.getStepName());
-        }
-        
-        webBrowser.addUpdatedURLListener(setBrowserContent);
-    };
-
     return {
         listenToEditorForPropConfig: __listenToEditorForPropConfig,
         listenToEditorForServerEnv: __listenToEditorForServerEnv,
