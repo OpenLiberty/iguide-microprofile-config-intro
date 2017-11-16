@@ -195,7 +195,7 @@ var microprofileConfigCallBack = (function() {
 
         tabbedEditor.addActiveTabChangeListener(__handleInstruction);
     };
-    
+
     var __getInjectionConfigContent = function(content) {
         var annotationParams = null;
         try {
@@ -229,13 +229,8 @@ var microprofileConfigCallBack = (function() {
         if (annotationParams.length === 2) {
             var param1 = annotationParams[0];
             var param2 = annotationParams[1];
-<<<<<<< HEAD
 
-            if ((param1 === "name=\"download-url\"" &&
-=======
-                  
             if ((param1 === "name=\"download_url\"" &&
->>>>>>> origin/dev
                  param2 === "defaultValue=\"ftp:\/\/music.com\/us\/download\"") ||
                 (param2 === "name=\"download_url\"" &&
                  param1 === "defaultValue=\"ftp:\/\/music.com\/us\/download\"")) {
@@ -398,15 +393,9 @@ var microprofileConfigCallBack = (function() {
         }
     };
 
-<<<<<<< HEAD
     var __addInjectConfigToEditor = function(stepName) {
-        var injectConfig = "    @Inject @ConfigProperty(name=\"download-url\", defaultValue=\"ftp://music.com/us/download\")";
-        if (!stepName) {
-=======
-    var __addInjectConfigToEditor = function(stepName) {      
         var injectConfig = "    @Inject @ConfigProperty(name=\"download_url\", defaultValue=\"ftp://music.com/us-east/download\")";
-        if (!stepName) {   
->>>>>>> origin/dev
+        if (!stepName) {
            stepName = stepContent.getCurrentStepName();
         }
         // reset content every time property is added through the button so as to clear out any manual editing
@@ -418,13 +407,8 @@ var microprofileConfigCallBack = (function() {
         readOnlyLines.push({from: 1, to: 9}, {from: 11, to: 12});
         contentManager.markEditorReadOnlyLines(stepName, readOnlyLines);
     };
-<<<<<<< HEAD
 
-    var downloadMusicUrl = "https://music.com/download";
-=======
-    
     var downloadMusicUrl = "https://music.com/play";
->>>>>>> origin/dev
 
     var __populateURL = function(event, stepName) {
         if (event.type === "click" ||

@@ -76,13 +76,8 @@
                 "Injecting a configuration value this way is recommended for mandatory properties. If no configured value exists for this property, a <code>DeploymentException</code> will be thrown during startup."
             ],
             "instruction": [
-<<<<<<< HEAD
-                "To inject a <code>download-url</code> configuration property into the code, add the following <code>@Inject</code> and <code>@ConfigProperty</code> annotations to line 6 before declaring the <code>String download-url</code>, or click  <action title='Inject a ConfigProperty'><b>@Inject @ConfigProperty(name=\"download-url\")</b></action>. Then, click <action title='Save'><b>Save</b></action> on the editor menu pane.<br><br><note>Note: You have not yet specified a value for the <code>download-url</code> configuration property.  Execution of this code at this time would cause a <code>DeploymentException</code> to be thrown since a value is required.</note>"
-            ],
-=======
                 "To inject a <code>download_url</code> configuration property into the code, add the following <code>@Inject</code> and <code>@ConfigProperty</code> annotations to line 6 before declaring the <code>String download_url</code>, or click  <action title='Inject a ConfigProperty'><b>@Inject @ConfigProperty(name=\"download_url\")</b></action>. Then, click <action title='Save'><b>Save</b></action> on the editor menu pane.<br><br><note>Note: You have not yet specified a value for the <code>download_url</code> configuration property.  Execution of this code at this time would cause a <code>DeploymentException</code> to be thrown since a value is required.</note>"
-            ],    
->>>>>>> origin/dev
+            ],
             "content":[
                 {
                     "displayType":"fileEditor",
@@ -93,23 +88,13 @@
                         "import org.eclipse.microprofile.config.inject.ConfigProperty;",
                         "",
                         "public class Music-download {",
-<<<<<<< HEAD
                         "",
-                        "    private static String download-url;",
-                        "",
-                        "    public void download() {",
-                        "        downloadService(download-url);",
-                        "    }",
-                        "}"
-=======
-                        "",    
                         "    private static String download_url;",
                         "",
                         "    public void download() {",
                         "        downloadService(download_url);",
-                        "    }", 
-                        "}"               
->>>>>>> origin/dev
+                        "    }",
+                        "}"
                     ],
                     "readonly": [
                        {
@@ -177,11 +162,7 @@
                 "<ul><li>All META-INF/microprofile-config.properties found on the classpath. (default ordinal = 100).</li><li>Environment variables (default ordinal=300).</li><li>System properties (default ordinal=400).</li></ul>Setting values within any of these ConfigSources will override any default value for the configuration property set in the injection."
             ],
             "instruction": [
-<<<<<<< HEAD
-                "Currently, only a default value has been specified for the download-url configuration property.  Type the following URL into the browser that follows, or click <action title='URL' onclick=\"microprofileConfigCallBack.populateURL(event, 'ConfigureDefaultConfigSources')\"><b>https://music.com/download</b></action> and then press <action title='Enter' onclick=\"microprofileConfigCallBack.enterButtonURL(event, 'ConfigureDefaultConfigSources')\"><b>Enter</b></action>."
-=======
-                "Currently, only a default value has been specified for the download_url configuration property.  Type the following URL into the browser that follows, or click <action title='URL' onclick=\"microprofileConfigCallBack.populateURL(event, 'ConfigureDefaultConfigSources')\"><b>https://music.com/play</b></action> and then press <action title='Enter' onclick=\"microprofileConfigCallBack.enterButtonURL(event, 'ConfigureDefaultConfigSources')\"><b>Enter</b></action>."           
->>>>>>> origin/dev
+                "Currently, only a default value has been specified for the download_url configuration property.  Type the following URL into the browser that follows, or click <action title='URL' onclick=\"microprofileConfigCallBack.populateURL(event, 'ConfigureDefaultConfigSources')\"><b>https://music.com/play</b></action> and then press <action title='Enter' onclick=\"microprofileConfigCallBack.enterButtonURL(event, 'ConfigureDefaultConfigSources')\"><b>Enter</b></action>."
             ],
             "content":[
               {
@@ -237,22 +218,6 @@
             ],
             "content":[
               {
-<<<<<<< HEAD
-                "displayType":"fileEditor",
-                "fileName": "server.env",
-                "preload": [
-                    "WLP_SKIP_MAXPERMSIZE=true",
-                    ""
-                ],
-                "readonly": [
-                  {
-                      "from": "1",
-                      "to": "1"
-                  }
-                ],
-                "save": false,
-                "callback": "(function test(editor) {microprofileConfigCallBack.listenToEditorForServerEnv(editor); })"
-=======
                 "displayType": "tabbedEditor",
                 "activeTab": "server.env",
                 "callback": "(function test(tabbedEditor) {microprofileConfigCallBack.listenToEditorTabChange(tabbedEditor, 0, 'server.env'); })",
@@ -310,7 +275,6 @@
                     "callback": "(function test(editor) {microprofileConfigCallBack.listenToEditorForServerEnv(editor); })"
                   }
                 ]
->>>>>>> origin/dev
               },
               {
                 "displayType":"webBrowser",
