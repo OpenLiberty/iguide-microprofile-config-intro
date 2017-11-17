@@ -49,7 +49,7 @@
             ],
             "instruction": [
                 "To inject a <code>download_url</code> configuration property into the code, add the following <code>@Inject</code> and <code>@ConfigProperty</code> annotations to line 11 before declaring the <code>private String downloadUrl</code>, or click  <action title='Inject a ConfigProperty' onclick='microprofileConfigCallBack.addInjectConfigButton(event)'><b>@Inject @ConfigProperty(name=\"download_url\")</b></action>. Then, click <action title='Run' onclick=\"microprofileConfigCallBack.saveButton(event)\"><b>Run</b></action> on the editor menu pane.<br><br><note>Note: You have not yet specified a value for the <code>download_url</code> configuration property.  Execution of this code at this time would cause a <code>DeploymentException</code> to be thrown since a value is required.</note>",
-                "Type the following URL into the browser that follows, or click <action title='URL' onclick=\"microprofileConfigCallBack.populateURL(event, 'ConfigureViaInject')\"><b>https://music.com/download</b></action> and then press <action title='Enter' onclick=\"microprofileConfigCallBack.enterButtonURL(event, 'ConfigureViaInject')\"><b>Enter</b></action>."
+                "Type the following URL into the browser that follows, or click <action title='URL' onclick=\"microprofileConfigCallBack.populateURL(event, 'ConfigureViaInject')\"><b>https://music.com/play</b></action> and then press <action title='Enter' onclick=\"microprofileConfigCallBack.enterButtonURL(event, 'ConfigureViaInject')\"><b>Enter</b></action>."
             ],    
             "content":[
                 {
