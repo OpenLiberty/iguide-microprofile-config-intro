@@ -164,7 +164,7 @@ var microprofileConfigCallBack = (function() {
             } else if (stepName === "ConfigurePropsFile") {
                 editorFileName = "META-INF/microprofile-config.props";
             } else if (stepName === "ConfigureViaInject") {
-                editorFileName === "Music-download.java";
+                editorFileName = "Music-download.java";
             }
             if (editorFileName) {
                 contentManager.saveTabbedEditor(stepName, editorFileName);
