@@ -31,26 +31,55 @@
             ]
         },
         {
-            "name": "AddLibertyMPFaultTolerance",
-            "title": "Enabling MicroProfile Config",
+            "name": "EnableMPConfig",
+            "title": "Enabling the MicroProfile Config feature",
             "description": [
-                "Begin by enabling the MicroProfile Config feature in your <code>server.xml</code> file."
+                "Begin by enabling the MicroProfile Config 1.1 feature in your <code>server.xml</code> file."
             ],
             "instruction": [
-              "Add <b>&lt;feature>mpConfig-1.1&lt;/feature>."
+              "Add the following element declaration inside the featureManager element to the <code>server.xml</code> file, or click <action tabindex='0' role='button' title='Enable MicroProfile Config' aria-label='Enable MicroProfile Config' onkeypress=\"microprofileConfigCallBack.addMicroProfileConfigFeatureButton(event)\" onclick=\"microprofileConfigCallBack.addMicroProfileConfigFeatureButton(event)\"><b>&lt;feature&gtmpConfig-1.1&lt;/feature&gt;</b></action>. Then, click <action tabindex='0' role='button' title='Save' aria-label='Save' onkeypress=\"microprofileConfigCallBack.saveButton(event)\" onclick=\"microprofileConfigCallBack.saveButton(event)\"><b>Save</b></action> on the editor menu pane."            ],
+            "content":[
+              {
+                "displayType":"fileEditor",
+                "fileName": "server.xml",
+                "preload": [
+                  "<?xml version=\"1.0\"?>",
+                  "<server description=\"Sample Liberty server\">",
+                  "   <featureManager>",
+                  "      <feature>cdi-1.2</feature>",
+                  "      <feature>jaxrs-2.0</feature>",
+                  "",
+                  "   </featureManager>",
+                  "   <httpEndpoint host=\"*\" id=\"defaultHttpEndpoint\" httpsPort=\"${default.https.port}\"",
+                  "   httpPort=\"{default.http.port}\"/>",
+                  "</server>"
+                ],
+                "readonly": [
+                  {
+                      "from": "1",
+                      "to": "5"
+                  },
+                  {
+                      "from": "7",
+                      "to": "10"
+                  }
+                ],
+                "save": true,
+                "callback": "(function test(editor) {microprofileConfigCallBack.listenToEditorForFeatureInServerXML(editor); })"
+              }
             ]
         },
         {
             "name": "ConfigureViaInject",
             "title": "Injecting configuration properties through annotations",
             "description": [
-                "After you modify your <code>server.xml</code> file to <a>include the mpConfig feature</a>, a single configuration property value can be injected directly into your code using the <code>@Inject</code> and the <code>@ConfigProperty</code> annotations. The injected value is set when the application starts and is static.<br>", 
+                "After you modify your <code>server.xml</code> file to <a>include the mpConfig feature</a>, a single configuration property value can be injected directly into your code using the <code>@Inject</code> and the <code>@ConfigProperty</code> annotations. The injected value is set when the application starts and is static.<br>",
                 "Injecting a configuration value this way is recommended for mandatory properties. If no configured value exists for this property, a <code>DeploymentException</code> will be thrown during startup."
             ],
             "instruction": [
                 "To inject a <code>download_url</code> configuration property into the code, add the following <code>@Inject</code> and <code>@ConfigProperty</code> annotations to line 11 before declaring the <code>private String downloadUrl</code>, or click  <action title='Inject a ConfigProperty' onclick='microprofileConfigCallBack.addInjectConfigButton(event)'><b>@Inject @ConfigProperty(name=\"download_url\")</b></action>. Then, click <action title='Run' onclick=\"microprofileConfigCallBack.saveButton(event)\"><b>Run</b></action> on the editor menu pane.<br><br><note>Note: You have not yet specified a value for the <code>download_url</code> configuration property.  Execution of this code at this time would cause a <code>DeploymentException</code> to be thrown since a value is required.</note>",
                 "Type the following URL into the browser that follows, or click <action title='URL' onclick=\"microprofileConfigCallBack.populateURL(event, 'ConfigureViaInject')\"><b>https://music.com/play</b></action> and then press <action title='Enter' onclick=\"microprofileConfigCallBack.enterButtonURL(event, 'ConfigureViaInject')\"><b>Enter</b></action>."
-            ],    
+            ],
             "content":[
                 {
                     "displayType":"fileEditor",
@@ -60,7 +89,7 @@
                         "import javax.inject.Inject;",
                         "import org.eclipse.microprofile.config.Config;",
                         "import org.eclipse.microprofile.config.inject.ConfigProperty;",
-                        "",    
+                        "",
                         "public class Music-download {",
                         "",
                         "    @Inject",
@@ -71,8 +100,8 @@
                         "",
                         "    public void download() {",
                         "        downloadService(downloadUrl);",
-                        "    }", 
-                        "}"                  
+                        "    }",
+                        "}"
                     ],
                     "readonly": [
                        {
@@ -94,13 +123,13 @@
                     "callback": "(function test(webBrowser) {microprofileConfigCallBack.listenToBrowserForInjectConfig(webBrowser); })"
                 }
             ]
-        },               
+        },
         {
             "name": "InjectWithDefaultValue",
             "title": "Providing default values with injection",
             "TOCIndent": 1,
             "description": [
-                "You can specify a default value for a configuration property using the <b>defaultValue</b> parameter in the <code>@ConfigProperty</code> annotation.  If the property is not assigned a value anywhere else, then it will be assigned this default value.<br>"                
+                "You can specify a default value for a configuration property using the <b>defaultValue</b> parameter in the <code>@ConfigProperty</code> annotation.  If the property is not assigned a value anywhere else, then it will be assigned this default value.<br>"
             ],
             "instruction": [
                 "Change the @ConfigProperty annotation on line 11 to the following code, or click <action title='Provide default value using ConfigProperty annotation' onclick=\"microprofileConfigCallBack.addInjectDefaultConfigButton(event)\"><b>@Inject @ConfigProperty(name=\"download_url\", defaultValue=\"ftp://music.com/us-east/download\")</b></action>. Then, click <action title='Run' onclick=\"microprofileConfigCallBack.saveButton(event)\"><b>Run</b></action> on the editor menu pane.",
@@ -115,7 +144,7 @@
                         "import javax.inject.Inject;",
                         "import org.eclipse.microprofile.config.Config;",
                         "import org.eclipse.microprofile.config.inject.ConfigProperty;",
-                        "",    
+                        "",
                         "public class Music-download {",
                         "",
                         "    @Inject",
@@ -140,7 +169,7 @@
                        }
                     ],
                     "save": false,
-                    "callback": "(function test(editor) {microprofileConfigCallBack.listenToEditorForInjectDefaultConfig(editor); })"                   
+                    "callback": "(function test(editor) {microprofileConfigCallBack.listenToEditorForInjectDefaultConfig(editor); })"
                 },
                 {
                     "displayType":"webBrowser",
@@ -148,13 +177,13 @@
                     "browserContent": "/guides/iguide-microprofile-config/html/interactive-guides/microprofile-config/download-deployment-exception.html",
                     "callback": "(function test(webBrowser) {microprofileConfigCallBack.listenToBrowserForInjectDefaultConfig(webBrowser); })"
                 }
-            ]               
+            ]
         },
         {
             "name": "ConfigureDefaultConfigSources",
             "title": "Using default ConfigSources to provide configuration data",
             "description": [
-                "A <b>ConfigSource</b> is a source for configured values.  Each ConfigSource has a specified <b>ordinal</b>, which is used to determine the importance of the values taken from the associated ConfigSource. A higher ordinal means that the values taken from this ConfigSource will override values from lower-priority ConfigSources. <br><br>MicroProfile Config has 3 default ConfigSources:",               
+                "A <b>ConfigSource</b> is a source for configured values.  Each ConfigSource has a specified <b>ordinal</b>, which is used to determine the importance of the values taken from the associated ConfigSource. A higher ordinal means that the values taken from this ConfigSource will override values from lower-priority ConfigSources. <br><br>MicroProfile Config has 3 default ConfigSources:",
                 "<ul><li>All META-INF/microprofile-config.properties found on the classpath. (default ordinal = 100).</li><li>Environment variables (default ordinal=300).</li><li>System properties (default ordinal=400).</li></ul>Setting values within any of these ConfigSources will override any default value for the configuration property set in the injection."
             ],
             "instruction": [
@@ -165,7 +194,7 @@
         {
             "name": "ConfigurePropsFile",
             "title": "Configuring with a properties file",
-            "TOCIndent": 1,            
+            "TOCIndent": 1,
             "description": [
                 "In Websphere Liberty, you can provide a properties file as part of your packaged application. This properties file lets you specify configuration for overriding injected values.",
                 "",
@@ -183,7 +212,7 @@
                 ],
                 "save": false,
                 "callback": "(function test(editor) {microprofileConfigCallBack.listenToEditorForPropConfig(editor); })"
-              }, 
+              },
               {
                 "displayType":"webBrowser",
                 "url": "https://music.com/play",
@@ -195,7 +224,7 @@
         {
             "name": "ConfigureAsEnvVar",
             "title": "Configuring as an environment variable",
-            "TOCIndent": 1,            
+            "TOCIndent": 1,
             "description": [
                 "In WebSphere Liberty, You can use server.env files at the installation and server levels to specify environment variables. The runtime-level file is located at <code>${wlp.install.dir}/etc/server.env</code> and the server-level is located at <code>${server.config.dir}/server.env</code>. If both files are there, the contents of the two files are merged. If the same environment variable is in both file, value in the server-level file take precedence over value in the runtime-level file. We are going to use the <code>${server.config.dir}/server.env</code> to configure the download_url environment variable.",
                 "",
@@ -276,7 +305,7 @@
         {
             "name": "ConfigureAsSysProp",
             "title": "Configuring as a system property",
-            "TOCIndent": 1,            
+            "TOCIndent": 1,
             "description": [
                 "temp"
             ]
@@ -292,7 +321,7 @@
         {
             "name": "DefaultPlayground",
             "title": "Default ConfigSources playground",
-            "TOCIndent": 1,            
+            "TOCIndent": 1,
             "description": [
                 "temp"
             ],
@@ -328,7 +357,7 @@
                         },
                         {
                             "displayType": "fileEditor",
-                            "fileName": "Properties", 
+                            "fileName": "Properties",
                             "preload": [
                                 "download_url=ftp://music.com/us-south/download"
                             ]
@@ -337,7 +366,7 @@
                             "displayType": "fileEditor",
                             "fileName": "Environment Property",
                             "preload": [
-                                
+
                             ]
                         },
                         {
@@ -375,7 +404,7 @@
         {
             "name": "CustomConverters",
             "title": "Adding custom converters",
-            "TOCIndent": 1,            
+            "TOCIndent": 1,
             "description": [
                 "You can also define a custom Converter for transforming the string property value into a specified type.<br>",
                 "A custom Converter must implement the generic interface org.eclipse.microprofile.config.spi.Converter. The Type parameter of the interface is the target type the String is converted to. You have to register your implementation in a file /META-INF/services/org.eclipse.microprofile.config.spi.Converter with the fully qualified class name of the custom implementation.<br>",
@@ -386,7 +415,7 @@
         {
             "name": "ConverterPriority",
             "title": "Converter Priority",
-            "TOCIndent": 1,            
+            "TOCIndent": 1,
             "description": [
                 "If multiple converters for the same type exist, the converter that is used can be controlled by using a @Priority annotation. This method allows for Converter implementations to be overridden later in the application lifecycle. A converter overrides any other converter with a lesser priority that is for the same type."
             ]
