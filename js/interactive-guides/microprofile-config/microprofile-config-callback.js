@@ -164,7 +164,7 @@ var microprofileConfigCallBack = (function() {
             } else if (stepName === "ConfigurePropsFile") {
                 editorFileName = "META-INF/microprofile-config.props";
             } else if (stepName === "ConfigureViaInject") {
-                editorFileName === "Music-download.java";
+                editorFileName = "Music-download.java";
             }
             if (editorFileName) {
                 contentManager.saveTabbedEditor(stepName, editorFileName);
@@ -224,44 +224,48 @@ var microprofileConfigCallBack = (function() {
         return annotationParams;
     };
 
-    var __isParamInAnnotation = function(annotationParams) {
+    var __isDefaultInjectParamInAnnotation = function(annotationParams) {
         var allMatch = false;
         if (annotationParams.length === 2) {
             var param1 = annotationParams[0];
             var param2 = annotationParams[1];
 
             if ((param1 === "name=\"download_url\"" &&
-                 param2 === "defaultValue=\"ftp:\/\/music.com\/us\/download\"") ||
+                 param2 === "defaultValue=\"ftp:\/\/music.com\/us-east\/download\"") ||
                 (param2 === "name=\"download_url\"" &&
-                 param1 === "defaultValue=\"ftp:\/\/music.com\/us\/download\"")) {
+                 param1 === "defaultValue=\"ftp:\/\/music.com\/us-east\/download\"")) {
                 allMatch = true;
             }
         }
         return allMatch;
     }
 
-    var __checkInjectionEditorContent = function(content) {
+    var __checkDefaultInjectionEditorContent = function(content) {
         var annotationIsThere = false;
         var editorContentBreakdown = __getInjectionConfigContent(content);
         if (editorContentBreakdown !== null) {
-            annotationIsThere = __isParamInAnnotation(editorContentBreakdown);
+            annotationIsThere = __isDefaultInjectParamInAnnotation(editorContentBreakdown);
         }
         return annotationIsThere;
     };
 
-    var __listenToEditorForInjectConfig = function(editor) {
+    var __listenToEditorForInjectDefaultConfig = function(editor) {
         var __showWebBrowser = function() {
             var stepName = editor.getStepName();
             var content = contentManager.getEditorContents(stepName);
-            if (__checkInjectionEditorContent(content)) {
+            if (__checkDefaultInjectionEditorContent(content)) {
                 editor.closeEditorErrorBox(stepName);
-                //contentManager.showBrowser(stepName, 0);
-                //contentManager.addRightSlideClassToBrowser(stepName, 0);
-                contentManager.markCurrentInstructionComplete(stepName);
-                //contentManager.updateWithNewInstructionNoMarkComplete(stepName);
+                contentManager.showBrowser(stepName, 0);
+                contentManager.addRightSlideClassToBrowser(stepName, 0);
+
+                var index = contentManager.getCurrentInstructionIndex();
+                if(index === 0){
+                    contentManager.markCurrentInstructionComplete(stepName);
+                    contentManager.updateWithNewInstructionNoMarkComplete(stepName);
+                }
             } else {
                 // display error and provide link to fix it
-                editor.createErrorLinkForCallBack(true, __addInjectConfigToEditor);
+                editor.createErrorLinkForCallBack(stepName, true, __addInjectDefaultConfigToEditor);
             }
         };
         editor.addSaveListener(__showWebBrowser);
@@ -312,9 +316,11 @@ var microprofileConfigCallBack = (function() {
          features = features.replace(/\s/g, ''); // Remove whitespace
          try {
             var featureMatches = features.match(/<feature>[\s\S]*?<\/feature>/g);
-            if ((featureMatches.length === 1) && (featureMatches[0] === "<feature>mpConfig-1.1</feature>")) {
+            if (features.length === "<feature>mpConfig-1.1</feature>".length) {
               //featureMatches should only contain the mpConfig-1.1 feature
-              return true;
+              if (featureMatches[0] === "<feature>mpConfig-1.1</feature>") {
+                return true;
+              }
             }
             return false;
          }
@@ -324,7 +330,7 @@ var microprofileConfigCallBack = (function() {
     };
 
     var __checkMicroProfileConfigFeatureContent = function(content) {
-        var isConfigFeatureThere = true;
+        var isConfigFeatureThere = false;
         var editorContentBreakdown = __getMicroProfileConfigFeatureContent(content);
         if (editorContentBreakdown.hasOwnProperty("features")) {
           //verify that mpConfig-1.1 feature was added
@@ -351,15 +357,15 @@ var microprofileConfigCallBack = (function() {
         contentManager.replaceEditorContents(stepName, 6, 6, ConfigFeature, 1);
     };
 
-    var __addConfigInjectButton = function(event) {
+    var __addInjectDefaultConfigButton = function(event) {
         if (event.type === "click" ||
         (event.type === "keypress" && (event.which === 13 || event.which === 32))) {
             // Click or 'Enter' or 'Space' key event...
-            __addInjectConfigToEditor();
+            __addInjectDefaultConfigToEditor();
         }
     };
 
-    var __addInjectConfigToEditor = function(stepName) {
+    var __addInjectDefaultConfigToEditor = function(stepName) {
         var injectConfig = "    @Inject @ConfigProperty(name=\"download_url\", defaultValue=\"ftp://music.com/us-east/download\")";
         if (!stepName) {
            stepName = stepContent.getCurrentStepName();
@@ -368,9 +374,9 @@ var microprofileConfigCallBack = (function() {
         contentManager.resetEditorContents(stepName);
         var content = contentManager.getEditorContents(stepName);
 
-        contentManager.replaceEditorContents(stepName, 10, 10, injectConfig, 1);
+        contentManager.replaceEditorContents(stepName, 11, 12, injectConfig, 2);
         var readOnlyLines = [];
-        readOnlyLines.push({from: 1, to: 9}, {from: 11, to: 12});
+        readOnlyLines.push({from: 1, to: 10}, {from: 13, to: 18});
         contentManager.markEditorReadOnlyLines(stepName, readOnlyLines);
     };
 
@@ -392,31 +398,114 @@ var microprofileConfigCallBack = (function() {
         }
     };
 
-    var __listenToBrowserForDefaultConfig = function(webBrowser) {
+    var __listenToBrowserForInjectDefaultConfig = function(webBrowser) {
         var setBrowserContent = function(currentURL) {
             webBrowser.setBrowserContent("/guides/iguide-microprofile-config/html/interactive-guides/microprofile-config/download-from-injection.html");
             contentManager.markCurrentInstructionComplete(webBrowser.getStepName());
         }
 
+        webBrowser.contentRootElement.addClass("hidden");
         webBrowser.addUpdatedURLListener(setBrowserContent);
+    };
+
+    var __listenToBrowserForInjectConfig = function(webBrowser) {
+        var setBrowserContent = function(currentURL) {
+            webBrowser.setBrowserContent("/guides/iguide-microprofile-config/html/interactive-guides/microprofile-config/download-deployment-exception.html");
+            contentManager.markCurrentInstructionComplete(webBrowser.getStepName());
+        }
+
+        webBrowser.contentRootElement.addClass("hidden");
+        webBrowser.addUpdatedURLListener(setBrowserContent);
+    };
+
+    var __listenToEditorForInjectConfig = function(editor) {
+        var __showWebBrowser = function() {
+            var stepName = editor.getStepName();
+            var content = contentManager.getEditorContents(stepName);
+            if (__checkInjectionEditorContent(content)) {
+                editor.closeEditorErrorBox(stepName);
+                contentManager.showBrowser(stepName, 0);
+                contentManager.addRightSlideClassToBrowser(stepName, 0);
+                //contentManager.markCurrentInstructionComplete(stepName);
+                //contentManager.updateWithNewInstructionNoMarkComplete(stepName);
+
+                var index = contentManager.getCurrentInstructionIndex();
+                if(index === 0){
+                    contentManager.markCurrentInstructionComplete(stepName);
+                    contentManager.updateWithNewInstructionNoMarkComplete(stepName);
+                }
+            } else {
+                // display error and provide link to fix it
+                editor.createErrorLinkForCallBack(stepName, true, __addInjectConfigToEditor);
+            }
+        };
+        editor.addSaveListener(__showWebBrowser);
+    };
+
+    var __isInjectParamInAnnotation = function(annotationParams) {
+        var allMatch = false;
+        if (annotationParams.length === 1) {
+            var param1 = annotationParams[0];
+
+            if (param1 === "name=\"download_url\"") {
+                allMatch = true;
+            }
+        }
+        return allMatch;
+    }
+
+    var __checkInjectionEditorContent = function(content) {
+        var annotationIsThere = false;
+        var editorContentBreakdown = __getInjectionConfigContent(content);
+        if (editorContentBreakdown !== null) {
+            annotationIsThere = __isInjectParamInAnnotation(editorContentBreakdown);
+        }
+        return annotationIsThere;
+    };
+
+    var __addInjectConfigButton = function(event) {
+        if (event.type === "click" ||
+        (event.type === "keypress" && (event.which === 13 || event.which === 32))) {
+            // Click or 'Enter' or 'Space' key event...
+            __addInjectConfigToEditor();
+        }
+    };
+
+    var __addInjectConfigToEditor = function(stepName) {
+        var injectConfig = "    @Inject @ConfigProperty(name=\"download_url\")";
+        if (!stepName) {
+           stepName = stepContent.getCurrentStepName();
+        }
+        // reset content every time property is added through the button so as to clear out any manual editing
+        contentManager.resetEditorContents(stepName);
+        var content = contentManager.getEditorContents(stepName);
+
+        contentManager.replaceEditorContents(stepName, 11, 11, injectConfig, 1);
+        var readOnlyLines = [];
+        readOnlyLines.push({from: 1, to: 10}, {from: 12, to: 17});
+        contentManager.markEditorReadOnlyLines(stepName, readOnlyLines);
     };
 
     return {
         listenToEditorForPropConfig: __listenToEditorForPropConfig,
         listenToEditorForServerEnv: __listenToEditorForServerEnv,
+        listenToEditorForInjectDefaultConfig: __listenToEditorForInjectDefaultConfig,
+        listenToEditorForInjectConfig: __listenToEditorForInjectConfig,
         listenToBrowserForPropFileConfig: __listenToBrowserForPropFileConfig,
         listenToBrowserForServerEnvConfig: __listenToBrowserForServerEnvConfig,
+        listenToBrowserForInjectDefaultConfig:  __listenToBrowserForInjectDefaultConfig,
+        listenToBrowserForInjectConfig: __listenToBrowserForInjectConfig,
+        listenToEditorTabChange: __listenToEditorTabChange,
+        listenToEditorForInjectConfig: __listenToEditorForInjectConfig,
         addPropToConfigProps: __addPropToConfigProps,
         addPropToServerEnvButton: __addPropToServerEnvButton,
+        addInjectConfigButton: __addInjectConfigButton,
+        addInjectDefaultConfigButton: __addInjectDefaultConfigButton,
+        listenToEditorForFeatureInServerXML: __listenToEditorForFeatureInServerXML,
+        addMicroProfileConfigFeatureButton: __addMicroProfileConfigFeatureButton,
         refreshBrowserButton: __refreshBrowserButton,
         saveButton: __saveButton,
         saveTabbedEditorButton: __saveTabbedEditorButton,
-        listenToEditorTabChange: __listenToEditorTabChange,
-        listenToEditorForInjectConfig: __listenToEditorForInjectConfig,
-        addConfigInjectButton: __addConfigInjectButton,
-        listenToEditorForFeatureInServerXML: __listenToEditorForFeatureInServerXML,
-        addMicroProfileConfigFeatureButton: __addMicroProfileConfigFeatureButton,
-        listenToBrowserForDefaultConfig:  __listenToBrowserForDefaultConfig,
         populateURL:  __populateURL,
         enterButtonURL: __enterButtonURL
     };
