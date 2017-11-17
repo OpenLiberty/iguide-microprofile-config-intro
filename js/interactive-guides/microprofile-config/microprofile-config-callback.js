@@ -249,33 +249,6 @@ var microprofileConfigCallBack = (function() {
         return annotationIsThere;
     };
 
-    var __saveServerXML = function() {
-      var stepName = stepContent.getCurrentStepName();
-      var content = contentManager.getEditorContents(stepName);
-      if (__checkMicroProfileConfigFeatureContent(content)) {
-          var stepName = stepContent.getCurrentStepName();
-          contentManager.markCurrentInstructionComplete(stepName);
-      } else {
-          // display error to fix it
-          __createErrorLinkForCallBack(stepName, true);
-      }
-    };
-
-    var __listenToEditorForFeatureInServerXML = function(editor) {
-      var saveServerXML = function() {
-          __saveServerXML();
-      };
-      editor.addSaveListener(saveServerXML);
-    };
-
-    var __saveServerXMLButton = function(event) {
-      if (event.type === "click" ||
-         (event.type === "keypress" && (event.which === 13 || event.which === 32))) {
-          // Click or 'Enter' or 'Space' key event...
-          __saveServerXML();
-      }
-    };
-
     var __listenToEditorForInjectConfig = function(editor) {
         var __showWebBrowser = function() {
             var stepName = editor.getStepName();
@@ -294,14 +267,31 @@ var microprofileConfigCallBack = (function() {
         editor.addSaveListener(__showWebBrowser);
     };
 
+    var __listenToEditorForFeatureInServerXML = function(editor) {
+      var __saveServerXML = function() {
+        var stepName = stepContent.getCurrentStepName();
+        var content = contentManager.getEditorContents(stepName);
+        if (__checkMicroProfileConfigFeatureContent(content)) {
+            var stepName = stepContent.getCurrentStepName();
+            contentManager.markCurrentInstructionComplete(stepName);
+        } else {
+            // display error to fix it
+            editor.createErrorLinkForCallBack(stepName, true, __addMicroProfileConfigFeature);
+        }
+      };
+      editor.addSaveListener(__saveServerXML);
+    };
+
     var __getMicroProfileConfigFeatureContent = function(content) {
       var editorContents = {};
       try {
           // match
+          // <?xml version="1.0"?>
+          // ...
           // <feature>jaxrs-2.0</feature>
           //    <anything here>
           // </featureManager>
-          // and capturing groups to get content before <feature>jaxrs-2.0</feature>, the feature, and after
+          // and capture groups to get content before <feature>jaxrs-2.0</feature>, the feature, and after
           // closing featureManager content tag.
           var featureManagerToMatch = "([\\s\\S]*)<feature>jaxrs-2.0</feature>([\\s\\S]*)<\\/featureManager>([\\s\\S]*)";
           var regExpToMatch = new RegExp(featureManagerToMatch, "g");
@@ -318,72 +308,48 @@ var microprofileConfigCallBack = (function() {
 
 
     var __isConfigInFeatures = function(features) {
-       var match = false;
-       features = features.replace('\n', '');
-       features = features.replace(/\s/g, ''); // Remove whitespace
-       try {
-           var featureMatches = features.match(/<feature>[\s\S]*?<\/feature>/g);
-           $(featureMatches).each(function (index, feature) {
-               if (feature.indexOf("<feature>mpConfig-1.1</feature>") !== -1) {
-                   match = true;
-                   return false; // break out of each loop
-               }
+         features = features.replace('\n', '');
+         features = features.replace(/\s/g, ''); // Remove whitespace
+         try {
+            var featureMatches = features.match(/<feature>[\s\S]*?<\/feature>/g);
+            if ((featureMatches.length === 1) && (featureMatches[0] === "<feature>mpConfig-1.1</feature>")) {
+              //featureMatches should only contain the mpConfig-1.1 feature
+              return true;
+            }
+            return false;
+         }
+         catch (e) {
 
-           });
-       }
-       catch (e) {
+         }
+    };
 
-       }
-       return match;
-   };
+    var __checkMicroProfileConfigFeatureContent = function(content) {
+        var isConfigFeatureThere = true;
+        var editorContentBreakdown = __getMicroProfileConfigFeatureContent(content);
+        if (editorContentBreakdown.hasOwnProperty("features")) {
+          //verify that mpConfig-1.1 feature was added
+          isConfigFeatureThere =  __isConfigInFeatures(editorContentBreakdown.features);
+        }
+        return isConfigFeatureThere;
+    };
 
-  var __checkMicroProfileConfigFeatureContent = function(content) {
-      var isConfigFeatureThere = true;
-      var editorContentBreakdown = __getMicroProfileConfigFeatureContent(content);
-      if (editorContentBreakdown.hasOwnProperty("features")) {
-        isConfigFeatureThere =  __isConfigInFeatures(editorContentBreakdown.features);
-        if (isConfigFeatureThere) {
-              // check for whether other stuffs are there
-              var features = editorContentBreakdown.features;
-              features = features.replace('\n', '');
-              features = features.replace(/\s/g, '');
-              console.log("features: ", features);
-              if (features.length !== "<feature>mpConfig-1.1</feature>".length) {
-                  isConfigFeatureThere = false; // contains extra text
-              }
-          }
-      } else {
-          isConfigFeatureThere = false;
+    var __addMicroProfileConfigFeatureButton = function(event) {
+      if (event.type === "click" ||
+         (event.type === "keypress" && (event.which === 13 || event.which === 32))) {
+          // Click or 'Enter' or 'Space' key event...
+          __addMicroProfileConfigFeature();
       }
-      return isConfigFeatureThere;
-  };
+    };
 
-  var __addMicroProfileConfigFeatureButton = function(event) {
-    if (event.type === "click" ||
-       (event.type === "keypress" && (event.which === 13 || event.which === 32))) {
-        // Click or 'Enter' or 'Space' key event...
-        __addMicroProfileConfigFeature();
-    }
-  };
+    var __addMicroProfileConfigFeature = function() {
 
-  var __addMicroProfileConfigFeature = function() {
-
-      var ConfigFeature = "      <feature>mpConfig-1.1</feature>";
-      var stepName = stepContent.getCurrentStepName();
-      // reset content every time annotation is added through the button so as to clear out any
-      // manual editing
-      contentManager.resetEditorContents(stepName);
-      var content = contentManager.getEditorContents(stepName);
-
-      contentManager.insertEditorContents(stepName, 6, ConfigFeature);
-      var readOnlyLines = [];
-      // mark cdi feature line readonly
-      readOnlyLines.push({
-          from: 4,
-          to: 4
-      });
-      contentManager.markEditorReadOnlyLines(stepName, readOnlyLines);
-  };
+        var ConfigFeature = "      <feature>mpConfig-1.1</feature>";
+        var stepName = stepContent.getCurrentStepName();
+        // reset content every time feature is added through the button to clear manual editing
+        contentManager.resetEditorContents(stepName);
+        var content = contentManager.getEditorContents(stepName);
+        contentManager.replaceEditorContents(stepName, 6, 6, ConfigFeature, 1);
+    };
 
     var __addConfigInjectButton = function(event) {
         if (event.type === "click" ||
@@ -449,7 +415,6 @@ var microprofileConfigCallBack = (function() {
         listenToEditorForInjectConfig: __listenToEditorForInjectConfig,
         addConfigInjectButton: __addConfigInjectButton,
         listenToEditorForFeatureInServerXML: __listenToEditorForFeatureInServerXML,
-        saveServerXMLButton: __saveServerXMLButton,
         addMicroProfileConfigFeatureButton: __addMicroProfileConfigFeatureButton,
         listenToBrowserForDefaultConfig:  __listenToBrowserForDefaultConfig,
         populateURL:  __populateURL,

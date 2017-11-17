@@ -37,7 +37,7 @@
                 "Begin by enabling the MicroProfile Config 1.1 feature in your <code>server.xml</code> file."
             ],
             "instruction": [
-              "Add the following element declaration inside the featureManager element to the <code>server.xml</code> file, or click <action tabindex='0' role='button' title='Enable MicroProfile Config' aria-label='Enable MicroProfile Config' onkeypress=\"microprofileConfigCallBack.addMicroProfileConfigFeatureButton(event)\" onclick=\"microprofileConfigCallBack.addMicroProfileConfigFeatureButton(event)\"><b>&lt;feature&gtmpConfig-1.1&lt;/feature&gt;</b></action>. Then, click <action tabindex='0' role='button' title='Save' aria-label='Save' onkeypress=\"microprofileConfigCallBack.saveServerXMLButton(event)\" onclick=\"microprofileConfigCallBack.saveServerXMLButton(event)\"><b>Save</b></action> on the editor menu pane."            ],
+              "Add the following element declaration inside the featureManager element to the <code>server.xml</code> file, or click <action tabindex='0' role='button' title='Enable MicroProfile Config' aria-label='Enable MicroProfile Config' onkeypress=\"microprofileConfigCallBack.addMicroProfileConfigFeatureButton(event)\" onclick=\"microprofileConfigCallBack.addMicroProfileConfigFeatureButton(event)\"><b>&lt;feature&gtmpConfig-1.1&lt;/feature&gt;</b></action>. Then, click <action tabindex='0' role='button' title='Save' aria-label='Save' onkeypress=\"microprofileConfigCallBack.saveButton(event)\" onclick=\"microprofileConfigCallBack.saveButton(event)\"><b>Save</b></action> on the editor menu pane."            ],
             "content":[
               {
                 "displayType":"fileEditor",
@@ -48,6 +48,7 @@
                   "   <featureManager>",
                   "      <feature>cdi-1.2</feature>",
                   "      <feature>jaxrs-2.0</feature>",
+                  " ",
                   "   </featureManager>",
                   "   <httpEndpoint host=\"*\" id=\"defaultHttpEndpoint\" httpsPort=\"${default.https.port}\"",
                   "   httpPort=\"{default.http.port}\"/>",
@@ -59,8 +60,8 @@
                       "to": "5"
                   },
                   {
-                      "from": "6",
-                      "to": "9"
+                      "from": "7",
+                      "to": "10"
                   }
                 ],
                 "save": true,
