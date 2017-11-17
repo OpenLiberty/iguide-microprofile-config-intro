@@ -48,7 +48,8 @@
                 "Injecting a configuration value this way is recommended for mandatory properties. If no configured value exists for this property, a <code>DeploymentException</code> will be thrown during startup."
             ],
             "instruction": [
-                "To inject a <code>download_url</code> configuration property into the code, add the following <code>@Inject</code> and <code>@ConfigProperty</code> annotations to line 6 before declaring the <code>String download_url</code>, or click  <action title='Inject a ConfigProperty'><b>@Inject @ConfigProperty(name=\"download_url\")</b></action>. Then, click <action title='Save'><b>Save</b></action> on the editor menu pane.<br><br><note>Note: You have not yet specified a value for the <code>download_url</code> configuration property.  Execution of this code at this time would cause a <code>DeploymentException</code> to be thrown since a value is required.</note>"
+                "To inject a <code>download_url</code> configuration property into the code, add the following <code>@Inject</code> and <code>@ConfigProperty</code> annotations to line 11 before declaring the <code>private String downloadUrl</code>, or click  <action title='Inject a ConfigProperty' onclick='microprofileConfigCallBack.addInjectConfigButton(event)'><b>@Inject @ConfigProperty(name=\"download_url\")</b></action>. Then, click <action title='Run' onclick=\"microprofileConfigCallBack.saveButton(event)\"><b>Run</b></action> on the editor menu pane.<br><br><note>Note: You have not yet specified a value for the <code>download_url</code> configuration property.  Execution of this code at this time would cause a <code>DeploymentException</code> to be thrown since a value is required.</note>",
+                "Type the following URL into the browser that follows, or click <action title='URL' onclick=\"microprofileConfigCallBack.populateURL(event, 'ConfigureViaInject')\"><b>https://music.com/play</b></action> and then press <action title='Enter' onclick=\"microprofileConfigCallBack.enterButtonURL(event, 'ConfigureViaInject')\"><b>Enter</b></action>."
             ],    
             "content":[
                 {
@@ -57,28 +58,40 @@
                     "preload": [
                         "package com.music.download;",
                         "import javax.inject.Inject;",
+                        "import org.eclipse.microprofile.config.Config;",
                         "import org.eclipse.microprofile.config.inject.ConfigProperty;",
-                        "", 
-                        "public class Music-download {",
                         "",    
-                        "    private static String download_url;",
+                        "public class Music-download {",
+                        "",
+                        "    @Inject",
+                        "    private Config config;",
+                        "",
+                        "",
+                        "    private String downloadUrl;",
                         "",
                         "    public void download() {",
-                        "        downloadService(download_url);",
+                        "        downloadService(downloadUrl);",
                         "    }", 
-                        "}"               
+                        "}"                  
                     ],
                     "readonly": [
                        {
                             "from": "1",
-                            "to": "5"
+                            "to": "10"
                        },
                        {
-                            "from": "7",
-                            "to": "12"
+                            "from": "12",
+                            "to": "17"
                        }
                     ],
-                    "save": true
+                    "save": false,
+                    "callback": "(function test(editor) {microprofileConfigCallBack.listenToEditorForInjectConfig(editor); })"
+                },
+                {
+                    "displayType":"webBrowser",
+                    "url": "",
+                    "browserContent": "",
+                    "callback": "(function test(webBrowser) {microprofileConfigCallBack.listenToBrowserForInjectConfig(webBrowser); })"
                 }
             ]
         },               
@@ -87,10 +100,11 @@
             "title": "Providing default values with injection",
             "TOCIndent": 1,
             "description": [
-              "You can specify a default value for a configuration property using the <b>defaultValue</b> parameter in the <code>@ConfigProperty</code> annotation.  If the property is not assigned a value anywhere else, then it will be assigned this default value.<br><br><b>TODO:</b> Add an instruction to execute code relevant to our scenario to show that download_url has a value of the default value."
+                "You can specify a default value for a configuration property using the <b>defaultValue</b> parameter in the <code>@ConfigProperty</code> annotation.  If the property is not assigned a value anywhere else, then it will be assigned this default value.<br>"                
             ],
             "instruction": [
-                "Change the @ConfigProperty annotation on line 10 to the following code, or click <action title='Provide default value using ConfigProperty annotation' onclick=\"microprofileConfigCallBack.addConfigInjectButton(event)\"><b>@Inject @ConfigProperty(name=\"download_url\", defaultValue=\"ftp://music.com/us-east/download\")</b></action>. Then, click <action title='Save' onclick=\"microprofileConfigCallBack.saveButton(event)\"><b>Save</b></action> on the editor menu pane."
+                "Change the @ConfigProperty annotation on line 11 to the following code, or click <action title='Provide default value using ConfigProperty annotation' onclick=\"microprofileConfigCallBack.addInjectDefaultConfigButton(event)\"><b>@Inject @ConfigProperty(name=\"download_url\", defaultValue=\"ftp://music.com/us-east/download\")</b></action>. Then, click <action title='Run' onclick=\"microprofileConfigCallBack.saveButton(event)\"><b>Run</b></action> on the editor menu pane.",
+                "Click <action title='Refresh' onclick=\"microprofileConfigCallBack.refreshBrowserButton(event)\"><b>Refresh</b></action> in the following browser to see that the download_url via the injection is used.<br/>"
             ],
             "content":[
                 {
@@ -101,28 +115,38 @@
                         "import javax.inject.Inject;",
                         "import org.eclipse.microprofile.config.Config;",
                         "import org.eclipse.microprofile.config.inject.ConfigProperty;",
-                        "", 
+                        "",    
                         "public class Music-download {",
+                        "",
                         "    @Inject",
                         "    private Config config;",
                         "",
                         "    @Inject @ConfigProperty(name=\"download_url\")",
                         "    private String downloadUrl;",
-                        "}"                
+                        "",
+                        "    public void download() {",
+                        "        downloadService(downloadUrl);",
+                        "    }",
+                        "}"
                     ],
                     "readonly": [
                        {
                             "from": "1",
-                            "to": "9"
+                            "to": "10"
                        },
                        {
-                            "from": "11",
-                            "to": "12"
+                            "from": "12",
+                            "to": "17"
                        }
                     ],
-                    "save": true,
-                    "callback": "(function test(editor) {microprofileConfigCallBack.listenToEditorForInjectConfig(editor); })"
-                    
+                    "save": false,
+                    "callback": "(function test(editor) {microprofileConfigCallBack.listenToEditorForInjectDefaultConfig(editor); })"                   
+                },
+                {
+                    "displayType":"webBrowser",
+                    "url": "https://music.com/play",
+                    "browserContent": "/guides/iguide-microprofile-config/html/interactive-guides/microprofile-config/download-deployment-exception.html",
+                    "callback": "(function test(webBrowser) {microprofileConfigCallBack.listenToBrowserForInjectDefaultConfig(webBrowser); })"
                 }
             ]               
         },
@@ -134,15 +158,8 @@
                 "<ul><li>All META-INF/microprofile-config.properties found on the classpath. (default ordinal = 100).</li><li>Environment variables (default ordinal=300).</li><li>System properties (default ordinal=400).</li></ul>Setting values within any of these ConfigSources will override any default value for the configuration property set in the injection."
             ],
             "instruction": [
-                "Currently, only a default value has been specified for the download_url configuration property.  Type the following URL into the browser that follows, or click <action title='URL' onclick=\"microprofileConfigCallBack.populateURL(event, 'ConfigureDefaultConfigSources')\"><b>https://music.com/play</b></action> and then press <action title='Enter' onclick=\"microprofileConfigCallBack.enterButtonURL(event, 'ConfigureDefaultConfigSources')\"><b>Enter</b></action>."           
             ],
             "content":[
-              {
-                "displayType":"webBrowser",
-                "url": "",
-                "browserContent": "",
-                "callback": "(function test(webBrowser) {microprofileConfigCallBack.listenToBrowserForDefaultConfig(webBrowser); })"
-              }
             ]
         },
         {
