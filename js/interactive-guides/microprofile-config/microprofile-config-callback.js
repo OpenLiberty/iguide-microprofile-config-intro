@@ -202,7 +202,7 @@ var microprofileConfigCallBack = (function() {
             // match
             // private Config config;
             //   <space or newline here>
-            // @Inject @ConfigProperty(name=\"download_url\", defaultValue=\"ftp://music.com/us/download\")
+            // @Inject @ConfigProperty(name=\"download_url\", defaultValue=\"ftp://music.com/us-east/download\")
             // private String downloadUrl;
             var contentToMatch = "[\\s\\S]*private Config config;\\s*@Inject\\s*@ConfigProperty\\s*\\(([\\s\\S]*)\\)\\s*private String downloadUrl;";
             var regExpToMatch = new RegExp(contentToMatch, "g");
