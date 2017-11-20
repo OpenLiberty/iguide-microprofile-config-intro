@@ -24,7 +24,7 @@ var playground = (function() {
         }
     };
 
-    var repopulatePlaygroundConfigs = function(tabbedEditor) {
+    var repopulatePlaygroundConfigs = function() {
         properties = {};
 
         getInjectionProperties();
@@ -56,6 +56,7 @@ var playground = (function() {
         for (var i in lines) {
             console.log(lines[i]);
             //TODO: regex checking for `name` and `defaultValue` properties and putting them into `properties`
+            // playgroundAddConfig(injectKey, injectValue, 'inject', ordinal);
         }
     };
 
@@ -66,6 +67,8 @@ var playground = (function() {
             var lines = propertiesFileContent.split('\n');
         
             console.log(lines);
+
+            // playgroundAddConfig(propFileKey, propFileValue, 'propFile', ordinal);
         }
     };
 
@@ -76,6 +79,8 @@ var playground = (function() {
             var lines = envPropContent.split('\n');
 
             console.log(lines);
+
+            // playgroundAddConfig(propKey, propValue, 'sysProp');
         }
     };
 
@@ -86,36 +91,14 @@ var playground = (function() {
             var lines = sysPropContent.split('\n');
 
             console.log(lines);
+
+            // playgroundAddConfig(envKey, envValue, 'envVar');
         }
     };
 
-    var playgroundListenToEditorForInjectConfig = function(editor) {
+    var playgroundListenToEditorForChange = function(editor) {
         var __updatePlaygroundEnv = function() {
-            //TODO: get inject value from editor
-            var editor = contentManager.getTabbedEditorContents('DefaultPlayground', 'Injection');        
-            
-            playgroundAddConfig(injectKey, injectValue, 'inject', ordinal);
-        };
-    };
-
-    var playgroundListenToEditorForPropFile = function(editor) {
-        var __updatePlaygroundEnv = function() {
-            //TODO: get prop file value from editor
-            playgroundAddConfig(propFileKey, propFileValue, 'propFile', ordinal);
-        }
-    };
-
-    var playgroundListenToEditorForPropConfig = function(editor) {
-        var __updatePlaygroundEnv = function() {
-            //TODO: get system property from editor
-            playgroundAddConfig(propKey, propValue, 'sysProp');
-        };
-    };
-
-    var playgroundListenToEditorForServerEnv = function(editor) {
-        var __updatePlaygroundEnv = function() {
-            //TODO: get env var from editor
-            playgroundAddConfig(envKey, envValue, 'envVar');
+            repopulatePlaygroundConfigs();
         };
     };
 
@@ -139,7 +122,8 @@ var playground = (function() {
         getPropertiesFileProperties: getPropertiesFileProperties,
         getEnvironmentProperties: getEnvironmentProperties,
         getSystemProperties: getSystemProperties,
-        getProperties: getProperties
+        getProperties: getProperties,
+        playgroundListenToEditorForChange: playgroundListenToEditorForChange
     };
 
 })();
