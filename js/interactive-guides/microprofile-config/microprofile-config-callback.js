@@ -109,6 +109,23 @@ var microprofileConfigCallBack = (function() {
         contentManager.markTabbedEditorReadOnlyLines(stepName, serverEnvFileName, readOnlyLines);
     };
 
+    var systemPropsFileName = "bootstrap.properties";
+    var systemPropsDownloadUrlConfig = "download_url=ftp://music.com/asia/download";
+    var __addPropToSystemProperties = function() {
+        var stepName = stepContent.getCurrentStepName();
+        // reset content every time property is added through the button so as to clear out any manual editing
+        contentManager.resetTabbedEditorContents(stepName, systemPropsFileName);
+        contentManager.replaceTabbedEditorContents(stepName, systemPropsFileName, 2, 2, systemPropsDownloadUrlConfig);
+
+        var readOnlyLines = [];
+        readOnlyLines.push({
+            from: 1,
+            to: 1
+        });
+
+        contentManager.markTabbedEditorReadOnlyLines(stepName, systemPropsFileName, readOnlyLines);
+    };
+
     var __listenToBrowserForPropFileConfig = function(webBrowser) {
         var setBrowserContent = function(currentURL) {
             webBrowser.setBrowserContent("/guides/iguide-microprofile-config/html/interactive-guides/microprofile-config/download-from-properties-file.html");
@@ -165,6 +182,8 @@ var microprofileConfigCallBack = (function() {
                 editorFileName = "META-INF/microprofile-config.props";
             } else if (stepName === "ConfigureViaInject") {
                 editorFileName === "Music-download.java";
+            } else if (stepName === "ConfigureAsSysProp") {
+                editorFileName = "bootstrap.properties";
             }
             if (editorFileName) {
                 contentManager.saveTabbedEditor(stepName, editorFileName);
@@ -324,6 +343,7 @@ var microprofileConfigCallBack = (function() {
         listenToBrowserForServerEnvConfig: __listenToBrowserForServerEnvConfig,
         addPropToConfigProps: __addPropToConfigProps,
         addPropToServerEnvButton: __addPropToServerEnvButton,
+        addPropToSystemProperties: __addPropToSystemProperties,
         refreshBrowserButton: __refreshBrowserButton,
         saveButton: __saveButton,
         saveTabbedEditorButton: __saveTabbedEditorButton,
