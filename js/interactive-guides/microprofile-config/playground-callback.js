@@ -36,12 +36,14 @@ var playground = (function() {
     var getInjectionProperties = function() {
         var injectionContent = contentManager.getTabbedEditorContents('DefaultPlayground', 'Injection');
 
+        // Use regex global search to find and store all indices of matches.
         var regexp = /@ConfigProperty/g;
         var match, matches = [];
         while ((match = regexp.exec(injectionContent)) != null) {
             matches.push(match.index);
         }
         
+        // For each match, grab string until end of Java code line.
         var lines = [];
         for (var i in matches) {
             var content = injectionContent.substring(matches[i]);
@@ -50,6 +52,7 @@ var playground = (function() {
             lines.push(line);
         }
 
+        // For each line, grab config value and properties
         for (var i in lines) {
             console.log(lines[i]);
             //TODO: regex checking for `name` and `defaultValue` properties and putting them into `properties`
