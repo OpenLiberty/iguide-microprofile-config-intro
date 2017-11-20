@@ -261,11 +261,11 @@
             "title": "Configuring as a system property",
             "TOCIndent": 1,            
             "description": [
-                "System properties have a default ordinal of 400. They can be set in boostrap.properties or jvm.options."
+                "Default configuration variables can be read from the JVM System Properties and have a default ordinal of 400. They can be set in boostrap.properties or jvm.options. For this example, edit the properties in bootstrap.properties"
             ],
             "instruction": [
                 "Add the <code>download_url=ftp://music.com/asia/download</code> on line 2, after the WLP_SKIP_MAXPERMSIXE=true or click <action title='Configure download_url in System Properties' onclick=\"microprofileConfigCallBack.addPropToSystemProperties(event)\"><b>download_url=ftp://music.com/asia/download</b></action>. Then, click <action title='Run' onclick=\"microprofileConfigCallBack.saveTabbedEditorButton(event)\"><b>Run</b></action> on the editor menu pane.",
-                "Click <action title='Refresh' onclick=\"microprofileConfigCallBack.refreshBrowserButton(event)\"><b>Refresh</b></action> in the following browser to see the download_url in the server.env file is used.<br/>"
+                "Click <action title='Refresh' onclick=\"microprofileConfigCallBack.refreshBrowserButton(event)\"><b>Refresh</b></action> in the following browser to see the download_url in the bootstrap.properties file is used.<br/>"
             ],
             "content":[
                 {
@@ -331,15 +331,16 @@
                                 "to": "5"
                             }
                         ],
-                        "save": false
+                        "save": false,
+                        "callback": "(function test(editor) {microprofileConfigCallBack.listenToEditorForSystemProperties(editor); })"
                     }
                   ]
                 },
                 {
                   "displayType":"webBrowser",
                   "url": "https://music.com/play",
-                  "browserContent": "/guides/iguide-microprofile-config/html/interactive-guides/microprofile-config/download-from-properties-file.html",
-                  "callback": "(function test(webBrowser) {microprofileConfigCallBack.listenToBrowserForServerEnvConfig(webBrowser); })"
+                  "browserContent": "/guides/iguide-microprofile-config/html/interactive-guides/microprofile-config/download-from-property-in-server-env.html",
+                  "callback": "(function test(webBrowser) {microprofileConfigCallBack.listenToBrowserForSystemPropConfig(webBrowser); })"
                 }
             ]
         },

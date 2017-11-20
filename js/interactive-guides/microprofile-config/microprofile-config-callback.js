@@ -42,6 +42,19 @@ var microprofileConfigCallBack = (function() {
         return match;
     };
 
+    var __checkSystemPropsContent = function(content){
+        var match = false;
+        try {
+            if (content.match(/WLP_SKIP_MAXPERMSIZE=true\s*download_url=ftp:\/\/music.com\/asia\/download\s*/g)) {
+                match = true;
+            }
+        }
+        catch (e) {
+
+        }
+        return match;
+    };
+
     var __listenToEditorForPropConfig = function(editor) {
         var __showWebBrowser = function() {
             var stepName = editor.getStepName();
@@ -80,6 +93,28 @@ var microprofileConfigCallBack = (function() {
             } else {
                 // display error and provide link to fix it
                 editor.createErrorLinkForCallBack(true, __addPropToServerEnv);
+            }
+        };
+        editor.addSaveListener(__showWebBrowser);
+    };
+
+    var __listenToEditorForSystemProperties = function(editor) {
+        var __showWebBrowser = function() {
+            var stepName = editor.getStepName();
+            var content = contentManager.getTabbedEditorContents(stepName, systemPropsFileName);
+            if (__checkSystemPropsContent(content)) {
+                editor.closeEditorErrorBox(stepName);
+                contentManager.showBrowser(stepName, 0);
+                contentManager.addRightSlideClassToBrowser(stepName, 0);
+
+                var index = contentManager.getCurrentInstructionIndex();  
+                if(index === 0){
+                    contentManager.markCurrentInstructionComplete(stepName);
+                    contentManager.updateWithNewInstructionNoMarkComplete(stepName);
+                }                
+            } else {
+                // display error and provide link to fix it
+                editor.createErrorLinkForCallBack(true, __addPropToSystemProperties);
             }
         };
         editor.addSaveListener(__showWebBrowser);
@@ -139,6 +174,16 @@ var microprofileConfigCallBack = (function() {
     var __listenToBrowserForServerEnvConfig = function(webBrowser) {
         var setBrowserContent = function(currentURL) {
             webBrowser.setBrowserContent("/guides/iguide-microprofile-config/html/interactive-guides/microprofile-config/download-from-property-in-server-env.html");
+            contentManager.markCurrentInstructionComplete(webBrowser.getStepName());
+        }
+        // Cannot use contentManager.hideBrowser as the browser is still going thru initialization 
+        webBrowser.contentRootElement.addClass("hidden");
+        webBrowser.addUpdatedURLListener(setBrowserContent);
+    };
+
+    var __listenToBrowserForSystemPropConfig = function(webBrowser) {
+        var setBrowserContent = function(currentURL) {
+            webBrowser.setBrowserContent("/guides/iguide-microprofile-config/html/interactive-guides/microprofile-config/download-from-property-in-system-props.html");
             contentManager.markCurrentInstructionComplete(webBrowser.getStepName());
         }
         // Cannot use contentManager.hideBrowser as the browser is still going thru initialization 
@@ -339,8 +384,10 @@ var microprofileConfigCallBack = (function() {
     return {
         listenToEditorForPropConfig: __listenToEditorForPropConfig,
         listenToEditorForServerEnv: __listenToEditorForServerEnv,
+        listenToEditorForSystemProperties: __listenToEditorForSystemProperties,
         listenToBrowserForPropFileConfig: __listenToBrowserForPropFileConfig,
         listenToBrowserForServerEnvConfig: __listenToBrowserForServerEnvConfig,
+        listenToBrowserForSystemPropConfig: __listenToBrowserForSystemPropConfig,
         addPropToConfigProps: __addPropToConfigProps,
         addPropToServerEnvButton: __addPropToServerEnvButton,
         addPropToSystemProperties: __addPropToSystemProperties,
