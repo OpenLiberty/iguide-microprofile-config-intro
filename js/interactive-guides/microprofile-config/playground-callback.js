@@ -43,14 +43,14 @@ var playground = (function() {
         }
         
         var lines = [];
-        for (i in matches) {
+        for (var i in matches) {
             var content = injectionContent.substring(matches[i]);
             var endLine = content.indexOf(";");
             var line = content.substring(0, endLine);
             lines.push(line);
         }
 
-        for (i in lines) {
+        for (var i in lines) {
             console.log(lines[i]);
             //TODO: regex checking for `name` and `defaultValue` properties and putting them into `properties`
         }
