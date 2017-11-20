@@ -201,18 +201,54 @@
                 "Add the download_url property to the microprofile-config.properties file to override the injected value of the download_url. The properties file contains settings with a default ordinal of 100 which overrides the injected properties with the same name. If a property appears in more than one source, then the property value from the source with the highest ordinal takes precedence. The download_url property in the microprofile-config.properties will be used because the injected default value is only used when no other config sources are provided."
             ],
             "instruction": [
-                "Add the <code>download_url=ftp://music.com/us-south/download</code> on line 1 or click <action title='Configure download_url in microprofile-config.properties' onclick=\"microprofileConfigCallBack.addPropToConfigProps(event)\"><b>download_url=ftp://music.com/us-south/download</b></action>. Then, click <action title='Run' onclick=\"microprofileConfigCallBack.saveButton(event)\"><b>Run</b></action> on the editor menu pane.",
+                "Add the <code>download_url=ftp://music.com/us-south/download</code> on line 1 or click <action title='Configure download_url in microprofile-config.properties' onclick=\"microprofileConfigCallBack.addPropToConfigProps(event)\"><b>download_url=ftp://music.com/us-south/download</b></action>. Then, click <action title='Run' onclick=\"microprofileConfigCallBack.saveTabbedEditorButton(event)\"><b>Run</b></action> on the editor menu pane.",
                 "Click <action title='Refresh' onclick=\"microprofileConfigCallBack.refreshBrowserButton(event)\"><b>Refresh</b></action> in the following browser to see that the download_url in the microprofile-config.properties file is used.<br/>"
             ],
             "content":[
-              {
-                "displayType":"fileEditor",
-                "fileName": "META-INF/microprofile-config.properties",
-                "preload": [
-                ],
-                "save": false,
-                "callback": "(function test(editor) {microprofileConfigCallBack.listenToEditorForPropConfig(editor); })"
-              },
+                {
+                    "displayType": "tabbedEditor",
+                    "activeTab": "META-INF/microprofile-config.properties",
+                    "callback": "(function test(tabbedEditor) {microprofileConfigCallBack.listenToEditorTabChange(tabbedEditor, 0, 'META-INF/microprofile-config.properties'); })",
+                    "editorList": [
+                      {
+                        "displayType":"fileEditor",
+                        "fileName": "Music-download.java",
+                        "preload": [
+                              "package com.music.download;",
+                              "import javax.inject.Inject;",
+                              "import org.eclipse.microprofile.config.Config;",
+                              "import org.eclipse.microprofile.config.inject.ConfigProperty;",
+                              "",
+                              "public class Music-download {",
+                              "",
+                              "    @Inject",
+                              "    @Config config",
+                              "",
+                              "    @Inject",
+                              "    @ConfigProperty(name=\"download_url\", ",
+                              "                   defaultValue=\"ftp://music.com/us-east/download\")",
+                              "    private String downloadUrl;",
+                              "",
+                              "    public void download() {",
+                              "        downloadService(downloadUrl);",
+                              "    }",
+                              "}"
+                        ],
+                        "readonly": true,
+                        "save": false
+                      },
+                      {
+                        "displayType":"fileEditor",
+                        "fileName": "META-INF/microprofile-config.properties",
+                        "readonly": false,
+                        "save": false,
+                        "preload": [
+                            ""
+                        ],
+                        "callback": "(function test(editor) {microprofileConfigCallBack.listenToEditorForPropConfig(editor); })"
+                      }
+                    ]
+              }, 
               {
                 "displayType":"webBrowser",
                 "url": "https://music.com/play",
