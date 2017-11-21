@@ -271,7 +271,7 @@ var microprofileConfigCallBack = (function() {
                 }
             } else {
                 // display error and provide link to fix it
-                editor.createErrorLinkForCallBack(stepName, true, __addInjectDefaultConfigToEditor);
+                editor.createErrorLinkForCallBack(true, __addInjectDefaultConfigToEditor);
             }
         };
         editor.addSaveListener(__showWebBrowser);
@@ -286,7 +286,7 @@ var microprofileConfigCallBack = (function() {
             contentManager.markCurrentInstructionComplete(stepName);
         } else {
             // display error to fix it
-            editor.createErrorLinkForCallBack(stepName, true, __addMicroProfileConfigFeature);
+            editor.createErrorLinkForCallBack(true, __addMicroProfileConfigFeature);
         }
       };
       editor.addSaveListener(__saveServerXML);
@@ -442,7 +442,7 @@ var microprofileConfigCallBack = (function() {
                 }
             } else {
                 // display error and provide link to fix it
-                editor.createErrorLinkForCallBack(stepName, true, __addInjectConfigToEditor);
+                editor.createErrorLinkForCallBack(true, __addInjectConfigToEditor);
             }
         };
         editor.addSaveListener(__showWebBrowser);
