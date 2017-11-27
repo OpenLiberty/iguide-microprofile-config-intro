@@ -18,7 +18,7 @@ var microprofileConfigCallBack = (function() {
     var __checkConfigPropsFile = function(content) {
         var match = false;
         try {
-            if(content.match(/\s*download_url=ftp:\/\/music.com\/us-south\/download\s*/g)){
+            if(content.match(/\s*download_url=ftp:\/\/music.com\/us-south\/download\s*$/g)){
                 match = true;
             }
         }
@@ -31,7 +31,7 @@ var microprofileConfigCallBack = (function() {
     var __checkSystemPropsContent = function(content){
         var match = false;
         try {
-            if (content.match(/WLP_SKIP_MAXPERMSIZE=true\s*download_url=ftp:\/\/music.com\/asia\/download\s*/g)) {
+            if (content.match(/WLP_SKIP_MAXPERMSIZE=true\s*download_url=ftp:\/\/music.com\/asia\/download\s*$/g)) {
                 match = true;
             }
         }
@@ -74,7 +74,7 @@ var microprofileConfigCallBack = (function() {
     var __checkServerEnvContent = function(content) {
         var match = false;
         try {
-            if (content.match(/WLP_SKIP_MAXPERMSIZE=true\s*download_url=ftp:\/\/music.com\/us-west\/download\s*/g)) {
+            if (content.match(/WLP_SKIP_MAXPERMSIZE=true\s*download_url=ftp:\/\/music.com\/us-west\/download\s*$/g)) {
                 match = true;
             }
         }
