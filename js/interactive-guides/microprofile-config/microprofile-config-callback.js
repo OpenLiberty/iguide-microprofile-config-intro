@@ -29,36 +29,9 @@ var microprofileConfigCallBack = (function() {
     };
 
     /*
-     * Callback and functions to support Configuring steps.
-     */
-    var serverEnvDownloadUrlConfig = "download_url=ftp://music.com/us-west/download";
-    var serverEnvFileName = "server.env";
-    var __checkServerEnvContent = function(content) {
-        var match = false;
-        try {
-            if (content.match(/WLP_SKIP_MAXPERMSIZE=true\s*download_url=ftp:\/\/music.com\/us-west\/download\s*/g)) {
-                match = true;
-            }
-        }
-        catch (e) {
-
-        }
-        return match;
-    };
-
-    var __checkSystemPropsContent = function(content){
-        var match = false;
-        try {
-            if (content.match(/WLP_SKIP_MAXPERMSIZE=true\s*download_url=ftp:\/\/music.com\/asia\/download\s*/g)) {
-                match = true;
-            }
-        }
-        catch (e) {
-
-        }
-        return match;
-    };
-
+    *  Adds a save listener to the editor, and gives a callback to handle changing the browser and instructions if the content entered in the
+    *  META-INF/microprofile-config.properties editor was right.
+    */
     var __listenToEditorForPropConfig = function(editor) {
         var __showWebBrowser = function() {
             var stepName = editor.getStepName();
@@ -133,7 +106,7 @@ var microprofileConfigCallBack = (function() {
                 if(index === 0){
                     contentManager.markCurrentInstructionComplete(stepName);
                     contentManager.updateWithNewInstructionNoMarkComplete(stepName);
-                }                
+                }
             } else {
                 // display error and provide link to fix it
                 editor.createErrorLinkForCallBack(true, __addPropToSystemProperties);
@@ -349,7 +322,7 @@ var microprofileConfigCallBack = (function() {
                 }
             } else {
                 // display error and provide link to fix it
-                editor.createErrorLinkForCallBack(stepName, true, __addInjectDefaultConfigToEditor);
+                editor.createErrorLinkForCallBack(true, __addInjectDefaultConfigToEditor);
             }
         };
         editor.addSaveListener(__showWebBrowser);
@@ -364,7 +337,7 @@ var microprofileConfigCallBack = (function() {
             contentManager.markCurrentInstructionComplete(stepName);
         } else {
             // display error to fix it
-            editor.createErrorLinkForCallBack(stepName, true, __addMicroProfileConfigFeature);
+            editor.createErrorLinkForCallBack(true, __addMicroProfileConfigFeature);
         }
       };
       editor.addSaveListener(__saveServerXML);
@@ -520,7 +493,7 @@ var microprofileConfigCallBack = (function() {
                 }
             } else {
                 // display error and provide link to fix it
-                editor.createErrorLinkForCallBack(stepName, true, __addInjectConfigToEditor);
+                editor.createErrorLinkForCallBack(true, __addInjectConfigToEditor);
             }
         };
         editor.addSaveListener(__showWebBrowser);
