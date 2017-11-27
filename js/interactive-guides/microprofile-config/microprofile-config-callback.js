@@ -28,6 +28,19 @@ var microprofileConfigCallBack = (function() {
         return match;
     };
 
+    var __checkSystemPropsContent = function(content){
+        var match = false;
+        try {
+            if (content.match(/WLP_SKIP_MAXPERMSIZE=true\s*download_url=ftp:\/\/music.com\/asia\/download\s*/g)) {
+                match = true;
+            }
+        }
+        catch (e) {
+        
+        }
+        return match;
+     };
+
     /*
     *  Adds a save listener to the editor, and gives a callback to handle changing the browser and instructions if the content entered in the
     *  META-INF/microprofile-config.properties editor was right.
