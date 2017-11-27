@@ -54,9 +54,24 @@ var playground = (function() {
 
         // For each line, grab config value and properties
         for (var i in lines) {
-            console.log(lines[i]);
-            //TODO: regex checking for `name` and `defaultValue` properties and putting them into `properties`
-            // playgroundAddConfig(injectKey, injectValue, 'inject', ordinal);
+            var lineRegexp = /(?<=\().*(?=\))/g  //grab everything in between the parentheses
+            var propertyLine = lineRegexp.exec(lines[i]);
+
+            if (propertyLine) {
+                var inlineProperties = propertyLine[0];
+                var nameRegexp = /name="(.*?)"/g //match 'name' property, with the property value as substring match
+                var defaultValueRegexp = /defaultValue="(.*?)"/g //match 'defaultValue' property, with the property value as substring match
+                var name = nameRegexp.exec(inlineProperties);
+                var defaultValue = defaultValueRegexp.exec(inlineProperties);
+                if (name) {
+                    //index 1 is the regex substring match which contains the name property value
+                    playgroundAddConfig('name', name[1], 'inject'); 
+                }
+                if (defaultValue) {
+                    //index 1 is the regex substring match which contains the defaultValue property value
+                    playgroundAddConfig('defaultValue', defaultValue[1], 'inject');
+                }
+            }
         }
     };
 
