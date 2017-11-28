@@ -206,11 +206,11 @@ var microprofileConfigCallBack = (function() {
         var annotationParams = null;
         try {
             // match
-            // private Config config;
+            // public class Music-download {
             //   <space or newline here>
             // @Inject @ConfigProperty(name=\"download_url\", defaultValue=\"ftp://music.com/us-east/download\")
             // private String downloadUrl;
-            var contentToMatch = "[\\s\\S]*private Config config;\\s*@Inject\\s*@ConfigProperty\\s*\\(([\\s\\S]*)\\)\\s*private String downloadUrl;";
+            var contentToMatch = "[\\s\\S]*public class Music-download {\\s*@Inject\\s*@ConfigProperty\\s*\\(([\\s\\S]*)\\)\\s*private String downloadUrl;";
             var regExpToMatch = new RegExp(contentToMatch, "g");
             var groups = regExpToMatch.exec(content);
 
@@ -380,9 +380,9 @@ var microprofileConfigCallBack = (function() {
         contentManager.resetEditorContents(stepName);
         var content = contentManager.getEditorContents(stepName);
 
-        contentManager.replaceEditorContents(stepName, 11, 12, injectConfig, 2);
+        contentManager.replaceEditorContents(stepName, 6, 6, injectConfig, 1);
         var readOnlyLines = [];
-        readOnlyLines.push({from: 1, to: 10}, {from: 13, to: 18});
+        readOnlyLines.push({from: 1, to: 5}, {from: 7, to: 12});
         contentManager.markEditorReadOnlyLines(stepName, readOnlyLines);
     };
 
@@ -486,9 +486,9 @@ var microprofileConfigCallBack = (function() {
         contentManager.resetEditorContents(stepName);
         var content = contentManager.getEditorContents(stepName);
 
-        contentManager.replaceEditorContents(stepName, 11, 11, injectConfig, 1);
+        contentManager.replaceEditorContents(stepName, 6, 6, injectConfig, 1);
         var readOnlyLines = [];
-        readOnlyLines.push({from: 1, to: 10}, {from: 12, to: 17});
+        readOnlyLines.push({from: 1, to: 5}, {from: 7, to: 12});
         contentManager.markEditorReadOnlyLines(stepName, readOnlyLines);
     };
 
