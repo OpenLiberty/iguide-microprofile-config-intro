@@ -193,15 +193,15 @@
         },
         {
             "name": "ConfigurePropsFile",
-            "title": "Configuring with a properties file",
+            "title": "Configuring with the properties file",
             "TOCIndent": 1,
             "description": [
-                "In Websphere Liberty, you can provide a properties file as part of your packaged application. This properties file lets you specify configuration for overriding injected values.",
+                "You can provide the <code>microprofile-config.properties</code> file as part of your packaged application. <code>Microprofile-config.properties</code> may be created in multiple locations, but they must be under the <code>/META-INF/</code> directory and you must specify these file locations in your classpath.",
                 "",
-                "Add the download_url property to the microprofile-config.properties file to override the injected value of the download_url. The properties file contains settings with a default ordinal of 100 which overrides the injected properties with the same name. If a property appears in more than one source, then the property value from the source with the highest ordinal takes precedence. The download_url property in the microprofile-config.properties will be used because the injected default value is only used when no other config sources are provided."
+                "The properties file contains settings with a default ordinal of 100 which overrides the injected default values with the same key. The download_url property in the <code>microprofile-config.properties</code> will be used because the injected default value is only used when no other config sources are provided."
             ],
             "instruction": [
-                "Add the <code>download_url=ftp://music.com/us-south/download</code> on line 1 or click <action title='Configure download_url in microprofile-config.properties' onclick=\"microprofileConfigCallBack.addPropToConfigProps(event)\"><b>download_url=ftp://music.com/us-south/download</b></action>. Then, click <action title='Run' onclick=\"microprofileConfigCallBack.saveTabbedEditorButton(event)\"><b>Run</b></action> on the editor menu pane.",
+                "Add the <code>download_url=ftp://music.com/us-south/download</code> on line 1 of <code>/META-INF/microprofile-config.properties</code> or click <action title='Configure download_url in microprofile-config.properties' onclick=\"microprofileConfigCallBack.addPropToConfigProps(event)\"><b>download_url=ftp://music.com/us-south/download</b></action>. Then, click <action title='Run' onclick=\"microprofileConfigCallBack.saveTabbedEditorButton(event)\"><b>Run</b></action> on the editor menu pane.",
                 "Click <action title='Refresh' onclick=\"microprofileConfigCallBack.refreshBrowserButton(event)\"><b>Refresh</b></action> in the following browser to see that the download_url in the microprofile-config.properties file is used.<br/>"
             ],
             "content":[
@@ -343,7 +343,91 @@
             "title": "Configuring as a system property",
             "TOCIndent": 1,
             "description": [
-                "temp"
+                "In WebSphere Liberty, default configuration variables can be retrieved from the Java system properties and these variables have a default ordinal of 400. Liberty adds properties from the server’s <code>bootstrap.properties</code> and <code>jvm.options</code> files to the Java system properties. The system properties can be set in both the <code>boostrap.properties</code> and in <code>jvm.options</code>. The bootstrap.properties file does not exist by default until you create it. You can create and configure the jvm.options file in multiple locations within your Liberty installation directory.",
+                "",
+                "The different locations where Liberty checks for jvm.options are the following: <ul><li><code>${wlp.install.dir}/usr/shared/jvm.options</code></li><li><code>${server.config.dir}/configDropins/defaults/jvm.options</code></li> <li><code>${server.config.dir}/jvm.options</code></li> <li><code>${server.config.dir}/configDropins/overrides/jvm.options</code></li></ul>  These contents of the files are merged in order from top to bottom before server start and are used as the JVM options for the server. If none of these files are present, then <code>${wlp.install.dir}/etc/jvm.options</code> is read.",
+                "",
+                "In this example, we are going to use the <code>${server.config.dir}/bootstrap.properties</code> file to configure the download_url system property."
+            ],
+            "instruction": [
+                "Add the following <code>download_url=ftp://music.com/asia/download</code> on line 2 of <code>bootstrap.properties</code>, after the WLP_SKIP_MAXPERMSIZE=true or click <action title='Configure download_url in System Properties' onclick=\"microprofileConfigCallBack.addPropToSystemProperties(event)\"><b>download_url=ftp://music.com/asia/download</b></action>. Then, click <action title='Run' onclick=\"microprofileConfigCallBack.saveTabbedEditorButton(event)\"><b>Run</b></action> on the editor menu pane.",
+                "Click <action title='Refresh' onclick=\"microprofileConfigCallBack.refreshBrowserButton(event)\"><b>Refresh</b></action> in the following browser to see the download_url in the bootstrap.properties file is used.<br/>"
+            ],
+            "content":[
+                {
+                  "displayType": "tabbedEditor",
+                  "activeTab": "bootstrap.properties",
+                  "callback": "(function test(tabbedEditor) {microprofileConfigCallBack.listenToEditorTabChange(tabbedEditor, 0, 'bootstrap.properties'); })",
+                  "editorList": [
+                    {
+                      "displayType":"fileEditor",
+                      "fileName": "Music-download.java",
+                      "preload": [
+                            "package com.music.download;",
+                            "import javax.inject.Inject;",
+                            "import org.eclipse.microprofile.config.Config;",
+                            "import org.eclipse.microprofile.config.inject.ConfigProperty;",
+                            "",
+                            "public class Music-download {",
+                            "",
+                            "    @Inject",
+                            "    @Config config",
+                            "",
+                            "    @Inject",
+                            "    @ConfigProperty(name=\"download_url\", ",
+                            "                   defaultValue=\"ftp://music.com/us-east/download\")",
+                            "    private String downloadUrl;",
+                            "",
+                            "    public void download() {",
+                            "        downloadService(downloadUrl);",
+                            "    }",
+                            "}"
+                      ],
+                      "readonly": true,
+                      "save": false
+                    },
+                    {
+                      "displayType":"fileEditor",
+                      "fileName": "META-INF/microprofile-config.properties",
+                      "preload": [
+                          "download_url=ftp://music.com/us-south/download"
+                      ],
+                      "readonly": true,
+                      "save": false
+                    },
+                    {
+                      "displayType":"fileEditor",
+                      "fileName": "server.env",
+                      "preload": [
+                        "WLP_SKIP_MAXPERMSIZE=true",
+                        "download_url=ftp://music.com/us-west/download"
+                      ],
+                      "readonly": true,
+                      "save": false
+                    },
+                    {
+                        "displayType":"fileEditor",
+                        "fileName": "bootstrap.properties",
+                        "preload": [
+                              "WLP_SKIP_MAXPERMSIZE=true"
+                        ],
+                        "readonly": [
+                            {
+                                "from": "1",
+                                "to": "5"
+                            }
+                        ],
+                        "save": false,
+                        "callback": "(function test(editor) {microprofileConfigCallBack.listenToEditorForSystemProperties(editor); })"
+                    }
+                  ]
+                },
+                {
+                  "displayType":"webBrowser",
+                  "url": "https://music.com/play",
+                  "browserContent": "/guides/iguide-microprofile-config/html/interactive-guides/microprofile-config/download-from-property-in-server-env.html",
+                  "callback": "(function test(webBrowser) {microprofileConfigCallBack.listenToBrowserForSystemPropConfig(webBrowser); })"
+                }
             ]
         },
         {
@@ -390,7 +474,7 @@
                                     "to": "5"
                                 }
                             ],
-                            "callback": "(function test(editor) {playground.repopulatePlaygroundConfigs();})"
+                            "callback": "(function test(editor) {playground.getInjectionProperties();})"
                         },
                         {
                             "displayType": "fileEditor",
@@ -398,7 +482,7 @@
                             "preload": [
                                 "download_url=ftp://music.com/us-south/download"
                             ],
-                            "callback": "(function test(editor) {playground.repopulatePlaygroundConfigs();})"
+                            "callback": "(function test(editor) {playground.getPropertiesFileProperties();})"
                         },
                         {
                             "displayType": "fileEditor",
@@ -406,7 +490,7 @@
                             "preload": [
 
                             ],
-                            "callback": "(function test(editor) {playground.repopulatePlaygroundConfigs();})"
+                            "callback": "(function test(editor) {playground.getEnvironmentProperties();})"
                         },
                         {
                             "displayType": "fileEditor",
@@ -415,7 +499,7 @@
                                 "WLP_SKIP_MAXPERMSIZE=true",
                                 "download_url=ftp://music.com/asia/download"
                             ],
-                            "callback": "(function test(editor) {playground.repopulatePlaygroundConfigs();})"
+                            "callback": "(function test(editor) {playground.getSystemProperties();})"
                         }
                     ]
                 }
