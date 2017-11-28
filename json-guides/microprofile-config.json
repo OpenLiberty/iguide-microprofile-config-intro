@@ -476,7 +476,7 @@
                                     "to": "5"
                                 }
                             ],
-                            "callback": "(function test(editor) {playground.getInjectionProperties();})"
+                            "callback": "(function test(editor) {playground.repopulatePlaygroundConfigs();})"
                         },
                         {
                             "displayType": "fileEditor",
@@ -484,7 +484,7 @@
                             "preload": [
                                 "download_url=ftp://music.com/us-south/download"
                             ],
-                            "callback": "(function test(editor) {playground.getPropertiesFileProperties();})"
+                            "callback": "(function test(editor) {playground.repopulatePlaygroundConfigs();})"
                         },
                         {
                             "displayType": "fileEditor",
@@ -492,7 +492,7 @@
                             "preload": [
 
                             ],
-                            "callback": "(function test(editor) {playground.getEnvironmentProperties();})"
+                            "callback": "(function test(editor) {playground.repopulatePlaygroundConfigs();})"
                         },
                         {
                             "displayType": "fileEditor",
@@ -501,7 +501,7 @@
                                 "WLP_SKIP_MAXPERMSIZE=true",
                                 "download_url=ftp://music.com/asia/download"
                             ],
-                            "callback": "(function test(editor) {playground.getSystemProperties();})"
+                            "callback": "(function test(editor) {playground.repopulatePlaygroundConfigs();})"
                         }
                     ]
                 }
