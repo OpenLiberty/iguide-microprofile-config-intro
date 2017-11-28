@@ -18,7 +18,7 @@ var microprofileConfigCallBack = (function() {
     var __checkConfigPropsFile = function(content) {
         var match = false;
         try {
-            if(content.match(/\s*download_url=ftp:\/\/music.com\/us-south\/download\s*/g)){
+            if(content.match(/\s*download_url=ftp:\/\/music.com\/us-south\/download\s*$/g)){
                 match = true;
             }
         }
@@ -27,6 +27,19 @@ var microprofileConfigCallBack = (function() {
         }
         return match;
     };
+
+    var __checkSystemPropsContent = function(content){
+        var match = false;
+        try {
+            if (content.match(/WLP_SKIP_MAXPERMSIZE=true\s*download_url=ftp:\/\/music.com\/asia\/download\s*$/g)) {
+                match = true;
+            }
+        }
+        catch (e) {
+        
+        }
+        return match;
+     };
 
     /*
     *  Adds a save listener to the editor, and gives a callback to handle changing the browser and instructions if the content entered in the
@@ -61,7 +74,7 @@ var microprofileConfigCallBack = (function() {
     var __checkServerEnvContent = function(content) {
         var match = false;
         try {
-            if (content.match(/WLP_SKIP_MAXPERMSIZE=true\s*download_url=ftp:\/\/music.com\/us-west\/download\s*/g)) {
+            if (content.match(/WLP_SKIP_MAXPERMSIZE=true\s*download_url=ftp:\/\/music.com\/us-west\/download\s*$/g)) {
                 match = true;
             }
         }
@@ -93,6 +106,28 @@ var microprofileConfigCallBack = (function() {
         editor.addSaveListener(__showWebBrowser);
     };
 
+    var __listenToEditorForSystemProperties = function(editor) {
+        var __showWebBrowser = function() {
+            var stepName = editor.getStepName();
+            var content = contentManager.getTabbedEditorContents(stepName, systemPropsFileName);
+            if (__checkSystemPropsContent(content)) {
+                editor.closeEditorErrorBox(stepName);
+                contentManager.showBrowser(stepName, 0);
+                contentManager.addRightSlideClassToBrowser(stepName, 0);
+
+                var index = contentManager.getCurrentInstructionIndex();  
+                if(index === 0){
+                    contentManager.markCurrentInstructionComplete(stepName);
+                    contentManager.updateWithNewInstructionNoMarkComplete(stepName);
+                }
+            } else {
+                // display error and provide link to fix it
+                editor.createErrorLinkForCallBack(true, __addPropToSystemProperties);
+            }
+        };
+        editor.addSaveListener(__showWebBrowser);
+    };
+
     var __addPropToConfigProps = function() {
         var stepName = stepContent.getCurrentStepName();
         // reset content every time property is added through the button so as to clear out any manual editing
@@ -115,6 +150,23 @@ var microprofileConfigCallBack = (function() {
         contentManager.markTabbedEditorReadOnlyLines(stepName, serverEnvFileName, readOnlyLines);
     };
 
+    var systemPropsFileName = "bootstrap.properties";
+    var systemPropsDownloadUrlConfig = "download_url=ftp://music.com/asia/download";
+    var __addPropToSystemProperties = function() {
+        var stepName = stepContent.getCurrentStepName();
+        // reset content every time property is added through the button so as to clear out any manual editing
+        contentManager.resetTabbedEditorContents(stepName, systemPropsFileName);
+        contentManager.replaceTabbedEditorContents(stepName, systemPropsFileName, 2, 2, systemPropsDownloadUrlConfig);
+
+        var readOnlyLines = [];
+        readOnlyLines.push({
+            from: 1,
+            to: 1
+        });
+
+        contentManager.markTabbedEditorReadOnlyLines(stepName, systemPropsFileName, readOnlyLines);
+    };
+
     var __listenToBrowserForPropFileConfig = function(webBrowser) {
         var setBrowserContent = function(currentURL) {
             webBrowser.setBrowserContent("/guides/iguide-microprofile-config/html/interactive-guides/microprofile-config/download-from-properties-file.html");
@@ -131,6 +183,16 @@ var microprofileConfigCallBack = (function() {
             contentManager.markCurrentInstructionComplete(webBrowser.getStepName());
         }
         // Cannot use contentManager.hideBrowser as the browser is still going thru initialization
+        webBrowser.contentRootElement.addClass("hidden");
+        webBrowser.addUpdatedURLListener(setBrowserContent);
+    };
+
+    var __listenToBrowserForSystemPropConfig = function(webBrowser) {
+        var setBrowserContent = function(currentURL) {
+            webBrowser.setBrowserContent("/guides/iguide-microprofile-config/html/interactive-guides/microprofile-config/download-from-property-in-system-props.html");
+            contentManager.markCurrentInstructionComplete(webBrowser.getStepName());
+        }
+        // Cannot use contentManager.hideBrowser as the browser is still going thru initialization 
         webBrowser.contentRootElement.addClass("hidden");
         webBrowser.addUpdatedURLListener(setBrowserContent);
     };
@@ -170,7 +232,9 @@ var microprofileConfigCallBack = (function() {
             } else if (stepName === "ConfigurePropsFile") {
                 editorFileName = "META-INF/microprofile-config.properties";
             } else if (stepName === "ConfigureViaInject") {
-                editorFileName = "Music-download.java";
+                editorFileName === "Music-download.java";
+            } else if (stepName === "ConfigureAsSysProp") {
+                editorFileName = "bootstrap.properties";
             }
             if (editorFileName) {
                 contentManager.saveTabbedEditor(stepName, editorFileName);
@@ -495,16 +559,19 @@ var microprofileConfigCallBack = (function() {
     return {
         listenToEditorForPropConfig: __listenToEditorForPropConfig,
         listenToEditorForServerEnv: __listenToEditorForServerEnv,
+        listenToEditorForSystemProperties: __listenToEditorForSystemProperties,    
         listenToEditorForInjectDefaultConfig: __listenToEditorForInjectDefaultConfig,
         listenToEditorForInjectConfig: __listenToEditorForInjectConfig,
         listenToBrowserForPropFileConfig: __listenToBrowserForPropFileConfig,
         listenToBrowserForServerEnvConfig: __listenToBrowserForServerEnvConfig,
+        listenToBrowserForSystemPropConfig: __listenToBrowserForSystemPropConfig,
         listenToBrowserForInjectDefaultConfig:  __listenToBrowserForInjectDefaultConfig,
         listenToBrowserForInjectConfig: __listenToBrowserForInjectConfig,
         listenToEditorTabChange: __listenToEditorTabChange,
         listenToEditorForInjectConfig: __listenToEditorForInjectConfig,
         addPropToConfigProps: __addPropToConfigProps,
         addPropToServerEnvButton: __addPropToServerEnvButton,
+        addPropToSystemProperties: __addPropToSystemProperties,
         addInjectConfigButton: __addInjectConfigButton,
         addInjectDefaultConfigButton: __addInjectDefaultConfigButton,
         listenToEditorForFeatureInServerXML: __listenToEditorForFeatureInServerXML,

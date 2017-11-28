@@ -321,7 +321,93 @@
             "title": "Configuring as a system property",
             "TOCIndent": 1,
             "description": [
-                "temp"
+                "Default configuration variables can be retrieved from the Java system properties and these variables have a default ordinal of 400. Liberty adds properties from the server’s <code>bootstrap.properties</code> and <code>jvm.options</code> files to the Java system properties. The bootstrap.properties file does not exist by default until you create it. You can create and configure the jvm.options file in multiple locations within your Liberty installation directory.",
+                "",
+                "The different locations where Liberty checks for jvm.options are the following: <ul><li><code>${wlp.install.dir}/usr/shared/jvm.options</code></li><li><code>${server.config.dir}/configDropins/defaults/jvm.options</code></li> <li><code>${server.config.dir}/jvm.options</code></li> <li><code>${server.config.dir}/configDropins/overrides/jvm.options</code></li></ul>",
+                "The contents of the files are merged in order from top to bottom before server start and are used as the JVM options for the server. If none of these files are present, then <code>${wlp.install.dir}/etc/jvm.options</code> is read.",
+                "",
+                "<note>Note: If a property exists in both <code>bootstrap.properties</code> and <code>jvm.options</code>, then the value from <code>jvm.options</code> takes precedence.</note>",
+                "In this example, we are going to use the <code>${server.config.dir}/bootstrap.properties</code> file to configure the download_url system property."
+            ],
+            "instruction": [
+                "Add the following <code>download_url=ftp://music.com/asia/download</code> on line 2 of <code>bootstrap.properties</code>, after the WLP_SKIP_MAXPERMSIZE=true or click <action title='Configure download_url in System Properties' onclick=\"microprofileConfigCallBack.addPropToSystemProperties(event)\"><b>download_url=ftp://music.com/asia/download</b></action>. Then, click <action title='Run' onclick=\"microprofileConfigCallBack.saveTabbedEditorButton(event)\"><b>Run</b></action> on the editor menu pane.",
+                "Click <action title='Refresh' onclick=\"microprofileConfigCallBack.refreshBrowserButton(event)\"><b>Refresh</b></action> in the following browser to see the download_url in the bootstrap.properties file is used.<br/>"
+            ],
+            "content":[
+                {
+                  "displayType": "tabbedEditor",
+                  "activeTab": "bootstrap.properties",
+                  "callback": "(function test(tabbedEditor) {microprofileConfigCallBack.listenToEditorTabChange(tabbedEditor, 0, 'bootstrap.properties'); })",
+                  "editorList": [
+                    {
+                      "displayType":"fileEditor",
+                      "fileName": "Music-download.java",
+                      "preload": [
+                            "package com.music.download;",
+                            "import javax.inject.Inject;",
+                            "import org.eclipse.microprofile.config.Config;",
+                            "import org.eclipse.microprofile.config.inject.ConfigProperty;",
+                            "",
+                            "public class Music-download {",
+                            "",
+                            "    @Inject",
+                            "    @Config config",
+                            "",
+                            "    @Inject",
+                            "    @ConfigProperty(name=\"download_url\", ",
+                            "                   defaultValue=\"ftp://music.com/us-east/download\")",
+                            "    private String downloadUrl;",
+                            "",
+                            "    public void download() {",
+                            "        downloadService(downloadUrl);",
+                            "    }",
+                            "}"
+                      ],
+                      "readonly": true,
+                      "save": false
+                    },
+                    {
+                      "displayType":"fileEditor",
+                      "fileName": "META-INF/microprofile-config.properties",
+                      "preload": [
+                          "download_url=ftp://music.com/us-south/download"
+                      ],
+                      "readonly": true,
+                      "save": false
+                    },
+                    {
+                      "displayType":"fileEditor",
+                      "fileName": "server.env",
+                      "preload": [
+                        "WLP_SKIP_MAXPERMSIZE=true",
+                        "download_url=ftp://music.com/us-west/download"
+                      ],
+                      "readonly": true,
+                      "save": false
+                    },
+                    {
+                        "displayType":"fileEditor",
+                        "fileName": "bootstrap.properties",
+                        "preload": [
+                              "WLP_SKIP_MAXPERMSIZE=true"
+                        ],
+                        "readonly": [
+                            {
+                                "from": "1",
+                                "to": "5"
+                            }
+                        ],
+                        "save": false,
+                        "callback": "(function test(editor) {microprofileConfigCallBack.listenToEditorForSystemProperties(editor); })"
+                    }
+                  ]
+                },
+                {
+                  "displayType":"webBrowser",
+                  "url": "https://music.com/play",
+                  "browserContent": "/guides/iguide-microprofile-config/html/interactive-guides/microprofile-config/download-from-property-in-server-env.html",
+                  "callback": "(function test(webBrowser) {microprofileConfigCallBack.listenToBrowserForSystemPropConfig(webBrowser); })"
+                }
             ]
         },
         {
