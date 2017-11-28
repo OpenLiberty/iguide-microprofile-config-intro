@@ -535,7 +535,7 @@
                                     "to": "5"
                                 }
                             ],
-                            "callback": "(function test(editor) {playground.repopulatePlaygroundConfigs();})"
+                            "callback": "(function test(editor) {microprofileConfigCallBack.listenToPlaygroundEditor(editor);})"
                         },
                         {
                             "displayType": "fileEditor",
@@ -543,7 +543,7 @@
                             "preload": [
                                 "download_url=ftp://music.com/us-south/download"
                             ],
-                            "callback": "(function test(editor) {playground.repopulatePlaygroundConfigs();})"
+                            "callback": "(function test(editor) {microprofileConfigCallBack.listenToPlaygroundEditor(editor);})"
                         },
                         {
                             "displayType": "fileEditor",
@@ -551,7 +551,7 @@
                             "preload": [
 
                             ],
-                            "callback": "(function test(editor) {playground.repopulatePlaygroundConfigs();})"
+                            "callback": "(function test(editor) {microprofileConfigCallBack.listenToPlaygroundEditor(editor);})"
                         },
                         {
                             "displayType": "fileEditor",
@@ -560,13 +560,14 @@
                                 "WLP_SKIP_MAXPERMSIZE=true",
                                 "download_url=ftp://music.com/asia/download"
                             ],
-                            "callback": "(function test(editor) {playground.repopulatePlaygroundConfigs();})"
+                            "callback": "(function test(editor) {microprofileConfigCallBack.listenToPlaygroundEditor(editor);})"
                         }
                     ]
                 },
                 {
                     "displayType": "pod",
-                    "content": "/guides/iguide-microprofile-config/html/interactive-guides/microprofile-config/playground.html"
+                    "content": "/guides/iguide-microprofile-config/html/interactive-guides/microprofile-config/playground.html",
+                    "callback": "(function(pod) {microprofileConfigCallBack.createPlayground(pod, 'playground')})"
                 }
             ]
         },
