@@ -563,6 +563,10 @@
                             "callback": "(function test(editor) {playground.repopulatePlaygroundConfigs();})"
                         }
                     ]
+                },
+                {
+                    "displayType": "pod",
+                    "content": "/guides/iguide-microprofile-config/html/interactive-guides/microprofile-config/playground.html"
                 }
             ]
         },

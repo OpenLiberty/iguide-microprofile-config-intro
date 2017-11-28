@@ -117,6 +117,10 @@ var playground = (function() {
         };
     };
 
+    var showProperties = function() {
+
+    };
+
     var __getDefaultOrdinal = function(source) {
         switch(source) {
         case 'inject': return '0';
