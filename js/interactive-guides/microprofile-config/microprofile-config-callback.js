@@ -36,9 +36,23 @@ var microprofileConfigCallBack = (function() {
             }
         }
         catch (e) {
-        
+
         }
         return match;
+     };
+
+     var __checkConfigOrdinalProp = function(content) {
+         var match = false;
+         try {
+
+             if(content.match(/\s*download_url=ftp:\/\/music.com\/us-south\/download\s*config_ordinal=500\s*$/g)){
+                 match = true;
+             }
+         }
+         catch (e) {
+
+         }
+         return match;
      };
 
     /*
@@ -82,7 +96,7 @@ var microprofileConfigCallBack = (function() {
 
         }
         return match;
-    };    
+    };
 
     var __listenToEditorForServerEnv = function(editor) {
         var __showWebBrowser = function() {
@@ -115,7 +129,7 @@ var microprofileConfigCallBack = (function() {
                 contentManager.showBrowser(stepName, 0);
                 contentManager.addRightSlideClassToBrowser(stepName, 0);
 
-                var index = contentManager.getCurrentInstructionIndex();  
+                var index = contentManager.getCurrentInstructionIndex();
                 if(index === 0){
                     contentManager.markCurrentInstructionComplete(stepName);
                     contentManager.updateWithNewInstructionNoMarkComplete(stepName);
@@ -128,11 +142,44 @@ var microprofileConfigCallBack = (function() {
         editor.addSaveListener(__showWebBrowser);
     };
 
+    /*
+    *  Adds a save listener to the editor for 'Changing ordinal of ConfigSource' step
+    */
+    var __listenToEditorForOrdinalChange = function(editor) {
+        var __showWebBrowser = function() {
+            var stepName = editor.getStepName();
+            var content = contentManager.getTabbedEditorContents(stepName, propsFileName);
+            if (__checkConfigOrdinalProp(content)) {
+                editor.closeEditorErrorBox(stepName);
+                contentManager.showBrowser(stepName, 0);
+                contentManager.addRightSlideClassToBrowser(stepName, 0);
+                var index = contentManager.getCurrentInstructionIndex();
+                if(index === 0){
+                    contentManager.markCurrentInstructionComplete(stepName);
+                    contentManager.updateWithNewInstructionNoMarkComplete(stepName);
+                }
+            } else {
+                // display error and provide link to fix it
+		editor.createErrorLinkForCallBack(true, __addConfigOrdinalToProps);
+            }
+        };
+        editor.addSaveListener(__showWebBrowser);
+    };
+
+
     var __addPropToConfigProps = function() {
         var stepName = stepContent.getCurrentStepName();
         // reset content every time property is added through the button so as to clear out any manual editing
         contentManager.resetTabbedEditorContents(stepName, propsFileName);
         contentManager.replaceTabbedEditorContents(stepName, propsFileName, 1, 1, propsFileConfig);
+    };
+
+    var __addConfigOrdinalToProps = function() {
+        var stepName = stepContent.getCurrentStepName();
+        var configOrdinal = "config_ordinal=500";
+        // reset content every time property is added through the button so as to clear out any manual editing
+        contentManager.resetTabbedEditorContents(stepName, propsFileName );
+        contentManager.replaceTabbedEditorContents(stepName, propsFileName, 2, 2, configOrdinal);
     };
 
     var __addPropToServerEnv = function() {
@@ -192,7 +239,7 @@ var microprofileConfigCallBack = (function() {
             webBrowser.setBrowserContent("/guides/iguide-microprofile-config/html/interactive-guides/microprofile-config/download-from-property-in-system-props.html");
             contentManager.markCurrentInstructionComplete(webBrowser.getStepName());
         }
-        // Cannot use contentManager.hideBrowser as the browser is still going thru initialization 
+        // Cannot use contentManager.hideBrowser as the browser is still going thru initialization
         webBrowser.contentRootElement.addClass("hidden");
         webBrowser.addUpdatedURLListener(setBrowserContent);
     };
@@ -229,7 +276,7 @@ var microprofileConfigCallBack = (function() {
             var editorFileName;
             if (stepName === "ConfigureAsEnvVar") {
                 editorFileName = serverEnvFileName;
-            } else if (stepName === "ConfigurePropsFile") {
+            } else if ((stepName === "ConfigurePropsFile") || (stepName === "UpdateOrdinal")) {
                 editorFileName = "META-INF/microprofile-config.properties";
             } else if (stepName === "ConfigureViaInject") {
                 editorFileName === "Music-download.java";
@@ -559,7 +606,8 @@ var microprofileConfigCallBack = (function() {
     return {
         listenToEditorForPropConfig: __listenToEditorForPropConfig,
         listenToEditorForServerEnv: __listenToEditorForServerEnv,
-        listenToEditorForSystemProperties: __listenToEditorForSystemProperties,    
+        listenToEditorForSystemProperties: __listenToEditorForSystemProperties,
+        listenToEditorForOrdinalChange: __listenToEditorForOrdinalChange,
         listenToEditorForInjectDefaultConfig: __listenToEditorForInjectDefaultConfig,
         listenToEditorForInjectConfig: __listenToEditorForInjectConfig,
         listenToBrowserForPropFileConfig: __listenToBrowserForPropFileConfig,
@@ -572,6 +620,7 @@ var microprofileConfigCallBack = (function() {
         addPropToConfigProps: __addPropToConfigProps,
         addPropToServerEnvButton: __addPropToServerEnvButton,
         addPropToSystemProperties: __addPropToSystemProperties,
+        addConfigOrdinalToProps: __addConfigOrdinalToProps,
         addInjectConfigButton: __addInjectConfigButton,
         addInjectDefaultConfigButton: __addInjectDefaultConfigButton,
         listenToEditorForFeatureInServerXML: __listenToEditorForFeatureInServerXML,

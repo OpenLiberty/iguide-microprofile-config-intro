@@ -34,10 +34,10 @@
             "name": "EnableMPConfig",
             "title": "Enabling the MicroProfile Config feature",
             "description": [
-                "Begin by enabling the MicroProfile Config 1.1 feature in your <code>server.xml</code> file."
+                "Begin by enabling the MicroProfile Config 1.1 feature in your <code>server.xml</code> file. This feature allows you to use the MicroProfile Config API to externalize configuration data."
             ],
             "instruction": [
-              "Add the following element declaration inside the featureManager element to the <code>server.xml</code> file, or click <action tabindex='0' role='button' title='Enable MicroProfile Config' aria-label='Enable MicroProfile Config' onkeypress=\"microprofileConfigCallBack.addMicroProfileConfigFeatureButton(event)\" onclick=\"microprofileConfigCallBack.addMicroProfileConfigFeatureButton(event)\"><b>&lt;feature&gtmpConfig-1.1&lt;/feature&gt;</b></action>. Then, click <action tabindex='0' role='button' title='Save' aria-label='Save' onkeypress=\"microprofileConfigCallBack.saveButton(event)\" onclick=\"microprofileConfigCallBack.saveButton(event)\"><b>Save</b></action> on the editor menu pane."            ],
+              "Add the following element declaration inside the featureManager element of the <code>server.xml</code> file, or click <action tabindex='0' role='button' title='Enable MicroProfile Config' aria-label='Enable MicroProfile Config' onkeypress=\"microprofileConfigCallBack.addMicroProfileConfigFeatureButton(event)\" onclick=\"microprofileConfigCallBack.addMicroProfileConfigFeatureButton(event)\"><b>&lt;feature&gtmpConfig-1.1&lt;/feature&gt;</b></action>. Then, click <action tabindex='0' role='button' title='Save' aria-label='Save' onkeypress=\"microprofileConfigCallBack.saveButton(event)\" onclick=\"microprofileConfigCallBack.saveButton(event)\"><b>Save</b></action> on the editor menu pane."            ],
             "content":[
               {
                 "displayType":"fileEditor",
@@ -206,7 +206,8 @@
             ],
             "content":[
                 {
-                    "displayType": "tabbedEditor",
+                    "displayType":
+                     "tabbedEditor",
                     "activeTab": "META-INF/microprofile-config.properties",
                     "callback": "(function test(tabbedEditor) {microprofileConfigCallBack.listenToEditorTabChange(tabbedEditor, 0, 'META-INF/microprofile-config.properties'); })",
                     "editorList": [
@@ -248,7 +249,7 @@
                         "callback": "(function test(editor) {microprofileConfigCallBack.listenToEditorForPropConfig(editor); })"
                       }
                     ]
-              }, 
+              },
               {
                 "displayType":"webBrowser",
                 "url": "https://music.com/play",
@@ -437,7 +438,87 @@
             "title": "Changing the ordinal of a ConfigSource",
             "TOCIndent": 1,
             "description": [
-                "temp"
+                "You can override the default ordinal value of a ConfigSource by adding the <code>config_ordinal</code> property to your configuration source file. The configuration source with the highest ordinal value takes precedence."
+            ],
+            "instruction": [
+                "On line 2 of the <code>/META-INF/microprofile-config.properties</code> file add or click <action title='Changing the ordinal of microprofile-config.properties' onclick=\"microprofileConfigCallBack.addConfigOrdinalToProps(event)\"><b>config_ordinal=500</b></action>. Then, click <action title='Run' onclick=\"microprofileConfigCallBack.saveTabbedEditorButton(event)\"><b>Run</b></action> on the editor menu pane.",
+                "Click <action title='Refresh' onclick=\"microprofileConfigCallBack.refreshBrowserButton(event)\"><b>Refresh</b></action> in the following browser to see that the <code>download_url</code> in the <code>/META-INF/microprofile-config.properties</code> file is used instead of the one defined in the <code>bootstrap.properties</code> file.<br/>"
+            ],
+            "content":[
+              {
+                "displayType": "tabbedEditor",
+                "activeTab": "META-INF/microprofile-config.properties",
+                "callback": "(function test(tabbedEditor) {microprofileConfigCallBack.listenToEditorTabChange(tabbedEditor, 0, 'META-INF/microprofile-config.properties'); })",
+                "editorList": [
+                  {
+                    "displayType":"fileEditor",
+                    "fileName": "Music-download.java",
+                    "preload": [
+                          "package com.music.download;",
+                          "import javax.inject.Inject;",
+                          "import org.eclipse.microprofile.config.Config;",
+                          "import org.eclipse.microprofile.config.inject.ConfigProperty;",
+                          "",
+                          "public class Music-download {",
+                          "",
+                          "    @Inject",
+                          "    @Config config",
+                          "",
+                          "    @Inject",
+                          "    @ConfigProperty(name=\"download_url\", ",
+                          "                   defaultValue=\"ftp://music.com/us-east/download\")",
+                          "    private String downloadUrl;",
+                          "",
+                          "    public void download() {",
+                          "        downloadService(downloadUrl);",
+                          "    }",
+                          "}"
+                    ],
+                    "readonly": true,
+                    "save": false
+                  },
+                  {
+                    "displayType":"fileEditor",
+                    "fileName": "META-INF/microprofile-config.properties",
+                    "readonly": false,
+                    "save": false,
+                    "preload": [
+                        "download_url=ftp://music.com/us-south/download"
+                    ],
+                    "readonly": [
+                      {
+                        "from": "1",
+                        "to": "1"
+                      }
+                    ],
+                    "callback": "(function test(editor) {microprofileConfigCallBack.listenToEditorForOrdinalChange(editor); })"
+                  },
+                  {
+                    "displayType":"fileEditor",
+                    "fileName": "server.env",
+                    "preload": [
+                      "WLP_SKIP_MAXPERMSIZE=true",
+                      ""
+                    ],
+                    "readonly": true,
+                    "save": false
+                  },
+                  {
+                    "displayType":"fileEditor",
+                    "fileName": "bootstrap.properties",
+                    "preload": [
+                          "WLP_SKIP_MAXPERMSIZE=true"
+                     ],
+                    "readonly": true,
+                    "save": false                 }
+                ]
+              },
+              {
+                "displayType":"webBrowser",
+                "url": "https://music.com/play",
+                "browserContent": "/guides/iguide-microprofile-config/html/interactive-guides/microprofile-config/download-from-property-in-system-props.html",
+                "callback": "(function test(webBrowser) {microprofileConfigCallBack.listenToBrowserForPropFileConfig(webBrowser); })"
+              }
             ]
         },
         {
