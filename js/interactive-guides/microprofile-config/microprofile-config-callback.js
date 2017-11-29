@@ -603,6 +603,27 @@ var microprofileConfigCallBack = (function() {
         contentManager.markEditorReadOnlyLines(stepName, readOnlyLines);
     };
 
+    var __createPlayground = function(root, stepName) {
+        // If root is not a jQuery element, get the jQuery element from the root object passed in
+        if(!root.selector){
+            root = root.contentRootElement;
+        }
+
+        var pg = playground.create(root, stepName);
+        root.playground = pg;
+
+        contentManager.setPlayground(stepName, pg, 0);
+    };
+
+    var updatePlaygroundProperties = function(editor) {
+        var __populateProperties = function(editorInstance, editor) {
+            var pg = contentManager.getPlayground(editorInstance.getStepName());
+            pg.repopulatePlaygroundConfigs();
+        };
+
+        editor.addSaveListener(__populateProperties);
+    };
+
     return {
         listenToEditorForPropConfig: __listenToEditorForPropConfig,
         listenToEditorForServerEnv: __listenToEditorForServerEnv,
@@ -629,7 +650,9 @@ var microprofileConfigCallBack = (function() {
         saveButton: __saveButton,
         saveTabbedEditorButton: __saveTabbedEditorButton,
         populateURL:  __populateURL,
-        enterButtonURL: __enterButtonURL
+        enterButtonURL: __enterButtonURL,
+        createPlayground: __createPlayground,
+        updatePlaygroundProperties: updatePlaygroundProperties
     };
 
 })();
