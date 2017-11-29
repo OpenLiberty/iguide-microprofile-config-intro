@@ -557,28 +557,6 @@ var microprofileConfigCallBack = (function() {
             }
         };
         editor.addSaveListener(__showPodWithDeploymentException);
-/*
-        var __showWebBrowser = function() {
-            var stepName = editor.getStepName();
-            var content = contentManager.getEditorContents(stepName);
-            if (__checkInjectionEditorContent(content)) {
-                editor.closeEditorErrorBox(stepName);
-                contentManager.showBrowser(stepName, 0);
-                contentManager.addRightSlideClassToBrowser(stepName, 0);
-                //contentManager.markCurrentInstructionComplete(stepName);
-                //contentManager.updateWithNewInstructionNoMarkComplete(stepName);
-
-                var index = contentManager.getCurrentInstructionIndex();
-                if(index === 0){
-                    contentManager.markCurrentInstructionComplete(stepName);
-                    contentManager.updateWithNewInstructionNoMarkComplete(stepName);
-                }
-            } else {
-                // display error and provide link to fix it
-                editor.createErrorLinkForCallBack(true, __addInjectConfigToEditor);
-            }
-        };
-        editor.addSaveListener(__showWebBrowser);*/
     };
 
     var __isInjectParamInAnnotation = function(annotationParams) {
