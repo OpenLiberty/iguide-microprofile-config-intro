@@ -193,15 +193,15 @@
         },
         {
             "name": "ConfigurePropsFile",
-            "title": "Configuring with a properties file",
+            "title": "Configuring with the properties file",
             "TOCIndent": 1,
             "description": [
-                "In Websphere Liberty, you can provide a properties file as part of your packaged application. This properties file lets you specify configuration for overriding injected values.",
+                "You can provide the <code>/META-INF/microprofile-config.properties</code> file as part of your packaged application. The <code>/META-INF/microprofile-config.properties</code> file may be created in multiple locations, but you must specify these file locations in your classpath.",
                 "",
-                "Add the download_url property to the microprofile-config.properties file to override the injected value of the download_url. The properties file contains settings with a default ordinal of 100 which overrides the injected properties with the same name. If a property appears in more than one source, then the property value from the source with the highest ordinal takes precedence. The download_url property in the microprofile-config.properties will be used because the injected default value is only used when no other config sources are provided."
+                "The properties file contains settings with a default ordinal of 100 which overrides the injected default values with the same key, so the <code>download_url</code> property value in the <code>microprofile-config.properties</code> will be used."
             ],
             "instruction": [
-                "Add the <code>download_url=ftp://music.com/us-south/download</code> on line 1 or click <action title='Configure download_url in microprofile-config.properties' onclick=\"microprofileConfigCallBack.addPropToConfigProps(event)\"><b>download_url=ftp://music.com/us-south/download</b></action>. Then, click <action title='Run' onclick=\"microprofileConfigCallBack.saveTabbedEditorButton(event)\"><b>Run</b></action> on the editor menu pane.",
+                "In <code>/META-INF/microprofile-config.properties</code> add the following on line 1 or click <action title='Configure download_url in microprofile-config.properties' onclick=\"microprofileConfigCallBack.addPropToConfigProps(event)\"><b>download_url=ftp://music.com/us-south/download</b></action>. Then, click <action title='Run' onclick=\"microprofileConfigCallBack.saveTabbedEditorButton(event)\"><b>Run</b></action> on the editor menu pane.",
                 "Click <action title='Refresh' onclick=\"microprofileConfigCallBack.refreshBrowserButton(event)\"><b>Refresh</b></action> in the following browser to see that the download_url in the microprofile-config.properties file is used.<br/>"
             ],
             "content":[
