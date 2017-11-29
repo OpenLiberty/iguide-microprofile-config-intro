@@ -198,10 +198,10 @@
             "description": [
                 "You can provide the <code>/META-INF/microprofile-config.properties</code> file as part of your packaged application. The <code>/META-INF/microprofile-config.properties</code> file may be created in multiple locations, but you must specify these file locations in your classpath.",
                 "",
-                "The properties file contains settings with a default ordinal of 100 which overrides the injected default values with the same key, so the <code>download_url</code> property in the <code>microprofile-config.properties</code> will be used."
+                "The properties file contains settings with a default ordinal of 100 which overrides the injected default values with the same key, so the <code>download_url</code> property value in the <code>microprofile-config.properties</code> will be used."
             ],
             "instruction": [
-                "In <code>/META-INF/microprofile-config.properties</code> add the following code on line 1 or click <action title='Configure download_url in microprofile-config.properties' onclick=\"microprofileConfigCallBack.addPropToConfigProps(event)\"><b>download_url=ftp://music.com/us-south/download</b></action>. Then, click <action title='Run' onclick=\"microprofileConfigCallBack.saveTabbedEditorButton(event)\"><b>Run</b></action> on the editor menu pane.",
+                "In <code>/META-INF/microprofile-config.properties</code> add the following on line 1 or click <action title='Configure download_url in microprofile-config.properties' onclick=\"microprofileConfigCallBack.addPropToConfigProps(event)\"><b>download_url=ftp://music.com/us-south/download</b></action>. Then, click <action title='Run' onclick=\"microprofileConfigCallBack.saveTabbedEditorButton(event)\"><b>Run</b></action> on the editor menu pane.",
                 "Click <action title='Refresh' onclick=\"microprofileConfigCallBack.refreshBrowserButton(event)\"><b>Refresh</b></action> in the following browser to see that the download_url in the microprofile-config.properties file is used.<br/>"
             ],
             "content":[
