@@ -1,0 +1,9 @@
+.ordinalPriorities {
+    text-align: center; /* Align the image in the center of the div */
+    margin-top: 15px;
+}
+
+.ordinalPriorities > img {
+    height: 350px;
+    width: 550px;
+}
