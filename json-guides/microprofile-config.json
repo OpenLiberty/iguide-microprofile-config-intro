@@ -1,8 +1,8 @@
 {
     "name": "MicroprofileConfig",
     "title": "Microprofile Config",
-    "description": "Creating a unified config for your sources",
-    "duration": "10 minutes",
+    "description": "Use MicroProfile Config to separate configuration from code",
+    "duration": "25 minutes",
     "audience": "developer",
     "repo": "https://github.com/OpenLiberty/iguide-microprofile-config",
     "steps": [
@@ -32,7 +32,7 @@
         },
         {
             "name": "EnableMPConfig",
-            "title": "Enabling the MicroProfile Config feature",
+            "title": "Enabling MicroProfile Config",
             "description": [
                 "Begin by enabling the MicroProfile Config 1.1 feature in your <code>server.xml</code> file. This feature allows you to use the MicroProfile Config API to externalize configuration data."
             ],
@@ -71,13 +71,13 @@
         },
         {
             "name": "ConfigureViaInject",
-            "title": "Injecting configuration properties through annotations",
+            "title": "Injecting configuration through @ConfigProperty annotation",
             "description": [
-                "After you modify your <code>server.xml</code> file to <a>include the mpConfig feature</a>, a single configuration property value can be injected directly into your code using the <code>@Inject</code> and the <code>@ConfigProperty</code> annotations. The injected value is set when the application starts and is static.<br>",
-                "Injecting a configuration value this way is recommended for mandatory properties. If no configured value exists for this property, a <code>DeploymentException</code> will be thrown during startup."
+                "After you modify your <code>server.xml</code> file to <a href='#enabling-microprofile-config'>include the mpConfig feature</a>, a single configuration property value can be injected directly into your code using the <code>@Inject</code> and the <code>@ConfigProperty</code> annotations. The injected value is static and therefore will not change after the application starts.<br>",
+                "Injecting a configuration value this way is recommended for mandatory properties. If no configured value exists for this property, a <code>DeploymentException</code> is thrown during application startup causing the application to fail to start."
             ],
             "instruction": [
-                "To inject a <code>download_url</code> configuration property into the code, add the following <code>@Inject</code> and <code>@ConfigProperty</code> annotations to line 11 before declaring the <code>private String downloadUrl</code>, or click  <action title='Inject a ConfigProperty' onclick='microprofileConfigCallBack.addInjectConfigButton(event)'><b>@Inject @ConfigProperty(name=\"download_url\")</b></action>. Then, click <action title='Run' onclick=\"microprofileConfigCallBack.saveButton(event)\"><b>Run</b></action> on the editor menu pane.<br><br><note>Note: You have not yet specified a value for the <code>download_url</code> configuration property.  Execution of this code at this time would cause a <code>DeploymentException</code> to be thrown since a value is required.</note>",
+                "To inject a <code>download_url</code> configuration property into the code, add the following <code>@Inject</code> and <code>@ConfigProperty</code> annotations to line 6 before declaring the <code>private String downloadUrl</code>, or click  <action title='Inject a ConfigProperty' onclick='microprofileConfigCallBack.addInjectConfigButton(event)'><b>@Inject @ConfigProperty(name=\"download_url\")</b></action>. Then, click <action title='Run' onclick=\"microprofileConfigCallBack.saveButton(event)\"><b>Run</b></action> on the editor menu pane.",
                 "Type the following URL into the browser that follows, or click <action title='URL' onclick=\"microprofileConfigCallBack.populateURL(event, 'ConfigureViaInject')\"><b>https://music.com/play</b></action> and then press <action title='Enter' onclick=\"microprofileConfigCallBack.enterButtonURL(event, 'ConfigureViaInject')\"><b>Enter</b></action>."
             ],
             "content":[
@@ -87,14 +87,9 @@
                     "preload": [
                         "package com.music.download;",
                         "import javax.inject.Inject;",
-                        "import org.eclipse.microprofile.config.Config;",
                         "import org.eclipse.microprofile.config.inject.ConfigProperty;",
                         "",
                         "public class Music-download {",
-                        "",
-                        "    @Inject",
-                        "    private Config config;",
-                        "",
                         "",
                         "    private String downloadUrl;",
                         "",
@@ -106,11 +101,11 @@
                     "readonly": [
                        {
                             "from": "1",
-                            "to": "10"
+                            "to": "5"
                        },
                        {
-                            "from": "12",
-                            "to": "17"
+                            "from": "7",
+                            "to": "12"
                        }
                     ],
                     "save": false,
@@ -129,11 +124,11 @@
             "title": "Providing default values with injection",
             "TOCIndent": 1,
             "description": [
-                "You can specify a default value for a configuration property using the <b>defaultValue</b> parameter in the <code>@ConfigProperty</code> annotation.  If the property is not assigned a value anywhere else, then it will be assigned this default value.<br>"
+                "You can specify a default value for a configuration property using the <b>defaultValue</b> parameter in the <code>@ConfigProperty</code> annotation.  This value is used when a value is not specified anywhere else.<br>"
             ],
             "instruction": [
-                "Change the @ConfigProperty annotation on line 11 to the following code, or click <action title='Provide default value using ConfigProperty annotation' onclick=\"microprofileConfigCallBack.addInjectDefaultConfigButton(event)\"><b>@Inject @ConfigProperty(name=\"download_url\", defaultValue=\"ftp://music.com/us-east/download\")</b></action>. Then, click <action title='Run' onclick=\"microprofileConfigCallBack.saveButton(event)\"><b>Run</b></action> on the editor menu pane.",
-                "Click <action title='Refresh' onclick=\"microprofileConfigCallBack.refreshBrowserButton(event)\"><b>Refresh</b></action> in the following browser to see that the download_url via the injection is used.<br/>"
+                "Change the <code>@ConfigProperty</code> annotation on line 6 to the following code, or click <action title='Provide default value using ConfigProperty annotation' onclick=\"microprofileConfigCallBack.addInjectDefaultConfigButton(event)\"><b>@Inject @ConfigProperty(name=\"download_url\",\n defaultValue=\"ftp://music.com/us-east/download\")</b></action>. Then, click <action title='Run' onclick=\"microprofileConfigCallBack.saveButton(event)\"><b>Run</b></action> on the editor menu pane.",
+                "Type the following URL into the browser that follows, or click <action title='URL' onclick=\"microprofileConfigCallBack.populateURL(event, 'InjectWithDefaultValue')\"><b>https://music.com/play</b></action> and then press <action title='Enter' onclick=\"microprofileConfigCallBack.enterButtonURL(event, 'InjectWithDefaultValue')\"><b>Enter</b></action>."
             ],
             "content":[
                 {
@@ -142,14 +137,9 @@
                     "preload": [
                         "package com.music.download;",
                         "import javax.inject.Inject;",
-                        "import org.eclipse.microprofile.config.Config;",
                         "import org.eclipse.microprofile.config.inject.ConfigProperty;",
                         "",
                         "public class Music-download {",
-                        "",
-                        "    @Inject",
-                        "    private Config config;",
-                        "",
                         "    @Inject @ConfigProperty(name=\"download_url\")",
                         "    private String downloadUrl;",
                         "",
@@ -161,11 +151,11 @@
                     "readonly": [
                        {
                             "from": "1",
-                            "to": "10"
+                            "to": "5"
                        },
                        {
-                            "from": "12",
-                            "to": "17"
+                            "from": "7",
+                            "to": "12"
                        }
                     ],
                     "save": false,
@@ -173,8 +163,6 @@
                 },
                 {
                     "displayType":"webBrowser",
-                    "url": "https://music.com/play",
-                    "browserContent": "/guides/iguide-microprofile-config/html/interactive-guides/microprofile-config/download-deployment-exception.html",
                     "callback": "(function test(webBrowser) {microprofileConfigCallBack.listenToBrowserForInjectDefaultConfig(webBrowser); })"
                 }
             ]
@@ -217,14 +205,9 @@
                         "preload": [
                               "package com.music.download;",
                               "import javax.inject.Inject;",
-                              "import org.eclipse.microprofile.config.Config;",
                               "import org.eclipse.microprofile.config.inject.ConfigProperty;",
                               "",
                               "public class Music-download {",
-                              "",
-                              "    @Inject",
-                              "    @Config config",
-                              "",
                               "    @Inject",
                               "    @ConfigProperty(name=\"download_url\", ",
                               "                   defaultValue=\"ftp://music.com/us-east/download\")",
@@ -283,14 +266,9 @@
                     "preload": [
                           "package com.music.download;",
                           "import javax.inject.Inject;",
-                          "import org.eclipse.microprofile.config.Config;",
                           "import org.eclipse.microprofile.config.inject.ConfigProperty;",
                           "",
                           "public class Music-download {",
-                          "",
-                          "    @Inject",
-                          "    @Config config",
-                          "",
                           "    @Inject",
                           "    @ConfigProperty(name=\"download_url\", ",
                           "                   defaultValue=\"ftp://music.com/us-east/download\")",
