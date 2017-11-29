@@ -77,8 +77,7 @@
                 "Injecting a configuration value this way is recommended for mandatory properties. If no configured value exists for this property, a <code>DeploymentException</code> is thrown during application startup causing the application to fail to start."
             ],
             "instruction": [
-                "To inject a <code>download_url</code> configuration property into the code, add the following <code>@Inject</code> and <code>@ConfigProperty</code> annotations to line 6 before declaring the <code>private String downloadUrl</code>, or click  <action title='Inject a ConfigProperty' onclick='microprofileConfigCallBack.addInjectConfigButton(event)'><b>@Inject @ConfigProperty(name=\"download_url\")</b></action>. Then, click <action title='Run' onclick=\"microprofileConfigCallBack.saveButton(event)\"><b>Run</b></action> on the editor menu pane.",
-                "Type the following URL into the browser that follows, or click <action title='URL' onclick=\"microprofileConfigCallBack.populateURL(event, 'ConfigureViaInject')\"><b>https://music.com/play</b></action> and then press <action title='Enter' onclick=\"microprofileConfigCallBack.enterButtonURL(event, 'ConfigureViaInject')\"><b>Enter</b></action>."
+                "To inject a <code>download_url</code> configuration property into the code, add the following <code>@Inject</code> and <code>@ConfigProperty</code> annotations to line 6 before declaring the <code>private String downloadUrl</code>, or click  <action title='Inject a ConfigProperty' onclick='microprofileConfigCallBack.addInjectConfigButton(event)'><b>@Inject @ConfigProperty(name=\"download_url\")</b></action>. Then, click <action title='Run' onclick=\"microprofileConfigCallBack.saveButton(event)\"><b>Run</b></action> on the editor menu pane."
             ],
             "content":[
                 {
@@ -112,10 +111,7 @@
                     "callback": "(function test(editor) {microprofileConfigCallBack.listenToEditorForInjectConfig(editor); })"
                 },
                 {
-                    "displayType":"webBrowser",
-                    "url": "",
-                    "browserContent": "",
-                    "callback": "(function test(webBrowser) {microprofileConfigCallBack.listenToBrowserForInjectConfig(webBrowser); })"
+                    "displayType":"pod"
                 }
             ]
         },
@@ -163,6 +159,8 @@
                 },
                 {
                     "displayType":"webBrowser",
+                    "url": "",
+                    "browserContent": "",
                     "callback": "(function test(webBrowser) {microprofileConfigCallBack.listenToBrowserForInjectDefaultConfig(webBrowser); })"
                 }
             ]

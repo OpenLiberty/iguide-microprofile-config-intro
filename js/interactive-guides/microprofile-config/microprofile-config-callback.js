@@ -536,6 +536,28 @@ var microprofileConfigCallBack = (function() {
     };
 
     var __listenToEditorForInjectConfig = function(editor) {
+        var __showPodWithDeploymentException = function() {
+            var stepName = editor.getStepName();
+            var content = contentManager.getEditorContents(stepName);
+            if (__checkInjectionEditorContent(content)) {
+                editor.closeEditorErrorBox(stepName);
+                contentManager.markCurrentInstructionComplete(stepName);
+                contentManager.setPodContentWithRightSlide(stepName,
+                    "<p class='maxspace' style='font-size: 13px; margin-top: 0; word-wrap: break-word; color:red;' >[ERROR ] CWWKZ0002E: An exception occurred while starting the application io.openliberty.guides.microprofile.mpconfig." +
+                    "The exception message was: com.ibm.ws.container.service.state.StateChangeException:" +
+                    "org.jboss.weld.exceptions.DeploymentException: WELD-001408: Unsatisfied dependencies for type String with qualifiers @configproperty " +
+                    "at injection point [BackedAnnotatedField] @Inject @configproperty private " +
+                    "io.openliberty.guides.microprofile.InventoryConfig.downloadUrl " +
+                    "at io.openliberty.guides.microprofile.InventoryConfig.downloadUrl(InventoryConfig.java:0)" +
+                    "</p>"
+                );
+            } else {
+                // display error
+                editor.createErrorLinkForCallBack(stepName, true, __correctEditorError);
+            }
+        };
+        editor.addSaveListener(__showPodWithDeploymentException);
+/*
         var __showWebBrowser = function() {
             var stepName = editor.getStepName();
             var content = contentManager.getEditorContents(stepName);
@@ -556,7 +578,7 @@ var microprofileConfigCallBack = (function() {
                 editor.createErrorLinkForCallBack(true, __addInjectConfigToEditor);
             }
         };
-        editor.addSaveListener(__showWebBrowser);
+        editor.addSaveListener(__showWebBrowser);*/
     };
 
     var __isInjectParamInAnnotation = function(annotationParams) {
