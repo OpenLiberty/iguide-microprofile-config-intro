@@ -17,7 +17,7 @@ var playground = function(){
          */
         playgroundAddConfig: function(key, value, source, ordinal) {
             if (!ordinal) {
-                ordinal = __getDefaultOrdinal(source);
+                ordinal = this.__getDefaultOrdinal(source);
             }
 
             if (properties[key]) {
@@ -33,13 +33,13 @@ var playground = function(){
         repopulatePlaygroundConfigs: function() {
             properties = {};
 
-            getInjectionProperties();
-            getPropertiesFileProperties();
-            getEnvironmentProperties();
-            getSystemProperties();
+            this.__getInjectionProperties();
+            this.__getPropertiesFileProperties();
+            this.__getEnvironmentProperties();
+            this.__getSystemProperties();
         },
 
-        getInjectionProperties: function() {
+        __getInjectionProperties: function() {
             var injectionContent = contentManager.getTabbedEditorContents('DefaultPlayground', 'Injection');
 
             // Use regex global search to find and store all indices of matches.
@@ -69,19 +69,15 @@ var playground = function(){
                     var defaultValueRegexp = /defaultValue="(.*?)"/g //match 'defaultValue' property, with the property value as substring match
                     var name = nameRegexp.exec(inlineProperties);
                     var defaultValue = defaultValueRegexp.exec(inlineProperties);
-                    if (name) {
-                        //index 1 is the regex substring match which contains the name property value
-                        playgroundAddConfig('name', name[1], 'inject'); 
-                    }
-                    if (defaultValue) {
-                        //index 1 is the regex substring match which contains the defaultValue property value
-                        playgroundAddConfig('defaultValue', defaultValue[1], 'inject');
+                    if (name && defaultValue) {
+                        //index 1 is the regex substring match which contains the value of the match
+                        this.playgroundAddConfig(name[1], defaultValue[1], 'inject'); 
                     }
                 }
             }
         },
 
-        getPropertiesFileProperties: function() {
+        __getPropertiesFileProperties: function() {
             var propertiesFileContent = contentManager.getTabbedEditorContents('DefaultPlayground', 'Properties');
 
             if (propertiesFileContent) {
@@ -93,7 +89,7 @@ var playground = function(){
             }
         },
 
-        getEnvironmentProperties: function() {
+        __getEnvironmentProperties: function() {
             var envPropContent = contentManager.getTabbedEditorContents('DefaultPlayground', 'Environment Property');
 
             if (envPropContent) {
@@ -105,7 +101,7 @@ var playground = function(){
             }
         },
 
-        getSystemProperties: function() {
+        __getSystemProperties: function() {
             var sysPropContent = contentManager.getTabbedEditorContents('DefaultPlayground', 'System Property');
 
             if (sysPropContent) {
@@ -119,7 +115,7 @@ var playground = function(){
 
         playgroundListenToEditorForChange: function(editor) {
             var __updatePlaygroundEnv = function() {
-                repopulatePlaygroundConfigs();
+                this.repopulatePlaygroundConfigs();
             };
         },
 
@@ -144,10 +140,10 @@ var playground = function(){
 
     // return {
     //     repopulatePlaygroundConfigs: repopulatePlaygroundConfigs,
-    //     getInjectionProperties: getInjectionProperties,
-    //     getPropertiesFileProperties: getPropertiesFileProperties,
-    //     getEnvironmentProperties: getEnvironmentProperties,
-    //     getSystemProperties: getSystemProperties,
+    //     __getInjectionProperties: __getInjectionProperties,
+    //     __getPropertiesFileProperties: __getPropertiesFileProperties,
+    //     __getEnvironmentProperties: __getEnvironmentProperties,
+    //     __getSystemProperties: __getSystemProperties,
     //     getProperties: getProperties,
     //     playgroundListenToEditorForChange: playgroundListenToEditorForChange
     // };

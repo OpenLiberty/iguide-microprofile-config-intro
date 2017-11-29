@@ -615,14 +615,13 @@ var microprofileConfigCallBack = (function() {
         contentManager.setPlayground(stepName, pg, 0);
     };
 
-    var listenToPlaygroundEditor = function(editor) {
-        var __listenToContentChanges = function(editorInstance, editor) {
-            var pg = contentManager.getPlayground(editor.getStepName());
+    var updatePlaygroundProperties = function(editor) {
+        var __populateProperties = function(editorInstance, editor) {
+            var pg = contentManager.getPlayground(editorInstance.getStepName());
             pg.repopulatePlaygroundConfigs();
         };
 
-        editor.addSaveListener(__listenToContentChanges);
-        editor.addContentChangeListener(__listenToContentChanges);
+        editor.addSaveListener(__populateProperties);
     };
 
     return {
@@ -653,7 +652,7 @@ var microprofileConfigCallBack = (function() {
         populateURL:  __populateURL,
         enterButtonURL: __enterButtonURL,
         createPlayground: __createPlayground,
-        listenToPlaygroundEditor: listenToPlaygroundEditor
+        updatePlaygroundProperties: updatePlaygroundProperties
     };
 
 })();
