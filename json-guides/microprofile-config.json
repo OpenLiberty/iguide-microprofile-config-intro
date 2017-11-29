@@ -184,7 +184,7 @@
             "title": "Using default ConfigSources to provide configuration data",
             "description": [
                 "A <b>ConfigSource</b> is a source for configured values.  Each ConfigSource has a specified <b>ordinal</b>, which is used to determine the importance of the values taken from the associated ConfigSource. A higher ordinal means that the values taken from this ConfigSource will override values from lower-priority ConfigSources. <br><br>MicroProfile Config has 3 default ConfigSources:",
-                "<ul><li>All META-INF/microprofile-config.properties found on the classpath. (default ordinal = 100).</li><li>Environment variables (default ordinal=300).</li><li>System properties (default ordinal=400).</li></ul>Setting values within any of these ConfigSources will override any default value for the configuration property set in the injection."
+                "<ul><li>All <code>META-INF/microprofile-config.properties</code> found on the classpath. (default ordinal = 100).</li><li>Environment variables (default ordinal=300).</li><li>System properties (default ordinal=400).</li></ul>Setting values within any of these ConfigSources will override any default value for the configuration property set in the injection."
             ],
             "instruction": [
             ],
@@ -263,12 +263,12 @@
             "title": "Configuring as an environment variable",
             "TOCIndent": 1,
             "description": [
-                "In WebSphere Liberty, You can use server.env files at the installation and server levels to specify environment variables. The runtime-level file is located at <code>${wlp.install.dir}/etc/server.env</code> and the server-level is located at <code>${server.config.dir}/server.env</code>. If both files are there, the contents of the two files are merged. If the same environment variable is in both file, value in the server-level file take precedence over value in the runtime-level file. We are going to use the <code>${server.config.dir}/server.env</code> to configure the download_url environment variable.",
+                "In WebSphere Liberty, you can use server.env files at the installation and server levels to specify environment variables. The runtime level file is located at <code>${wlp.install.dir}/etc/server.env</code> and the server level is located at <code>${server.config.dir}/server.env</code>. If both files exist, the contents of the two files are merged. If the same environment variable is in both files, the value in the server level file takes precedence over the value in the runtime level file. We are going to use the <code>${server.config.dir}/server.env</code> to configure the download_url environment variable.",
                 "",
-                "After you add your <code>/META-INF/microprofile-config.properties</code> file to override the download_url to us-south region, add the download_url to the <code>${server.config.dir}/server.env</code> file to us-west region . The server.env contains the environment settings with the default ordinal of 300 which is higher than the 100 for the microprofile-config.properties. If a property appears in more than one source, then the property value from the source with the highest ordinal takes precedence. The download_url property in the server.env will be used."
+                "The server.env file contains the environment settings with a default ordinal of 300 which is higher than the 100 for the microprofile-config.properties, therefore the <code>download_url</code> property value in server.env will be used."
             ],
             "instruction": [
-              "Add the <code>download_url=ftp://music.com/us-west/download</code> on line 2, after the WLP_SKIP_MAXPERMSIXE=true or click <action title='Configure download_url in server.env' onclick=\"microprofileConfigCallBack.addPropToServerEnvButton(event)\"><b>download_url=ftp://music.com/us-west/download</b></action>. Then, click <action title='Run' onclick=\"microprofileConfigCallBack.saveTabbedEditorButton(event)\"><b>Run</b></action> on the editor menu pane.",
+              "In <code>server.env</code>, add the following after <code>WLP_SKIP_MAXPERMSIZE=true</code> on line 2 or click <action title='Configure download_url in server.env' onclick=\"microprofileConfigCallBack.addPropToServerEnvButton(event)\"><b>download_url=ftp://music.com/us-west/download</b></action>. Then, click <action title='Run' onclick=\"microprofileConfigCallBack.saveTabbedEditorButton(event)\"><b>Run</b></action> on the editor menu pane.",
               "Click <action title='Refresh' onclick=\"microprofileConfigCallBack.refreshBrowserButton(event)\"><b>Refresh</b></action> in the following browser to see the download_url in the server.env file is used.<br/>"
             ],
             "content":[
@@ -347,7 +347,7 @@
                 "Default configuration variables can be retrieved from the Java system properties and these variables have a default ordinal of 400. Liberty adds properties from the server’s <code>bootstrap.properties</code> and <code>jvm.options</code> files to the Java system properties. The bootstrap.properties file does not exist by default until you create it. You can create and configure the jvm.options file in multiple locations within your Liberty installation directory.",
                 "",
                 "The different locations where Liberty checks for jvm.options are the following: <ul><li><code>${wlp.install.dir}/usr/shared/jvm.options</code></li><li><code>${server.config.dir}/configDropins/defaults/jvm.options</code></li> <li><code>${server.config.dir}/jvm.options</code></li> <li><code>${server.config.dir}/configDropins/overrides/jvm.options</code></li></ul>",
-                "The contents of the files are merged in order from top to bottom before server start and are used as the JVM options for the server. If none of these files are present, then <code>${wlp.install.dir}/etc/jvm.options</code> is read.",
+                "The contents of the files are merged in order from top to bottom before server start and are used as the JVM options for the server. Only if none of these files are present, then the values from <code>${wlp.install.dir}/etc/jvm.options</code> are used.",
                 "",
                 "<note>Note: If a property exists in both <code>bootstrap.properties</code> and <code>jvm.options</code>, then the value from <code>jvm.options</code> takes precedence.</note>",
                 "In this example, we are going to use the <code>${server.config.dir}/bootstrap.properties</code> file to configure the download_url system property."
