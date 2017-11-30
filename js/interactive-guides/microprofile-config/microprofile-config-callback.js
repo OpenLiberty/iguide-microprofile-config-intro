@@ -65,8 +65,6 @@ var microprofileConfigCallBack = (function() {
             var content = contentManager.getTabbedEditorContents(stepName, propsFileName);
             if (__checkConfigPropsFile(content)) {
                 editor.closeEditorErrorBox(stepName);
-                contentManager.showBrowser(stepName, 0);
-                contentManager.addRightSlideClassToBrowser(stepName, 0);
                 var index = contentManager.getCurrentInstructionIndex();
                 if(index === 0){
                     contentManager.markCurrentInstructionComplete(stepName);
@@ -104,8 +102,6 @@ var microprofileConfigCallBack = (function() {
             var content = contentManager.getTabbedEditorContents(stepName, serverEnvFileName);
             if (__checkServerEnvContent(content)) {
                 editor.closeEditorErrorBox(stepName);
-                contentManager.showBrowser(stepName, 0);
-                contentManager.addRightSlideClassToBrowser(stepName, 0);
 
                 var index = contentManager.getCurrentInstructionIndex();
                 if(index === 0){
@@ -126,8 +122,6 @@ var microprofileConfigCallBack = (function() {
             var content = contentManager.getTabbedEditorContents(stepName, systemPropsFileName);
             if (__checkSystemPropsContent(content)) {
                 editor.closeEditorErrorBox(stepName);
-                contentManager.showBrowser(stepName, 0);
-                contentManager.addRightSlideClassToBrowser(stepName, 0);
 
                 var index = contentManager.getCurrentInstructionIndex();
                 if(index === 0){
@@ -151,8 +145,7 @@ var microprofileConfigCallBack = (function() {
             var content = contentManager.getTabbedEditorContents(stepName, propsFileName);
             if (__checkConfigOrdinalProp(content)) {
                 editor.closeEditorErrorBox(stepName);
-                contentManager.showBrowser(stepName, 0);
-                contentManager.addRightSlideClassToBrowser(stepName, 0);
+
                 var index = contentManager.getCurrentInstructionIndex();
                 if(index === 0){
                     contentManager.markCurrentInstructionComplete(stepName);
@@ -216,31 +209,31 @@ var microprofileConfigCallBack = (function() {
 
     var __listenToBrowserForPropFileConfig = function(webBrowser) {
         var setBrowserContent = function(currentURL) {
-            webBrowser.setBrowserContent("/guides/iguide-microprofile-config/html/interactive-guides/microprofile-config/download-from-properties-file.html");
-            contentManager.markCurrentInstructionComplete(webBrowser.getStepName());
+            if (contentManager.getCurrentInstructionIndex(webBrowser.getStepName()) === 1) {
+                webBrowser.setBrowserContent("/guides/iguide-microprofile-config/html/interactive-guides/microprofile-config/download-from-properties-file.html");
+                contentManager.markCurrentInstructionComplete(webBrowser.getStepName());
+            }
         }
-        // Cannot use contentManager.hideBrowser as the browser is still going thru initialization
-        webBrowser.contentRootElement.addClass("hidden");
         webBrowser.addUpdatedURLListener(setBrowserContent);
     };
 
     var __listenToBrowserForServerEnvConfig = function(webBrowser) {
         var setBrowserContent = function(currentURL) {
-            webBrowser.setBrowserContent("/guides/iguide-microprofile-config/html/interactive-guides/microprofile-config/download-from-property-in-server-env.html");
-            contentManager.markCurrentInstructionComplete(webBrowser.getStepName());
+            if (contentManager.getCurrentInstructionIndex(webBrowser.getStepName()) === 1) {
+                webBrowser.setBrowserContent("/guides/iguide-microprofile-config/html/interactive-guides/microprofile-config/download-from-property-in-server-env.html");
+                contentManager.markCurrentInstructionComplete(webBrowser.getStepName());
+            }
         }
-        // Cannot use contentManager.hideBrowser as the browser is still going thru initialization
-        webBrowser.contentRootElement.addClass("hidden");
         webBrowser.addUpdatedURLListener(setBrowserContent);
     };
 
     var __listenToBrowserForSystemPropConfig = function(webBrowser) {
         var setBrowserContent = function(currentURL) {
-            webBrowser.setBrowserContent("/guides/iguide-microprofile-config/html/interactive-guides/microprofile-config/download-from-property-in-system-props.html");
-            contentManager.markCurrentInstructionComplete(webBrowser.getStepName());
+            if (contentManager.getCurrentInstructionIndex(webBrowser.getStepName()) === 1) {
+                webBrowser.setBrowserContent("/guides/iguide-microprofile-config/html/interactive-guides/microprofile-config/download-from-property-in-system-props.html");
+                contentManager.markCurrentInstructionComplete(webBrowser.getStepName());
+            }
         }
-        // Cannot use contentManager.hideBrowser as the browser is still going thru initialization
-        webBrowser.contentRootElement.addClass("hidden");
         webBrowser.addUpdatedURLListener(setBrowserContent);
     };
 
@@ -372,8 +365,6 @@ var microprofileConfigCallBack = (function() {
             var content = contentManager.getEditorContents(stepName);
             if (__checkDefaultInjectionEditorContent(content)) {
                 editor.closeEditorErrorBox(stepName);
-                contentManager.showBrowser(stepName, 0);
-                contentManager.addRightSlideClassToBrowser(stepName, 0);
 
                 var index = contentManager.getCurrentInstructionIndex();
                 if(index === 0){
@@ -518,21 +509,21 @@ var microprofileConfigCallBack = (function() {
 
     var __listenToBrowserForInjectDefaultConfig = function(webBrowser) {
         var setBrowserContent = function(currentURL) {
-            webBrowser.setBrowserContent("/guides/iguide-microprofile-config/html/interactive-guides/microprofile-config/download-from-injection.html");
-            contentManager.markCurrentInstructionComplete(webBrowser.getStepName());
+            if (contentManager.getCurrentInstructionIndex(webBrowser.getStepName()) === 1) {
+                webBrowser.setBrowserContent("/guides/iguide-microprofile-config/html/interactive-guides/microprofile-config/download-from-injection.html");
+                contentManager.markCurrentInstructionComplete(webBrowser.getStepName());
+            }
         }
-
-        webBrowser.contentRootElement.addClass("hidden");
         webBrowser.addUpdatedURLListener(setBrowserContent);
     };
 
     var __listenToBrowserForInjectConfig = function(webBrowser) {
         var setBrowserContent = function(currentURL) {
-            webBrowser.setBrowserContent("/guides/iguide-microprofile-config/html/interactive-guides/microprofile-config/download-deployment-exception.html");
-            contentManager.markCurrentInstructionComplete(webBrowser.getStepName());
+            if (contentManager.getCurrentInstructionIndex(webBrowser.getStepName()) === 1) {
+                webBrowser.setBrowserContent("/guides/iguide-microprofile-config/html/interactive-guides/microprofile-config/download-deployment-exception.html");
+                contentManager.markCurrentInstructionComplete(webBrowser.getStepName());
+            }
         }
-
-        webBrowser.contentRootElement.addClass("hidden");
         webBrowser.addUpdatedURLListener(setBrowserContent);
     };
 
