@@ -79,24 +79,21 @@
                 "Injecting a configuration value this way is recommended for mandatory properties. If no configured value exists for this property, a <code>DeploymentException</code> is thrown during application startup causing the application to fail to start."
             ],
             "instruction": [
-                "To inject a <code>download_url</code> configuration property into the code, add the following <code>@Inject</code> and <code>@ConfigProperty</code> annotations to line 6 before declaring the <code>private String downloadUrl</code>, or click  <action title='Inject a ConfigProperty' onclick='microprofileConfigCallBack.addInjectConfigButton(event)'><b>@Inject @ConfigProperty(name=\"download_url\")</b></action>. Then, click <action title='Run' onclick=\"microprofileConfigCallBack.saveButton(event)\"><b>Run</b></action> on the editor menu pane."
+                "To inject a <code>port</code> configuration property into the code, add the following <code>@Inject</code> and <code>@ConfigProperty</code> annotations to line 6 before declaring the <code>private Integer port</code>, or click  <action title='Inject a ConfigProperty' onclick='microprofileConfigCallBack.addInjectConfigButton(event)'><b>@Inject @ConfigProperty(name=\"port\")</b></action>. Then, click <action title='Run' onclick=\"microprofileConfigCallBack.saveButton(event)\"><b>Run</b></action> on the editor menu pane."
             ],
             "content":[
                 {
                     "displayType":"fileEditor",
-                    "fileName": "Music-download.java",
+                    "fileName": "Cars-Type.java",
                     "preload": [
-                        "package com.music.download;",
+                        "package com.cars.type;",
                         "import javax.inject.Inject;",
                         "import org.eclipse.microprofile.config.inject.ConfigProperty;",
                         "",
-                        "public class Music-download {",
+                        "public class Cars-Type {",
                         "",
-                        "    private String downloadUrl;",
+                        "    private Integer port;",
                         "",
-                        "    public void download() {",
-                        "        downloadService(downloadUrl);",
-                        "    }",
                         "}"
                     ],
                     "readonly": [
@@ -106,7 +103,7 @@
                        },
                        {
                             "from": "7",
-                            "to": "12"
+                            "to": "9"
                        }
                     ],
                     "save": false,
@@ -125,25 +122,22 @@
                 "You can specify a default value for a configuration property using the <b>defaultValue</b> parameter in the <code>@ConfigProperty</code> annotation.  This value is used when a value is not specified anywhere else.<br>"
             ],
             "instruction": [
-                "Change the <code>@ConfigProperty</code> annotation on line 6 to the following code, or click <action title='Provide default value using ConfigProperty annotation' onclick=\"microprofileConfigCallBack.addInjectDefaultConfigButton(event)\"><b>@Inject @ConfigProperty(name=\"download_url\",\n defaultValue=\"ftp://music.com/us-east/download\")</b></action>. Then, click <action title='Run' onclick=\"microprofileConfigCallBack.saveButton(event)\"><b>Run</b></action> on the editor menu pane.",
-                "Type the following URL into the browser that follows, or click <action title='URL' onclick=\"microprofileConfigCallBack.populateURL(event, 'InjectWithDefaultValue')\"><b>https://music.com/play</b></action> and then press <action title='Enter' onclick=\"microprofileConfigCallBack.enterButtonURL(event, 'InjectWithDefaultValue')\"><b>Enter</b></action>."
+                "Change the <code>@ConfigProperty</code> annotation on line 6 to the following code, or click <action title='Provide default value using ConfigProperty annotation' onclick=\"microprofileConfigCallBack.addInjectDefaultConfigButton(event)\"><b>@Inject @ConfigProperty(name=\"port\",\n defaultValue=\"9080\")</b></action>. Then, click <action title='Run' onclick=\"microprofileConfigCallBack.saveButton(event)\"><b>Run</b></action> on the editor menu pane.",
+                "Type the following URL into the browser that follows, or click <action title='URL' onclick=\"microprofileConfigCallBack.populateURL(event, 'InjectWithDefaultValue')\"><b>https://localhost:8080/cars-type</b></action> and then press <action title='Enter' onclick=\"microprofileConfigCallBack.enterButtonURL(event, 'InjectWithDefaultValue')\"><b>Enter</b></action>."
             ],
             "content":[
                 {
                     "displayType":"fileEditor",
-                    "fileName": "Music-download.java",
+                    "fileName": "Cars-Type.java",
                     "preload": [
-                        "package com.music.download;",
+                        "package com.cars.type;",
                         "import javax.inject.Inject;",
                         "import org.eclipse.microprofile.config.inject.ConfigProperty;",
                         "",
-                        "public class Music-download {",
-                        "    @Inject @ConfigProperty(name=\"download_url\")",
-                        "    private String downloadUrl;",
+                        "public class Cars-Type {",
+                        "    @Inject @ConfigProperty(name=\"port\")",
+                        "    private Integer port;",
                         "",
-                        "    public void download() {",
-                        "        downloadService(downloadUrl);",
-                        "    }",
                         "}"
                     ],
                     "readonly": [
@@ -153,7 +147,7 @@
                        },
                        {
                             "from": "7",
-                            "to": "12"
+                            "to": "9"
                        }
                     ],
                     "save": false,
@@ -190,11 +184,11 @@
             "description": [
                 "You can provide the <code>/META-INF/microprofile-config.properties</code> file as part of your packaged application. The <code>/META-INF/microprofile-config.properties</code> file may be created in multiple locations, but you must specify these file locations in your classpath.",
                 "",
-                "The properties file contains settings with a default ordinal of 100 which overrides the injected default values with the same key, so the <code>download_url</code> property value in the <code>microprofile-config.properties</code> will be used."
+                "The properties file contains settings with a default ordinal of 100 which overrides the injected default values with the same key, so the <code>port</code> property value in the <code>microprofile-config.properties</code> will be used."
             ],
             "instruction": [
-                "In <code>/META-INF/microprofile-config.properties</code> add the following on line 1 or click <action title='Configure download_url in microprofile-config.properties' onclick=\"microprofileConfigCallBack.addPropToConfigProps(event)\"><b>download_url=ftp://music.com/us-south/download</b></action>. Then, click <action title='Run' onclick=\"microprofileConfigCallBack.saveTabbedEditorButton(event)\"><b>Run</b></action> on the editor menu pane.",
-                "Click <action title='Refresh' onclick=\"microprofileConfigCallBack.refreshBrowserButton(event)\"><b>Refresh</b></action> in the following browser to see that the download_url in the microprofile-config.properties file is used.<br/>"
+                "In <code>/META-INF/microprofile-config.properties</code> add the following on line 1 or click <action title='Configure port in microprofile-config.properties' onclick=\"microprofileConfigCallBack.addPropToConfigProps(event)\"><b>port=9081</b></action>. Then, click <action title='Run' onclick=\"microprofileConfigCallBack.saveTabbedEditorButton(event)\"><b>Run</b></action> on the editor menu pane.",
+                "Click <action title='Refresh' onclick=\"microprofileConfigCallBack.refreshBrowserButton(event)\"><b>Refresh</b></action> in the following browser to see that the port in the microprofile-config.properties file is used.<br/>"
             ],
             "content":[
                 {
@@ -205,21 +199,18 @@
                     "editorList": [
                       {
                         "displayType":"fileEditor",
-                        "fileName": "Music-download.java",
+                        "fileName": "Cars-Type.java",
                         "preload": [
-                              "package com.music.download;",
+                              "package com.cars.type;",
                               "import javax.inject.Inject;",
                               "import org.eclipse.microprofile.config.inject.ConfigProperty;",
                               "",
-                              "public class Music-download {",
+                              "public class Cars-Type {",
                               "    @Inject",
-                              "    @ConfigProperty(name=\"download_url\", ",
-                              "                   defaultValue=\"ftp://music.com/us-east/download\")",
-                              "    private String downloadUrl;",
+                              "    @ConfigProperty(name=\"port\", ",
+                              "                   defaultValue=\"9080\")",
+                              "    private Integer port;",
                               "",
-                              "    public void download() {",
-                              "        downloadService(downloadUrl);",
-                              "    }",
                               "}"
                         ],
                         "readonly": true,
@@ -239,7 +230,7 @@
               },
               {
                 "displayType":"webBrowser",
-                "url": "https://music.com/play",
+                "url": "https://localhost:8080/cars-type",
                 "browserContent": "/guides/iguide-microprofile-config/html/interactive-guides/microprofile-config/download-from-injection.html",
                 "callback": "(function test(webBrowser) {microprofileConfigCallBack.listenToBrowserForPropFileConfig(webBrowser); })"
               }
@@ -250,13 +241,13 @@
             "title": "Configuring as an environment variable",
             "TOCIndent": 1,
             "description": [
-                "In WebSphere Liberty, you can use server.env files at the installation and server levels to specify environment variables. The runtime level file is located at <code>${wlp.install.dir}/etc/server.env</code> and the server level is located at <code>${server.config.dir}/server.env</code>. If both files exist, the contents of the two files are merged. If the same environment variable is in both files, the value in the server level file takes precedence over the value in the runtime level file. We are going to use the <code>${server.config.dir}/server.env</code> to configure the download_url environment variable.",
+                "In WebSphere Liberty, you can use server.env files at the installation and server levels to specify environment variables. The runtime level file is located at <code>${wlp.install.dir}/etc/server.env</code> and the server level is located at <code>${server.config.dir}/server.env</code>. If both files exist, the contents of the two files are merged. If the same environment variable is in both files, the value in the server level file takes precedence over the value in the runtime level file. We are going to use the <code>${server.config.dir}/server.env</code> to configure the port environment variable.",
                 "",
-                "The server.env file contains the environment settings with a default ordinal of 300 which is higher than the 100 for the microprofile-config.properties, therefore the <code>download_url</code> property value in server.env will be used."
+                "The server.env file contains the environment settings with a default ordinal of 300 which is higher than the 100 for the microprofile-config.properties, therefore the <code>port</code> property value in server.env will be used."
             ],
             "instruction": [
-              "In <code>server.env</code>, add the following after <code>WLP_SKIP_MAXPERMSIZE=true</code> on line 2 or click <action title='Configure download_url in server.env' onclick=\"microprofileConfigCallBack.addPropToServerEnvButton(event)\"><b>download_url=ftp://music.com/us-west/download</b></action>. Then, click <action title='Run' onclick=\"microprofileConfigCallBack.saveTabbedEditorButton(event)\"><b>Run</b></action> on the editor menu pane.",
-              "Click <action title='Refresh' onclick=\"microprofileConfigCallBack.refreshBrowserButton(event)\"><b>Refresh</b></action> in the following browser to see the download_url in the server.env file is used.<br/>"
+              "In <code>server.env</code>, add the following after <code>WLP_SKIP_MAXPERMSIZE=true</code> on line 2 or click <action title='Configure port in server.env' onclick=\"microprofileConfigCallBack.addPropToServerEnvButton(event)\"><b>port=9082</b></action>. Then, click <action title='Run' onclick=\"microprofileConfigCallBack.saveTabbedEditorButton(event)\"><b>Run</b></action> on the editor menu pane.",
+              "Click <action title='Refresh' onclick=\"microprofileConfigCallBack.refreshBrowserButton(event)\"><b>Refresh</b></action> in the following browser to see the port in the server.env file is used.<br/>"
             ],
             "content":[
               {
@@ -266,21 +257,18 @@
                 "editorList": [
                   {
                     "displayType":"fileEditor",
-                    "fileName": "Music-download.java",
+                    "fileName": "Cars-Type.java",
                     "preload": [
-                          "package com.music.download;",
+                          "package com.cars.type;",
                           "import javax.inject.Inject;",
                           "import org.eclipse.microprofile.config.inject.ConfigProperty;",
                           "",
-                          "public class Music-download {",
+                          "public class Cars-Type {",
                           "    @Inject",
-                          "    @ConfigProperty(name=\"download_url\", ",
-                          "                   defaultValue=\"ftp://music.com/us-east/download\")",
-                          "    private String downloadUrl;",
+                          "    @ConfigProperty(name=\"port\", ",
+                          "                    defaultValue=\"9080\")",
+                          "    private Integer port;",
                           "",
-                          "    public void download() {",
-                          "        downloadService(downloadUrl);",
-                          "    }",
                           "}"
                     ],
                     "readonly": true,
@@ -290,7 +278,7 @@
                     "displayType":"fileEditor",
                     "fileName": "META-INF/microprofile-config.properties",
                     "preload": [
-                        "download_url=ftp://music.com/us-south/download"
+                        "port=9081"
                     ],
                     "readonly": true,
                     "save": false
@@ -315,7 +303,7 @@
               },
               {
                 "displayType":"webBrowser",
-                "url": "https://music.com/play",
+                "url": "https://localhost:8080/cars-type",
                 "browserContent": "/guides/iguide-microprofile-config/html/interactive-guides/microprofile-config/download-from-properties-file.html",
                 "callback": "(function test(webBrowser) {microprofileConfigCallBack.listenToBrowserForServerEnvConfig(webBrowser); })"
               }
@@ -332,11 +320,11 @@
                 "The contents of the files are merged in order from top to bottom before server start and are used as the JVM options for the server. Only if none of these files are present, then the values from <code>${wlp.install.dir}/etc/jvm.options</code> are used.",
                 "",
                 "<note>Note: If a property exists in both <code>bootstrap.properties</code> and <code>jvm.options</code>, then the value from <code>jvm.options</code> takes precedence.</note>",
-                "In this example, we are going to use the <code>${server.config.dir}/bootstrap.properties</code> file to configure the download_url system property."
+                "In this example, we are going to use the <code>${server.config.dir}/bootstrap.properties</code> file to configure the port system property."
             ],
             "instruction": [
-                "Add the following <code>download_url=ftp://music.com/asia/download</code> on line 2 of <code>bootstrap.properties</code>, after the WLP_SKIP_MAXPERMSIZE=true or click <action title='Configure download_url in System Properties' onclick=\"microprofileConfigCallBack.addPropToSystemProperties(event)\"><b>download_url=ftp://music.com/asia/download</b></action>. Then, click <action title='Run' onclick=\"microprofileConfigCallBack.saveTabbedEditorButton(event)\"><b>Run</b></action> on the editor menu pane.",
-                "Click <action title='Refresh' onclick=\"microprofileConfigCallBack.refreshBrowserButton(event)\"><b>Refresh</b></action> in the following browser to see the download_url in the bootstrap.properties file is used.<br/>"
+                "Add the following <code>port=9083</code> on line 2 of <code>bootstrap.properties</code>, after the WLP_SKIP_MAXPERMSIZE=true or click <action title='Configure port in System Properties' onclick=\"microprofileConfigCallBack.addPropToSystemProperties(event)\"><b>port=9083</b></action>. Then, click <action title='Run' onclick=\"microprofileConfigCallBack.saveTabbedEditorButton(event)\"><b>Run</b></action> on the editor menu pane.",
+                "Click <action title='Refresh' onclick=\"microprofileConfigCallBack.refreshBrowserButton(event)\"><b>Refresh</b></action> in the following browser to see the port in the bootstrap.properties file is used.<br/>"
             ],
             "content":[
                 {
@@ -346,26 +334,19 @@
                   "editorList": [
                     {
                       "displayType":"fileEditor",
-                      "fileName": "Music-download.java",
+                      "fileName": "Cars-Type.java",
                       "preload": [
-                            "package com.music.download;",
+                            "package com.cars.type;",
                             "import javax.inject.Inject;",
-                            "import org.eclipse.microprofile.config.Config;",
                             "import org.eclipse.microprofile.config.inject.ConfigProperty;",
                             "",
-                            "public class Music-download {",
+                            "public class Cars-Type {",
                             "",
                             "    @Inject",
-                            "    @Config config",
+                            "    @ConfigProperty(name=\"port\", ",
+                            "                   defaultValue=\"9080\")",
+                            "    private Integer port;",
                             "",
-                            "    @Inject",
-                            "    @ConfigProperty(name=\"download_url\", ",
-                            "                   defaultValue=\"ftp://music.com/us-east/download\")",
-                            "    private String downloadUrl;",
-                            "",
-                            "    public void download() {",
-                            "        downloadService(downloadUrl);",
-                            "    }",
                             "}"
                       ],
                       "readonly": true,
@@ -375,7 +356,7 @@
                       "displayType":"fileEditor",
                       "fileName": "META-INF/microprofile-config.properties",
                       "preload": [
-                          "download_url=ftp://music.com/us-south/download"
+                          "port=9081"
                       ],
                       "readonly": true,
                       "save": false
@@ -385,7 +366,7 @@
                       "fileName": "server.env",
                       "preload": [
                         "WLP_SKIP_MAXPERMSIZE=true",
-                        "download_url=ftp://music.com/us-west/download"
+                        "port=9082"
                       ],
                       "readonly": true,
                       "save": false
@@ -409,7 +390,7 @@
                 },
                 {
                   "displayType":"webBrowser",
-                  "url": "https://music.com/play",
+                  "url": "https://localhost:8080/cars-type",
                   "browserContent": "/guides/iguide-microprofile-config/html/interactive-guides/microprofile-config/download-from-property-in-server-env.html",
                   "callback": "(function test(webBrowser) {microprofileConfigCallBack.listenToBrowserForSystemPropConfig(webBrowser); })"
                 }
@@ -424,7 +405,7 @@
             ],
             "instruction": [
                 "On line 2 of the <code>/META-INF/microprofile-config.properties</code> file add or click <action title='Changing the ordinal of microprofile-config.properties' onclick=\"microprofileConfigCallBack.addConfigOrdinalToProps(event)\"><b>config_ordinal=500</b></action>. Then, click <action title='Run' onclick=\"microprofileConfigCallBack.saveTabbedEditorButton(event)\"><b>Run</b></action> on the editor menu pane.",
-                "Click <action title='Refresh' onclick=\"microprofileConfigCallBack.refreshBrowserButton(event)\"><b>Refresh</b></action> in the following browser to see that the <code>download_url</code> in the <code>/META-INF/microprofile-config.properties</code> file is used instead of the one defined in the <code>bootstrap.properties</code> file.<br/>"
+                "Click <action title='Refresh' onclick=\"microprofileConfigCallBack.refreshBrowserButton(event)\"><b>Refresh</b></action> in the following browser to see that the <code>port</code> in the <code>/META-INF/microprofile-config.properties</code> file is used instead of the one defined in the <code>bootstrap.properties</code> file.<br/>"
             ],
             "content":[
               {
@@ -434,26 +415,19 @@
                 "editorList": [
                   {
                     "displayType":"fileEditor",
-                    "fileName": "Music-download.java",
+                    "fileName": "Cars-Type.java",
                     "preload": [
-                          "package com.music.download;",
+                          "package com.cars.type;",
                           "import javax.inject.Inject;",
-                          "import org.eclipse.microprofile.config.Config;",
                           "import org.eclipse.microprofile.config.inject.ConfigProperty;",
                           "",
-                          "public class Music-download {",
+                          "public class Cars-Type {",
                           "",
                           "    @Inject",
-                          "    @Config config",
+                          "    @ConfigProperty(name=\"port\", ",
+                          "                    defaultValue=\"9080\")",
+                          "    private Integer port;",
                           "",
-                          "    @Inject",
-                          "    @ConfigProperty(name=\"download_url\", ",
-                          "                   defaultValue=\"ftp://music.com/us-east/download\")",
-                          "    private String downloadUrl;",
-                          "",
-                          "    public void download() {",
-                          "        downloadService(downloadUrl);",
-                          "    }",
                           "}"
                     ],
                     "readonly": true,
@@ -465,7 +439,7 @@
                     "readonly": false,
                     "save": false,
                     "preload": [
-                        "download_url=ftp://music.com/us-south/download"
+                        "port=9081"
                     ],
                     "readonly": [
                       {
@@ -497,7 +471,7 @@
               },
               {
                 "displayType":"webBrowser",
-                "url": "https://music.com/play",
+                "url": "https://localhost:8080/cars-type",
                 "browserContent": "/guides/iguide-microprofile-config/html/interactive-guides/microprofile-config/download-from-property-in-system-props.html",
                 "callback": "(function test(webBrowser) {microprofileConfigCallBack.listenToBrowserForPropFileConfig(webBrowser); })"
               }
@@ -518,18 +492,14 @@
                             "displayType": "fileEditor",
                             "fileName": "Injection",
                             "preload": [
-                                "package com.music.download;",
+                                "package com.cars.type;",
                                 "import javax.inject.Inject;",
-                                "import org.eclipse.microprofile.config.Config;",
                                 "import org.eclipse.microprofile.config.inject.ConfigProperty;",
                                 "",
-                                "public class MusicDownload {",
+                                "public class Cars-Type {",
                                 "",
-                                "    @Inject",
-                                "    private Config config;",
-                                "",
-                                "    @Inject @ConfigProperty(name=\"download_url\", defaultValue=\"ftp://music.com/us-east/download\");",
-                                "    private String downloadUrl;",
+                                "    @Inject @ConfigProperty(name=\"port\", defaultValue=\"9080\");",
+                                "    private Integer port;",
                                 "",
                                 "}"
                             ],
@@ -545,7 +515,7 @@
                             "displayType": "fileEditor",
                             "fileName": "Properties",
                             "preload": [
-                                "download_url=ftp://music.com/us-south/download"
+                                "port=9081"
                             ],
                             "callback": "(function test(editor) {microprofileConfigCallBack.updatePlaygroundProperties(editor);})"
                         },
@@ -562,7 +532,7 @@
                             "fileName": "System Property",
                             "preload": [
                                 "WLP_SKIP_MAXPERMSIZE=true",
-                                "download_url=ftp://music.com/asia/download"
+                                "port=9083"
                             ],
                             "callback": "(function test(editor) {microprofileConfigCallBack.updatePlaygroundProperties(editor);})"
                         }

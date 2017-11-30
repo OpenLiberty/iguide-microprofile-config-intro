@@ -10,7 +10,7 @@
 *******************************************************************************/
 var microprofileConfigCallBack = (function() {
 
-    var propsFileConfig = "download_url=ftp://music.com/us-south/download";
+    var propsFileConfig = "port=9081";
     var propsFileName = "META-INF/microprofile-config.properties";
     /*
     *  Checks that the correct content was entered in META-INF/microprofile-config.properties
@@ -18,7 +18,7 @@ var microprofileConfigCallBack = (function() {
     var __checkConfigPropsFile = function(content) {
         var match = false;
         try {
-            if(content.match(/\s*download_url=ftp:\/\/music.com\/us-south\/download\s*$/g)){
+            if(content.match(/\s*port=9081\s*$/g)){
                 match = true;
             }
         }
@@ -31,7 +31,7 @@ var microprofileConfigCallBack = (function() {
     var __checkSystemPropsContent = function(content){
         var match = false;
         try {
-            if (content.match(/WLP_SKIP_MAXPERMSIZE=true\s*download_url=ftp:\/\/music.com\/asia\/download\s*$/g)) {
+            if (content.match(/WLP_SKIP_MAXPERMSIZE=true\s*port=9083\s*$/g)) {
                 match = true;
             }
         }
@@ -45,7 +45,7 @@ var microprofileConfigCallBack = (function() {
          var match = false;
          try {
 
-             if(content.match(/\s*download_url=ftp:\/\/music.com\/us-south\/download\s*config_ordinal=500\s*$/g)){
+             if(content.match(/\s*port=9081\s*config_ordinal=500\s*$/g)){
                  match = true;
              }
          }
@@ -83,12 +83,12 @@ var microprofileConfigCallBack = (function() {
     /*
      * Callback and functions to support Configuring steps.
      */
-    var serverEnvDownloadUrlConfig = "download_url=ftp://music.com/us-west/download";
+    var serverEnvDownloadUrlConfig = "port=9082";
     var serverEnvFileName = "server.env";
     var __checkServerEnvContent = function(content) {
         var match = false;
         try {
-            if (content.match(/WLP_SKIP_MAXPERMSIZE=true\s*download_url=ftp:\/\/music.com\/us-west\/download\s*$/g)) {
+            if (content.match(/WLP_SKIP_MAXPERMSIZE=true\s*port=9082\s*$/g)) {
                 match = true;
             }
         }
@@ -160,7 +160,7 @@ var microprofileConfigCallBack = (function() {
                 }
             } else {
                 // display error and provide link to fix it
-		editor.createErrorLinkForCallBack(true, __addConfigOrdinalToProps);
+		        editor.createErrorLinkForCallBack(true, __addConfigOrdinalToProps);
             }
         };
         editor.addSaveListener(__showWebBrowser);
@@ -198,7 +198,7 @@ var microprofileConfigCallBack = (function() {
     };
 
     var systemPropsFileName = "bootstrap.properties";
-    var systemPropsDownloadUrlConfig = "download_url=ftp://music.com/asia/download";
+    var systemPropsDownloadUrlConfig = "port=9083";
     var __addPropToSystemProperties = function() {
         var stepName = stepContent.getCurrentStepName();
         // reset content every time property is added through the button so as to clear out any manual editing
@@ -319,9 +319,9 @@ var microprofileConfigCallBack = (function() {
             // match
             // public class Music-download {
             //   <space or newline here>
-            // @Inject @ConfigProperty(name=\"download_url\", defaultValue=\"ftp://music.com/us-east/download\")
-            // private String downloadUrl;
-            var contentToMatch = "[\\s\\S]*public class Music-download {\\s*@Inject\\s*@ConfigProperty\\s*\\(([\\s\\S]*)\\)\\s*private String downloadUrl;";
+            // @Inject @ConfigProperty(name=\"port\", defaultValue=\"9080\")
+            // private Integer port;
+            var contentToMatch = "[\\s\\S]*public class Cars-Type {\\s*@Inject\\s*@ConfigProperty\\s*\\(([\\s\\S]*)\\)\\s*private Integer port;";
             var regExpToMatch = new RegExp(contentToMatch, "g");
             var groups = regExpToMatch.exec(content);
 
@@ -347,10 +347,10 @@ var microprofileConfigCallBack = (function() {
             var param1 = annotationParams[0];
             var param2 = annotationParams[1];
 
-            if ((param1 === "name=\"download_url\"" &&
-                 param2 === "defaultValue=\"ftp:\/\/music.com\/us-east\/download\"") ||
-                (param2 === "name=\"download_url\"" &&
-                 param1 === "defaultValue=\"ftp:\/\/music.com\/us-east\/download\"")) {
+            if ((param1 === "name=\"port\"" &&
+                 param2 === "defaultValue=\"9080\"") ||
+                (param2 === "name=\"port\"" &&
+                 param1 === "defaultValue=\"9080\"")) {
                 allMatch = true;
             }
         }
@@ -483,7 +483,8 @@ var microprofileConfigCallBack = (function() {
     };
 
     var __addInjectDefaultConfigToEditor = function(stepName) {
-        var injectConfig = "    @Inject @ConfigProperty(name=\"download_url\", defaultValue=\"ftp://music.com/us-east/download\")";
+        var injectConfig = "    @Inject @ConfigProperty(name=\"port\", \n" +
+                           "                            defaultValue=\"9080\")";
         if (!stepName) {
            stepName = stepContent.getCurrentStepName();
         }
@@ -491,19 +492,19 @@ var microprofileConfigCallBack = (function() {
         contentManager.resetEditorContents(stepName);
         var content = contentManager.getEditorContents(stepName);
 
-        contentManager.replaceEditorContents(stepName, 6, 6, injectConfig, 1);
+        contentManager.replaceEditorContents(stepName, 6, 6, injectConfig, 2);
         var readOnlyLines = [];
-        readOnlyLines.push({from: 1, to: 5}, {from: 7, to: 12});
+        readOnlyLines.push({from: 1, to: 5}, {from: 8, to: 10});
         contentManager.markEditorReadOnlyLines(stepName, readOnlyLines);
     };
 
-    var downloadMusicUrl = "https://music.com/play";
+    var carsUrl = "https://localhost:8080/cars-type";
 
     var __populateURL = function(event, stepName) {
         if (event.type === "click" ||
            (event.type === "keypress" && (event.which === 13 || event.which === 32))) {
                // Click or 'Enter' or 'Space' key event...
-            contentManager.setBrowserURL(stepName, downloadMusicUrl);
+            contentManager.setBrowserURL(stepName, carsUrl);
         }
     };
 
@@ -545,10 +546,10 @@ var microprofileConfigCallBack = (function() {
                 contentManager.setPodContentWithRightSlide(stepName,
                     "<p class='maxspace' style='font-size: 13px; margin-top: 0; word-wrap: break-word; color:red;' >[ERROR ] CWWKZ0002E: An exception occurred while starting the application io.openliberty.guides.microprofile.mpconfig." +
                     "The exception message was: com.ibm.ws.container.service.state.StateChangeException:" +
-                    "org.jboss.weld.exceptions.DeploymentException: WELD-001408: Unsatisfied dependencies for type String with qualifiers @configproperty " +
+                    "org.jboss.weld.exceptions.DeploymentException: WELD-001408: Unsatisfied dependencies for type Integer with qualifiers @configproperty " +
                     "at injection point [BackedAnnotatedField] @Inject @configproperty private " +
-                    "io.openliberty.guides.microprofile.InventoryConfig.downloadUrl " +
-                    "at io.openliberty.guides.microprofile.InventoryConfig.downloadUrl(InventoryConfig.java:0)" +
+                    "io.openliberty.guides.microprofile.InventoryConfig.port " +
+                    "at io.openliberty.guides.microprofile.InventoryConfig.port(InventoryConfig.java:0)" +
                     "</p>"
                 );
             } else {
@@ -564,7 +565,7 @@ var microprofileConfigCallBack = (function() {
         if (annotationParams.length === 1) {
             var param1 = annotationParams[0];
 
-            if (param1 === "name=\"download_url\"") {
+            if (param1 === "name=\"port\"") {
                 allMatch = true;
             }
         }
@@ -589,7 +590,7 @@ var microprofileConfigCallBack = (function() {
     };
 
     var __addInjectConfigToEditor = function(stepName) {
-        var injectConfig = "    @Inject @ConfigProperty(name=\"download_url\")";
+        var injectConfig = "    @Inject @ConfigProperty(name=\"port\")";
         if (!stepName) {
            stepName = stepContent.getCurrentStepName();
         }
@@ -599,7 +600,7 @@ var microprofileConfigCallBack = (function() {
 
         contentManager.replaceEditorContents(stepName, 6, 6, injectConfig, 1);
         var readOnlyLines = [];
-        readOnlyLines.push({from: 1, to: 5}, {from: 7, to: 12});
+        readOnlyLines.push({from: 1, to: 5}, {from: 7, to: 9});
         contentManager.markEditorReadOnlyLines(stepName, readOnlyLines);
     };
 
