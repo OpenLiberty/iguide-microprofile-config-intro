@@ -37,6 +37,7 @@ var playground = function(){
             this.__getPropertiesFileProperties();
             this.__getEnvironmentProperties();
             this.__getSystemProperties();
+            this.showProperties();
         },
 
         __getInjectionProperties: function() {
@@ -113,14 +114,15 @@ var playground = function(){
             }
         },
 
-        playgroundListenToEditorForChange: function(editor) {
-            var __updatePlaygroundEnv = function() {
-                this.repopulatePlaygroundConfigs();
-            };
-        },
-
         showProperties: function() {
-
+            var props = this.getProperties();
+            var propsDiv = this.root.find('.properties');
+            propsDiv.empty();
+            for (var key in props) {
+                var prop = $('<li>');
+                prop.html(key + " - " + props[key].value);
+                propsDiv.append(prop);
+            }
         },
 
         __getDefaultOrdinal: function(source) {
