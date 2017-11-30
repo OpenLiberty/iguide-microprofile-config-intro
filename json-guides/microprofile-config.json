@@ -25,7 +25,7 @@
         },
         {
             "name": "ExampleScenario",
-            "title": "Example: Leveraging MicroProfile Config through the devOps pipeline",
+            "title": "Example: DevOps pipeline",
             "description": [
                 "Imagine that you're developing and deploying a microservice called [A] for displaying a list of car types that are currently available for purchase from your business.   This microservice has a dependency on another microservice called [B] which actually provides the currently available list.  As you develop your microservice [A], you need to ensure that it works correctly when it interacts with [B], however, for security and performance you can't call [B] unless you're running in production.  This leads to four versions of [B] available at four different locations that microservice [A] must call as it moves through the pipeline:<br>",
                 "<ul><li>Development - Port: 9080</li><li>Test - Port: 9081</li><li>Quality Assurance - Port: 9082</li><li>Production - Port: 9083</li></ul>",
