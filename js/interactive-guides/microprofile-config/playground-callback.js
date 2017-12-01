@@ -1,6 +1,7 @@
 var playground = function(){
     
     var properties = {};
+    var staging = [];
 
     var _playground = function(root, stepName) {
         this.root = root;
@@ -10,10 +11,10 @@ var playground = function(){
     _playground.prototype = {
         /**
          * 
-         * @param {*} key - 
-         * @param {*} value - 
-         * @param {*} source - 
-         * @param {*} ordinal (optional?) - provided ordinal number. otherwise default based on source
+         * @param {String} key - the name of the property
+         * @param {String} value - the value of the property
+         * @param {String} source - 'inject', 'propFile', 'envVar', 'sysProp'
+         * @param {*} ordinal (optional) - provided ordinal number. otherwise default based on source
          */
         playgroundAddConfig: function(key, value, source, ordinal) {
             if (!ordinal) {
@@ -82,11 +83,21 @@ var playground = function(){
             var propertiesFileContent = contentManager.getTabbedEditorContents('DefaultPlayground', 'Properties');
 
             if (propertiesFileContent) {
-                var lines = propertiesFileContent.split('\n');
-            
-                console.log(lines);
+                var regex = /(^.*?)=(.*$)/gm;
+                var match = null;
+                var ordinal;
+                while ((match = regex.exec(propertiesFileContent)) !== null) {
+                    var key = match[1];
+                    var value = match[2];
+                    if (key === "config_ordinal") {
+                        //TODO: what if ordinal has already been set? (multiple config_ordinal keys)
+                        ordinal = value;
+                    } else {
+                        this.__stageConfigProperty(key, value);                        
+                    }
+                }
 
-                // playgroundAddConfig(propFileKey, propFileValue, 'propFile', ordinal);
+                this.__storeStagedProperties('propFile', ordinal);
             }
         },
 
@@ -94,11 +105,13 @@ var playground = function(){
             var envPropContent = contentManager.getTabbedEditorContents('DefaultPlayground', 'Environment Property');
 
             if (envPropContent) {
-                var lines = envPropContent.split('\n');
-
-                console.log(lines);
-
-                // playgroundAddConfig(propKey, propValue, 'sysProp');
+                var regex = /(^.*?)=(.*$)/gm;
+                var match = null;
+                while ((match = regex.exec(envPropContent)) !== null) {
+                    var key = match[1];
+                    var value = match[2];
+                    this.playgroundAddConfig(key, value, 'envVar');
+                }
             }
         },
 
@@ -106,12 +119,27 @@ var playground = function(){
             var sysPropContent = contentManager.getTabbedEditorContents('DefaultPlayground', 'System Property');
 
             if (sysPropContent) {
-                var lines = sysPropContent.split('\n');
-
-                console.log(lines);
-
-                // playgroundAddConfig(envKey, envValue, 'envVar');
+                var regex = /(^.*?)=(.*$)/gm;
+                var match = null;
+                while ((match = regex.exec(sysPropContent)) !== null) {
+                    var key = match[1];
+                    var value = match[2];
+                    this.playgroundAddConfig(key, value, 'sysProp');
+                }
             }
+        },
+        
+        __stageConfigProperty: function(key, value) {
+            staging.push([key, value]);
+        },
+
+        __storeStagedProperties: function(source, ordinal) {
+            for (var i in staging) {
+                var key = staging[i][0];
+                var value = staging[i][1];
+                this.playgroundAddConfig(key, value, source, ordinal);
+            }
+            staging = [];
         },
 
         showProperties: function() {
@@ -140,20 +168,10 @@ var playground = function(){
         }
     };
 
-    // return {
-    //     repopulatePlaygroundConfigs: repopulatePlaygroundConfigs,
-    //     __getInjectionProperties: __getInjectionProperties,
-    //     __getPropertiesFileProperties: __getPropertiesFileProperties,
-    //     __getEnvironmentProperties: __getEnvironmentProperties,
-    //     __getSystemProperties: __getSystemProperties,
-    //     getProperties: getProperties,
-    //     playgroundListenToEditorForChange: playgroundListenToEditorForChange
-    // };
-
     var _create = function(root, stepName){
         return new _playground(root, stepName);
     };
-  
+
     return {
         create: _create
     };
