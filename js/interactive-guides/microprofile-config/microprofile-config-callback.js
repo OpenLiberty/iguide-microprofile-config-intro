@@ -314,7 +314,7 @@ var microprofileConfigCallBack = (function() {
             //   <space or newline here>
             // @Inject @ConfigProperty(name=\"port\", defaultValue=\"9080\")
             // private Integer port;
-            var contentToMatch = "[\\s\\S]*public class Cars-Type {\\s*@Inject\\s*@ConfigProperty\\s*\\(([\\s\\S]*)\\)\\s*private Integer port;";
+            var contentToMatch = "[\\s\\S]*public class CarTypes {\\s*@Inject\\s*@ConfigProperty\\s*\\(([\\s\\S]*)\\)\\s*private Integer port;";
             var regExpToMatch = new RegExp(contentToMatch, "g");
             var groups = regExpToMatch.exec(content);
 
@@ -491,7 +491,7 @@ var microprofileConfigCallBack = (function() {
         contentManager.markEditorReadOnlyLines(stepName, readOnlyLines);
     };
 
-    var carsUrl = "https://localhost:8080/cars-type";
+    var carsUrl = "https://localhost:8080/car-types";
 
     var __populateURL = function(event, stepName) {
         if (event.type === "click" ||
