@@ -10,10 +10,10 @@ var playground = function(){
     _playground.prototype = {
         /**
          * 
-         * @param {*} key - 
-         * @param {*} value - 
-         * @param {*} source - 
-         * @param {*} ordinal (optional?) - provided ordinal number. otherwise default based on source
+         * @param {String} key - the name of the property
+         * @param {String} value - the value of the property
+         * @param {String} source - 'inject', 'propFile', 'envVar', 'sysProp'
+         * @param {*} ordinal (optional) - provided ordinal number. otherwise default based on source
          */
         playgroundAddConfig: function(key, value, source, ordinal) {
             if (!ordinal) {
@@ -84,9 +84,13 @@ var playground = function(){
             if (propertiesFileContent) {
                 var lines = propertiesFileContent.split('\n');
             
-                console.log(lines);
-
-                // playgroundAddConfig(propFileKey, propFileValue, 'propFile', ordinal);
+                for (var i in lines) {
+                    var regexp = /(^.*?)=(.*$)/;
+                    var match = regexp.exec(lines[i]);
+                    var key = match[1];
+                    var value = match[2];
+                    this.playgroundAddConfig(key, value, 'propFile');
+                }
             }
         },
 
@@ -96,9 +100,13 @@ var playground = function(){
             if (envPropContent) {
                 var lines = envPropContent.split('\n');
 
-                console.log(lines);
-
-                // playgroundAddConfig(propKey, propValue, 'sysProp');
+                for (var i in lines) {
+                    var regexp = /(^.*?)=(.*$)/;
+                    var match = regexp.exec(lines[i]);
+                    var key = match[1];
+                    var value = match[2];
+                    this.playgroundAddConfig(key, value, 'envVar');
+                }
             }
         },
 
@@ -108,9 +116,13 @@ var playground = function(){
             if (sysPropContent) {
                 var lines = sysPropContent.split('\n');
 
-                console.log(lines);
-
-                // playgroundAddConfig(envKey, envValue, 'envVar');
+                for (var i in lines) {
+                    var regexp = /(^.*?)=(.*$)/;
+                    var match = regexp.exec(lines[i]);
+                    var key = match[1];
+                    var value = match[2];
+                    this.playgroundAddConfig(key, value, 'sysProp');
+                }
             }
         },
 
