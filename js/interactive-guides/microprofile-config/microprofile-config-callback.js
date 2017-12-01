@@ -365,6 +365,8 @@ var microprofileConfigCallBack = (function() {
             var content = contentManager.getEditorContents(stepName);
             if (__checkDefaultInjectionEditorContent(content)) {
                 editor.closeEditorErrorBox(stepName);
+                contentManager.showBrowser(stepName, 0);
+                contentManager.addRightSlideClassToBrowser(stepName, 0);
 
                 var index = contentManager.getCurrentInstructionIndex();
                 if(index === 0){
@@ -514,16 +516,8 @@ var microprofileConfigCallBack = (function() {
                 contentManager.markCurrentInstructionComplete(webBrowser.getStepName());
             }
         }
-        webBrowser.addUpdatedURLListener(setBrowserContent);
-    };
-
-    var __listenToBrowserForInjectConfig = function(webBrowser) {
-        var setBrowserContent = function(currentURL) {
-            if (contentManager.getCurrentInstructionIndex(webBrowser.getStepName()) === 1) {
-                webBrowser.setBrowserContent("/guides/iguide-microprofile-config/html/interactive-guides/microprofile-config/download-deployment-exception.html");
-                contentManager.markCurrentInstructionComplete(webBrowser.getStepName());
-            }
-        }
+        // Cannot use contentManager.hideBrowser as the browser is still going thru initialization
+        webBrowser.contentRootElement.addClass("hidden");
         webBrowser.addUpdatedURLListener(setBrowserContent);
     };
 
@@ -627,7 +621,6 @@ var microprofileConfigCallBack = (function() {
         listenToBrowserForServerEnvConfig: __listenToBrowserForServerEnvConfig,
         listenToBrowserForSystemPropConfig: __listenToBrowserForSystemPropConfig,
         listenToBrowserForInjectDefaultConfig:  __listenToBrowserForInjectDefaultConfig,
-        listenToBrowserForInjectConfig: __listenToBrowserForInjectConfig,
         listenToEditorTabChange: __listenToEditorTabChange,
         listenToEditorForInjectConfig: __listenToEditorForInjectConfig,
         addPropToConfigProps: __addPropToConfigProps,
