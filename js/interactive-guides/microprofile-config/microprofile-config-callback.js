@@ -491,7 +491,7 @@ var microprofileConfigCallBack = (function() {
         contentManager.markEditorReadOnlyLines(stepName, readOnlyLines);
     };
 
-    var carsUrl = "https://localhost:8080/car-types";
+    var carsUrl = "https://rentacar.com/car-types";
 
     var __populateURL = function(event, stepName) {
         if (event.type === "click" ||
