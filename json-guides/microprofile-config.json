@@ -95,7 +95,7 @@
                     "displayType":"fileEditor",
                     "fileName": "CarTypes.java",
                     "preload": [
-                        "package com.cars.type;",
+                        "package com.car.types;",
                         "import javax.inject.Inject;",
                         "import org.eclipse.microprofile.config.inject.ConfigProperty;",
                         "",
@@ -139,7 +139,7 @@
                     "displayType":"fileEditor",
                     "fileName": "CarTypes.java",
                     "preload": [
-                        "package com.cars.type;",
+                        "package com.car.types;",
                         "import javax.inject.Inject;",
                         "import org.eclipse.microprofile.config.inject.ConfigProperty;",
                         "",
@@ -193,7 +193,7 @@
                         "displayType":"fileEditor",
                         "fileName": "CarTypes.java",
                         "preload": [
-                              "package com.cars.type;",
+                              "package com.car.types;",
                               "import javax.inject.Inject;",
                               "import org.eclipse.microprofile.config.inject.ConfigProperty;",
                               "",
@@ -250,7 +250,7 @@
                     "displayType":"fileEditor",
                     "fileName": "CarTypes.java",
                     "preload": [
-                          "package com.cars.type;",
+                          "package com.car.types;",
                           "import javax.inject.Inject;",
                           "import org.eclipse.microprofile.config.inject.ConfigProperty;",
                           "",
@@ -326,7 +326,7 @@
                       "displayType":"fileEditor",
                       "fileName": "CarTypes.java",
                       "preload": [
-                            "package com.cars.type;",
+                            "package com.car.types;",
                             "import javax.inject.Inject;",
                             "import org.eclipse.microprofile.config.inject.ConfigProperty;",
                             "",
@@ -406,7 +406,7 @@
                     "displayType":"fileEditor",
                     "fileName": "CarTypes.java",
                     "preload": [
-                          "package com.cars.type;",
+                          "package com.car.types;",
                           "import javax.inject.Inject;",
                           "import org.eclipse.microprofile.config.inject.ConfigProperty;",
                           "",
@@ -480,7 +480,7 @@
                             "displayType": "fileEditor",
                             "fileName": "Injection",
                             "preload": [
-                                "package com.cars.type;",
+                                "package com.car.types;",
                                 "import javax.inject.Inject;",
                                 "import org.eclipse.microprofile.config.inject.ConfigProperty;",
                                 "",
