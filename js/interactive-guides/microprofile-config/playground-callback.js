@@ -105,11 +105,9 @@ var playground = function(){
             var envPropContent = contentManager.getTabbedEditorContents('DefaultPlayground', 'Environment Property');
 
             if (envPropContent) {
-                var lines = envPropContent.split('\n');
-
-                for (var i in lines) {
-                    var regexp = /(^.*?)=(.*$)/;
-                    var match = regexp.exec(lines[i]);
+                var regex = /(^.*?)=(.*$)/gm;
+                var match = null;
+                while ((match = regex.exec(envPropContent)) !== null) {
                     var key = match[1];
                     var value = match[2];
                     this.playgroundAddConfig(key, value, 'envVar');
@@ -121,11 +119,9 @@ var playground = function(){
             var sysPropContent = contentManager.getTabbedEditorContents('DefaultPlayground', 'System Property');
 
             if (sysPropContent) {
-                var lines = sysPropContent.split('\n');
-
-                for (var i in lines) {
-                    var regexp = /(^.*?)=(.*$)/;
-                    var match = regexp.exec(lines[i]);
+                var regex = /(^.*?)=(.*$)/gm;
+                var match = null;
+                while ((match = regex.exec(sysPropContent)) !== null) {
                     var key = match[1];
                     var value = match[2];
                     this.playgroundAddConfig(key, value, 'sysProp');
