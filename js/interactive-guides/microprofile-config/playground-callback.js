@@ -80,57 +80,25 @@ var playground = function(){
         },
 
         __getPropertiesFileProperties: function() {
-            var propertiesFileContent = contentManager.getTabbedEditorContents('DefaultPlayground', 'Properties');
-
-            if (propertiesFileContent) {
-                var regex = /(^.*?)=(.*$)/gm;
-                var match = null;
-                var ordinal;
-                while ((match = regex.exec(propertiesFileContent)) !== null) {
-                    var key = match[1];
-                    var value = match[2];
-                    if (key === "config_ordinal") {
-                        //TODO: what if ordinal has already been set? (multiple config_ordinal keys)
-                        ordinal = value;
-                    } else {
-                        this.__stageConfigProperty(key, value);                        
-                    }
-                }
-
-                this.__storeStagedProperties('propFile', ordinal);
-            }
+            this.__parseAndStorePropertyFiles('Properties', 'propFile');
         },
 
         __getEnvironmentProperties: function() {
-            var envPropContent = contentManager.getTabbedEditorContents('DefaultPlayground', 'Environment Property');
-
-            if (envPropContent) {
-                var regex = /(^.*?)=(.*$)/gm;
-                var match = null;
-                var ordinal;
-                while ((match = regex.exec(envPropContent)) !== null) {
-                    var key = match[1];
-                    var value = match[2];
-                    if (key === "config_ordinal") {
-                        //TODO: what if ordinal has already been set? (multiple config_ordinal keys)
-                        ordinal = value;
-                    } else {
-                        this.__stageConfigProperty(key, value);                        
-                    }
-                }
-
-                this.__storeStagedProperties('envVar', ordinal);
-            }
+            this.__parseAndStorePropertyFiles('Environment Property', 'envVar');
         },
 
         __getSystemProperties: function() {
-            var sysPropContent = contentManager.getTabbedEditorContents('DefaultPlayground', 'System Property');
+            this.__parseAndStorePropertyFiles('System Property', 'sysProp');
+        },
 
-            if (sysPropContent) {
+        __parseAndStorePropertyFiles: function(filename, filetype) {
+            var fileContent = contentManager.getTabbedEditorContents('DefaultPlayground', filename);
+            
+            if (fileContent) {
                 var regex = /(^.*?)=(.*$)/gm;
                 var match = null;
                 var ordinal;
-                while ((match = regex.exec(sysPropContent)) !== null) {
+                while ((match = regex.exec(fileContent)) !== null) {
                     var key = match[1];
                     var value = match[2];
                     if (key === "config_ordinal") {
@@ -141,7 +109,7 @@ var playground = function(){
                     }
                 }
 
-                this.__storeStagedProperties('sysProp', ordinal);
+                this.__storeStagedProperties(filetype, ordinal);
             }
         },
         
