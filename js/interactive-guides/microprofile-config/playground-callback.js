@@ -22,7 +22,7 @@ var playground = function(){
             }
 
             if (properties[key]) {
-                var oldOrdinal = properties[key]['ordinal'];
+                var oldOrdinal = properties[key].ordinal;
                 if (parseInt(ordinal) >= parseInt(oldOrdinal)) {
                     properties[key] = {'ordinal': ordinal, 'value': value};
                 }
@@ -62,13 +62,13 @@ var playground = function(){
 
             // For each line, grab config value and properties
             for (var i in lines) {
-                var lineRegexp = /(?<=\().*(?=\))/g  //grab everything in between the parentheses
+                var lineRegexp = /(?<=\().*(?=\))/g;  //grab everything in between the parentheses
                 var propertyLine = lineRegexp.exec(lines[i]);
 
                 if (propertyLine) {
                     var inlineProperties = propertyLine[0];
-                    var nameRegexp = /name="(.*?)"/g //match 'name' property, with the property value as substring match
-                    var defaultValueRegexp = /defaultValue="(.*?)"/g //match 'defaultValue' property, with the property value as substring match
+                    var nameRegexp = /name="(.*?)"/g; //match 'name' property, with the property value as substring match
+                    var defaultValueRegexp = /defaultValue="(.*?)"/g; //match 'defaultValue' property, with the property value as substring match
                     var name = nameRegexp.exec(inlineProperties);
                     var defaultValue = defaultValueRegexp.exec(inlineProperties);
                     if (name && defaultValue) {
@@ -107,11 +107,19 @@ var playground = function(){
             if (envPropContent) {
                 var regex = /(^.*?)=(.*$)/gm;
                 var match = null;
+                var ordinal;
                 while ((match = regex.exec(envPropContent)) !== null) {
                     var key = match[1];
                     var value = match[2];
-                    this.playgroundAddConfig(key, value, 'envVar');
+                    if (key === "config_ordinal") {
+                        //TODO: what if ordinal has already been set? (multiple config_ordinal keys)
+                        ordinal = value;
+                    } else {
+                        this.__stageConfigProperty(key, value);                        
+                    }
                 }
+
+                this.__storeStagedProperties('envVar', ordinal);
             }
         },
 
@@ -121,11 +129,19 @@ var playground = function(){
             if (sysPropContent) {
                 var regex = /(^.*?)=(.*$)/gm;
                 var match = null;
+                var ordinal;
                 while ((match = regex.exec(sysPropContent)) !== null) {
                     var key = match[1];
                     var value = match[2];
-                    this.playgroundAddConfig(key, value, 'sysProp');
+                    if (key === "config_ordinal") {
+                        //TODO: what if ordinal has already been set? (multiple config_ordinal keys)
+                        ordinal = value;
+                    } else {
+                        this.__stageConfigProperty(key, value);                        
+                    }
                 }
+
+                this.__storeStagedProperties('sysProp', ordinal);
             }
         },
         
