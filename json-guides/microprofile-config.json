@@ -11,14 +11,23 @@
             "title": "What you'll learn",
             "guide_duration" : "25 minutes",
             "description": [
-              "temp"
+              "Explore how to use MicroProfile Config to inject configuration data into a microservice without repackaging the application each time the underlying runtime environment changes. Application configuration properties from multiple sources are combined into a single set of configuration properties and accessed from a single API by your application.  Applications packaged into containers can also use MicroProfile Config to identify configuration changes.<br>",
+              "Using the Microprofile Config API, the sample application illustrates how a configuration property can be assigned a value in multiple configuration sources. Each source is assigned a priority.  The value from the source with the highest priority takes precedence over that from a lower priority.  This method allows code to run unchanged under different configurations for development, test, quality assurance, and production environments since an existing configuration value can easily be overridden as the need arises."
             ],
             "sections" : [
                 {
                   "name": "backgroundConcepts",
                   "title": "Background concepts",
                   "description": [
-                    "temp"
+                    "Microprofile Config uses <b><i>Java CDI</i></b> (Contexts and Dependency Injection) to inject configuration property values directly into an application without requiring user code to retrieve them.  The injected values, set at application startup, are <b><i>static</i></b>.<br>",
+                    "The API combines configuration values from multiple sources, each known as a <b><i>ConfigSource</b></i>.  Each ConfigSource has a specified <b><i>ordinal</i></b>, which is used to determine the importance of the values taken from the associated ConfigSource. A higher ordinal means that the values taken from this ConfigSource will override values from lower-priority ConfigSources. <br><br>MicroProfile Config has 3 default ConfigSources:",
+                    "<ul><li>All <code>META-INF/microprofile-config.properties</code> found on the classpath. (default ordinal = 100).</li><li>Environment variables (default ordinal=300).</li><li>System properties (default ordinal=400).</li></ul>"
+                  ],
+                  "content": [
+                    {
+                      "content": "<div class='ordinalPriorities'><img src='/guides/iguide-microprofile-config/html/interactive-guides/microprofile-config/images/ordinalPriorities.png' alt='Ordinal Priorities'></div>",
+                      "displayType": "pod"
+                    }              
                   ]
                 }
             ]
@@ -162,25 +171,8 @@
             ]
         },
         {
-            "name": "ConfigureDefaultConfigSources",
-            "title": "Using default ConfigSources to provide configuration data",
-            "description": [
-                "A <b>ConfigSource</b> is a source for configured values.  Each ConfigSource has a specified <b>ordinal</b>, which is used to determine the importance of the values taken from the associated ConfigSource. A higher ordinal means that the values taken from this ConfigSource will override values from lower-priority ConfigSources. <br><br>MicroProfile Config has 3 default ConfigSources:",
-                "<ul><li>All <code>META-INF/microprofile-config.properties</code> found on the classpath. (default ordinal = 100).</li><li>Environment variables (default ordinal=300).</li><li>System properties (default ordinal=400).</li></ul>Setting values within any of these ConfigSources will override any default value for the configuration property set in the injection."
-            ],
-            "instruction": [
-            ],
-            "content": [
-                {
-                  "content": "<div class='ordinalPriorities'><img src='/guides/iguide-microprofile-config/html/interactive-guides/microprofile-config/images/ordinalPriorities.png' alt='Ordinal Priorities'></div>",
-                  "displayType": "pod"
-                }              
-            ]
-        },
-        {
             "name": "ConfigurePropsFile",
             "title": "Configuring with the properties file",
-            "TOCIndent": 1,
             "description": [
                 "You can provide the <code>/META-INF/microprofile-config.properties</code> file as part of your packaged application. The <code>/META-INF/microprofile-config.properties</code> file may be created in multiple locations, but you must specify these file locations in your classpath.",
                 "",
@@ -239,7 +231,6 @@
         {
             "name": "ConfigureAsEnvVar",
             "title": "Configuring as an environment variable",
-            "TOCIndent": 1,
             "description": [
                 "In WebSphere Liberty, you can use server.env files at the installation and server levels to specify environment variables. The runtime level file is located at <code>${wlp.install.dir}/etc/server.env</code> and the server level is located at <code>${server.config.dir}/server.env</code>. If both files exist, the contents of the two files are merged. If the same environment variable is in both files, the value in the server level file takes precedence over the value in the runtime level file. We are going to use the <code>${server.config.dir}/server.env</code> to configure the port environment variable.",
                 "",
@@ -312,7 +303,6 @@
         {
             "name": "ConfigureAsSysProp",
             "title": "Configuring as a system property",
-            "TOCIndent": 1,
             "description": [
                 "Default configuration variables can be retrieved from the Java system properties and these variables have a default ordinal of 400. Liberty adds properties from the server’s <code>bootstrap.properties</code> and <code>jvm.options</code> files to the Java system properties. The bootstrap.properties file does not exist by default until you create it. You can create and configure the jvm.options file in multiple locations within your Liberty installation directory.",
                 "",
@@ -399,7 +389,6 @@
         {
             "name": "UpdateOrdinal",
             "title": "Changing the ordinal of a ConfigSource",
-            "TOCIndent": 1,
             "description": [
                 "You can override the default ordinal value of a ConfigSource by adding the <code>config_ordinal</code> property to your configuration source file. The configuration source with the highest ordinal value takes precedence."
             ],
@@ -480,7 +469,6 @@
         {
             "name": "DefaultPlayground",
             "title": "Default ConfigSources playground",
-            "TOCIndent": 1,
             "description": [
                 "temp"
             ],
