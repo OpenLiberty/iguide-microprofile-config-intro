@@ -11,7 +11,7 @@
             "title": "What you'll learn",
             "guide_duration" : "25 minutes",
             "description": [
-              "Explore how to use MicroProfile Config to inject configuration data into a microservice without repackaging the application each time the underlying runtime environment changes. Application configuration properties from multiple sources are combined into a single set of configuration properties and accessed from a single API by your application.  Applications packaged into containers can also use MicroProfile Config to identify configuration changes.<br>",
+              "Explore how to use <a href='https://github.com/eclipse/microprofile-config' target='_blank'>MicroProfile Config</a> to inject configuration data into a microservice without repackaging the application each time the underlying runtime environment changes. Application configuration properties from multiple sources are combined into a single set of configuration properties and accessed from a single API by your application.  Applications packaged into containers can also use MicroProfile Config to identify configuration changes.<br>",
               "Using the Microprofile Config API, the sample application illustrates how a configuration property can be assigned a value in multiple configuration sources. Each source is assigned a priority.  The value from the source with the highest priority takes precedence over that from a lower priority.  This method allows code to run unchanged under different configurations for development, test, quality assurance, and production environments since an existing configuration value can easily be overridden as the need arises."
             ],
             "sections" : [
