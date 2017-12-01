@@ -1,6 +1,7 @@
 var playground = function(){
     
     var properties = {};
+    var staging = [];
 
     var _playground = function(root, stepName) {
         this.root = root;
@@ -82,15 +83,21 @@ var playground = function(){
             var propertiesFileContent = contentManager.getTabbedEditorContents('DefaultPlayground', 'Properties');
 
             if (propertiesFileContent) {
-                var lines = propertiesFileContent.split('\n');
-            
-                for (var i in lines) {
-                    var regexp = /(^.*?)=(.*$)/;
-                    var match = regexp.exec(lines[i]);
+                var regex = /(^.*?)=(.*$)/gm;
+                var match = null;
+                var ordinal;
+                while ((match = regex.exec(propertiesFileContent)) !== null) {
                     var key = match[1];
                     var value = match[2];
-                    this.playgroundAddConfig(key, value, 'propFile');
+                    if (key === "config_ordinal") {
+                        //TODO: what if ordinal has already been set? (multiple config_ordinal keys)
+                        ordinal = value;
+                    } else {
+                        this.__stageConfigProperty(key, value);                        
+                    }
                 }
+
+                this.__storeStagedProperties('propFile', ordinal);
             }
         },
 
@@ -125,6 +132,19 @@ var playground = function(){
                 }
             }
         },
+        
+        __stageConfigProperty: function(key, value) {
+            staging.push([key, value]);
+        },
+
+        __storeStagedProperties: function(source, ordinal) {
+            for (var i in staging) {
+                var key = staging[i][0];
+                var value = staging[i][1];
+                this.playgroundAddConfig(key, value, source, ordinal);
+            }
+            staging = [];
+        },
 
         showProperties: function() {
             var props = this.getProperties();
@@ -152,20 +172,10 @@ var playground = function(){
         }
     };
 
-    // return {
-    //     repopulatePlaygroundConfigs: repopulatePlaygroundConfigs,
-    //     __getInjectionProperties: __getInjectionProperties,
-    //     __getPropertiesFileProperties: __getPropertiesFileProperties,
-    //     __getEnvironmentProperties: __getEnvironmentProperties,
-    //     __getSystemProperties: __getSystemProperties,
-    //     getProperties: getProperties,
-    //     playgroundListenToEditorForChange: playgroundListenToEditorForChange
-    // };
-
     var _create = function(root, stepName){
         return new _playground(root, stepName);
     };
-  
+
     return {
         create: _create
     };
