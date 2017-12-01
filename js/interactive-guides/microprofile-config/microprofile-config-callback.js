@@ -535,7 +535,7 @@ var microprofileConfigCallBack = (function() {
                 editor.closeEditorErrorBox(stepName);
                 contentManager.markCurrentInstructionComplete(stepName);
                 contentManager.setPodContentWithRightSlide(stepName,
-                    "<p class='maxspace' style='font-size: 13px; margin-top: 0; word-wrap: break-word; color:red;' >[ERROR ] CWWKZ0002E: An exception occurred while starting the application io.openliberty.guides.microprofile.mpconfig." +
+                    "<p  style='font-size: 13px; margin-top: 0; word-wrap: break-word; line-height: inherit;' >The following exception occurs following application startup because no default value has been set:<br/><br/> <span style='color:red'>[ERROR ] CWWKZ0002E</span>: An exception occurred while starting the application io.openliberty.guides.microprofile.mpconfig." +
                     "The exception message was: com.ibm.ws.container.service.state.StateChangeException:" +
                     "org.jboss.weld.exceptions.DeploymentException: WELD-001408: Unsatisfied dependencies for type Integer with qualifiers @configproperty " +
                     "at injection point [BackedAnnotatedField] @Inject @configproperty private " +
