@@ -36,10 +36,10 @@
             "name": "ExampleScenario",
             "title": "Example: DevOps pipeline",
             "description": [
-                "Imagine that you're developing and deploying a microservice called [A] for displaying the types of cars that are currently available for purchase from your business.   This microservice has a dependency on another microservice called [B] which actually provides the currently available list.  As you develop your microservice [A], you need to ensure that it works correctly when it interacts with [B], however, for security and performance you can't call [B] on the production port unless you're running in production.  This leads to four running versions of [B] available at four different port locations that microservice [A] must call as it moves through the devOps pipeline:<br>",
+                "Imagine that you're developing and deploying a DisplayCarTypes microservice for displaying the types of cars that are currently available for purchase from your business.   This microservice has a dependency on another microservice called ObtainCarTypes which provides the currently available list.  As you develop your displayCarTypes microservice, you need to ensure that it works correctly when it interacts with the ObtainCarTypes microservice.  For performance and security reasons we don't want to test against the production version of ObtainCarTypes during the development pipeline.  This leads to running four instances of the ObtainCarTypes microservice that are to be used at the different stages of the devOps pipeline:",
+                "",
                 "<ul><li>Development - Port: 9080</li><li>Test - Port: 9081</li><li>Quality Assurance - Port: 9082</li><li>Production - Port: 9083</li></ul>",
-                "In the following pages, you will set a configuration property for the port value to indicate from which microservice the list of available car types will come."
-            ]
+                "As you progress though this guide, you will set a configuration property for the port value to specify which of the four ObtainCarTypes instances the DisplayCarTypes microservice should connect to."            ]
         },
         {
             "name": "EnableMPConfig",
@@ -48,7 +48,8 @@
                 "Begin by enabling the MicroProfile Config 1.1 feature in your <code>server.xml</code> file. This feature allows you to use the MicroProfile Config API to externalize configuration data."
             ],
             "instruction": [
-              "Add the following element declaration inside the featureManager element of the <code>server.xml</code> file, or click <action tabindex='0' role='button' title='Enable MicroProfile Config' aria-label='Enable MicroProfile Config' onkeypress=\"microprofileConfigCallBack.addMicroProfileConfigFeatureButton(event)\" onclick=\"microprofileConfigCallBack.addMicroProfileConfigFeatureButton(event)\"><b>&lt;feature&gtmpConfig-1.1&lt;/feature&gt;</b></action>. Then, click <action tabindex='0' role='button' title='Save' aria-label='Save' onkeypress=\"microprofileConfigCallBack.saveButton(event)\" onclick=\"microprofileConfigCallBack.saveButton(event)\"><b>Save</b></action> on the editor menu pane."            ],
+              "Add the following element declaration inside the featureManager element of the <code>server.xml</code> file, or click <action tabindex='0' role='button' title='Enable MicroProfile Config' aria-label='Enable MicroProfile Config' onkeypress=\"microprofileConfigCallBack.addMicroProfileConfigFeatureButton(event)\" onclick=\"microprofileConfigCallBack.addMicroProfileConfigFeatureButton(event)\"><b>&lt;feature&gtmpConfig-1.1&lt;/feature&gt;</b></action>. Then, click <action tabindex='0' role='button' title='Save' aria-label='Save' onkeypress=\"microprofileConfigCallBack.saveButton(event)\" onclick=\"microprofileConfigCallBack.saveButton(event)\"><b>Save</b></action> on the editor menu pane."
+            ],
             "content":[
               {
                 "displayType":"fileEditor",
@@ -184,8 +185,7 @@
             ],
             "content":[
                 {
-                    "displayType":
-                     "tabbedEditor",
+                    "displayType": "tabbedEditor",
                     "activeTab": "META-INF/microprofile-config.properties",
                     "callback": "(function test(tabbedEditor) {microprofileConfigCallBack.listenToEditorTabChange(tabbedEditor, 0, 'META-INF/microprofile-config.properties'); })",
                     "editorList": [
@@ -232,7 +232,7 @@
             "name": "ConfigureAsEnvVar",
             "title": "Configuring with an environment variable",
             "description": [
-                "In Open Liberty, you can use <code>server.env</code> files at the installation and server levels to specify environment variables. The runtime level file is located at <code>${wlp.install.dir}/etc/server.env</code> and the server level is located at <code>${server.config.dir}/server.env</code>. If both files exist, the contents of the two files are merged. If the same environment variable is in both files, the value in the server level file takes precedence over the value in the runtime level file. We are going to use the <code>${server.config.dir}/server.env</code> to configure the <code>port</code> environment variable.",
+                "In Open Liberty, you can use <code>server.env</code> files at the installation and server levels to specify environment variables. The installation level file is located at <code>${wlp.install.dir}/etc/server.env</code> and the server level is located at <code>${server.config.dir}/server.env</code>. If both files exist, the contents of the two files are merged. If the same environment variable is in both files, the value in the server level file takes precedence over the value in the installation level file. We are going to use the <code>${server.config.dir}/server.env</code> to configure the <code>port</code> environment variable.",
                 "",
                 "The <code>server.env</code> file contains the environment settings with a default ordinal of 300 which is higher than the 100 for the <code>/META-INF/microprofile-config.properties</code>, therefore the <code>port</code> property value in <code>server.env</code> will be used."
             ],
