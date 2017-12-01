@@ -11,7 +11,7 @@
             "title": "What you'll learn",
             "guide_duration" : "25 minutes",
             "description": [
-              "Explore how to use <a href='https://github.com/eclipse/microprofile-config' target='_blank'>MicroProfile Config</a> to inject configuration data into a microservice without repackaging the application each time the underlying runtime environment changes. Application configuration properties from multiple sources are combined into a single set of configuration properties and accessed from a single API by your application.  Applications packaged into containers can also use MicroProfile Config to identify configuration changes.<br>",
+              "Explore how to inject configuration data into a microservice without repackaging the application each time the underlying runtime environment changes.  <a href='https://microprofile.io/' target='_blank'>MicroProfile</a> makes building configurable microservices easy with its <a href='https://github.com/eclipse/microprofile-config' target='_blank'>MicroProfile Config</a> feature. Application configuration properties from multiple sources are combined into a single set of configuration properties and accessed from a single API by your application.<br>",
               "Using the Microprofile Config API, the sample application illustrates how a configuration property can be assigned a value in multiple configuration sources. Each source is assigned a priority.  The value from the source with the highest priority takes precedence over that from a lower priority.  This method allows code to run unchanged under different configurations for development, test, quality assurance, and production environments since an existing configuration value can easily be overridden as the need arises."
             ],
             "sections" : [
@@ -20,8 +20,8 @@
                   "title": "Background concepts",
                   "description": [
                     "Microprofile Config uses <b><i>Java CDI</i></b> (Contexts and Dependency Injection) to inject configuration property values directly into an application without requiring user code to retrieve them.  The injected values, set at application startup, are <b><i>static</i></b>.<br>",
-                    "The API combines configuration values from multiple sources, each known as a <b><i>ConfigSource</b></i>.  Each ConfigSource has a specified <b><i>ordinal</i></b>, which is used to determine the importance of the values taken from the associated ConfigSource. A higher ordinal means that the values taken from this ConfigSource will override values from lower-priority ConfigSources. <br><br>MicroProfile Config has 3 default ConfigSources:",
-                    "<ul><li>All <code>META-INF/microprofile-config.properties</code> found on the classpath. (default ordinal = 100).</li><li>Environment variables (default ordinal=300).</li><li>System properties (default ordinal=400).</li></ul>"
+                    "The API combines configuration values from multiple sources, each known as a <b><i>ConfigSource</b></i>.  Each ConfigSource has a specified priority, defined by its <b><i>ordinal</i></b> value. A higher ordinal means that the values taken from this ConfigSource will override values from ConfigSources with a lower ordinal value. <br><br>MicroProfile Config has 3 default ConfigSources:",
+                    "<ul><li>All <code>META-INF/microprofile-config.properties</code> found on the classpath (default ordinal = 100).</li><li>Environment variables (default ordinal = 300).</li><li>System properties (default ordinal = 400).</li></ul>"
                   ],
                   "content": [
                     {
@@ -179,8 +179,8 @@
                 "The properties file contains settings with a default ordinal of 100 which overrides the injected default values with the same key, so the <code>port</code> property value in the <code>microprofile-config.properties</code> will be used."
             ],
             "instruction": [
-                "In <code>/META-INF/microprofile-config.properties</code> add the following on line 1 or click <action title='Configure port in microprofile-config.properties' onclick=\"microprofileConfigCallBack.addPropToConfigProps(event)\"><b>port=9081</b></action>. Then, click <action title='Run' onclick=\"microprofileConfigCallBack.saveTabbedEditorButton(event)\"><b>Run</b></action> on the editor menu pane.",
-                "Click <action title='Refresh' onclick=\"microprofileConfigCallBack.refreshBrowserButton(event)\"><b>Refresh</b></action> in the following browser to see that the port in the <code>/META-INF/microprofile-config.properties</code> file is used.<br/>"
+                "In <code>/META-INF/microprofile-config.properties</code>, add the following on line 1 or click <action title='Configure port in microprofile-config.properties' onclick=\"microprofileConfigCallBack.addPropToConfigProps(event)\"><b>port=9081</b></action>. Then, click <action title='Run' onclick=\"microprofileConfigCallBack.saveTabbedEditorButton(event)\"><b>Run</b></action> on the editor menu pane.",
+                "Click <action title='Refresh' onclick=\"microprofileConfigCallBack.refreshBrowserButton(event)\"><b>Refresh</b></action> in the following browser to see that the port value in the <code>/META-INF/microprofile-config.properties</code> file is used.<br/>"
             ],
             "content":[
                 {
@@ -232,13 +232,13 @@
             "name": "ConfigureAsEnvVar",
             "title": "Configuring with an environment variable",
             "description": [
-                "In Open Liberty, you can use <code>server.env</code> files at the installation and server levels to specify environment variables. The runtime level file is located at <code>${wlp.install.dir}/etc/server.env</code> and the server level is located at <code>${server.config.dir}/server.env</code>. If both files exist, the contents of the two files are merged. If the same environment variable is in both files, the value in the server level file takes precedence over the value in the runtime level file. We are going to use the <code>${server.config.dir}/server.env</code> to configure the port environment variable.",
+                "In Open Liberty, you can use <code>server.env</code> files at the installation and server levels to specify environment variables. The runtime level file is located at <code>${wlp.install.dir}/etc/server.env</code> and the server level is located at <code>${server.config.dir}/server.env</code>. If both files exist, the contents of the two files are merged. If the same environment variable is in both files, the value in the server level file takes precedence over the value in the runtime level file. We are going to use the <code>${server.config.dir}/server.env</code> to configure the <code>port</code> environment variable.",
                 "",
                 "The <code>server.env</code> file contains the environment settings with a default ordinal of 300 which is higher than the 100 for the <code>/META-INF/microprofile-config.properties</code>, therefore the <code>port</code> property value in <code>server.env</code> will be used."
             ],
             "instruction": [
-              "In <code>server.env</code>, add the following after <code>WLP_SKIP_MAXPERMSIZE=true</code> on line 2 or click <action title='Configure port in server.env' onclick=\"microprofileConfigCallBack.addPropToServerEnvButton(event)\"><b>port=9082</b></action>. Then, click <action title='Run' onclick=\"microprofileConfigCallBack.saveTabbedEditorButton(event)\"><b>Run</b></action> on the editor menu pane.",
-              "Click <action title='Refresh' onclick=\"microprofileConfigCallBack.refreshBrowserButton(event)\"><b>Refresh</b></action> in the following browser to see the port in the server.env file is used.<br/>"
+              "In <code>server.env</code>, add the following on line 1 or click <action title='Configure port in server.env' onclick=\"microprofileConfigCallBack.addPropToServerEnvButton(event)\"><b>port=9082</b></action>. Then, click <action title='Run' onclick=\"microprofileConfigCallBack.saveTabbedEditorButton(event)\"><b>Run</b></action> on the editor menu pane.",
+              "Click <action title='Refresh' onclick=\"microprofileConfigCallBack.refreshBrowserButton(event)\"><b>Refresh</b></action> in the following browser to see the port value in the server.env file is used.<br/>"
             ],
             "content":[
               {
@@ -278,7 +278,6 @@
                     "displayType":"fileEditor",
                     "fileName": "server.env",
                     "preload": [
-                      "WLP_SKIP_MAXPERMSIZE=true",
                       ""
                     ],
                     "readonly": [
@@ -310,11 +309,11 @@
                 "The contents of these files are merged, with latter files taking precedence in the case of duplicate properties. If none of these files are present, then <code>${wlp.install.dir}/etc/jvm.options</code> will be used.",
                 "",
                 "<note>Note: If a property exists in both <code>bootstrap.properties</code> and <code>jvm.options</code>, then the value from <code>jvm.options</code> takes precedence.</note>",
-                "In this example, we are going to use the <code>${server.config.dir}/bootstrap.properties</code> file to configure the port system property."
+                "In this example, we are going to use the <code>${server.config.dir}/bootstrap.properties</code> file to configure the <code>port</code> system property."
             ],
             "instruction": [
-                "Add the following <code>port=9083</code> on line 2 of <code>bootstrap.properties</code>, after the WLP_SKIP_MAXPERMSIZE=true or click <action title='Configure port in System Properties' onclick=\"microprofileConfigCallBack.addPropToSystemProperties(event)\"><b>port=9083</b></action>. Then, click <action title='Run' onclick=\"microprofileConfigCallBack.saveTabbedEditorButton(event)\"><b>Run</b></action> on the editor menu pane.",
-                "Click <action title='Refresh' onclick=\"microprofileConfigCallBack.refreshBrowserButton(event)\"><b>Refresh</b></action> in the following browser to see the port in the <code>bootstrap.properties</code> file is used.<br/>"
+                "Add the following port value on line 1 of <code>bootstrap.properties</code>, or click <action title='Configure port in System Properties' onclick=\"microprofileConfigCallBack.addPropToSystemProperties(event)\"><b>port=9083</b></action>. Then, click <action title='Run' onclick=\"microprofileConfigCallBack.saveTabbedEditorButton(event)\"><b>Run</b></action> on the editor menu pane.",
+                "Click <action title='Refresh' onclick=\"microprofileConfigCallBack.refreshBrowserButton(event)\"><b>Refresh</b></action> in the following browser to see the port value in the <code>bootstrap.properties</code> file is used.<br/>"
             ],
             "content":[
                 {
@@ -355,7 +354,6 @@
                       "displayType":"fileEditor",
                       "fileName": "server.env",
                       "preload": [
-                        "WLP_SKIP_MAXPERMSIZE=true",
                         "port=9082"
                       ],
                       "readonly": true,
@@ -365,7 +363,7 @@
                         "displayType":"fileEditor",
                         "fileName": "bootstrap.properties",
                         "preload": [
-                              "WLP_SKIP_MAXPERMSIZE=true"
+                              ""
                         ],
                         "readonly": [
                             {
@@ -442,7 +440,6 @@
                     "displayType":"fileEditor",
                     "fileName": "server.env",
                     "preload": [
-                      "WLP_SKIP_MAXPERMSIZE=true",
                       ""
                     ],
                     "readonly": true,
@@ -452,7 +449,6 @@
                     "displayType":"fileEditor",
                     "fileName": "bootstrap.properties",
                     "preload": [
-                          "WLP_SKIP_MAXPERMSIZE=true"
                      ],
                     "readonly": true,
                     "save": false                 }
@@ -519,7 +515,6 @@
                             "displayType": "fileEditor",
                             "fileName": "System Property",
                             "preload": [
-                                "WLP_SKIP_MAXPERMSIZE=true",
                                 "port=9083"
                             ],
                             "callback": "(function test(editor) {microprofileConfigCallBack.updatePlaygroundProperties(editor);})"

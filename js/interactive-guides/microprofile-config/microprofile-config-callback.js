@@ -31,7 +31,7 @@ var microprofileConfigCallBack = (function() {
     var __checkSystemPropsContent = function(content){
         var match = false;
         try {
-            if (content.match(/WLP_SKIP_MAXPERMSIZE=true\s*port=9083\s*$/g)) {
+            if (content.match(/\s*port=9083\s*$/g)) {
                 match = true;
             }
         }
@@ -86,7 +86,7 @@ var microprofileConfigCallBack = (function() {
     var __checkServerEnvContent = function(content) {
         var match = false;
         try {
-            if (content.match(/WLP_SKIP_MAXPERMSIZE=true\s*port=9082\s*$/g)) {
+            if (content.match(/\s*port=9082\s*$/g)) {
                 match = true;
             }
         }
@@ -179,15 +179,7 @@ var microprofileConfigCallBack = (function() {
         var stepName = stepContent.getCurrentStepName();
         // reset content every time property is added through the button so as to clear out any manual editing
         contentManager.resetTabbedEditorContents(stepName, serverEnvFileName);
-        contentManager.replaceTabbedEditorContents(stepName, serverEnvFileName, 2, 2, serverEnvDownloadUrlConfig);
-
-        var readOnlyLines = [];
-        readOnlyLines.push({
-            from: 1,
-            to: 1
-        });
-
-        contentManager.markTabbedEditorReadOnlyLines(stepName, serverEnvFileName, readOnlyLines);
+        contentManager.replaceTabbedEditorContents(stepName, serverEnvFileName, 1, 1, serverEnvDownloadUrlConfig);
     };
 
     var systemPropsFileName = "bootstrap.properties";
@@ -196,15 +188,7 @@ var microprofileConfigCallBack = (function() {
         var stepName = stepContent.getCurrentStepName();
         // reset content every time property is added through the button so as to clear out any manual editing
         contentManager.resetTabbedEditorContents(stepName, systemPropsFileName);
-        contentManager.replaceTabbedEditorContents(stepName, systemPropsFileName, 2, 2, systemPropsDownloadUrlConfig);
-
-        var readOnlyLines = [];
-        readOnlyLines.push({
-            from: 1,
-            to: 1
-        });
-
-        contentManager.markTabbedEditorReadOnlyLines(stepName, systemPropsFileName, readOnlyLines);
+        contentManager.replaceTabbedEditorContents(stepName, systemPropsFileName, 1, 1, systemPropsDownloadUrlConfig);
     };
 
     var __listenToBrowserForPropFileConfig = function(webBrowser) {
