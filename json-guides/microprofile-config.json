@@ -467,7 +467,15 @@
             "name": "DefaultPlayground",
             "title": "Default ConfigSources playground",
             "description": [
-                "temp"
+                "Now that you've learned the various ways of defining configuration properties, you can see how they all work together.",
+                "<br>Here are the four places to define properties:",
+                "<ul>",
+                "<li>Using <code>@Inject @ConfigProperty</code> in your application code",
+                "<li><code>/META-INF/microprofile-config.properties</code>",
+                "<li><code>server.env</code>",
+                "<li><code>bootstrap.properties</code>",
+                "</ul>",
+                "You can try defining various properties in the files in the editor."
             ],
             "content": [
                 {
