@@ -22,7 +22,7 @@ var playground = function(){
             }
 
             if (properties[key]) {
-                var oldOrdinal = properties[key]['ordinal'];
+                var oldOrdinal = properties[key].ordinal;
                 if (parseInt(ordinal) >= parseInt(oldOrdinal)) {
                     properties[key] = {'ordinal': ordinal, 'value': value};
                 }
@@ -62,13 +62,13 @@ var playground = function(){
 
             // For each line, grab config value and properties
             for (var i in lines) {
-                var lineRegexp = /(?<=\().*(?=\))/g  //grab everything in between the parentheses
+                var lineRegexp = /(?<=\().*(?=\))/g;  //grab everything in between the parentheses
                 var propertyLine = lineRegexp.exec(lines[i]);
 
                 if (propertyLine) {
                     var inlineProperties = propertyLine[0];
-                    var nameRegexp = /name="(.*?)"/g //match 'name' property, with the property value as substring match
-                    var defaultValueRegexp = /defaultValue="(.*?)"/g //match 'defaultValue' property, with the property value as substring match
+                    var nameRegexp = /name="(.*?)"/g; //match 'name' property, with the property value as substring match
+                    var defaultValueRegexp = /defaultValue="(.*?)"/g; //match 'defaultValue' property, with the property value as substring match
                     var name = nameRegexp.exec(inlineProperties);
                     var defaultValue = defaultValueRegexp.exec(inlineProperties);
                     if (name && defaultValue) {
@@ -80,13 +80,25 @@ var playground = function(){
         },
 
         __getPropertiesFileProperties: function() {
-            var propertiesFileContent = contentManager.getTabbedEditorContents('DefaultPlayground', 'Properties');
+            this.__parseAndStorePropertyFiles('Properties', 'propFile');
+        },
 
-            if (propertiesFileContent) {
+        __getEnvironmentProperties: function() {
+            this.__parseAndStorePropertyFiles('Environment Property', 'envVar');
+        },
+
+        __getSystemProperties: function() {
+            this.__parseAndStorePropertyFiles('System Property', 'sysProp');
+        },
+
+        __parseAndStorePropertyFiles: function(filename, filetype) {
+            var fileContent = contentManager.getTabbedEditorContents('DefaultPlayground', filename);
+            
+            if (fileContent) {
                 var regex = /(^.*?)=(.*$)/gm;
                 var match = null;
                 var ordinal;
-                while ((match = regex.exec(propertiesFileContent)) !== null) {
+                while ((match = regex.exec(fileContent)) !== null) {
                     var key = match[1];
                     var value = match[2];
                     if (key === "config_ordinal") {
@@ -97,35 +109,7 @@ var playground = function(){
                     }
                 }
 
-                this.__storeStagedProperties('propFile', ordinal);
-            }
-        },
-
-        __getEnvironmentProperties: function() {
-            var envPropContent = contentManager.getTabbedEditorContents('DefaultPlayground', 'Environment Property');
-
-            if (envPropContent) {
-                var regex = /(^.*?)=(.*$)/gm;
-                var match = null;
-                while ((match = regex.exec(envPropContent)) !== null) {
-                    var key = match[1];
-                    var value = match[2];
-                    this.playgroundAddConfig(key, value, 'envVar');
-                }
-            }
-        },
-
-        __getSystemProperties: function() {
-            var sysPropContent = contentManager.getTabbedEditorContents('DefaultPlayground', 'System Property');
-
-            if (sysPropContent) {
-                var regex = /(^.*?)=(.*$)/gm;
-                var match = null;
-                while ((match = regex.exec(sysPropContent)) !== null) {
-                    var key = match[1];
-                    var value = match[2];
-                    this.playgroundAddConfig(key, value, 'sysProp');
-                }
+                this.__storeStagedProperties(filetype, ordinal);
             }
         },
         
