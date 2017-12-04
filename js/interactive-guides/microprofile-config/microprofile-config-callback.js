@@ -255,8 +255,6 @@ var microprofileConfigCallBack = (function() {
                 editorFileName = serverEnvFileName;
             } else if ((stepName === "ConfigurePropsFile") || (stepName === "UpdateOrdinal")) {
                 editorFileName = "META-INF/microprofile-config.properties";
-            } else if (stepName === "ConfigureViaInject") {
-                editorFileName === "Music-download.java";
             } else if (stepName === "ConfigureAsSysProp") {
                 editorFileName = "bootstrap.properties";
             }
@@ -294,7 +292,7 @@ var microprofileConfigCallBack = (function() {
         var annotationParams = null;
         try {
             // match
-            // public class Music-download {
+            // public class CarTypes {
             //   <space or newline here>
             // @Inject @ConfigProperty(name=\"port\", defaultValue=\"9080\")
             // private Integer port;
