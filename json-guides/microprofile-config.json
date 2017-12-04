@@ -468,14 +468,14 @@
             "title": "Default ConfigSources playground",
             "description": [
                 "Now that you've learned the various ways of defining configuration properties, you can see how they all work together.",
-                "<br>Here are the four places to define properties:",
+                "<br>To review, here are the four places to inject properties:",
                 "<ul>",
-                "<li>Using <code>@Inject @ConfigProperty</code> in your application code (no ordinal)",
-                "<li><code>/META-INF/microprofile-config.properties</code> (default ordinal = 100)",
-                "<li><code>server.env</code> (default ordinal = 300)",
-                "<li><code>bootstrap.properties</code> (default ordinal = 400)",
+                "<li>Java annotations <code>@Inject @ConfigProperty</code> in <code>CarTypes.java</code> (no ordinal)",
+                "<li>Properties file through <code>/META-INF/microprofile-config.properties</code> (default ordinal = 100)",
+                "<li>Environment variables through <code>server.env</code> (default ordinal = 300)",
+                "<li>System properties through <code>bootstrap.properties</code> (default ordinal = 400)",
                 "</ul>",
-                "You can try defining various properties in the files in the editor."
+                "You can try injecting various properties in the files in the editor."
             ],
             "content": [
                 {
@@ -483,7 +483,7 @@
                     "editorList": [
                         {
                             "displayType": "fileEditor",
-                            "fileName": "Injection",
+                            "fileName": "CarTypes.java",
                             "preload": [
                                 "package com.car.types;",
                                 "import javax.inject.Inject;",
@@ -491,7 +491,8 @@
                                 "",
                                 "public class CarTypes {",
                                 "",
-                                "    @Inject @ConfigProperty(name=\"port\", defaultValue=\"9080\");",
+                                "    @Inject @ConfigProperty(name=\"port\", ",
+                                "                            defaultValue=\"9080\");",
                                 "    private Integer port;",
                                 "",
                                 "}"
@@ -502,31 +503,35 @@
                                     "to": "5"
                                 }
                             ],
-                            "callback": "(function test(editor) {microprofileConfigCallBack.updatePlaygroundProperties(editor);})"
+                            "callback": "(function test(editor) {microprofileConfigCallBack.updatePlaygroundProperties(editor);})",
+                            "save": false
                         },
                         {
                             "displayType": "fileEditor",
-                            "fileName": "Properties",
+                            "fileName": "/META-INF/microprofile-config.properties",
                             "preload": [
                                 "port=9081"
                             ],
-                            "callback": "(function test(editor) {microprofileConfigCallBack.updatePlaygroundProperties(editor);})"
+                            "callback": "(function test(editor) {microprofileConfigCallBack.updatePlaygroundProperties(editor);})",
+                            "save": false
                         },
                         {
                             "displayType": "fileEditor",
-                            "fileName": "Environment Property",
+                            "fileName": "server.env",
                             "preload": [
-
+                                "port=9082"
                             ],
-                            "callback": "(function test(editor) {microprofileConfigCallBack.updatePlaygroundProperties(editor);})"
+                            "callback": "(function test(editor) {microprofileConfigCallBack.updatePlaygroundProperties(editor);})",
+                            "save": false
                         },
                         {
                             "displayType": "fileEditor",
-                            "fileName": "System Property",
+                            "fileName": "bootstrap.properties",
                             "preload": [
                                 "port=9083"
                             ],
-                            "callback": "(function test(editor) {microprofileConfigCallBack.updatePlaygroundProperties(editor);})"
+                            "callback": "(function test(editor) {microprofileConfigCallBack.updatePlaygroundProperties(editor);})",
+                            "save": false
                         }
                     ]
                 },

@@ -42,7 +42,7 @@ var playground = function(){
         },
 
         __getInjectionProperties: function() {
-            var injectionContent = contentManager.getTabbedEditorContents('DefaultPlayground', 'Injection');
+            var injectionContent = contentManager.getTabbedEditorContents('DefaultPlayground', 'CarTypes.java');
 
             // Use regex global search to find and store all indices of matches.
             var regexp = /@ConfigProperty/g;
@@ -80,15 +80,15 @@ var playground = function(){
         },
 
         __getPropertiesFileProperties: function() {
-            this.__parseAndStorePropertyFiles('Properties', 'propFile');
+            this.__parseAndStorePropertyFiles('/META-INF/microprofile-config.properties', 'propFile');
         },
 
         __getEnvironmentProperties: function() {
-            this.__parseAndStorePropertyFiles('Environment Property', 'envVar');
+            this.__parseAndStorePropertyFiles('server.env', 'envVar');
         },
 
         __getSystemProperties: function() {
-            this.__parseAndStorePropertyFiles('System Property', 'sysProp');
+            this.__parseAndStorePropertyFiles('bootstrap.properties', 'sysProp');
         },
 
         __parseAndStorePropertyFiles: function(filename, filetype) {
