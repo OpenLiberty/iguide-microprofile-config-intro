@@ -19,7 +19,7 @@
                   "name": "backgroundConcepts",
                   "title": "Background concepts",
                   "description": [
-                    "Microprofile Config uses <b><i>Java CDI</i></b> (Contexts and Dependency Injection) to inject configuration property values directly into an application without requiring user code to retrieve them.  The injected values, set at application startup, are <b><i>static</i></b>.<br>",
+                    "Microprofile Config uses <b><i>Context Dependency Injection</i></b> to inject configuration property values directly into an application without requiring user code to retrieve them.  The injected values, set at application startup, are <b><i>static</i></b>.<br>",
                     "The API combines configuration values from multiple sources, each known as a <b><i>ConfigSource</b></i>.  Each ConfigSource has a specified priority, defined by its <b><i>ordinal</i></b> value. A higher ordinal means that the values taken from this ConfigSource will override values from ConfigSources with a lower ordinal value. <br><br>MicroProfile Config has 3 default ConfigSources:",
                     "<ul><li>All <code>META-INF/microprofile-config.properties</code> found on the classpath (default ordinal = 100).</li><li>Environment variables (default ordinal = 300).</li><li>System properties (default ordinal = 400).</li></ul>"
                   ],
@@ -36,10 +36,10 @@
             "name": "ExampleScenario",
             "title": "Example: DevOps pipeline",
             "description": [
-                "Imagine that you're developing and deploying a DisplayCarTypes microservice for displaying the types of cars that are currently available for purchase from your business.   This microservice has a dependency on another microservice called ObtainCarTypes which provides the currently available list.  As you develop your displayCarTypes microservice, you need to ensure that it works correctly when it interacts with the ObtainCarTypes microservice.  For performance and security reasons we don't want to test against the production version of ObtainCarTypes during the development pipeline.  This leads to running four instances of the ObtainCarTypes microservice that are to be used at the different stages of the devOps pipeline:",
+                "Imagine that you're developing and deploying a DisplayCarTypes microservice for displaying the types of cars that are currently available for purchase from your business.   This microservice has a dependency on another microservice called ObtainCarTypes which provides the currently available list.  As you develop your DisplayCarTypes microservice, you need to ensure that it works correctly when it interacts with the ObtainCarTypes microservice.  For stability and security reasons we don't want to test against the production version of ObtainCarTypes during the development pipeline.  This leads to running four instances of the ObtainCarTypes microservice that are to be used at the different stages of the devOps pipeline:",
                 "",
                 "<ul><li>Development - Port: 9080</li><li>Test - Port: 9081</li><li>Quality Assurance - Port: 9082</li><li>Production - Port: 9083</li></ul>",
-                "As you progress though this guide, you will set a configuration property for the port value to specify which of the four ObtainCarTypes instances the DisplayCarTypes microservice should connect to."            ]
+                "Each instance of the ObtainCarTypes microservice is running on one port of a single application on a single Liberty server. As you progress though this guide, you will set a configuration property for the port value to specify which of the four ObtainCarTypes instances the DisplayCarTypes microservice should connect to. "]
         },
         {
             "name": "EnableMPConfig",
@@ -133,7 +133,7 @@
             ],
             "instruction": [
                 "Change the <code>@ConfigProperty</code> annotation on line 6 to the following code, or click <action title='Provide default value using ConfigProperty annotation' onclick=\"microprofileConfigCallBack.addInjectDefaultConfigButton(event)\"><b>@Inject @ConfigProperty(name=\"port\",\n defaultValue=\"9080\")</b></action>. Then, click <action title='Run' onclick=\"microprofileConfigCallBack.saveButton(event)\"><b>Run</b></action> on the editor menu pane.",
-                "Type the following URL into the browser that follows, or click <action title='URL' onclick=\"microprofileConfigCallBack.populateURL(event, 'InjectWithDefaultValue')\"><b>https://rentacar.com/car-types</b></action> and then press <action title='Enter' onclick=\"microprofileConfigCallBack.enterButtonURL(event, 'InjectWithDefaultValue')\"><b>Enter</b></action>."
+                "Type the following URL into the browser that follows, or click <action title='URL' onclick=\"microprofileConfigCallBack.populateURL(event, 'InjectWithDefaultValue')\"><b>https://mycarvendor.com/car-types</b></action> and then press <action title='Enter' onclick=\"microprofileConfigCallBack.enterButtonURL(event, 'InjectWithDefaultValue')\"><b>Enter</b></action>. The development port of the obtainCarTypes microservice returns the values <code>carA</code> and <code>carB</code>."
             ],
             "content":[
                 {
@@ -181,7 +181,7 @@
             ],
             "instruction": [
                 "In <code>/META-INF/microprofile-config.properties</code>, add the following on line 1 or click <action title='Configure port in microprofile-config.properties' onclick=\"microprofileConfigCallBack.addPropToConfigProps(event)\"><b>port=9081</b></action>. Then, click <action title='Run' onclick=\"microprofileConfigCallBack.saveTabbedEditorButton(event)\"><b>Run</b></action> on the editor menu pane.",
-                "Click <action title='Refresh' onclick=\"microprofileConfigCallBack.refreshBrowserButton(event)\"><b>Refresh</b></action> in the following browser to see that the port value in the <code>/META-INF/microprofile-config.properties</code> file is used.<br/>"
+                "Click <action title='Refresh' onclick=\"microprofileConfigCallBack.refreshBrowserButton(event)\"><b>Refresh</b></action> in the following browser to see that the port value in the <code>/META-INF/microprofile-config.properties</code> file is used. The test port of the obtainCarTypes microservice returns the values <code>typeA</code>, <code>typeB</code>, and <code>typeC</code>. <br/>"
             ],
             "content":[
                 {
@@ -222,7 +222,7 @@
               },
               {
                 "displayType":"webBrowser",
-                "url": "https://rentacar.com/car-types",
+                "url": "https://mycarvendor.com/car-types",
                 "browserContent": "/guides/iguide-microprofile-config/html/interactive-guides/microprofile-config/download-from-injection.html",
                 "callback": "(function test(webBrowser) {microprofileConfigCallBack.listenToBrowserForPropFileConfig(webBrowser); })"
               }
@@ -238,7 +238,7 @@
             ],
             "instruction": [
               "In <code>server.env</code>, add the following on line 1 or click <action title='Configure port in server.env' onclick=\"microprofileConfigCallBack.addPropToServerEnvButton(event)\"><b>port=9082</b></action>. Then, click <action title='Run' onclick=\"microprofileConfigCallBack.saveTabbedEditorButton(event)\"><b>Run</b></action> on the editor menu pane.",
-              "Click <action title='Refresh' onclick=\"microprofileConfigCallBack.refreshBrowserButton(event)\"><b>Refresh</b></action> in the following browser to see the port value in the server.env file is used.<br/>"
+              "Click <action title='Refresh' onclick=\"microprofileConfigCallBack.refreshBrowserButton(event)\"><b>Refresh</b></action> in the following browser to see the port value in the server.env file is used. The quality assurance port of the obtainCarTypes microservice returns the values <code>SUV</code>, <code>Crossover</code>, and <code>Coupe</code>.<br/>"
             ],
             "content":[
               {
@@ -293,7 +293,7 @@
               },
               {
                 "displayType":"webBrowser",
-                "url": "https://rentacar.com/car-types",
+                "url": "https://mycarvendor.com/car-types",
                 "browserContent": "/guides/iguide-microprofile-config/html/interactive-guides/microprofile-config/download-from-properties-file.html",
                 "callback": "(function test(webBrowser) {microprofileConfigCallBack.listenToBrowserForServerEnvConfig(webBrowser); })"
               }
@@ -303,17 +303,16 @@
             "name": "ConfigureAsSysProp",
             "title": "Configuring with a system property",
             "description": [
-                "Default configuration variables can be retrieved from the Java system properties and these variables have a default ordinal of 400. Open Liberty adds properties from the server’s <code>bootstrap.properties</code> and <code>jvm.options</code> files to the Java system properties. The <code>bootstrap.properties</code> file does not exist by default until you create it. You can create and configure the <code>jvm.options</code> file in multiple locations within your Open Liberty installation directory.",
+                "Default configuration variables can be retrieved from the Java system properties and these variables have a default ordinal of 400. Open Liberty adds properties from the server’s <code>bootstrap.properties</code> and <code>jvm.options</code> files to the Java system properties. You can create and configure the <code>jvm.options</code> file in multiple locations within your Open Liberty installation directory.",
                 "",
                 "The different locations where Open Liberty checks for <code>jvm.options</code> are the following: <ol><li><code>${wlp.install.dir}/usr/shared/jvm.options</code></li><li><code>${server.config.dir}/configDropins/defaults/jvm.options</code></li> <li><code>${server.config.dir}/jvm.options</code></li> <li><code>${server.config.dir}/configDropins/overrides/jvm.options</code></li></ol>",
-                "The contents of these files are merged, with latter files taking precedence in the case of duplicate properties. If none of these files are present, then <code>${wlp.install.dir}/etc/jvm.options</code> will be used.",
+                "The contents of these files are merged, with latter files taking precedence in the case of duplicate properties. If none of these files are present, then <code>${wlp.install.dir}/etc/jvm.options</code> will be used. If a property exists in both <code>bootstrap.properties</code> and <code>jvm.options</code>, then the value from <code>jvm.options</code> takes precedence.",
                 "",
-                "<note>Note: If a property exists in both <code>bootstrap.properties</code> and <code>jvm.options</code>, then the value from <code>jvm.options</code> takes precedence.</note>",
                 "In this example, we are going to use the <code>${server.config.dir}/bootstrap.properties</code> file to configure the <code>port</code> system property."
             ],
             "instruction": [
                 "Add the following port value on line 1 of <code>bootstrap.properties</code>, or click <action title='Configure port in System Properties' onclick=\"microprofileConfigCallBack.addPropToSystemProperties(event)\"><b>port=9083</b></action>. Then, click <action title='Run' onclick=\"microprofileConfigCallBack.saveTabbedEditorButton(event)\"><b>Run</b></action> on the editor menu pane.",
-                "Click <action title='Refresh' onclick=\"microprofileConfigCallBack.refreshBrowserButton(event)\"><b>Refresh</b></action> in the following browser to see the port value in the <code>bootstrap.properties</code> file is used.<br/>"
+                "Click <action title='Refresh' onclick=\"microprofileConfigCallBack.refreshBrowserButton(event)\"><b>Refresh</b></action> in the following browser to see the port value in the <code>bootstrap.properties</code> file is used. The production port of the obtainCarTypes microservice returns values <code>SUV</code>, <code>Crossover</code>, <code>Coupe</code>, <code>Truck</code>, and <code>Convertible</code>.<br/>"
             ],
             "content":[
                 {
@@ -378,7 +377,7 @@
                 },
                 {
                   "displayType":"webBrowser",
-                  "url": "https://rentacar.com/car-types",
+                  "url": "https://mycarvendor.com/car-types",
                   "browserContent": "/guides/iguide-microprofile-config/html/interactive-guides/microprofile-config/download-from-property-in-server-env.html",
                   "callback": "(function test(webBrowser) {microprofileConfigCallBack.listenToBrowserForSystemPropConfig(webBrowser); })"
                 }
@@ -388,7 +387,9 @@
             "name": "UpdateOrdinal",
             "title": "Changing the ordinal of a ConfigSource",
             "description": [
-                "You can override the default ordinal value of a ConfigSource by adding the <code>config_ordinal</code> property to your configuration source file. The configuration source with the highest ordinal value takes precedence."
+                "You can override the default ordinal value of a ConfigSource by adding the <code>config_ordinal</code> property to your configuration source file. The configuration source with the highest ordinal value takes precedence.",
+                "",
+                "Adding <code>config_ordinal</code> to <code>/META-INF/microprofile-config.properties</code> with a value of 500 increases its ordinal value. This will now override the port value from <code>bootstrap.properties</code> which has a default ordinal of 400."
             ],
             "instruction": [
                 "On line 2 of the <code>/META-INF/microprofile-config.properties</code> file add or click <action title='Changing the ordinal of microprofile-config.properties' onclick=\"microprofileConfigCallBack.addConfigOrdinalToProps(event)\"><b>config_ordinal=500</b></action>. Then, click <action title='Run' onclick=\"microprofileConfigCallBack.saveTabbedEditorButton(event)\"><b>Run</b></action> on the editor menu pane.",
@@ -456,7 +457,7 @@
               },
               {
                 "displayType":"webBrowser",
-                "url": "https://rentacar.com/car-types",
+                "url": "https://mycarvendor.com/car-types",
                 "browserContent": "/guides/iguide-microprofile-config/html/interactive-guides/microprofile-config/download-from-property-in-system-props.html",
                 "callback": "(function test(webBrowser) {microprofileConfigCallBack.listenToBrowserForPropFileConfig(webBrowser); })"
               }
