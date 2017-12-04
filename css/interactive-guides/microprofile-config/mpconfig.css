@@ -7,3 +7,21 @@
     height: 350px;
     width: 550px;
 }
+
+.carSiteTitle {
+    text-align: center; 
+    font-size: 18px; 
+    background-color: blue; 
+    color: white; 
+    height: 30px; 
+    padding: 5px 0px;
+}
+
+.carsGrid td {
+    padding: 5px 10px;
+}
+
+.carsGrid td img {
+    height:30px;
+    width:30px;
+}
