@@ -19,7 +19,7 @@
                   "name": "backgroundConcepts",
                   "title": "Background concepts",
                   "description": [
-                    "Microprofile Config uses <b><i>Context Dependency Injection</i></b> to inject configuration property values directly into an application without requiring user code to retrieve them.  The injected values, set at application startup, are <b><i>static</i></b>.<br>",
+                    "Microprofile Config uses <b><i>CDI</i></b> (Contexts and Dependency Injection) to inject configuration property values directly into an application without requiring user code to retrieve them.  The injected values, set at application startup, are <b><i>static</i></b>.<br>",
                     "The API combines configuration values from multiple sources, each known as a <b><i>ConfigSource</b></i>.  Each ConfigSource has a specified priority, defined by its <b><i>ordinal</i></b> value. A higher ordinal means that the values taken from this ConfigSource will override values from ConfigSources with a lower ordinal value. <br><br>MicroProfile Config has 3 default ConfigSources:",
                     "<ul><li>All <code>META-INF/microprofile-config.properties</code> found on the classpath (default ordinal = 100).</li><li>Environment variables (default ordinal = 300).</li><li>System properties (default ordinal = 400).</li></ul>"
                   ],
