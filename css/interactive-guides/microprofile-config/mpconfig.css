@@ -8,6 +8,10 @@
     width: 550px;
 }
 
+.carSite {
+    margin: 0;
+}
+
 .carSiteTitle {
     text-align: center; 
     font-size: 18px; 
