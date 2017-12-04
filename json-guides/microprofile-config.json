@@ -470,7 +470,7 @@
                 "Now that you've learned the various ways of defining configuration properties, you can see how they all work together.",
                 "<br>To review, here are the four places to inject properties:",
                 "<ul>",
-                "<li>Java annotations <code>@Inject @ConfigProperty</code> in <code>CarTypes.java</code> (no ordinal)",
+                "<li>Java annotations <code>@Inject @ConfigProperty</code> with <code>defaultValue</code> in <code>CarTypes.java</code> (no ordinal)",
                 "<li>Properties file through <code>/META-INF/microprofile-config.properties</code> (default ordinal = 100)",
                 "<li>Environment variables through <code>server.env</code> (default ordinal = 300)",
                 "<li>System properties through <code>bootstrap.properties</code> (default ordinal = 400)",
