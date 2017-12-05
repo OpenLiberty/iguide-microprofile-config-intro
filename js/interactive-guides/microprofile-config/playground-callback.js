@@ -34,6 +34,8 @@ var playground = function(){
         repopulatePlaygroundConfigs: function() {
             properties = {};
 
+            //TODO: clear all editor messages
+
             this.__getInjectionProperties('CarTypes.java');
             this.__getPropertiesFileProperties('/META-INF/microprofile-config.properties');
             this.__getEnvironmentProperties('server.env');
@@ -41,8 +43,14 @@ var playground = function(){
             this.showProperties();
         },
 
+        __getEditorInstance: function(fileName) {
+            if (contentManager.getEditorInstanceFromTabbedEditor) {
+                return contentManager.getEditorInstanceFromTabbedEditor(STEP_NAME, fileName);
+            }
+        },
+
         __getInjectionProperties: function(fileName) {
-            var injectionEditor = contentManager.getEditorInstanceFromTabbedEditor(STEP_NAME, fileName);
+            var editorInstance = this.__getEditorInstance(fileName);
             var injectionContent = contentManager.getTabbedEditorContents(STEP_NAME, fileName);
 
             // Use regex global search to find and store all indices of matches.
@@ -82,18 +90,21 @@ var playground = function(){
         },
 
         __getPropertiesFileProperties: function(fileName) {
-            this.__parseAndStorePropertyFiles(fileName, 'propFile');
+            var editorInstance = this.__getEditorInstance(fileName);
+            this.__parseAndStorePropertyFiles(fileName, 'propFile', editorInstance);
         },
 
         __getEnvironmentProperties: function(fileName) {
-            this.__parseAndStorePropertyFiles(fileName, 'envVar');
+            var editorInstance = this.__getEditorInstance(fileName);
+            this.__parseAndStorePropertyFiles(fileName, 'envVar', editorInstance);
         },
 
         __getSystemProperties: function(fileName) {
-            this.__parseAndStorePropertyFiles(fileName, 'sysProp');
+            var editorInstance = this.__getEditorInstance(fileName);
+            this.__parseAndStorePropertyFiles(fileName, 'sysProp', editorInstance);
         },
 
-        __parseAndStorePropertyFiles: function(filename, filetype) {
+        __parseAndStorePropertyFiles: function(filename, filetype, editorInstance) {
             var fileContent = contentManager.getTabbedEditorContents(STEP_NAME, filename);
             
             if (fileContent) {
@@ -111,7 +122,7 @@ var playground = function(){
                     }
                 }
 
-                this.__storeStagedProperties(filetype, ordinal);
+                this.__storeStagedProperties(filetype, ordinal, editorInstance);
             }
         },
         
@@ -119,15 +130,20 @@ var playground = function(){
             staging.push([key, value]);
         },
 
-        __storeStagedProperties: function(source, ordinal) {
+        __storeStagedProperties: function(source, ordinal, editorInstance) {
             for (var i in staging) {
                 var key = staging[i][0];
                 var value = staging[i][1];
                 if (this.getProperty(key) !== null) {
                     this.playgroundAddConfig(key, value, source, ordinal);                    
                 } else {
+                    console.log("The property " + key + " needs to be set with @Inject in Java file");
                     //TODO: editor error message for this
-                    console.log("This property needs to be set with @Inject in Java file");
+                    if (editorInstance) {
+                        var fixInjection = function(){console.log("placeholder for java code fix");};
+                        // editorInstance.createErrorLinkForCallBack(false, fixInjection);
+                        editorInstance.createCustomErrorMessage("The property <b>" + key + "</b> needs to be set with @Inject in Java file");
+                    }
                 }
             }
             staging = [];
