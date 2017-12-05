@@ -476,7 +476,7 @@ var microprofileConfigCallBack = (function() {
         contentManager.markEditorReadOnlyLines(stepName, readOnlyLines);
     };
 
-    var carsUrl = "https://mycarvendor.com/car-types";
+    var carsUrl = "https://mycarvendor.openliberty.io/car-types";
 
     var __populateURL = function(event, stepName) {
         if (event.type === "click" ||

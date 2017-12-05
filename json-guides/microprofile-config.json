@@ -133,7 +133,7 @@
             ],
             "instruction": [
                 "Change the <code>@ConfigProperty</code> annotation on line 6 to the following code, or click <action title='Provide default value using ConfigProperty annotation' onclick=\"microprofileConfigCallBack.addInjectDefaultConfigButton(event)\"><b>@Inject @ConfigProperty(name=\"port\",\n defaultValue=\"9080\")</b></action>. Then, click <action title='Run' onclick=\"microprofileConfigCallBack.saveButton(event)\"><b>Run</b></action> on the editor menu pane.",
-                "Type the following URL into the browser that follows, or click <action title='URL' onclick=\"microprofileConfigCallBack.populateURL(event, 'InjectWithDefaultValue')\"><b>https://mycarvendor.com/car-types</b></action> and then press <action title='Enter' onclick=\"microprofileConfigCallBack.enterButtonURL(event, 'InjectWithDefaultValue')\"><b>Enter</b></action>. The development port (9080) of the ObtainCarTypes microservice returns the values <code>carA</code> and <code>carB</code>."
+                "Type the following URL into the browser that follows, or click <action title='URL' onclick=\"microprofileConfigCallBack.populateURL(event, 'InjectWithDefaultValue')\"><b>https://mycarvendor.openliberty.io/car-types</b></action> and then press <action title='Enter' onclick=\"microprofileConfigCallBack.enterButtonURL(event, 'InjectWithDefaultValue')\"><b>Enter</b></action>. The development port (9080) of the ObtainCarTypes microservice returns the values <code>carA</code> and <code>carB</code>."
             ],
             "content":[
                 {
@@ -222,7 +222,7 @@
               },
               {
                 "displayType":"webBrowser",
-                "url": "https://mycarvendor.com/car-types",
+                "url": "https://mycarvendor.openliberty.io/car-types",
                 "browserContent": "/guides/iguide-microprofile-config/html/interactive-guides/microprofile-config/download-from-injection.html",
                 "statusBarText": "Retrieved data from development port 9080.",
                 "callback": "(function test(webBrowser) {microprofileConfigCallBack.listenToBrowserForPropFileConfig(webBrowser); })"
@@ -296,7 +296,7 @@
               },
               {
                 "displayType":"webBrowser",
-                "url": "https://mycarvendor.com/car-types",
+                "url": "https://mycarvendor.openliberty.io/car-types",
                 "browserContent": "/guides/iguide-microprofile-config/html/interactive-guides/microprofile-config/download-from-properties-file.html",
                 "statusBarText": "Retrieved data from test port 9081.",
                 "callback": "(function test(webBrowser) {microprofileConfigCallBack.listenToBrowserForServerEnvConfig(webBrowser); })"
@@ -381,7 +381,7 @@
                 },
                 {
                   "displayType":"webBrowser",
-                  "url": "https://mycarvendor.com/car-types",
+                  "url": "https://mycarvendor.openliberty.io/car-types",
                   "browserContent": "/guides/iguide-microprofile-config/html/interactive-guides/microprofile-config/download-from-property-in-server-env.html",
                   "statusBarText": "Retrieved data from quality assurance port 9082.",
                   "callback": "(function test(webBrowser) {microprofileConfigCallBack.listenToBrowserForSystemPropConfig(webBrowser); })"
@@ -462,7 +462,7 @@
               },
               {
                 "displayType":"webBrowser",
-                "url": "https://mycarvendor.com/car-types",
+                "url": "https://mycarvendor.openliberty.io/car-types",
                 "browserContent": "/guides/iguide-microprofile-config/html/interactive-guides/microprofile-config/download-from-property-in-system-props.html",
                 "statusBarText": "Retrieved data from production port 9083.",
                 "callback": "(function test(webBrowser) {microprofileConfigCallBack.listenToBrowserForPropFileConfig(webBrowser); })"
@@ -551,7 +551,7 @@
         {
             "name": "WhatNext",
             "title": "Great work!  You're done!",
-            "description": ["You learned how ......",
+            "description": ["You learned how to use MicroProfile Config to separate configuration from code by using injection, configuring with properties files, configuring with environment variables, and configuring with system properties. You also learned about default ordinals for each of these configuration sources and how to override these values.",
                             "<p> <a >Download the sample MicroProfile Config application on github</a>.</p>"
                            ]
         }
