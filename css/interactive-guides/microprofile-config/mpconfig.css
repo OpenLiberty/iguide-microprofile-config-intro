@@ -10,6 +10,7 @@
 
 .carSite {
     margin: 0;
+    font-family: arial;
 }
 
 .carSiteTitle {
@@ -19,6 +20,7 @@
     color: white; 
     height: 30px; 
     padding: 5px 0px;
+    margin-top: 0px;
 }
 
 .carsGrid td {
