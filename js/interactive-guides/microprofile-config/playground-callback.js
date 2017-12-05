@@ -1,5 +1,5 @@
 var playground = function(){
-    
+    var STEP_NAME = 'DefaultPlayground';
     var properties = {};
     var staging = [];
 
@@ -34,15 +34,16 @@ var playground = function(){
         repopulatePlaygroundConfigs: function() {
             properties = {};
 
-            this.__getInjectionProperties();
-            this.__getPropertiesFileProperties();
-            this.__getEnvironmentProperties();
-            this.__getSystemProperties();
+            this.__getInjectionProperties('CarTypes.java');
+            this.__getPropertiesFileProperties('/META-INF/microprofile-config.properties');
+            this.__getEnvironmentProperties('server.env');
+            this.__getSystemProperties('bootstrap.properties');
             this.showProperties();
         },
 
-        __getInjectionProperties: function() {
-            var injectionContent = contentManager.getTabbedEditorContents('DefaultPlayground', 'CarTypes.java');
+        __getInjectionProperties: function(fileName) {
+            var injectionEditor = contentManager.getEditorInstanceFromTabbedEditor(STEP_NAME, fileName);
+            var injectionContent = contentManager.getTabbedEditorContents(STEP_NAME, fileName);
 
             // Use regex global search to find and store all indices of matches.
             // Makes sure we have @Inject and @ConfigProperty
@@ -80,20 +81,20 @@ var playground = function(){
             }
         },
 
-        __getPropertiesFileProperties: function() {
-            this.__parseAndStorePropertyFiles('/META-INF/microprofile-config.properties', 'propFile');
+        __getPropertiesFileProperties: function(fileName) {
+            this.__parseAndStorePropertyFiles(fileName, 'propFile');
         },
 
-        __getEnvironmentProperties: function() {
-            this.__parseAndStorePropertyFiles('server.env', 'envVar');
+        __getEnvironmentProperties: function(fileName) {
+            this.__parseAndStorePropertyFiles(fileName, 'envVar');
         },
 
-        __getSystemProperties: function() {
-            this.__parseAndStorePropertyFiles('bootstrap.properties', 'sysProp');
+        __getSystemProperties: function(fileName) {
+            this.__parseAndStorePropertyFiles(fileName, 'sysProp');
         },
 
         __parseAndStorePropertyFiles: function(filename, filetype) {
-            var fileContent = contentManager.getTabbedEditorContents('DefaultPlayground', filename);
+            var fileContent = contentManager.getTabbedEditorContents(STEP_NAME, filename);
             
             if (fileContent) {
                 var regex = /(^.*?)=(.*$)/gm;
