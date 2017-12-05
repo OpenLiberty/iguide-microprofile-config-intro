@@ -45,13 +45,14 @@ var playground = function(){
             var injectionContent = contentManager.getTabbedEditorContents('DefaultPlayground', 'CarTypes.java');
 
             // Use regex global search to find and store all indices of matches.
-            var regexp = /@ConfigProperty/g;
+            // Makes sure we have @Inject and @ConfigProperty
+            var regexp = /\@Inject\s*\@ConfigProperty/g;
             var match, matches = [];
             while ((match = regexp.exec(injectionContent)) != null) {
                 matches.push(match.index);
             }
             
-            // For each match, grab string until end of Java code line.
+            // For each match, grab string until end of Java code line (including lines split for readability).
             var lines = [];
             for (var i in matches) {
                 var content = injectionContent.substring(matches[i]);
@@ -62,7 +63,7 @@ var playground = function(){
 
             // For each line, grab config value and properties
             for (var i in lines) {
-                var lineRegexp = /(?<=\().*(?=\))/g;  //grab everything in between the parentheses
+                var lineRegexp = /(?<=\().*(?=\))/gs;  //grab everything in between the parentheses
                 var propertyLine = lineRegexp.exec(lines[i]);
 
                 if (propertyLine) {
@@ -121,7 +122,12 @@ var playground = function(){
             for (var i in staging) {
                 var key = staging[i][0];
                 var value = staging[i][1];
-                this.playgroundAddConfig(key, value, source, ordinal);
+                if (this.getProperty(key) !== null) {
+                    this.playgroundAddConfig(key, value, source, ordinal);                    
+                } else {
+                    //TODO: editor error message for this
+                    console.log("This property needs to be set with @Inject in Java file");
+                }
             }
             staging = [];
         },
@@ -149,6 +155,14 @@ var playground = function(){
 
         getProperties: function() {
             return properties;
+        },
+        
+        getProperty: function(key) {
+            if (properties[key]) {
+                return properties[key];
+            } else {
+                return null;
+            }
         }
     };
 
