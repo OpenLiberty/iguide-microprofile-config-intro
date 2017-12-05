@@ -551,7 +551,7 @@
         {
             "name": "WhatNext",
             "title": "Great work!  You're done!",
-            "description": ["You learned how to use MicroProfile Config to separate configuration from code by using injection, configuring with properties files, configuring with environment variables, and configuring with system properties. You also learned about default ordinals for each of these configuration sources and how to override these values.",
+            "description": ["You learned how to use MicroProfile Config to separate configuration from code by using injection, configuring with properties files, configuring with environment variables, and configuring with system properties. You also learned the default ordinals for each of these configuration sources and how to override them.",
                             "<p> <a >Download the sample MicroProfile Config application on github</a>.</p>"
                            ]
         }
