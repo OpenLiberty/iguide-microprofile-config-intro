@@ -1,5 +1,5 @@
 var playground = function(){
-    
+    var STEP_NAME = 'DefaultPlayground';
     var properties = {};
     var staging = [];
 
@@ -34,36 +34,47 @@ var playground = function(){
         repopulatePlaygroundConfigs: function() {
             properties = {};
 
-            this.__getInjectionProperties();
-            this.__getPropertiesFileProperties();
-            this.__getEnvironmentProperties();
-            this.__getSystemProperties();
+            //TODO: clear all editor messages (look at editor.closeEditorErrorBox())
+
+            this.__getInjectionProperties('CarTypes.java');
+            this.__getPropertiesFileProperties('/META-INF/microprofile-config.properties');
+            this.__getEnvironmentProperties('server.env');
+            this.__getSystemProperties('bootstrap.properties');
             this.showProperties();
         },
 
-        __getInjectionProperties: function() {
-            var injectionContent = contentManager.getTabbedEditorContents('DefaultPlayground', 'CarTypes.java');
+        __getEditorInstance: function(fileName) {
+            if (contentManager.getEditorInstanceFromTabbedEditor) {
+                return contentManager.getEditorInstanceFromTabbedEditor(STEP_NAME, fileName);
+            }
+        },
+
+        __getInjectionProperties: function(fileName) {
+            var editorInstance = this.__getEditorInstance(fileName);
+            var injectionContent = contentManager.getTabbedEditorContents(STEP_NAME, fileName);
 
             // Use regex global search to find and store all indices of matches.
-            var regexp = /@ConfigProperty/g;
+            // Makes sure we have @Inject and @ConfigProperty
+            var regexp = /@Inject\s*@ConfigProperty/g;
             var match, matches = [];
             while ((match = regexp.exec(injectionContent)) != null) {
                 matches.push(match.index);
             }
             
-            // For each match, grab string until end of Java code line.
+            // For each match, grab string until end of Java code line (including lines split for readability).
             var lines = [];
             for (var i in matches) {
                 var content = injectionContent.substring(matches[i]);
-                var endLine = content.indexOf(";");
+                var endLine = content.indexOf(';');
                 var line = content.substring(0, endLine);
                 lines.push(line);
             }
 
             // For each line, grab config value and properties
             for (var i in lines) {
-                var lineRegexp = /(?<=\().*(?=\))/g;  //grab everything in between the parentheses
-                var propertyLine = lineRegexp.exec(lines[i]);
+                var lineRegexp = /\(.*(?=\))/;  //grab everything in between the parentheses
+                var lineWithoutWhitespace = lines[i].replace(/\s/g, '');
+                var propertyLine = lineRegexp.exec(lineWithoutWhitespace);
 
                 if (propertyLine) {
                     var inlineProperties = propertyLine[0];
@@ -79,20 +90,23 @@ var playground = function(){
             }
         },
 
-        __getPropertiesFileProperties: function() {
-            this.__parseAndStorePropertyFiles('/META-INF/microprofile-config.properties', 'propFile');
+        __getPropertiesFileProperties: function(fileName) {
+            var editorInstance = this.__getEditorInstance(fileName);
+            this.__parseAndStorePropertyFiles(fileName, 'propFile', editorInstance);
         },
 
-        __getEnvironmentProperties: function() {
-            this.__parseAndStorePropertyFiles('server.env', 'envVar');
+        __getEnvironmentProperties: function(fileName) {
+            var editorInstance = this.__getEditorInstance(fileName);
+            this.__parseAndStorePropertyFiles(fileName, 'envVar', editorInstance);
         },
 
-        __getSystemProperties: function() {
-            this.__parseAndStorePropertyFiles('bootstrap.properties', 'sysProp');
+        __getSystemProperties: function(fileName) {
+            var editorInstance = this.__getEditorInstance(fileName);
+            this.__parseAndStorePropertyFiles(fileName, 'sysProp', editorInstance);
         },
 
-        __parseAndStorePropertyFiles: function(filename, filetype) {
-            var fileContent = contentManager.getTabbedEditorContents('DefaultPlayground', filename);
+        __parseAndStorePropertyFiles: function(filename, filetype, editorInstance) {
+            var fileContent = contentManager.getTabbedEditorContents(STEP_NAME, filename);
             
             if (fileContent) {
                 var regex = /(^.*?)=(.*$)/gm;
@@ -101,7 +115,7 @@ var playground = function(){
                 while ((match = regex.exec(fileContent)) !== null) {
                     var key = match[1];
                     var value = match[2];
-                    if (key === "config_ordinal") {
+                    if (key === 'config_ordinal') {
                         //TODO: what if ordinal has already been set? (multiple config_ordinal keys)
                         ordinal = value;
                     } else {
@@ -109,7 +123,7 @@ var playground = function(){
                     }
                 }
 
-                this.__storeStagedProperties(filetype, ordinal);
+                this.__storeStagedProperties(filetype, ordinal, editorInstance);
             }
         },
         
@@ -117,11 +131,17 @@ var playground = function(){
             staging.push([key, value]);
         },
 
-        __storeStagedProperties: function(source, ordinal) {
+        __storeStagedProperties: function(source, ordinal, editorInstance) {
             for (var i in staging) {
                 var key = staging[i][0];
                 var value = staging[i][1];
-                this.playgroundAddConfig(key, value, source, ordinal);
+                if (this.getProperty(key) !== null) {
+                    this.playgroundAddConfig(key, value, source, ordinal);                    
+                } else {
+                    if (editorInstance) {
+                        editorInstance.createCustomErrorMessage('The property <b>' + key + '</b> needs to be set with @Inject in Java file');
+                    }
+                }
             }
             staging = [];
         },
@@ -132,7 +152,7 @@ var playground = function(){
             propsDiv.empty();
             for (var key in props) {
                 var prop = $('<li>');
-                prop.html(key + " - " + props[key].value);
+                prop.html(key + ' - ' + props[key].value);
                 propsDiv.append(prop);
             }
         },
@@ -149,6 +169,14 @@ var playground = function(){
 
         getProperties: function() {
             return properties;
+        },
+        
+        getProperty: function(key) {
+            if (properties[key]) {
+                return properties[key];
+            } else {
+                return null;
+            }
         }
     };
 

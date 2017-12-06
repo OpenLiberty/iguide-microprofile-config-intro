@@ -481,7 +481,7 @@
                 "<li>Environment variables through <code>server.env</code> (default ordinal = 300)",
                 "<li>System properties through <code>bootstrap.properties</code> (default ordinal = 400)",
                 "</ul>",
-                "You can try injecting various properties in the files in the editor."
+                "You can try injecting various properties in the files in the editor. <code>config_ordinal</code> can be set in any of the properties files."
             ],
             "content": [
                 {

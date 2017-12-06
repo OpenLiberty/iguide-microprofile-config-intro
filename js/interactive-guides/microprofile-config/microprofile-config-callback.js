@@ -582,6 +582,7 @@ var microprofileConfigCallBack = (function() {
         }
 
         var pg = playground.create(root, stepName);
+        pg.repopulatePlaygroundConfigs();
         root.playground = pg;
 
         contentManager.setPlayground(stepName, pg, 0);
