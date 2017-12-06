@@ -34,8 +34,6 @@ var playground = function(){
         repopulatePlaygroundConfigs: function() {
             properties = {};
 
-            //TODO: clear all editor messages (look at editor.closeEditorErrorBox())
-
             this.__getInjectionProperties('CarTypes.java');
             this.__getPropertiesFileProperties('/META-INF/microprofile-config.properties');
             this.__getEnvironmentProperties('server.env');
@@ -51,6 +49,7 @@ var playground = function(){
 
         __getInjectionProperties: function(fileName) {
             var editorInstance = this.__getEditorInstance(fileName);
+            editorInstance.closeEditorErrorBox();
             var injectionContent = contentManager.getTabbedEditorContents(STEP_NAME, fileName);
 
             // Use regex global search to find and store all indices of matches.
@@ -132,6 +131,8 @@ var playground = function(){
         },
 
         __storeStagedProperties: function(source, ordinal, editorInstance) {
+            editorInstance.closeEditorErrorBox();
+            
             for (var i in staging) {
                 var key = staging[i][0];
                 var value = staging[i][1];
