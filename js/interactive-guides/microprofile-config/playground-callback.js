@@ -110,7 +110,7 @@ var playground = function(){
             var fileContent = contentManager.getTabbedEditorContents(STEP_NAME, filename);
             
             if (fileContent) {
-                var regex = /(^.*?)\s*?=\s?(.*$)/gm;
+                var regex = /(^.*?)\s*?[=:]\s?(.*$)/gm;
                 var match = null;
                 var ordinal;
                 while ((match = regex.exec(fileContent)) !== null) {
