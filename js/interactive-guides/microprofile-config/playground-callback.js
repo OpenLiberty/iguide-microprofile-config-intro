@@ -111,12 +111,12 @@ var playground = function(){
             var fileContent = contentManager.getTabbedEditorContents(STEP_NAME, filename);
             
             if (fileContent) {
-                var regex = /(^.*?)\s*?[=:]\s?(.*$)/gm; //match lines that contain = or :
+                var regex = /(^.*?)\s*[=:]\s*(.*$)/gm; //match lines that contain = or :
                 var match = null;
                 var ordinal;
                 while ((match = regex.exec(fileContent)) !== null) {
                     var key = match[1].trim();
-                    var value = match[2].trim();
+                    var value = match[2];
                     if (key === 'config_ordinal') {
                         //TODO: what if ordinal has already been set? (multiple config_ordinal keys)
                         ordinal = value;
