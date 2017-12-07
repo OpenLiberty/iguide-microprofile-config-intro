@@ -35,6 +35,9 @@ var playground = function(){
             }
         },
 
+        /**
+         * Clear all properties and error messages, and read/parse all files for properties again
+         */
         repopulatePlaygroundConfigs: function() {
             properties = {};
             this.__clearErrorMessage();
@@ -44,12 +47,6 @@ var playground = function(){
             this.__getEnvironmentProperties(ENV_FILE);
             this.__getSystemProperties(SYS_FILE);
             this.showProperties();
-        },
-
-        __getEditorInstance: function(fileName) {
-            if (contentManager.getEditorInstanceFromTabbedEditor) {
-                return contentManager.getEditorInstanceFromTabbedEditor(STEP_NAME, fileName);
-            }
         },
 
         __getInjectionProperties: function(fileName) {
@@ -107,6 +104,9 @@ var playground = function(){
             this.__parseAndStorePropertyFiles(fileName, 'sysProp');
         },
 
+        /**
+         * Parse properties files and store them.
+         */
         __parseAndStorePropertyFiles: function(filename, filetype) {
             var fileContent = contentManager.getTabbedEditorContents(STEP_NAME, filename);
             
@@ -129,10 +129,18 @@ var playground = function(){
             }
         },
         
+        /**
+         * Temporarily hold properties.
+         * Used while parsing properties files and waiting to encounter `config_ordinal`
+         */
         __stageConfigProperty: function(key, value) {
             staging.push([key, value]);
         },
 
+        /**
+         * Store properties.
+         * Used after parsing properties files and checked for existence of `config_ordinal`
+         */
         __storeStagedProperties: function(source, ordinal) {
             for (var i in staging) {
                 var key = staging[i][0];
@@ -147,6 +155,9 @@ var playground = function(){
             staging = [];
         },
 
+        /**
+         * Display final properties and values in pod
+         */
         showProperties: function() {
             var props = this.getProperties();
             var propsDiv = this.root.find('.properties');
@@ -177,6 +188,12 @@ var playground = function(){
                 return properties[key];
             } else {
                 return null;
+            }
+        },
+        
+        __getEditorInstance: function(fileName) {
+            if (contentManager.getEditorInstanceFromTabbedEditor) {
+                return contentManager.getEditorInstanceFromTabbedEditor(STEP_NAME, fileName);
             }
         },
 
