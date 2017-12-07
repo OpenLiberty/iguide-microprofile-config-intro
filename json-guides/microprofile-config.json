@@ -25,7 +25,7 @@
                   ],
                   "content": [
                     {
-                      "content": "<div class='ordinalPriorities'><img src='/guides/iguide-microprofile-config/html/interactive-guides/microprofile-config/images/ordinalPriorities.png' alt='Ordinal Priorities'></div>",
+                      "content": "<div class='ordinalPriorities'><img src='/guides/iguide-microprofile-config/html/interactive-guides/microprofile-config/images/ordinalPriorities.svg' alt='Ordinal Priorities'></div>",
                       "displayType": "pod"
                     }
                   ]
