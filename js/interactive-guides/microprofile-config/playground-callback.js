@@ -105,20 +105,24 @@ var playground = function(){
 
         /**
          * Parse properties files and store them.
+         * TODO: will ignore lines without = or : sign.
          */
         __parseAndStorePropertyFiles: function(filename, filetype) {
             var fileContent = contentManager.getTabbedEditorContents(STEP_NAME, filename);
             
             if (fileContent) {
+                
                 var regex = /(^.*?)\s*?[=:]\s?(.*$)/gm;
                 var match = null;
                 var ordinal;
                 while ((match = regex.exec(fileContent)) !== null) {
-                    var key = match[1];
-                    var value = match[2];
+                    var key = match[1].trim();
+                    var value = match[2].trim();
                     if (key === 'config_ordinal') {
                         //TODO: what if ordinal has already been set? (multiple config_ordinal keys)
                         ordinal = value;
+                    } else if (key.match(/^[!#].*/) !== null) {
+                        continue;
                     } else {
                         this.__stageConfigProperty(key, value);                        
                     }
