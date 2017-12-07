@@ -224,7 +224,7 @@
                 "displayType":"webBrowser",
                 "url": "https://mycarvendor.openliberty.io/car-types",
                 "browserContent": "/guides/iguide-microprofile-config/html/interactive-guides/microprofile-config/download-from-injection.html",
-                "statusBarText": "Retrieved data from development port 9080.",
+                "statusBarText": "Retrieved data from Development on port 9080.",
                 "callback": "(function test(webBrowser) {microprofileConfigCallBack.listenToBrowserForPropFileConfig(webBrowser); })"
               }
             ]
@@ -298,7 +298,7 @@
                 "displayType":"webBrowser",
                 "url": "https://mycarvendor.openliberty.io/car-types",
                 "browserContent": "/guides/iguide-microprofile-config/html/interactive-guides/microprofile-config/download-from-properties-file.html",
-                "statusBarText": "Retrieved data from test port 9081.",
+                "statusBarText": "Retrieved data from Test on port 9081.",
                 "callback": "(function test(webBrowser) {microprofileConfigCallBack.listenToBrowserForServerEnvConfig(webBrowser); })"
               }
             ]
@@ -383,7 +383,7 @@
                   "displayType":"webBrowser",
                   "url": "https://mycarvendor.openliberty.io/car-types",
                   "browserContent": "/guides/iguide-microprofile-config/html/interactive-guides/microprofile-config/download-from-property-in-server-env.html",
-                  "statusBarText": "Retrieved data from quality assurance port 9082.",
+                  "statusBarText": "Retrieved data from Quality Assurance on port 9082.",
                   "callback": "(function test(webBrowser) {microprofileConfigCallBack.listenToBrowserForSystemPropConfig(webBrowser); })"
                 }
             ]
@@ -464,7 +464,7 @@
                 "displayType":"webBrowser",
                 "url": "https://mycarvendor.openliberty.io/car-types",
                 "browserContent": "/guides/iguide-microprofile-config/html/interactive-guides/microprofile-config/download-from-property-in-system-props.html",
-                "statusBarText": "Retrieved data from production port 9083.",
+                "statusBarText": "Retrieved data from Production on port 9083.",
                 "callback": "(function test(webBrowser) {microprofileConfigCallBack.listenToBrowserForPropFileConfig(webBrowser); })"
               }
             ]

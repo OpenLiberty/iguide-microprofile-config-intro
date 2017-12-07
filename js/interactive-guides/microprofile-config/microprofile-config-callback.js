@@ -195,7 +195,7 @@ var microprofileConfigCallBack = (function() {
         var setBrowserContent = function(currentURL) {
             if (contentManager.getCurrentInstructionIndex(webBrowser.getStepName()) === 1) {
                 webBrowser.setBrowserContent("/guides/iguide-microprofile-config/html/interactive-guides/microprofile-config/download-from-properties-file.html");
-                webBrowser.setBrowserStatusBar("Retrieved data from test port 9081.");
+                webBrowser.setBrowserStatusBar("Retrieved data from Test on port 9081.");
                 contentManager.markCurrentInstructionComplete(webBrowser.getStepName());
             }
         }
@@ -206,7 +206,7 @@ var microprofileConfigCallBack = (function() {
         var setBrowserContent = function(currentURL) {
             if (contentManager.getCurrentInstructionIndex(webBrowser.getStepName()) === 1) {
                 webBrowser.setBrowserContent("/guides/iguide-microprofile-config/html/interactive-guides/microprofile-config/download-from-property-in-server-env.html");
-                webBrowser.setBrowserStatusBar("Retrieved data from quality assurance port 9082.");
+                webBrowser.setBrowserStatusBar("Retrieved data from Quality Assurance on port 9082.");
                 contentManager.markCurrentInstructionComplete(webBrowser.getStepName());
             }
         }
@@ -217,7 +217,7 @@ var microprofileConfigCallBack = (function() {
         var setBrowserContent = function(currentURL) {
             if (contentManager.getCurrentInstructionIndex(webBrowser.getStepName()) === 1) {
                 webBrowser.setBrowserContent("/guides/iguide-microprofile-config/html/interactive-guides/microprofile-config/download-from-property-in-system-props.html");
-                webBrowser.setBrowserStatusBar("Retrieved data from production port 9083.");
+                webBrowser.setBrowserStatusBar("Retrieved data from Production on port 9083.");
                 contentManager.markCurrentInstructionComplete(webBrowser.getStepName());
             }
         }
@@ -498,7 +498,7 @@ var microprofileConfigCallBack = (function() {
         var setBrowserContent = function(currentURL) {
             if (contentManager.getCurrentInstructionIndex(webBrowser.getStepName()) === 1) {
                 webBrowser.setBrowserContent("/guides/iguide-microprofile-config/html/interactive-guides/microprofile-config/download-from-injection.html");
-                webBrowser.setBrowserStatusBar("Retrieved data from development port 9080.");
+                webBrowser.setBrowserStatusBar("Retrieved data from Development on port 9080.");
                 contentManager.markCurrentInstructionComplete(webBrowser.getStepName());
             }
         }
