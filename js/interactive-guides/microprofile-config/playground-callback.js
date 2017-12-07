@@ -1,5 +1,9 @@
 var playground = function(){
     var STEP_NAME = 'DefaultPlayground';
+    var JAVA_FILE = 'CarTypes.java';
+    var PROP_FILE = '/META-INF/microprofile-config.properties';
+    var ENV_FILE = 'server.env';
+    var SYS_FILE = 'bootstrap.properties';
     var properties = {};
     var staging = [];
 
@@ -33,11 +37,12 @@ var playground = function(){
 
         repopulatePlaygroundConfigs: function() {
             properties = {};
+            this.__clearErrorMessage();
 
-            this.__getInjectionProperties('CarTypes.java');
-            this.__getPropertiesFileProperties('/META-INF/microprofile-config.properties');
-            this.__getEnvironmentProperties('server.env');
-            this.__getSystemProperties('bootstrap.properties');
+            this.__getInjectionProperties(JAVA_FILE);
+            this.__getPropertiesFileProperties(PROP_FILE);
+            this.__getEnvironmentProperties(ENV_FILE);
+            this.__getSystemProperties(SYS_FILE);
             this.showProperties();
         },
 
@@ -48,8 +53,6 @@ var playground = function(){
         },
 
         __getInjectionProperties: function(fileName) {
-            var editorInstance = this.__getEditorInstance(fileName);
-            editorInstance.closeEditorErrorBox();
             var injectionContent = contentManager.getTabbedEditorContents(STEP_NAME, fileName);
 
             // Use regex global search to find and store all indices of matches.
@@ -91,20 +94,20 @@ var playground = function(){
 
         __getPropertiesFileProperties: function(fileName) {
             var editorInstance = this.__getEditorInstance(fileName);
-            this.__parseAndStorePropertyFiles(fileName, 'propFile', editorInstance);
+            this.__parseAndStorePropertyFiles(fileName, 'propFile');
         },
 
         __getEnvironmentProperties: function(fileName) {
             var editorInstance = this.__getEditorInstance(fileName);
-            this.__parseAndStorePropertyFiles(fileName, 'envVar', editorInstance);
+            this.__parseAndStorePropertyFiles(fileName, 'envVar');
         },
 
         __getSystemProperties: function(fileName) {
             var editorInstance = this.__getEditorInstance(fileName);
-            this.__parseAndStorePropertyFiles(fileName, 'sysProp', editorInstance);
+            this.__parseAndStorePropertyFiles(fileName, 'sysProp');
         },
 
-        __parseAndStorePropertyFiles: function(filename, filetype, editorInstance) {
+        __parseAndStorePropertyFiles: function(filename, filetype) {
             var fileContent = contentManager.getTabbedEditorContents(STEP_NAME, filename);
             
             if (fileContent) {
@@ -122,7 +125,7 @@ var playground = function(){
                     }
                 }
 
-                this.__storeStagedProperties(filetype, ordinal, editorInstance);
+                this.__storeStagedProperties(filetype, ordinal);
             }
         },
         
@@ -130,18 +133,15 @@ var playground = function(){
             staging.push([key, value]);
         },
 
-        __storeStagedProperties: function(source, ordinal, editorInstance) {
-            editorInstance.closeEditorErrorBox();
-            
+        __storeStagedProperties: function(source, ordinal) {
             for (var i in staging) {
                 var key = staging[i][0];
                 var value = staging[i][1];
                 if (this.getProperty(key) !== null) {
                     this.playgroundAddConfig(key, value, source, ordinal);                    
                 } else {
-                    if (editorInstance) {
-                        editorInstance.createCustomErrorMessage('The property <b>' + key + '</b> needs to be set with @Inject in Java file');
-                    }
+                    var message = 'The property <b>' + key + '</b> needs to be set with @Inject in Java file';
+                    this.__displayErrorMessage(message);
                 }
             }
             staging = [];
@@ -178,6 +178,38 @@ var playground = function(){
             } else {
                 return null;
             }
+        },
+
+        /**
+         * Displays error message across all the files in the tabbedEditor
+         * TODO: possibly move this functionality into commons code, make sure to ignore readonly editors
+         */
+        __displayErrorMessage: function(message) {
+            var javaEditor = this.__getEditorInstance(JAVA_FILE);
+            var propEditor = this.__getEditorInstance(PROP_FILE);
+            var envEditor = this.__getEditorInstance(ENV_FILE);
+            var sysEditor = this.__getEditorInstance(SYS_FILE);
+
+            javaEditor.createCustomErrorMessage(message);
+            propEditor.createCustomErrorMessage(message);
+            envEditor.createCustomErrorMessage(message);
+            sysEditor.createCustomErrorMessage(message);
+        },
+
+        /**
+         * Clears all error messages across all the files in tabbedEditor
+         * TODO: possibly move this functionality into commons code, make sure to ignore readonly editors
+         */
+        __clearErrorMessage: function() {
+            var javaEditor = this.__getEditorInstance(JAVA_FILE);
+            var propEditor = this.__getEditorInstance(PROP_FILE);
+            var envEditor = this.__getEditorInstance(ENV_FILE);
+            var sysEditor = this.__getEditorInstance(SYS_FILE);
+
+            javaEditor.closeEditorErrorBox();
+            propEditor.closeEditorErrorBox();
+            envEditor.closeEditorErrorBox();
+            sysEditor.closeEditorErrorBox();
         }
     };
 
