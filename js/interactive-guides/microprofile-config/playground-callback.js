@@ -54,7 +54,7 @@ var playground = function(){
 
             // Use regex global search to find and store all indices of matches.
             // Makes sure we have @Inject and @ConfigProperty
-            var regexp = /@Inject\s*@ConfigProperty/g;
+            var regexp = /@Inject\s+@ConfigProperty/g;
             var match, matches = [];
             while ((match = regexp.exec(injectionContent)) != null) {
                 matches.push(match.index);
@@ -65,15 +65,14 @@ var playground = function(){
             for (var i in matches) {
                 var content = injectionContent.substring(matches[i]);
                 var endLine = content.indexOf(';');
-                var line = content.substring(0, endLine);
+                var line = content.substring(0, endLine).replace(/\n/g, ''); //remove newline characters
                 lines.push(line);
             }
 
             // For each line, grab config value and properties
             for (var i in lines) {
                 var lineRegexp = /\(.*(?=\))/;  //grab everything in between the parentheses
-                var lineWithoutWhitespace = lines[i].replace(/\s/g, '');
-                var propertyLine = lineRegexp.exec(lineWithoutWhitespace);
+                var propertyLine = lineRegexp.exec(lines[i]);
 
                 if (propertyLine) {
                     var inlineProperties = propertyLine[0];
@@ -106,20 +105,25 @@ var playground = function(){
 
         /**
          * Parse properties files and store them.
+         * TODO: will ignore lines without = or : sign.
          */
         __parseAndStorePropertyFiles: function(filename, filetype) {
             var fileContent = contentManager.getTabbedEditorContents(STEP_NAME, filename);
             
             if (fileContent) {
-                var regex = /(^.*?)\s*?=\s?(.*$)/gm;
+                var regex = /(^.*?)\s*?[=:]\s?(.*$)/gm; //match lines that contain = or :
                 var match = null;
                 var ordinal;
                 while ((match = regex.exec(fileContent)) !== null) {
-                    var key = match[1];
-                    var value = match[2];
+                    var key = match[1].trim();
+                    var value = match[2].trim();
                     if (key === 'config_ordinal') {
                         //TODO: what if ordinal has already been set? (multiple config_ordinal keys)
                         ordinal = value;
+                    } else if (key.match(/^[!#].*/) !== null) {
+                        // ignore lines that start with ! or # for comments
+                        // all non-valid property lines are already ignored
+                        continue;
                     } else {
                         this.__stageConfigProperty(key, value);                        
                     }
