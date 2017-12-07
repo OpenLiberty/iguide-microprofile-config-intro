@@ -1,11 +1,11 @@
 .ordinalPriorities {
     text-align: center; /* Align the image in the center of the div */
-    margin-top: 15px;
 }
 
 .ordinalPriorities > img {
-    height: 350px;
-    width: 550px;
+    width: 75%;
+    min-width: 350px;
+    max-width: 550px;
 }
 
 .carSite {
@@ -16,9 +16,10 @@
 .carSiteTitle {
     text-align: center; 
     font-size: 18px; 
-    background-color: blue; 
+    background-color: #555; 
     color: white; 
-    height: 30px; 
+    height: 30px;
+    line-height: 30px;  /* vertically centers the text within the title */ 
     padding: 5px 0px;
     margin-top: 0px;
 }
