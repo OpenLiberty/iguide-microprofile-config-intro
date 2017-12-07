@@ -111,8 +111,7 @@ var playground = function(){
             var fileContent = contentManager.getTabbedEditorContents(STEP_NAME, filename);
             
             if (fileContent) {
-                
-                var regex = /(^.*?)\s*?[=:]\s?(.*$)/gm;
+                var regex = /(^.*?)\s*?[=:]\s?(.*$)/gm; //match lines that contain = or :
                 var match = null;
                 var ordinal;
                 while ((match = regex.exec(fileContent)) !== null) {
@@ -122,6 +121,8 @@ var playground = function(){
                         //TODO: what if ordinal has already been set? (multiple config_ordinal keys)
                         ordinal = value;
                     } else if (key.match(/^[!#].*/) !== null) {
+                        // ignore lines that start with ! or # for comments
+                        // all non-valid property lines are already ignored
                         continue;
                     } else {
                         this.__stageConfigProperty(key, value);                        
