@@ -54,7 +54,7 @@ var playground = function(){
 
             // Use regex global search to find and store all indices of matches.
             // Makes sure we have @Inject and @ConfigProperty
-            var regexp = /@Inject\s*@ConfigProperty/g;
+            var regexp = /@Inject\s+@ConfigProperty/g;
             var match, matches = [];
             while ((match = regexp.exec(injectionContent)) != null) {
                 matches.push(match.index);
@@ -65,15 +65,14 @@ var playground = function(){
             for (var i in matches) {
                 var content = injectionContent.substring(matches[i]);
                 var endLine = content.indexOf(';');
-                var line = content.substring(0, endLine);
+                var line = content.substring(0, endLine).replace(/\n/g, ''); //remove newline characters
                 lines.push(line);
             }
 
             // For each line, grab config value and properties
             for (var i in lines) {
                 var lineRegexp = /\(.*(?=\))/;  //grab everything in between the parentheses
-                var lineWithoutWhitespace = lines[i].replace(/\s/g, '');
-                var propertyLine = lineRegexp.exec(lineWithoutWhitespace);
+                var propertyLine = lineRegexp.exec(lines[i]);
 
                 if (propertyLine) {
                     var inlineProperties = propertyLine[0];
