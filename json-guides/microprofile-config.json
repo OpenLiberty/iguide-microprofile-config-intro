@@ -429,7 +429,6 @@
                   {
                     "displayType":"fileEditor",
                     "fileName": "META-INF/microprofile-config.properties",
-                    "readonly": false,
                     "save": false,
                     "preload": [
                         "port=9081"
@@ -446,7 +445,7 @@
                     "displayType":"fileEditor",
                     "fileName": "server.env",
                     "preload": [
-                      ""
+                      "port=9082"
                     ],
                     "readonly": true,
                     "save": false
@@ -455,6 +454,7 @@
                     "displayType":"fileEditor",
                     "fileName": "bootstrap.properties",
                     "preload": [
+                        "port=9083"
                      ],
                     "readonly": true,
                     "save": false                 }

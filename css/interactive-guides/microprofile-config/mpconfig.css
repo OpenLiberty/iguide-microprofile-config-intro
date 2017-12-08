@@ -15,7 +15,7 @@
 
 .carSiteTitle {
     text-align: center; 
-    font-size: 18px; 
+    font-size: 16px; 
     background-color: #555; 
     color: white; 
     height: 30px;
@@ -26,6 +26,7 @@
 
 .carsGrid td {
     padding: 5px 10px;
+    font-size: 12px;
 }
 
 .carsGrid td img {
