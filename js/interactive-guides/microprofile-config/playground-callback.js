@@ -105,13 +105,12 @@ var playground = function(){
 
         /**
          * Parse properties files and store them.
-         * TODO: will ignore lines without = or : sign.
          */
         __parseAndStorePropertyFiles: function(filename, filetype) {
             var fileContent = contentManager.getTabbedEditorContents(STEP_NAME, filename);
             
             if (fileContent) {
-                var regex = /(^.*?)\s*[=:]\s*(.*$)/gm; //match lines that contain = or :
+                var regex = /^[ \t]*(.+?)[ \t]*[=: ][ \t]*(.+$)/gm; // match all key value pairs
                 var match = null;
                 var ordinal;
                 while ((match = regex.exec(fileContent)) !== null) {
