@@ -38,3 +38,22 @@
     float: center;
     text-align: center;
 }
+
+#guide_content .codeeditor .CodeMirror {
+    height: 100%;
+    border-bottom: none;
+}
+
+#guide_content .editorContainer{
+    height: 448px;
+}
+
+#guide_content .teContainer .editorContainer{
+    height: 423px;
+}
+
+.codeeditor {
+    height: 100%;
+    border-bottom: 1px solid black;
+    overflow: hidden;
+  }
