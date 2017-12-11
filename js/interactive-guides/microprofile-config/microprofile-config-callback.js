@@ -254,7 +254,9 @@ var microprofileConfigCallBack = (function() {
             // Click or 'Enter' or 'Space' key event...
             var stepName = stepContent.getCurrentStepName();
             var editorFileName;
-            if (stepName === "ConfigureAsEnvVar") {
+            if(stepName === "EnableMPConfig") {
+                editorFileName = "server.xml";
+            } else if (stepName === "ConfigureAsEnvVar") {
                 editorFileName = serverEnvFileName;
             } else if ((stepName === "ConfigurePropsFile") || (stepName === "UpdateOrdinal")) {
                 editorFileName = "META-INF/microprofile-config.properties";
@@ -366,10 +368,11 @@ var microprofileConfigCallBack = (function() {
         editor.addSaveListener(__showWebBrowser);
     };
 
-    var __listenToEditorForFeatureInServerXML = function(editor) {
+    var serverXmlFileName = "server.xml";
+    var __listenToEditorForFeatureInServerXML = function(editor) {      
       var __saveServerXML = function() {
         var stepName = stepContent.getCurrentStepName();
-        var content = contentManager.getEditorContents(stepName);
+        var content = contentManager.getTabbedEditorContents(stepName, serverXmlFileName);
         if (__checkMicroProfileConfigFeatureContent(content)) {
             var stepName = stepContent.getCurrentStepName();
             contentManager.markCurrentInstructionComplete(stepName);
@@ -447,9 +450,9 @@ var microprofileConfigCallBack = (function() {
         var ConfigFeature = "      <feature>mpConfig-1.1</feature>";
         var stepName = stepContent.getCurrentStepName();
         // reset content every time feature is added through the button to clear manual editing
-        contentManager.resetEditorContents(stepName);
-        var content = contentManager.getEditorContents(stepName);
-        contentManager.replaceEditorContents(stepName, 6, 6, ConfigFeature, 1);
+        contentManager.resetTabbedEditorContents(stepName, serverXmlFileName);
+        var content = contentManager.getTabbedEditorContents(stepName, serverXmlFileName);
+        contentManager.replaceTabbedEditorContents(stepName, serverXmlFileName, 6, 6, ConfigFeature);
     };
 
     var __addInjectDefaultConfigButton = function(event) {
