@@ -8,6 +8,14 @@
     max-width: 550px;
 }
 
+.propertyRow {
+  cursor: pointer;
+}
+
+#guide_content tr.propertyRow:hover {
+  background-color: #F4BD9B;
+}
+
 .carSite {
     border-top: 3px solid #ffb000;
     padding-top: 32px;
@@ -24,9 +32,15 @@
 }
 
 .carSiteTitle {
-    text-align: center; 
+    text-align: center;
     font-size: 18px;
     font-family: Asap-medium;
+    background-color: #555;
+    color: white;
+    height: 30px;
+    line-height: 30px;  /* vertically centers the text within the title */
+    padding: 5px 0px;
+    margin-top: 0px;
 }
 
 .flexContainer {
@@ -48,7 +62,7 @@
     font-family:Asap-SemiBold;
     font-size:16px;
     color:#333851;
-    letter-spacing:0;    
+    letter-spacing:0;
     border-bottom: 2px solid #ffb000;
     line-height: 70px; /* Important to center text vertically inside the card */
 }
