@@ -42,6 +42,7 @@ var playground = function(){
          */
         repopulatePlaygroundConfigs: function() {
             properties = {};
+            fileOrdinals = {};
             this.__clearErrorMessage();
 
             this.__getInjectionProperties(JAVA_FILE);
