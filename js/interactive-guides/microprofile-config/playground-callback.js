@@ -198,6 +198,16 @@ var playground = function(){
             }
         },
 
+        __getFileName: function(filetype) {
+            switch(filetype) {
+                case 'inject': return JAVA_FILE;
+                case 'propFile': return PROP_FILE;
+                case 'envVar': return ENV_FILE;
+                case 'sysProp': return SYS_FILE;
+                default: return null;
+            }
+        },
+
         getProperties: function() {
             return properties;
         },
