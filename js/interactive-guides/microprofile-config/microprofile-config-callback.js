@@ -240,14 +240,6 @@ var microprofileConfigCallBack = (function() {
         }
     };
 
-    var __saveButton = function(event) {
-        if (event.type === "click" ||
-           (event.type === "keypress" && (event.which === 13 || event.which === 32))) {
-            // Click or 'Enter' or 'Space' key event...
-            contentManager.saveEditor(stepContent.getCurrentStepName());
-        }
-    };
-
     var __saveTabbedEditorButton = function(event) {
         if (event.type === "click" ||
            (event.type === "keypress" && (event.which === 13 || event.which === 32))) {
@@ -637,7 +629,6 @@ var microprofileConfigCallBack = (function() {
         listenToEditorForFeatureInServerXML: __listenToEditorForFeatureInServerXML,
         addMicroProfileConfigFeatureButton: __addMicroProfileConfigFeatureButton,
         refreshBrowserButton: __refreshBrowserButton,
-        saveButton: __saveButton,
         saveTabbedEditorButton: __saveTabbedEditorButton,
         populateURL:  __populateURL,
         enterButtonURL: __enterButtonURL,
