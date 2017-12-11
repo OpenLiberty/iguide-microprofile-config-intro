@@ -184,10 +184,12 @@ var playground = function(){
             var order = this.__getOrdinalObjects();
             // Sort the config objects by ordinal
             order.sort(function(a, b){
-                if(a.ordinal > b.ordinal){
+                var ordinalA = parseInt(a.ordinal);
+                var ordinalB = parseInt(b.ordinal);
+                if(ordinalA > ordinalB){
                     return 1;
                 }
-                else if(a.ordinal < b.ordinal){
+                else if(ordinalA < ordinalB){
                     return -1;
                 }
                 // Equal ordinals
