@@ -4,8 +4,10 @@ var playground = function(){
     var PROP_FILE = '/META-INF/microprofile-config.properties';
     var ENV_FILE = 'server.env';
     var SYS_FILE = 'bootstrap.properties';
+
     var properties = {};
     var staging = [];
+    var fileOrdinals = {};
 
     var _playground = function(root, stepName) {
         this.root = root;
@@ -119,6 +121,7 @@ var playground = function(){
                     if (key === 'config_ordinal') {
                         //TODO: what if ordinal has already been set? (multiple config_ordinal keys)
                         ordinal = value;
+                        this.__setFileOrdinal(filetype, ordinal);
                     } else if (key.match(/^[!#].*/) !== null) {
                         // ignore lines that start with ! or # for comments
                         // all non-valid property lines are already ignored
@@ -149,7 +152,7 @@ var playground = function(){
                 var key = staging[i][0];
                 var value = staging[i][1];
                 if (this.getProperty(key) !== null) {
-                    this.playgroundAddConfig(key, value, source, ordinal);                    
+                    this.playgroundAddConfig(key, value, source, ordinal);
                 } else {
                     var message = 'The property <b>' + key + '</b> needs to be set with @Inject in Java file';
                     this.__displayErrorMessage(message);
@@ -179,6 +182,18 @@ var playground = function(){
             case 'envVar': return '300';
             case 'sysProp': return '400';
             default: return '0';
+            }
+        },
+
+        __setFileOrdinal: function(filetype, ordinal) {
+            fileOrdinals[filetype] = ordinal;
+        },
+
+        __getFileOrdinal: function(filetype) {
+            if (fileOrdinals[filetype]) {
+                return fileOrdinals[filetype];
+            } else {
+                return __getDefaultOrdinal(filetype);
             }
         },
 
