@@ -16,17 +16,20 @@
 <body>
     <h4 class="ordinalTitle">File Ordinals</h4>
     <div class="ordinalCardContainer">
-        <div class="ordinal-0 ordinalCard">
-            <span class="ordinalCardSpan">CarTypes.java</span>
+        <div class="ordinal-inject ordinalCard">
+            <div class="ordinalCardFileName">CarTypes.java</div>
         </div>
-        <div class="ordinal-1 ordinalCard">
-            <span class="ordinalCardSpan">/META-INF/microprofile-config<br />Ordinal = 100</span>
+        <div class="ordinal-propFile ordinalCard">
+            <div class="ordinalCardFileName">/META-INF/microprofile-config</div>
+            <div class="ordinalCardOrdinal">Ordinal = 100</div>
         </div>
-        <div class="ordinal-2 ordinalCard">
-                <span class="ordinalCardSpan">server.env<br/> Ordinal = 300</span>
+        <div class="ordinal-envVar ordinalCard">
+                <div class="ordinalCardFileName">server.env</div>
+                <div class="ordinalCardOrdinal">Ordinal = 300</div>
             </div>
-        <div class="ordinal-3 ordinalCard">
-                <span class="ordinalCardSpan">bootstrap.properties<br/>Ordinal = 400</span>
+        <div class="ordinal-sysProp ordinalCard">
+                <div class="ordinalCardFileName">bootstrap.properties</div>
+                <div class="ordinalCardOrdinal">Ordinal = 400</div>
             </div>
     </div>
     <ul class="properties"></ul>

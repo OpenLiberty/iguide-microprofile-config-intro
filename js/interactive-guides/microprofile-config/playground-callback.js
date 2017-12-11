@@ -199,13 +199,17 @@ var playground = function(){
             for(var i = 0; i < order.length; i++){
                 var configSource = order[i];
                 // Find the card's span associated with this order
-                var card = $('.ordinal-' + i);
+                var card = $('.ordinal-' + order[i].filetype);
                 if(card.length > 0){
                     var spanText = configSource.fileName;
+                    card.removeClass('ordinal-0 ordinal-1 ordinal-2 ordinal-3');
+                    card.addClass('ordinal-' + i);
+
+                    // Update the ordinal if there is one
                     if(configSource.ordinal > 0) {
-                        spanText += '<br/> Ordinal = ' + configSource.ordinal;
-                    }
-                    card.find('span').html(spanText);
+                        card.find('.ordinalCardOrdinal').html('Ordinal = ' + configSource.ordinal);
+                    }                    
+                    // Change the background color to always match the card
                     card.css('background-color', configSource.bgcolor);
                 }                
             }
@@ -216,6 +220,7 @@ var playground = function(){
             var ordinalObjects = [];
             for(var filetype in filetypes){
                 var obj = {};
+                obj.filetype = filetype;
                 obj.ordinal = this.__getFileOrdinal(filetype);
                 obj.fileName = this.__getFileName(filetype);
                 obj.bgcolor = this.__getCardColor(filetype);
