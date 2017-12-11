@@ -52,6 +52,7 @@ var playground = function(){
             this.__getEnvironmentProperties(ENV_FILE);
             this.__getSystemProperties(SYS_FILE);
             this.showProperties();
+            this.updateFigure();
         },
 
         __getInjectionProperties: function(fileName) {
@@ -178,6 +179,49 @@ var playground = function(){
             }
         },
 
+        /* Updates the 4 config source cards and sorts them by their ordinal value with the highest ordinal being on top. */
+        updateFigure: function(){           
+            var order = this.__getOrdinalObjects();
+            // Sort the config objects by ordinal
+            order.sort(function(a, b){
+                if(a.ordinal > b.ordinal){
+                    return 1;
+                }
+                else if(a.ordinal < b.ordinal){
+                    return -1;
+                }
+                // Equal ordinals
+                return 0;
+            });
+            // Update the cards text and color
+            for(var i = 0; i < order.length; i++){
+                var configSource = order[i];
+                // Find the card's span associated with this order
+                var card = $('.ordinal-' + i);
+                if(card.length > 0){
+                    var spanText = configSource.fileName;
+                    if(configSource.ordinal > 0) {
+                        spanText += '<br/> Ordinal = ' + configSource.ordinal;
+                    }
+                    card.find('span').html(spanText);
+                    card.css('background-color', configSource.bgcolor);
+                }                
+            }
+        },
+
+        __getOrdinalObjects: function() {
+            // Get order of the ordinals
+            var ordinalObjects = [];
+            for(var filetype in filetypes){
+                var obj = {};
+                obj.ordinal = this.__getFileOrdinal(filetype);
+                obj.fileName = this.__getFileName(filetype);
+                obj.bgcolor = this.__getCardColor(filetype);
+                ordinalObjects.push(obj);
+            }
+            return ordinalObjects;            
+        },
+
         __getDefaultOrdinal: function(source) {
             switch(source) {
             case filetypes.inject: return '0';
@@ -200,7 +244,7 @@ var playground = function(){
             if (fileOrdinals[filetype]) {
                 return fileOrdinals[filetype];
             } else {
-                return __getDefaultOrdinal(filetype);
+                return this.__getDefaultOrdinal(filetype);
             }
         },
 
@@ -217,6 +261,17 @@ var playground = function(){
                 case filetypes.propFile: return PROP_FILE;
                 case filetypes.envVar: return ENV_FILE;
                 case filetypes.sysProp: return SYS_FILE;
+                default: return null;
+            }
+        },
+
+        /* Returns the color for the ordinal card associated with the fileType passed in */
+        __getCardColor: function(filetype) {
+            switch(filetype) {
+                case filetypes.inject: return '#F0F2FD';
+                case filetypes.propFile: return '#E5EAFB';
+                case filetypes.envVar: return '#DAE1FA';
+                case filetypes.sysProp: return '#CDD6F9';
                 default: return null;
             }
         },

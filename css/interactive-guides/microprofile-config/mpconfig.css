@@ -107,29 +107,25 @@
     cursor: pointer;
 }
 
-.ordinal1 {
-    background-color: #F0F2FD;
+.ordinal-0 {
     z-index: 1;
     top: 50%;
     left: 15%;
 }
 
-.ordinal2 {
-    background-color: #E5EAFB;
+.ordinal-1 {
     z-index: 2;
     top: 40%;
     left: 25%;
 }
 
-.ordinal3 {
-    background-color: #DAE1FA;
+.ordinal-2 {
     z-index: 3;
     top: 30%;
     left: 35%;
 }
 
-.ordinal4 {
-    background-color: #CDD6F9;
+.ordinal-3 {
     z-index: 4;
     top: 20%;
     left: 45%;    
