@@ -18,7 +18,7 @@ var playground = function(){
 
     _playground.prototype = {
         /**
-         * 
+         *
          * @param {String} key - the name of the property
          * @param {String} value - the value of the property
          * @param {String} source - 'inject', 'propFile', 'envVar', 'sysProp'
@@ -32,10 +32,10 @@ var playground = function(){
             if (properties[key]) {
                 var oldOrdinal = properties[key].ordinal;
                 if (parseInt(ordinal) >= parseInt(oldOrdinal)) {
-                    properties[key] = {'ordinal': ordinal, 'value': value};
+                    properties[key] = {'ordinal': ordinal, 'value': value, 'source': source};
                 }
             } else {
-                properties[key] = {'ordinal': ordinal, 'value': value};
+                properties[key] = {'ordinal': ordinal, 'value': value, 'source': source};
             }
         },
 
@@ -64,7 +64,7 @@ var playground = function(){
             while ((match = regexp.exec(injectionContent)) != null) {
                 matches.push(match.index);
             }
-            
+
             // For each match, grab string until end of Java code line (including lines split for readability).
             var lines = [];
             for (var i in matches) {
@@ -87,7 +87,7 @@ var playground = function(){
                     var defaultValue = defaultValueRegexp.exec(inlineProperties);
                     if (name && defaultValue) {
                         //index 1 is the regex substring match which contains the value of the match
-                        this.playgroundAddConfig(name[1], defaultValue[1], filetypes.inject); 
+                        this.playgroundAddConfig(name[1], defaultValue[1], filetypes.inject);
                     }
                 }
             }
@@ -113,7 +113,7 @@ var playground = function(){
          */
         __parseAndStorePropertyFiles: function(filename, filetype) {
             var fileContent = contentManager.getTabbedEditorContents(STEP_NAME, filename);
-            
+
             if (fileContent) {
                 var regex = /^[ \t]*(.+?)[ \t]*[=: ][ \t]*(.+$)/gm; // match all key value pairs
                 var match = null;
@@ -130,14 +130,13 @@ var playground = function(){
                         // all non-valid property lines are already ignored
                         continue;
                     } else {
-                        this.__stageConfigProperty(key, value);                        
+                        this.__stageConfigProperty(key, value);
                     }
                 }
-
                 this.__storeStagedProperties(filetype, ordinal);
             }
         },
-        
+
         /**
          * Temporarily hold properties.
          * Used while parsing properties files and waiting to encounter `config_ordinal`
@@ -165,17 +164,43 @@ var playground = function(){
         },
 
         /**
+         * Gets filename from the html of the property row in the table
+         * and makes that file active in the tabbedEditor
+         */
+        __focusOnSourceTab: function(tableRow) {
+          var cells = tableRow.querySelectorAll("td");
+          var source = cells[2].innerText; //cells[2] - is the cell with the filename
+          contentManager.focusTabbedEditorByName(STEP_NAME, source);
+        },
+
+        /**
          * Display final properties and values in pod
          */
         showProperties: function() {
             var props = this.getProperties();
-            var propsDiv = this.root.find('.properties');
-            propsDiv.empty();
+
+            //create a table to display properties
+            var propsTable = this.root.find('.propsTable');
+            propsTable.empty();
+            propsTable.append('<tr><th>Config property</th><th>Value</th><th>Source</th></tr></table>'); //adding the column headers
+
             for (var key in props) {
-                var prop = $('<li>');
-                prop.html(key + ' - ' + props[key].value);
-                propsDiv.append(prop);
+              var prop = $('<tr class="propertyRow">');
+              prop.append('<td>' + key + '</td>');
+              prop.append('<td>' + props[key].value + '</td>');
+              prop.append('<td>' + this.__getFileName(props[key].source) + '</td></tr>'); 
+              propsTable.append(prop);
             }
+
+            //add on click event to each row in the properties table
+            //clicking the row will activate the respective source tab
+            var propRows = this.root.find('tr.propertyRow');
+            var thisPlayground = this;
+            propRows.each(function() {
+              $(this).on('click', function(e) {
+                thisPlayground.__focusOnSourceTab(this);
+              });
+            });
         },
 
         __getDefaultOrdinal: function(source) {
@@ -224,7 +249,7 @@ var playground = function(){
         getProperties: function() {
             return properties;
         },
-        
+
         getProperty: function(key) {
             if (properties[key]) {
                 return properties[key];
@@ -232,7 +257,7 @@ var playground = function(){
                 return null;
             }
         },
-        
+
         __getEditorInstance: function(fileName) {
             if (contentManager.getEditorInstanceFromTabbedEditor) {
                 return contentManager.getEditorInstanceFromTabbedEditor(STEP_NAME, fileName);
