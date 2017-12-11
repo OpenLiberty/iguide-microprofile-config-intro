@@ -241,7 +241,7 @@
             ],
             "instruction": [
               "In <code>server.env</code>, add the following on line 1 or click <action title='Configure port in server.env' onclick=\"microprofileConfigCallBack.addPropToServerEnvButton(event)\"><b>port=9082</b></action>. Then, click <action title='Run' onclick=\"microprofileConfigCallBack.saveTabbedEditorButton(event)\"><b>Run</b></action> on the editor menu pane.",
-              "Click <action title='Refresh' onclick=\"microprofileConfigCallBack.refreshBrowserButton(event)\"><b>Refresh</b></action> in the following browser to see the port value in the server.env file is used. The quality assurance port (9082) of the ObtainCarTypes microservice returns the values <code>SUV</code>, <code>Crossover</code>, and <code>Coupe</code>.<br/>"
+              "Click <action title='Refresh' onclick=\"microprofileConfigCallBack.refreshBrowserButton(event)\"><b>Refresh</b></action> in the following browser to see the port value in the server.env file is used. The quality assurance port (9082) of the ObtainCarTypes microservice returns the values <code>SUV</code>, <code>Crossover</code>, <code>Coupe</code>, and <code>Truck</code>.<br/>"
             ],
             "content":[
               {

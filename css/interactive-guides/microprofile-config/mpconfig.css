@@ -9,29 +9,48 @@
 }
 
 .carSite {
+    border-top: 3px solid #ffb000;
+    padding-top: 32px;
+    text-align: center;
     margin: 0;
     font-family: arial;
+    background:#323752;
+    color: #ffffff;
+}
+
+.carLogo {
+    height: 42px;
+    width: 47px;
 }
 
 .carSiteTitle {
     text-align: center; 
-    font-size: 16px; 
-    background-color: #555; 
-    color: white; 
-    height: 30px;
-    line-height: 30px;  /* vertically centers the text within the title */ 
-    padding: 5px 0px;
-    margin-top: 0px;
+    font-size: 18px;
+    font-family: Asap-medium;
 }
 
-.carsGrid td {
-    padding: 5px 10px;
-    font-size: 12px;
+.flexContainer {
+    display: flex;
+    flex-wrap: wrap;
 }
 
-.carsGrid td img {
-    height:30px;
-    width:30px;
+.card {
+    background:#ffffff;
+    border:2px solid #f4b23e;
+    border-radius:4px;
+    width:106px;
+    height:70px;
+    text-align:center;
+    margin: 5px auto;
+}
+
+.cardText {
+    font-family:Asap-SemiBold;
+    font-size:16px;
+    color:#333851;
+    letter-spacing:0;    
+    border-bottom: 2px solid #ffb000;
+    line-height: 70px; /* Important to center text vertically inside the card */
 }
 
 .devOpsPipeline {
