@@ -258,6 +258,8 @@ var microprofileConfigCallBack = (function() {
                 editorFileName = "server.xml";
             } else if(stepName === "ConfigureViaInject"){
                 editorFileName = configEditorFileName;
+            } else if(stepName === "InjectWithDefaultValue"){
+                editorFileName = configEditorFileName;
             } else if (stepName === "ConfigureAsEnvVar") {
                 editorFileName = serverEnvFileName;
             } else if ((stepName === "ConfigurePropsFile") || (stepName === "UpdateOrdinal")) {
@@ -351,7 +353,7 @@ var microprofileConfigCallBack = (function() {
     var __listenToEditorForInjectDefaultConfig = function(editor) {
         var __showWebBrowser = function() {
             var stepName = editor.getStepName();
-            var content = contentManager.getEditorContents(stepName);
+            var content = contentManager.getTabbedEditorContents(stepName, configEditorFileName);
             if (__checkDefaultInjectionEditorContent(content)) {
                 editor.closeEditorErrorBox(stepName);
                 contentManager.showBrowser(stepName, 0);
@@ -464,7 +466,7 @@ var microprofileConfigCallBack = (function() {
             __addInjectDefaultConfigToEditor();
         }
     };
-
+    
     var __addInjectDefaultConfigToEditor = function(stepName) {
         var injectConfig = "    @Inject @ConfigProperty(name=\"port\", \n" +
                            "                            defaultValue=\"9080\")";
@@ -472,10 +474,10 @@ var microprofileConfigCallBack = (function() {
            stepName = stepContent.getCurrentStepName();
         }
         // reset content every time property is added through the button so as to clear out any manual editing
-        contentManager.resetEditorContents(stepName);
-        var content = contentManager.getEditorContents(stepName);
+        contentManager.resetTabbedEditorContents(stepName, configEditorFileName);
+        var content = contentManager.getTabbedEditorContents(stepName, configEditorFileName);
 
-        contentManager.replaceEditorContents(stepName, 6, 6, injectConfig, 2);
+        contentManager.replaceTabbedEditorContents(stepName, configEditorFileName, 6, 6, injectConfig);
         var readOnlyLines = [];
         readOnlyLines.push({from: 1, to: 5}, {from: 8, to: 10});
         contentManager.markEditorReadOnlyLines(stepName, readOnlyLines);
@@ -575,7 +577,6 @@ var microprofileConfigCallBack = (function() {
         contentManager.resetTabbedEditorContents(stepName, configEditorFileName);
         var content = contentManager.getTabbedEditorContents(stepName, configEditorFileName);
 
-        // contentManager.replaceEditorContents(stepName, 6, 6, injectConfig, 1); //steven
         contentManager.replaceTabbedEditorContents(stepName, configEditorFileName, 6, 6, injectConfig);
         var readOnlyLines = [];
         readOnlyLines.push({from: 1, to: 5}, {from: 7, to: 9});
