@@ -582,7 +582,18 @@ var microprofileConfigCallBack = (function() {
         }
 
         var pg = playground.create(root, stepName);
-        pg.repopulatePlaygroundConfigs();
+        var populateContents = function() {
+            // Wait until all 4 editors have been loaded to call update the properties so the editors have time to load
+            setTimeout(function(){
+                try {
+                    pg.repopulatePlaygroundConfigs();
+                } catch (e) {
+                    console.log("Unable to prepopulate the config sources. Click run on the editor to retrieve the values. Retrying");
+                    populateContents();
+                }            
+            }, 250);
+        }
+        populateContents();
         root.playground = pg;
 
         contentManager.setPlayground(stepName, pg, 0);
@@ -593,7 +604,6 @@ var microprofileConfigCallBack = (function() {
             var pg = contentManager.getPlayground(editorInstance.getStepName());
             pg.repopulatePlaygroundConfigs();
         };
-
         editor.addSaveListener(__populateProperties);
     };
 
