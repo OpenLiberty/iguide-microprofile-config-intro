@@ -21,7 +21,8 @@
                   "description": [
                     "Microprofile Config uses <b><i>CDI</i></b> (Contexts and Dependency Injection) to inject configuration property values directly into an application without requiring user code to retrieve them.  The injected values are defined as <b><i>static</i></b> because they are set only at application startup.<br>",
                     "The API combines configuration values from multiple sources, each known as a <b><i>ConfigSource</b></i>.  Each ConfigSource has a specified priority, defined by its <b><i>ordinal</i></b> value. A higher ordinal means that the values taken from this ConfigSource will override values from ConfigSources with a lower ordinal value. <br><br>MicroProfile Config has 3 default ConfigSources:",
-                    "<ul><li>All <code>META-INF/microprofile-config.properties</code> found on the classpath (default ordinal = 100).</li><li>Environment variables (default ordinal = 300).</li><li>System properties (default ordinal = 400).</li></ul>"
+                    "<ul><li>All <code>META-INF/microprofile-config.properties</code> found on the classpath (default ordinal = 100).</li><li>Environment variables (default ordinal = 300).</li><li>System properties (default ordinal = 400).</li></ul>",
+                    "An optional default value can be specified via annotations, and will apply if configuration values are not found in any of the ConfigSources."
                   ],
                   "content": [
                     {
@@ -85,11 +86,12 @@
             "name": "ConfigureViaInject",
             "title": "Injecting configuration through @ConfigProperty annotation",
             "description": [
-                "After you modify your <code>server.xml</code> file to <a href='#enabling-microprofile-config'>include the mpConfig feature</a>, a single configuration property value can be injected directly into your code using the <code>@Inject</code> and the <code>@ConfigProperty</code> annotations. The injected value is static and therefore will not change after the application starts.<br>",
-                "Injecting a configuration value this way is recommended for mandatory properties. If no configured value exists for this property, a <code>DeploymentException</code> is thrown during application startup causing the application to fail to start."
+                "After you modify your <code>server.xml</code> file to <a href='#enabling-microprofile-config'>include the mpConfig feature</a>, a single configuration property value can be injected directly into your code using the <code>@Inject</code> and the <code>@ConfigProperty</code> annotations. The injected value is static and therefore will not change after the application starts.",
+                "",
+                "Mandatory configuration properties are those that require a value to be specified in the runtime environment.  Properties are mandatory when an optional default value is not specified on the annotation.  When the mandatory configuration property value is not found in any of the ConfigSources, a <code>DeploymentException</code> is thrown during application startup, causing the application to fail to start."
             ],
             "instruction": [
-                "To inject a <code>port</code> configuration property into the code, add the following <code>@Inject</code> and <code>@ConfigProperty</code> annotations to line 6 before declaring the <code>private Integer port</code>, or click  <action title='Inject a ConfigProperty' onclick='microprofileConfigCallBack.addInjectConfigButton(event)'><b>@Inject @ConfigProperty(name=\"port\")</b></action>. Then, click <action title='Run' onclick=\"microprofileConfigCallBack.saveButton(event)\"><b>Run</b></action> on the editor menu pane to see the exception occur."
+                "To inject a mandatory <code>port</code> configuration property into the code, add the following <code>@Inject</code> and <code>@ConfigProperty</code> annotations to line 6 before declaring the <code>private Integer port</code>, or click  <action title='Inject a ConfigProperty' onclick='microprofileConfigCallBack.addInjectConfigButton(event)'><b>@Inject @ConfigProperty(name=\"port\")</b></action>. Then, click <action title='Run' onclick=\"microprofileConfigCallBack.saveButton(event)\"><b>Run</b></action> on the editor menu pane to see the exception occur."
             ],
             "content":[
                 {
@@ -126,7 +128,7 @@
         },
         {
             "name": "InjectWithDefaultValue",
-            "title": "Providing default values with injection",
+            "title": "Providing optional default values",
             "TOCIndent": 1,
             "description": [
                 "You can specify a default value for a configuration property using the <b>defaultValue</b> parameter in the <code>@ConfigProperty</code> annotation.  This value is used when a value is not specified in any MicroProfile Config configuration source.<br>"
