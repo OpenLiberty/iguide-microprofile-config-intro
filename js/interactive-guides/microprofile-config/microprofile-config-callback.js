@@ -240,21 +240,19 @@ var microprofileConfigCallBack = (function() {
         }
     };
 
-    var __saveButton = function(event) {
-        if (event.type === "click" ||
-           (event.type === "keypress" && (event.which === 13 || event.which === 32))) {
-            // Click or 'Enter' or 'Space' key event...
-            contentManager.saveEditor(stepContent.getCurrentStepName());
-        }
-    };
-
     var __saveTabbedEditorButton = function(event) {
         if (event.type === "click" ||
            (event.type === "keypress" && (event.which === 13 || event.which === 32))) {
             // Click or 'Enter' or 'Space' key event...
             var stepName = stepContent.getCurrentStepName();
             var editorFileName;
-            if (stepName === "ConfigureAsEnvVar") {
+            if(stepName === "EnableMPConfig") {
+                editorFileName = "server.xml";
+            } else if(stepName === "ConfigureViaInject"){
+                editorFileName = configEditorFileName;
+            } else if(stepName === "InjectWithDefaultValue"){
+                editorFileName = configEditorFileName;
+            } else if (stepName === "ConfigureAsEnvVar") {
                 editorFileName = serverEnvFileName;
             } else if ((stepName === "ConfigurePropsFile") || (stepName === "UpdateOrdinal")) {
                 editorFileName = "META-INF/microprofile-config.properties";
@@ -347,7 +345,7 @@ var microprofileConfigCallBack = (function() {
     var __listenToEditorForInjectDefaultConfig = function(editor) {
         var __showWebBrowser = function() {
             var stepName = editor.getStepName();
-            var content = contentManager.getEditorContents(stepName);
+            var content = contentManager.getTabbedEditorContents(stepName, configEditorFileName);
             if (__checkDefaultInjectionEditorContent(content)) {
                 editor.closeEditorErrorBox(stepName);
                 contentManager.showBrowser(stepName, 0);
@@ -366,10 +364,11 @@ var microprofileConfigCallBack = (function() {
         editor.addSaveListener(__showWebBrowser);
     };
 
-    var __listenToEditorForFeatureInServerXML = function(editor) {
+    var serverXmlFileName = "server.xml";
+    var __listenToEditorForFeatureInServerXML = function(editor) {      
       var __saveServerXML = function() {
         var stepName = stepContent.getCurrentStepName();
-        var content = contentManager.getEditorContents(stepName);
+        var content = contentManager.getTabbedEditorContents(stepName, serverXmlFileName);
         if (__checkMicroProfileConfigFeatureContent(content)) {
             var stepName = stepContent.getCurrentStepName();
             contentManager.markCurrentInstructionComplete(stepName);
@@ -447,9 +446,9 @@ var microprofileConfigCallBack = (function() {
         var ConfigFeature = "      <feature>mpConfig-1.1</feature>";
         var stepName = stepContent.getCurrentStepName();
         // reset content every time feature is added through the button to clear manual editing
-        contentManager.resetEditorContents(stepName);
-        var content = contentManager.getEditorContents(stepName);
-        contentManager.replaceEditorContents(stepName, 6, 6, ConfigFeature, 1);
+        contentManager.resetTabbedEditorContents(stepName, serverXmlFileName);
+        var content = contentManager.getTabbedEditorContents(stepName, serverXmlFileName);
+        contentManager.replaceTabbedEditorContents(stepName, serverXmlFileName, 6, 6, ConfigFeature);
     };
 
     var __addInjectDefaultConfigButton = function(event) {
@@ -459,7 +458,7 @@ var microprofileConfigCallBack = (function() {
             __addInjectDefaultConfigToEditor();
         }
     };
-
+    
     var __addInjectDefaultConfigToEditor = function(stepName) {
         var injectConfig = "    @Inject @ConfigProperty(name=\"port\", \n" +
                            "                            defaultValue=\"9080\")";
@@ -467,10 +466,10 @@ var microprofileConfigCallBack = (function() {
            stepName = stepContent.getCurrentStepName();
         }
         // reset content every time property is added through the button so as to clear out any manual editing
-        contentManager.resetEditorContents(stepName);
-        var content = contentManager.getEditorContents(stepName);
+        contentManager.resetTabbedEditorContents(stepName, configEditorFileName);
+        var content = contentManager.getTabbedEditorContents(stepName, configEditorFileName);
 
-        contentManager.replaceEditorContents(stepName, 6, 6, injectConfig, 2);
+        contentManager.replaceTabbedEditorContents(stepName, configEditorFileName, 6, 6, injectConfig);
         var readOnlyLines = [];
         readOnlyLines.push({from: 1, to: 5}, {from: 8, to: 10});
         contentManager.markEditorReadOnlyLines(stepName, readOnlyLines);
@@ -510,7 +509,7 @@ var microprofileConfigCallBack = (function() {
     var __listenToEditorForInjectConfig = function(editor) {
         var __showPodWithDeploymentException = function() {
             var stepName = editor.getStepName();
-            var content = contentManager.getEditorContents(stepName);
+            var content = contentManager.getTabbedEditorContents(stepName, configEditorFileName);
             if (__checkInjectionEditorContent(content)) {
                 editor.closeEditorErrorBox(stepName);
                 contentManager.markCurrentInstructionComplete(stepName);
@@ -525,7 +524,7 @@ var microprofileConfigCallBack = (function() {
                 );
             } else {
                 // display error
-                editor.createErrorLinkForCallBack(stepName, true, __correctEditorError);
+                editor.createErrorLinkForCallBack(true, __addInjectConfigToEditor);
             }
         };
         editor.addSaveListener(__showPodWithDeploymentException);
@@ -560,16 +559,17 @@ var microprofileConfigCallBack = (function() {
         }
     };
 
+    var configEditorFileName = "CarTypes.java";
     var __addInjectConfigToEditor = function(stepName) {
         var injectConfig = "    @Inject @ConfigProperty(name=\"port\")";
         if (!stepName) {
            stepName = stepContent.getCurrentStepName();
         }
         // reset content every time property is added through the button so as to clear out any manual editing
-        contentManager.resetEditorContents(stepName);
-        var content = contentManager.getEditorContents(stepName);
+        contentManager.resetTabbedEditorContents(stepName, configEditorFileName);
+        var content = contentManager.getTabbedEditorContents(stepName, configEditorFileName);
 
-        contentManager.replaceEditorContents(stepName, 6, 6, injectConfig, 1);
+        contentManager.replaceTabbedEditorContents(stepName, configEditorFileName, 6, 6, injectConfig);
         var readOnlyLines = [];
         readOnlyLines.push({from: 1, to: 5}, {from: 7, to: 9});
         contentManager.markEditorReadOnlyLines(stepName, readOnlyLines);
@@ -629,7 +629,6 @@ var microprofileConfigCallBack = (function() {
         listenToEditorForFeatureInServerXML: __listenToEditorForFeatureInServerXML,
         addMicroProfileConfigFeatureButton: __addMicroProfileConfigFeatureButton,
         refreshBrowserButton: __refreshBrowserButton,
-        saveButton: __saveButton,
         saveTabbedEditorButton: __saveTabbedEditorButton,
         populateURL:  __populateURL,
         enterButtonURL: __enterButtonURL,
