@@ -5,6 +5,8 @@ var playground = function(){
     var ENV_FILE = 'server.env';
     var SYS_FILE = 'bootstrap.properties';
 
+    var filetypes = {'inject':'inject', 'propFile':'propFile', 'envVar':'envVar', 'sysProp':'sysProp'};
+
     var properties = {};
     var staging = [];
     var fileOrdinals = {};
@@ -85,7 +87,7 @@ var playground = function(){
                     var defaultValue = defaultValueRegexp.exec(inlineProperties);
                     if (name && defaultValue) {
                         //index 1 is the regex substring match which contains the value of the match
-                        this.playgroundAddConfig(name[1], defaultValue[1], 'inject'); 
+                        this.playgroundAddConfig(name[1], defaultValue[1], filetypes.inject); 
                     }
                 }
             }
@@ -93,17 +95,17 @@ var playground = function(){
 
         __getPropertiesFileProperties: function(fileName) {
             var editorInstance = this.__getEditorInstance(fileName);
-            this.__parseAndStorePropertyFiles(fileName, 'propFile');
+            this.__parseAndStorePropertyFiles(fileName, filetypes.propFile);
         },
 
         __getEnvironmentProperties: function(fileName) {
             var editorInstance = this.__getEditorInstance(fileName);
-            this.__parseAndStorePropertyFiles(fileName, 'envVar');
+            this.__parseAndStorePropertyFiles(fileName, filetypes.envVar);
         },
 
         __getSystemProperties: function(fileName) {
             var editorInstance = this.__getEditorInstance(fileName);
-            this.__parseAndStorePropertyFiles(fileName, 'sysProp');
+            this.__parseAndStorePropertyFiles(fileName, filetypes.sysProp);
         },
 
         /**
@@ -178,10 +180,10 @@ var playground = function(){
 
         __getDefaultOrdinal: function(source) {
             switch(source) {
-            case 'inject': return '0';
-            case 'propFile': return '100';
-            case 'envVar': return '300';
-            case 'sysProp': return '400';
+            case filetypes.inject: return '0';
+            case filetypes.propFile: return '100';
+            case filetypes.envVar: return '300';
+            case filetypes.sysProp: return '400';
             default: return '0';
             }
         },
@@ -190,6 +192,10 @@ var playground = function(){
             fileOrdinals[filetype] = ordinal;
         },
 
+        /**
+         * @param {String} filetype : shortname of filetype
+         * @returns : ordinal of specified properties file
+         */
         __getFileOrdinal: function(filetype) {
             if (fileOrdinals[filetype]) {
                 return fileOrdinals[filetype];
@@ -198,12 +204,19 @@ var playground = function(){
             }
         },
 
+        /**
+         * @returns : array of file ordinals
+         */
+        __getAllFileOrdinals: function() {
+            return fileOrdinals;
+        },
+
         __getFileName: function(filetype) {
             switch(filetype) {
-                case 'inject': return JAVA_FILE;
-                case 'propFile': return PROP_FILE;
-                case 'envVar': return ENV_FILE;
-                case 'sysProp': return SYS_FILE;
+                case filetypes.inject: return JAVA_FILE;
+                case filetypes.propFile: return PROP_FILE;
+                case filetypes.envVar: return ENV_FILE;
+                case filetypes.sysProp: return SYS_FILE;
                 default: return null;
             }
         },
