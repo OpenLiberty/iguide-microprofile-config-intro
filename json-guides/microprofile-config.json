@@ -97,35 +97,41 @@
                 "Mandatory configuration properties are those that require a value to be specified in the runtime environment.  Properties are mandatory when an optional default value is not specified on the annotation.  When the mandatory configuration property value is not found in any of the ConfigSources, a <code>DeploymentException</code> is thrown during application startup, causing the application to fail to start."
             ],
             "instruction": [
-                "To inject a mandatory <code>port</code> configuration property into the code, add the following <code>@Inject</code> and <code>@ConfigProperty</code> annotations to line 6 before declaring the <code>private Integer port</code>, or click  <action title='Inject a ConfigProperty' onclick='microprofileConfigCallBack.addInjectConfigButton(event)'><b>@Inject @ConfigProperty(name=\"port\")</b></action>. Then, click <action title='Run' onclick=\"microprofileConfigCallBack.saveButton(event)\"><b>Run</b></action> on the editor menu pane to see the exception occur."
+                "To inject a mandatory <code>port</code> configuration property into the code, add the following <code>@Inject</code> and <code>@ConfigProperty</code> annotations to line 6 before declaring the <code>private Integer port</code>, or click  <action title='Inject a ConfigProperty' onclick='microprofileConfigCallBack.addInjectConfigButton(event)'><b>@Inject @ConfigProperty(name=\"port\")</b></action>. Then, click <action title='Run' onclick=\"microprofileConfigCallBack.saveTabbedEditorButton(event)\"><b>Run</b></action> on the editor menu pane to see the exception occur."
             ],
             "content":[
                 {
-                    "displayType":"fileEditor",
-                    "fileName": "CarTypes.java",
-                    "preload": [
-                        "package com.car.types;",
-                        "import javax.inject.Inject;",
-                        "import org.eclipse.microprofile.config.inject.ConfigProperty;",
-                        "",
-                        "public class CarTypes {",
-                        "",
-                        "    private Integer port;",
-                        "",
-                        "}"
-                    ],
-                    "readonly": [
-                       {
-                            "from": "1",
-                            "to": "5"
-                       },
-                       {
-                            "from": "7",
-                            "to": "9"
-                       }
-                    ],
-                    "save": false,
-                    "callback": "(function test(editor) {microprofileConfigCallBack.listenToEditorForInjectConfig(editor); })"
+                    "displayType":"tabbedEditor",
+                    "activeTab": "CarTypes.java",
+                    "editorList": [
+                        {
+                            "displayType":"fileEditor",
+                            "fileName": "CarTypes.java",
+                            "preload": [
+                                "package com.car.types;",
+                                "import javax.inject.Inject;",
+                                "import org.eclipse.microprofile.config.inject.ConfigProperty;",
+                                "",
+                                "public class CarTypes {",
+                                "",
+                                "    private Integer port;",
+                                "",
+                                "}"
+                            ],
+                            "readonly": [
+                                {
+                                    "from": "1",
+                                    "to": "5"
+                                },
+                                {
+                                    "from": "7",
+                                    "to": "9"
+                                }
+                            ],
+                            "save": false,
+                            "callback": "(function test(editor) {microprofileConfigCallBack.listenToEditorForInjectConfig(editor); })"
+                        }
+                    ]
                 },
                 {
                     "displayType":"pod"

@@ -256,6 +256,8 @@ var microprofileConfigCallBack = (function() {
             var editorFileName;
             if(stepName === "EnableMPConfig") {
                 editorFileName = "server.xml";
+            } else if(stepName === "ConfigureViaInject"){
+                editorFileName = configEditorFileName;
             } else if (stepName === "ConfigureAsEnvVar") {
                 editorFileName = serverEnvFileName;
             } else if ((stepName === "ConfigurePropsFile") || (stepName === "UpdateOrdinal")) {
@@ -513,7 +515,7 @@ var microprofileConfigCallBack = (function() {
     var __listenToEditorForInjectConfig = function(editor) {
         var __showPodWithDeploymentException = function() {
             var stepName = editor.getStepName();
-            var content = contentManager.getEditorContents(stepName);
+            var content = contentManager.getTabbedEditorContents(stepName, configEditorFileName);
             if (__checkInjectionEditorContent(content)) {
                 editor.closeEditorErrorBox(stepName);
                 contentManager.markCurrentInstructionComplete(stepName);
@@ -528,7 +530,7 @@ var microprofileConfigCallBack = (function() {
                 );
             } else {
                 // display error
-                editor.createErrorLinkForCallBack(stepName, true, __correctEditorError);
+                editor.createErrorLinkForCallBack(true, __addInjectConfigToEditor);
             }
         };
         editor.addSaveListener(__showPodWithDeploymentException);
@@ -563,16 +565,18 @@ var microprofileConfigCallBack = (function() {
         }
     };
 
+    var configEditorFileName = "CarTypes.java";
     var __addInjectConfigToEditor = function(stepName) {
         var injectConfig = "    @Inject @ConfigProperty(name=\"port\")";
         if (!stepName) {
            stepName = stepContent.getCurrentStepName();
         }
         // reset content every time property is added through the button so as to clear out any manual editing
-        contentManager.resetEditorContents(stepName);
-        var content = contentManager.getEditorContents(stepName);
+        contentManager.resetTabbedEditorContents(stepName, configEditorFileName);
+        var content = contentManager.getTabbedEditorContents(stepName, configEditorFileName);
 
-        contentManager.replaceEditorContents(stepName, 6, 6, injectConfig, 1);
+        // contentManager.replaceEditorContents(stepName, 6, 6, injectConfig, 1); //steven
+        contentManager.replaceTabbedEditorContents(stepName, configEditorFileName, 6, 6, injectConfig);
         var readOnlyLines = [];
         readOnlyLines.push({from: 1, to: 5}, {from: 7, to: 9});
         contentManager.markEditorReadOnlyLines(stepName, readOnlyLines);
