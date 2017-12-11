@@ -188,7 +188,7 @@ var playground = function(){
               var prop = $('<tr class="propertyRow">');
               prop.append('<td>' + key + '</td>');
               prop.append('<td>' + props[key].value + '</td>');
-              prop.append('<td>' + props[key].source + '</td></tr>'); //TODO: call Kevin's method to get full filename
+              prop.append('<td>' + this.__getFileName(props[key].source) + '</td></tr>'); 
               propsTable.append(prop);
             }
 

@@ -12,6 +12,10 @@
   cursor: pointer;
 }
 
+#guide_content tr.propertyRow:hover {
+  background-color: #F4BD9B;
+}
+
 .carSite {
     border-top: 3px solid #ffb000;
     padding-top: 32px;
