@@ -200,7 +200,7 @@
                 "The properties file contains settings with a default ordinal of 100 which overrides the injected default values with the same key, so the <code>port</code> property value in the <code>microprofile-config.properties</code> will be used."
             ],
             "instruction": [
-                "In <code>/META-INF/microprofile-config.properties</code>, add the following on line 1 or click <action title='Configure port in microprofile-config.properties' onclick=\"microprofileConfigCallBack.addPropToConfigProps(event)\"><b>port=9081</b></action>. Then, click <action title='Run' onclick=\"microprofileConfigCallBack.saveTabbedEditorButton(event)\"><b>Run</b></action> on the editor menu pane.",
+                "In <code>/META-INF/microprofile-config.properties</code>, add the following on line 1 or click <action title='Configure port in microprofile-config.properties' onclick=\"microprofileConfigCallBack.addPropToConfigPropsButton(event)\"><b>port=9081</b></action>. Then, click <action title='Run' onclick=\"microprofileConfigCallBack.saveTabbedEditorButton(event)\"><b>Run</b></action> on the editor menu pane.",
                 "Click <action title='Refresh' onclick=\"microprofileConfigCallBack.refreshBrowserButton(event)\"><b>Refresh</b></action> in the following browser to see that the port value in the <code>/META-INF/microprofile-config.properties</code> file is used. The test port (9081) of the ObtainCarTypes microservice returns the values <code>typeA</code>, <code>typeB</code>, and <code>typeC</code>. <br/>"
             ],
             "content":[
@@ -335,7 +335,7 @@
                 "In this example, we are going to use the <code>${server.config.dir}/bootstrap.properties</code> file to configure the <code>port</code> system property."
             ],
             "instruction": [
-                "Add the following port value on line 1 of <code>bootstrap.properties</code>, or click <action title='Configure port in System Properties' onclick=\"microprofileConfigCallBack.addPropToSystemProperties(event)\"><b>port=9083</b></action>. Then, click <action title='Run' onclick=\"microprofileConfigCallBack.saveTabbedEditorButton(event)\"><b>Run</b></action> on the editor menu pane.",
+                "Add the following port value on line 1 of <code>bootstrap.properties</code>, or click <action title='Configure port in System Properties' onclick=\"microprofileConfigCallBack.addPropToSystemPropertiesButton(event)\"><b>port=9083</b></action>. Then, click <action title='Run' onclick=\"microprofileConfigCallBack.saveTabbedEditorButton(event)\"><b>Run</b></action> on the editor menu pane.",
                 "Click <action title='Refresh' onclick=\"microprofileConfigCallBack.refreshBrowserButton(event)\"><b>Refresh</b></action> in the following browser to see the port value in the <code>bootstrap.properties</code> file is used. The production port (9083) of the ObtainCarTypes microservice returns values <code>SUV</code>, <code>Crossover</code>, <code>Coupe</code>, <code>Truck</code>, and <code>Convertible</code>.<br/>"
             ],
             "content":[
@@ -417,7 +417,7 @@
                 "Adding <code>config_ordinal</code> to <code>/META-INF/microprofile-config.properties</code> with a value of 500 increases its ordinal value. This will now override the port value from <code>bootstrap.properties</code> which has a default ordinal of 400."
             ],
             "instruction": [
-                "On line 2 of the <code>/META-INF/microprofile-config.properties</code> file add or click <action title='Changing the ordinal of microprofile-config.properties' onclick=\"microprofileConfigCallBack.addConfigOrdinalToProps(event)\"><b>config_ordinal=500</b></action>. Then, click <action title='Run' onclick=\"microprofileConfigCallBack.saveTabbedEditorButton(event)\"><b>Run</b></action> on the editor menu pane.",
+                "On line 2 of the <code>/META-INF/microprofile-config.properties</code> file add or click <action title='Changing the ordinal of microprofile-config.properties' onclick=\"microprofileConfigCallBack.addConfigOrdinalToPropsButton(event)\"><b>config_ordinal=500</b></action>. Then, click <action title='Run' onclick=\"microprofileConfigCallBack.saveTabbedEditorButton(event)\"><b>Run</b></action> on the editor menu pane.",
                 "Click <action title='Refresh' onclick=\"microprofileConfigCallBack.refreshBrowserButton(event)\"><b>Refresh</b></action> in the following browser to see that the <code>port</code> in the <code>/META-INF/microprofile-config.properties</code> file is used instead of the one defined in the <code>bootstrap.properties</code> file. The test port (9081) of the ObtainCarTypes microservice returns the values typeA, typeB, and typeC."
             ],
             "content":[
