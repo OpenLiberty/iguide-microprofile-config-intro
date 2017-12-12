@@ -91,9 +91,9 @@ var playground = function(){
                     if (name) {
                         //index 1 is the regex substring match which contains the value of the match
                         if (defaultValue) {
-                            this.playgroundAddConfig(name[1], defaultValue[1], FILETYPES.inject);                            
+                            this.playgroundAddConfig(name[1], defaultValue[1], FILETYPES.inject);
                         } else {
-                            this.playgroundAddConfig(name[1], '', FILETYPES.inject);                            
+                            this.playgroundAddConfig(name[1], '', FILETYPES.inject);
                         }
                     }
                 }
@@ -189,18 +189,14 @@ var playground = function(){
             //create a table to display properties
             var propsTable = this.root.find('.propsTable');
             propsTable.empty();
-            propsTable.append('<tr><th>Config property</th><th>Value</th><th>Source</th></tr></table>'); //adding the column headers
+            propsTable.append('<tr><th>Property</th><th>Value</th><th>Source</th></tr></table>'); //adding the column headers
 
             for (var key in props) {
-                if (parseInt(props[key].ordinal) < 0) {
-                    this.__displayErrorMessage(utils.formatString(mpconfigMessages.valueRequired, [key]));
-                } else {
-                    var prop = $('<tr class="propertyRow">');
-                    prop.append('<td>' + key + '</td>');
-                    prop.append('<td>' + props[key].value + '</td>');
-                    prop.append('<td>' + this.__getFileName(props[key].source) + '</td></tr>'); 
-                    propsTable.append(prop);
-                }
+              var prop = $('<tr class="propertyRow">');
+              prop.append('<td title=\"'+ key + '\">' + key + '</td>');
+              prop.append('<td title=\"'+ props[key].value + '\">' + props[key].value + '</td>');
+              prop.append('<td title=\"'+ this.__getFileName(props[key].source) + '\">' + this.__getFileName(props[key].source) + '</td>');
+              propsTable.append(prop);
             }
 
             //add on click event to each row in the properties table
@@ -215,7 +211,7 @@ var playground = function(){
         },
 
         /* Updates the 4 config source cards and sorts them by their ordinal value with the highest ordinal being on top. */
-        updateFigure: function(){           
+        updateFigure: function(){
             var order = this.__getOrdinalObjects();
             // Sort the config objects by ordinal
             order.sort(function(a, b){
@@ -242,7 +238,7 @@ var playground = function(){
                     // Update the ordinal if there is one
                     if(configSource.ordinal > 0) {
                         card.find('.ordinalCardOrdinal').html('Ordinal = ' + configSource.ordinal);
-                    }                    
+                    }
                     // Change the background color to always match the card
                     card.css('background-color', configSource.bgcolor);
 
@@ -262,8 +258,8 @@ var playground = function(){
                             }
                         });
                     }
-                    closure(configSource);                    
-                }                
+                    closure(configSource);
+                }
             }
         },
 
@@ -278,7 +274,7 @@ var playground = function(){
                 obj.bgcolor = this.__getCardColor(filetype);
                 ordinalObjects.push(obj);
             }
-            return ordinalObjects;            
+            return ordinalObjects;
         },
 
         __getDefaultOrdinal: function(source) {
