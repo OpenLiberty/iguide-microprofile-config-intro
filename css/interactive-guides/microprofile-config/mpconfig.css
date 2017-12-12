@@ -15,7 +15,9 @@
 }
 
 .propsTable td {
-  word-wrap: break-word;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 .propertyRow {
