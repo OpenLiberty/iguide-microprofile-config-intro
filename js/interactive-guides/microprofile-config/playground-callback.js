@@ -226,7 +226,6 @@ var playground = function(){
                 // Find the card's span associated with this order
                 var card = $('.ordinal-' + order[i].filetype);
                 if(card.length > 0){
-                    var spanText = configSource.fileName;
                     card.removeClass('ordinal-0 ordinal-1 ordinal-2 ordinal-3');
                     card.addClass('ordinal-' + i);
 
@@ -236,6 +235,17 @@ var playground = function(){
                     }                    
                     // Change the background color to always match the card
                     card.css('background-color', configSource.bgcolor);
+
+                    // Create a closure to keep track of each configSource so it doesn't use the last one for each card.
+                    var closure = function(configSource){
+                        // Add onClick listener to focus the correct tab once clicked
+                        card.on('click', function(event){
+                            event.preventDefault();
+                            event.stopPropagation();
+                            contentManager.focusTabbedEditorByName(STEP_NAME, configSource.fileName);
+                        });
+                    }
+                    closure(configSource);                    
                 }                
             }
         },
