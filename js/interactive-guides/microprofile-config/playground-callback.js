@@ -84,8 +84,8 @@ var playground = function(){
 
                 if (propertyLine) {
                     var inlineProperties = propertyLine[0];
-                    var nameRegexp = /name="(.*?)"/g; //match 'name' property, with the property value as substring match
-                    var defaultValueRegexp = /defaultValue="(.*?)"/g; //match 'defaultValue' property, with the property value as substring match
+                    var nameRegexp = /name\s*=\s*"(.*?)"/g; //match 'name' property, with the property value as substring match
+                    var defaultValueRegexp = /defaultValue\s*=\s*"(.*?)"/g; //match 'defaultValue' property, with the property value as substring match
                     var name = nameRegexp.exec(inlineProperties);
                     var defaultValue = defaultValueRegexp.exec(inlineProperties);
                     if (name) {
