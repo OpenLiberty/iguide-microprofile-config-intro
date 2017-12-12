@@ -180,12 +180,10 @@ var microprofileConfigCallBack = (function() {
     };
 
     var __addPropToServerEnv = function(event) {
-        if(event.type === "click" || (event.which === 13 || event.which === 32)){
-            var stepName = stepContent.getCurrentStepName();
-            // reset content every time property is added through the button so as to clear out any manual editing
-            contentManager.resetTabbedEditorContents(stepName, serverEnvFileName);
-            contentManager.replaceTabbedEditorContents(stepName, serverEnvFileName, 1, 1, serverEnvDownloadUrlConfig);
-        }        
+        var stepName = stepContent.getCurrentStepName();
+        // reset content every time property is added through the button so as to clear out any manual editing
+        contentManager.resetTabbedEditorContents(stepName, serverEnvFileName);
+        contentManager.replaceTabbedEditorContents(stepName, serverEnvFileName, 1, 1, serverEnvDownloadUrlConfig);
     };
 
     var systemPropsFileName = "bootstrap.properties";
