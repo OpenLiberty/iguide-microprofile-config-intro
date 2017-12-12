@@ -8,6 +8,18 @@
     max-width: 550px;
 }
 
+.propsTable {
+  width: 100%;
+  font-size: 12px;
+  table-layout: fixed;
+}
+
+.propsTable td {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
 .propertyRow {
   cursor: pointer;
 }
@@ -143,5 +155,6 @@
 .ordinal-3 {
     z-index: 4;
     top: 14%;
-    left: 35%;    
+    left: 42%;
+
 }
