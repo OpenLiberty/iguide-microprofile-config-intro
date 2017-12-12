@@ -160,35 +160,43 @@ var microprofileConfigCallBack = (function() {
     };
 
 
-    var __addPropToConfigProps = function() {
-        var stepName = stepContent.getCurrentStepName();
-        // reset content every time property is added through the button so as to clear out any manual editing
-        contentManager.resetTabbedEditorContents(stepName, propsFileName);
-        contentManager.replaceTabbedEditorContents(stepName, propsFileName, 1, 1, propsFileConfig);
+    var __addPropToConfigProps = function(event) {
+        if(event.type === "click" || (event.which === 13 || event.which === 32)){
+            var stepName = stepContent.getCurrentStepName();
+            // reset content every time property is added through the button so as to clear out any manual editing
+            contentManager.resetTabbedEditorContents(stepName, propsFileName);
+            contentManager.replaceTabbedEditorContents(stepName, propsFileName, 1, 1, propsFileConfig);
+        };        
     };
 
-    var __addConfigOrdinalToProps = function() {
-        var stepName = stepContent.getCurrentStepName();
-        var configOrdinal = "config_ordinal=500";
-        // reset content every time property is added through the button so as to clear out any manual editing
-        contentManager.resetTabbedEditorContents(stepName, propsFileName );
-        contentManager.replaceTabbedEditorContents(stepName, propsFileName, 2, 2, configOrdinal);
+    var __addConfigOrdinalToProps = function(event) {
+        if(event.type === "click" || (event.which === 13 || event.which === 32)){
+            var stepName = stepContent.getCurrentStepName();
+            var configOrdinal = "config_ordinal=500";
+            // reset content every time property is added through the button so as to clear out any manual editing
+            contentManager.resetTabbedEditorContents(stepName, propsFileName );
+            contentManager.replaceTabbedEditorContents(stepName, propsFileName, 2, 2, configOrdinal);
+        };        
     };
 
-    var __addPropToServerEnv = function() {
-        var stepName = stepContent.getCurrentStepName();
-        // reset content every time property is added through the button so as to clear out any manual editing
-        contentManager.resetTabbedEditorContents(stepName, serverEnvFileName);
-        contentManager.replaceTabbedEditorContents(stepName, serverEnvFileName, 1, 1, serverEnvDownloadUrlConfig);
+    var __addPropToServerEnv = function(event) {
+        if(event.type === "click" || (event.which === 13 || event.which === 32)){
+            var stepName = stepContent.getCurrentStepName();
+            // reset content every time property is added through the button so as to clear out any manual editing
+            contentManager.resetTabbedEditorContents(stepName, serverEnvFileName);
+            contentManager.replaceTabbedEditorContents(stepName, serverEnvFileName, 1, 1, serverEnvDownloadUrlConfig);
+        }        
     };
 
     var systemPropsFileName = "bootstrap.properties";
     var systemPropsDownloadUrlConfig = "port=9083";
-    var __addPropToSystemProperties = function() {
-        var stepName = stepContent.getCurrentStepName();
-        // reset content every time property is added through the button so as to clear out any manual editing
-        contentManager.resetTabbedEditorContents(stepName, systemPropsFileName);
-        contentManager.replaceTabbedEditorContents(stepName, systemPropsFileName, 1, 1, systemPropsDownloadUrlConfig);
+    var __addPropToSystemProperties = function(event) {
+        if(event.type === "click" || (event.which === 13 || event.which === 32)){
+            var stepName = stepContent.getCurrentStepName();
+            // reset content every time property is added through the button so as to clear out any manual editing
+            contentManager.resetTabbedEditorContents(stepName, systemPropsFileName);
+            contentManager.replaceTabbedEditorContents(stepName, systemPropsFileName, 1, 1, systemPropsDownloadUrlConfig);
+        }        
     };
 
     var __listenToBrowserForPropFileConfig = function(webBrowser) {

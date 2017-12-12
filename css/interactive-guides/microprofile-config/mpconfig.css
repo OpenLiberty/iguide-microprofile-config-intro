@@ -35,12 +35,6 @@
     text-align: center;
     font-size: 18px;
     font-family: Asap-medium;
-    background-color: #555;
-    color: white;
-    height: 30px;
-    line-height: 30px;  /* vertically centers the text within the title */
-    padding: 5px 0px;
-    margin-top: 0px;
 }
 
 .flexContainer {
@@ -112,7 +106,7 @@
     transition: .25s all;
 }
 
-.ordinalCard:hover {
+.ordinalCard:hover, .ordinalCard:focus {
     z-index: 6;
     font-size: 11px;
     height: 40px;
@@ -120,6 +114,7 @@
     border: none;
     box-shadow: 0px 0px 0px 2px #E3700D;
     cursor: pointer;
+    outline: none;
 }
 
 .ordinal-0 {
