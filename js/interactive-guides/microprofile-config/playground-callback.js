@@ -5,7 +5,7 @@ var playground = function(){
     var ENV_FILE = 'server.env';
     var SYS_FILE = 'bootstrap.properties';
 
-    var filetypes = {'inject':'inject', 'propFile':'propFile', 'envVar':'envVar', 'sysProp':'sysProp'};
+    var FILETYPES = {'inject':'inject', 'propFile':'propFile', 'envVar':'envVar', 'sysProp':'sysProp'};
 
     var properties = {};
     var staging = [];
@@ -25,7 +25,9 @@ var playground = function(){
          * @param {*} ordinal (optional) - provided ordinal number. otherwise default based on source
          */
         playgroundAddConfig: function(key, value, source, ordinal) {
-            if (!ordinal) {
+            if (!value && (source === FILETYPES.inject)) {
+                ordinal = '-1'; //must be assigned elsewhere if no defaultValue
+            } else if (!ordinal) {
                 ordinal = this.__getDefaultOrdinal(source);
             }
 
@@ -82,13 +84,17 @@ var playground = function(){
 
                 if (propertyLine) {
                     var inlineProperties = propertyLine[0];
-                    var nameRegexp = /name="(.*?)"/g; //match 'name' property, with the property value as substring match
-                    var defaultValueRegexp = /defaultValue="(.*?)"/g; //match 'defaultValue' property, with the property value as substring match
+                    var nameRegexp = /name\s*=\s*"(.*?)"/g; //match 'name' property, with the property value as substring match
+                    var defaultValueRegexp = /defaultValue\s*=\s*"(.*?)"/g; //match 'defaultValue' property, with the property value as substring match
                     var name = nameRegexp.exec(inlineProperties);
                     var defaultValue = defaultValueRegexp.exec(inlineProperties);
-                    if (name && defaultValue) {
+                    if (name) {
                         //index 1 is the regex substring match which contains the value of the match
-                        this.playgroundAddConfig(name[1], defaultValue[1], filetypes.inject);
+                        if (defaultValue) {
+                            this.playgroundAddConfig(name[1], defaultValue[1], FILETYPES.inject);                            
+                        } else {
+                            this.playgroundAddConfig(name[1], '', FILETYPES.inject);                            
+                        }
                     }
                 }
             }
@@ -96,17 +102,17 @@ var playground = function(){
 
         __getPropertiesFileProperties: function(fileName) {
             var editorInstance = this.__getEditorInstance(fileName);
-            this.__parseAndStorePropertyFiles(fileName, filetypes.propFile);
+            this.__parseAndStorePropertyFiles(fileName, FILETYPES.propFile);
         },
 
         __getEnvironmentProperties: function(fileName) {
             var editorInstance = this.__getEditorInstance(fileName);
-            this.__parseAndStorePropertyFiles(fileName, filetypes.envVar);
+            this.__parseAndStorePropertyFiles(fileName, FILETYPES.envVar);
         },
 
         __getSystemProperties: function(fileName) {
             var editorInstance = this.__getEditorInstance(fileName);
-            this.__parseAndStorePropertyFiles(fileName, filetypes.sysProp);
+            this.__parseAndStorePropertyFiles(fileName, FILETYPES.sysProp);
         },
 
         /**
@@ -157,7 +163,7 @@ var playground = function(){
                 if (this.getProperty(key) !== null) {
                     this.playgroundAddConfig(key, value, source, ordinal);
                 } else {
-                    var message = 'The property <b>' + key + '</b> needs to be set with @Inject in Java file';
+                    var message = utils.formatString(mpconfigMessages.injectionRequired, [key]);
                     this.__displayErrorMessage(message);
                 }
             }
@@ -169,9 +175,9 @@ var playground = function(){
          * and makes that file active in the tabbedEditor
          */
         __focusOnSourceTab: function(tableRow) {
-          var cells = tableRow.querySelectorAll("td");
-          var source = cells[2].innerText; //cells[2] - is the cell with the filename
-          contentManager.focusTabbedEditorByName(STEP_NAME, source);
+            var cells = tableRow.querySelectorAll("td");
+            var source = cells[2].innerText; //cells[2] - is the cell with the filename
+            contentManager.focusTabbedEditorByName(STEP_NAME, source);
         },
 
         /**
@@ -186,11 +192,15 @@ var playground = function(){
             propsTable.append('<tr><th>Config property</th><th>Value</th><th>Source</th></tr></table>'); //adding the column headers
 
             for (var key in props) {
-              var prop = $('<tr class="propertyRow">');
-              prop.append('<td>' + key + '</td>');
-              prop.append('<td>' + props[key].value + '</td>');
-              prop.append('<td>' + this.__getFileName(props[key].source) + '</td></tr>'); 
-              propsTable.append(prop);
+                if (parseInt(props[key].ordinal) < 0) {
+                    this.__displayErrorMessage(utils.formatString(mpconfigMessages.valueRequired, [key]));
+                } else {
+                    var prop = $('<tr class="propertyRow">');
+                    prop.append('<td>' + key + '</td>');
+                    prop.append('<td>' + props[key].value + '</td>');
+                    prop.append('<td>' + this.__getFileName(props[key].source) + '</td></tr>'); 
+                    propsTable.append(prop);
+                }
             }
 
             //add on click event to each row in the properties table
@@ -198,9 +208,9 @@ var playground = function(){
             var propRows = this.root.find('tr.propertyRow');
             var thisPlayground = this;
             propRows.each(function() {
-              $(this).on('click', function(e) {
-                thisPlayground.__focusOnSourceTab(this);
-              });
+                $(this).on('click', function(e) {
+                    thisPlayground.__focusOnSourceTab(this);
+                });
             });
         },
 
@@ -253,7 +263,7 @@ var playground = function(){
         __getOrdinalObjects: function() {
             // Get order of the ordinals
             var ordinalObjects = [];
-            for(var filetype in filetypes){
+            for(var filetype in FILETYPES){
                 var obj = {};
                 obj.filetype = filetype;
                 obj.ordinal = this.__getFileOrdinal(filetype);
@@ -266,10 +276,10 @@ var playground = function(){
 
         __getDefaultOrdinal: function(source) {
             switch(source) {
-            case filetypes.inject: return '0';
-            case filetypes.propFile: return '100';
-            case filetypes.envVar: return '300';
-            case filetypes.sysProp: return '400';
+            case FILETYPES.inject: return '0';
+            case FILETYPES.propFile: return '100';
+            case FILETYPES.envVar: return '300';
+            case FILETYPES.sysProp: return '400';
             default: return '0';
             }
         },
@@ -299,10 +309,10 @@ var playground = function(){
 
         __getFileName: function(filetype) {
             switch(filetype) {
-                case filetypes.inject: return JAVA_FILE;
-                case filetypes.propFile: return PROP_FILE;
-                case filetypes.envVar: return ENV_FILE;
-                case filetypes.sysProp: return SYS_FILE;
+                case FILETYPES.inject: return JAVA_FILE;
+                case FILETYPES.propFile: return PROP_FILE;
+                case FILETYPES.envVar: return ENV_FILE;
+                case FILETYPES.sysProp: return SYS_FILE;
                 default: return null;
             }
         },
@@ -310,10 +320,10 @@ var playground = function(){
         /* Returns the color for the ordinal card associated with the fileType passed in */
         __getCardColor: function(filetype) {
             switch(filetype) {
-                case filetypes.inject: return '#F0F2FD';
-                case filetypes.propFile: return '#E5EAFB';
-                case filetypes.envVar: return '#DAE1FA';
-                case filetypes.sysProp: return '#CDD6F9';
+                case FILETYPES.inject: return '#F0F2FD';
+                case FILETYPES.propFile: return '#E5EAFB';
+                case FILETYPES.envVar: return '#DAE1FA';
+                case FILETYPES.sysProp: return '#CDD6F9';
                 default: return null;
             }
         },

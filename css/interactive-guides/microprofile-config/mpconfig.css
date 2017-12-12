@@ -135,28 +135,24 @@
 .ordinal-0 {
     z-index: 1;
     top: 35%;
-    left: 12%;
+    left: 5%;
 }
 
 .ordinal-1 {
     z-index: 2;
     top: 28%;
-    left: 22%;
+    left: 15%;
 }
 
 .ordinal-2 {
     z-index: 3;
     top: 21%;
-    left: 32%;
+    left: 25%;
 }
 
 .ordinal-3 {
     z-index: 4;
-<<<<<<< Updated upstream
     top: 14%;
-    left: 42%;    
-=======
-    top: 20%;
-    left: 45%;
->>>>>>> Stashed changes
+    left: 42%;
+
 }
