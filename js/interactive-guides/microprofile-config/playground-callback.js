@@ -250,6 +250,13 @@ var playground = function(){
                             event.stopPropagation();
                             contentManager.focusTabbedEditorByName(STEP_NAME, configSource.fileName);
                         });
+                        card.on('keypress', function(event){
+                            if(event.which === 13){
+                                event.preventDefault();
+                                event.stopPropagation();
+                                contentManager.focusTabbedEditorByName(STEP_NAME, configSource.fileName);
+                            }
+                        });
                     }
                     closure(configSource);
                 }
