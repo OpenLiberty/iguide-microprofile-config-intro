@@ -8,6 +8,16 @@
     max-width: 550px;
 }
 
+.propsTable {
+  width: 100%;
+  font-size: 12px;
+  table-layout: fixed;
+}
+
+.propsTable td {
+  word-wrap: break-word;
+}
+
 .propertyRow {
   cursor: pointer;
 }
@@ -142,6 +152,11 @@
 
 .ordinal-3 {
     z-index: 4;
+<<<<<<< Updated upstream
     top: 14%;
     left: 42%;    
+=======
+    top: 20%;
+    left: 45%;
+>>>>>>> Stashed changes
 }
