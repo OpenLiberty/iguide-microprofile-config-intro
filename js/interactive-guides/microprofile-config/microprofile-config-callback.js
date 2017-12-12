@@ -160,7 +160,7 @@ var microprofileConfigCallBack = (function() {
     };
 
 
-    var __addPropToConfigProps = function(event) {
+    var __addPropToConfigProps = function() {
         var stepName = stepContent.getCurrentStepName();
         // reset content every time property is added through the button so as to clear out any manual editing
         contentManager.resetTabbedEditorContents(stepName, propsFileName);
@@ -175,7 +175,7 @@ var microprofileConfigCallBack = (function() {
         }
     };
 
-    var __addConfigOrdinalToProps = function(event) {
+    var __addConfigOrdinalToProps = function() {
         var stepName = stepContent.getCurrentStepName();
         var configOrdinal = "config_ordinal=500";
         // reset content every time property is added through the button so as to clear out any manual editing
@@ -191,7 +191,7 @@ var microprofileConfigCallBack = (function() {
         }
     };
 
-    var __addPropToServerEnv = function(event) {
+    var __addPropToServerEnv = function() {
         var stepName = stepContent.getCurrentStepName();
         // reset content every time property is added through the button so as to clear out any manual editing
         contentManager.resetTabbedEditorContents(stepName, serverEnvFileName);
@@ -200,7 +200,7 @@ var microprofileConfigCallBack = (function() {
 
     var systemPropsFileName = "bootstrap.properties";
     var systemPropsDownloadUrlConfig = "port=9083";
-    var __addPropToSystemProperties = function(event) {
+    var __addPropToSystemProperties = function() {
         var stepName = stepContent.getCurrentStepName();
         // reset content every time property is added through the button so as to clear out any manual editing
         contentManager.resetTabbedEditorContents(stepName, systemPropsFileName);
