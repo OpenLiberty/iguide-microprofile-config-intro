@@ -192,11 +192,15 @@ var playground = function(){
             propsTable.append('<tr><th>Property</th><th>Value</th><th>Source</th></tr></table>'); //adding the column headers
 
             for (var key in props) {
-              var prop = $('<tr class="propertyRow">');
-              prop.append('<td title=\"'+ key + '\">' + key + '</td>');
-              prop.append('<td title=\"'+ props[key].value + '\">' + props[key].value + '</td>');
-              prop.append('<td title=\"'+ this.__getFileName(props[key].source) + '\">' + this.__getFileName(props[key].source) + '</td>');
-              propsTable.append(prop);
+                if (props[key].ordinal < 0) {
+                    this.__displayErrorMessage(utils.formatString(mpconfigMessages.valueRequired, [key]));
+                } else {
+                    var prop = $('<tr class="propertyRow">');
+                    prop.append('<td title=\"'+ key + '\">' + key + '</td>');
+                    prop.append('<td title=\"'+ props[key].value + '\">' + props[key].value + '</td>');
+                    prop.append('<td title=\"'+ this.__getFileName(props[key].source) + '\">' + this.__getFileName(props[key].source) + '</td>');
+                    propsTable.append(prop);
+                }
             }
 
             //add on click event to each row in the properties table
