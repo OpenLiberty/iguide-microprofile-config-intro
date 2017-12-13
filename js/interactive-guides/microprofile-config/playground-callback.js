@@ -188,17 +188,18 @@ var playground = function(){
 
             //create a table to display properties
             var propsTable = this.root.find('.propsTable');
+            propsTable.attr('aria-label', mpconfigMessages.propsTableLabel);
             propsTable.empty();
-            propsTable.append('<tr><th>Property</th><th>Value</th><th>Source</th></tr></table>'); //adding the column headers
+            propsTable.append('<tr><th tabindex="0">Property</th><th tabindex="0">Value</th><th tabindex="0">Source</th></tr></table>'); //adding the column headers
 
             for (var key in props) {
                 if (props[key].ordinal < 0) {
                     this.__displayErrorMessage(utils.formatString(mpconfigMessages.valueRequired, [key]));
                 } else {
                     var prop = $('<tr class="propertyRow">');
-                    prop.append('<td title=\"'+ key + '\">' + key + '</td>');
-                    prop.append('<td title=\"'+ props[key].value + '\">' + props[key].value + '</td>');
-                    prop.append('<td title=\"'+ this.__getFileName(props[key].source) + '\">' + this.__getFileName(props[key].source) + '</td>');
+                    prop.append('<td title="'+ key + '" tabindex="0">' + key + '</td>');
+                    prop.append('<td title="'+ props[key].value + '" tabindex="0">' + props[key].value + '</td>');
+                    prop.append('<td title="'+ this.__getFileName(props[key].source) + '" tabindex="0" aria-label="' + mpconfigMessages.propsTableClickable + '">' + this.__getFileName(props[key].source) + '</td>');
                     propsTable.append(prop);
                 }
             }
@@ -209,7 +210,17 @@ var playground = function(){
             var thisPlayground = this;
             propRows.each(function() {
                 $(this).on('click', function(e) {
-                    thisPlayground.__focusOnSourceTab(this);
+                  e.preventDefault();
+                  e.stopPropagation();
+                  thisPlayground.__focusOnSourceTab(this);
+                });
+                //event listener for jaws
+                $(this).on('keypress', function(e) {
+                    if (e.which === 13) {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      thisPlayground.__focusOnSourceTab(this);
+                    }
                 });
             });
         },
