@@ -501,7 +501,7 @@
                 "<li>Environment variables through <code>server.env</code> (default ordinal = 300)",
                 "<li>System properties through <code>bootstrap.properties</code> (default ordinal = 400)",
                 "</ul>",
-                "You can try injecting various properties in the files in the editor. <code>config_ordinal</code> can be set in any of the properties files."
+                "Try injecting various properties in the files in the editor. Any new properties added must be included in <code>CarTypes.java</code> using <code>@Inject @ConfigProperty (name=\"propertyName\");</code>. The <code>config_ordinal</code> value can be set in any of the properties files. "
             ],
             "content": [
                 {
