@@ -97,13 +97,9 @@
     overflow: hidden;
 }
 
-.ordinalTitle {
-    text-align: center;
-}
-
 .ordinalCardContainer {
     width: 100%;
-    height: 120px;
+    height: 150px;
 }
 
 .ordinalCard {
