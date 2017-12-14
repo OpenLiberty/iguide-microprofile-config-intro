@@ -253,15 +253,15 @@
             "name": "ConfigureAsEnvVar",
             "title": "Configuring with an environment variable",
             "description": [
-                "In Open Liberty, you can use <code>server.env</code> files at the installation and server levels to specify environment variables. The installation level file is located at <code>${wlp.install.dir}/etc/server.env</code> and the server level is located at <code>${server.config.dir}/server.env</code>. If both files exist, the contents of the two files are merged. If the same environment variable is in both files, the value in the server level file takes precedence over the value in the installation level file. We are going to use the <code>${server.config.dir}/server.env</code> to configure the <code>port</code> environment variable.",
+                "In Open Liberty, you can use <code>server.env</code> files at the installation and server levels to specify environment variables. The installation level file is located at <code>${wlp.install.dir}/etc/server.env</code>, and the server level is located at <code>${server.config.dir}/server.env</code>. If both files exist, the contents of the two files are merged. If the same environment variable is in both files, the value in the server level file takes precedence over the value in the installation level file. Use the <code>${server.config.dir}/server.env</code> file to configure the <code>port</code> environment variable.",
                 "",
                 "Environment variables can also be set using the command line.",
                 "",
-                "The <code>server.env</code> file contains the environment settings with a default ordinal of 300 which is higher than the 100 for the <code>/META-INF/microprofile-config.properties</code>, therefore the <code>port</code> property value in <code>server.env</code> will be used."
+                "The <code>server.env</code> file contains the environment settings with a default ordinal value of 300 which is higher than the default value of 100 for the <code>/META-INF/microprofile-config.properties</code> file. Thus, the <code>port</code> property value in <code>server.env</code> is used."
             ],
             "instruction": [
               "In <code>server.env</code>, add the following on line 1 or click <action title='Configure port in server.env' onclick=\"microprofileConfigCallBack.addPropToServerEnvButton(event)\"><b>port=9082</b></action>. Then, click <action title='Run' onclick=\"microprofileConfigCallBack.saveTabbedEditorButton(event)\"><b>Run</b></action> on the editor menu pane.",
-              "Click <action title='Refresh' onclick=\"microprofileConfigCallBack.refreshBrowserButton(event)\"><b>Refresh</b></action> in the following browser to see the port value in the server.env file is used. The quality assurance port (9082) of the ObtainCarTypes microservice returns the values <code>SUV</code>, <code>Crossover</code>, <code>Coupe</code>, and <code>Truck</code>.<br/>"
+              "Click <action title='Refresh' onclick=\"microprofileConfigCallBack.refreshBrowserButton(event)\"><b>Refresh</b></action> in the following browser to see that the port value in the server.env file is used. The quality assurance port (9082) of the ObtainCarTypes microservice returns the values <code>SUV</code>, <code>Crossover</code>, <code>Coupe</code>, and <code>Truck</code>.<br/>"
             ],
             "content":[
               {
@@ -327,16 +327,16 @@
             "name": "ConfigureAsSysProp",
             "title": "Configuring with a system property",
             "description": [
-                "Default configuration variables can be retrieved from the Java system properties and these variables have a default ordinal of 400. Open Liberty adds properties from the server’s <code>bootstrap.properties</code> and <code>jvm.options</code> files to the Java system properties. You can create and configure the <code>jvm.options</code> file in multiple locations within your Open Liberty installation directory.",
+                "Retrieve default configuration variables from the Java system properties. These variables have a default ordinal of 400. Open Liberty adds properties from the server’s <code>bootstrap.properties</code> and <code>jvm.options</code> files to the Java system properties. You can create and configure the <code>jvm.options</code> file in multiple locations within your Open Liberty installation directory.",
                 "",
-                "The different locations where Open Liberty checks for <code>jvm.options</code> are the following: <ol><li><code>${wlp.install.dir}/usr/shared/jvm.options</code></li><li><code>${server.config.dir}/configDropins/defaults/jvm.options</code></li> <li><code>${server.config.dir}/jvm.options</code></li> <li><code>${server.config.dir}/configDropins/overrides/jvm.options</code></li></ol>",
-                "The contents of these files are merged, with latter files taking precedence in the case of duplicate properties. If none of these files are present, then <code>${wlp.install.dir}/etc/jvm.options</code> will be used. If a property exists in both <code>bootstrap.properties</code> and <code>jvm.options</code>, then the value from <code>jvm.options</code> takes precedence.",
+                "The following list shows the different locations where Open Liberty checks for <code>jvm.options</code> files: <ol><li><code>${wlp.install.dir}/usr/shared/jvm.options</code></li><li><code>${server.config.dir}/configDropins/defaults/jvm.options</code></li> <li><code>${server.config.dir}/jvm.options</code></li> <li><code>${server.config.dir}/configDropins/overrides/jvm.options</code></li></ol>",
+                "The program merges the contents of these files. The latter files take precedence in the case of duplicate properties. If none of these files are present, then the <code>${wlp.install.dir}/etc/jvm.options</code> file is used. If a property exists in both <code>bootstrap.properties</code> and <code>jvm.options</code>, then the value from <code>jvm.options</code> takes precedence.",
                 "",
-                "In this example, we are going to use the <code>${server.config.dir}/bootstrap.properties</code> file to configure the <code>port</code> system property."
+                "In this example, use the <code>${server.config.dir}/bootstrap.properties</code> file to configure the <code>port</code> system property."
             ],
             "instruction": [
-                "Add the following port value on line 1 of <code>bootstrap.properties</code>, or click <action title='Configure port in System Properties' onclick=\"microprofileConfigCallBack.addPropToSystemPropertiesButton(event)\"><b>port=9083</b></action>. Then, click <action title='Run' onclick=\"microprofileConfigCallBack.saveTabbedEditorButton(event)\"><b>Run</b></action> on the editor menu pane.",
-                "Click <action title='Refresh' onclick=\"microprofileConfigCallBack.refreshBrowserButton(event)\"><b>Refresh</b></action> in the following browser to see the port value in the <code>bootstrap.properties</code> file is used. The production port (9083) of the ObtainCarTypes microservice returns values <code>SUV</code>, <code>Crossover</code>, <code>Coupe</code>, <code>Truck</code>, and <code>Convertible</code>.<br/>"
+                "Add the following port value on line 1 of <code>bootstrap.properties</code> or click <action title='Configure port in System Properties' onclick=\"microprofileConfigCallBack.addPropToSystemPropertiesButton(event)\"><b>port=9083</b></action>. Then, click <action title='Run' onclick=\"microprofileConfigCallBack.saveTabbedEditorButton(event)\"><b>Run</b></action> on the editor menu pane.",
+                "Click <action title='Refresh' onclick=\"microprofileConfigCallBack.refreshBrowserButton(event)\"><b>Refresh</b></action> in the following browser to see that the port value in the <code>bootstrap.properties</code> file is used. The production port (9083) of the ObtainCarTypes microservice returns values <code>SUV</code>, <code>Crossover</code>, <code>Coupe</code>, <code>Truck</code>, and <code>Convertible</code>.<br/>"
             ],
             "content":[
                 {
@@ -414,7 +414,7 @@
             "description": [
                 "You can override the default ordinal value of a ConfigSource by adding the <code>config_ordinal</code> property to your configuration source file. The configuration source with the highest ordinal value takes precedence.",
                 "",
-                "Adding <code>config_ordinal</code> to <code>/META-INF/microprofile-config.properties</code> with a value of 500 increases its ordinal value. This will now override the port value from <code>bootstrap.properties</code> which has a default ordinal of 400."
+                "Adding <code>config_ordinal</code> to <code>/META-INF/microprofile-config.properties</code> with a value of 500 increases its ordinal value. The <code>config_ordinal</code> now overrides the port value from <code>bootstrap.properties</code>, which has a default ordinal of 400."
             ],
             "instruction": [
                 "On line 2 of the <code>/META-INF/microprofile-config.properties</code> file add or click <action title='Changing the ordinal of microprofile-config.properties' onclick=\"microprofileConfigCallBack.addConfigOrdinalToPropsButton(event)\"><b>config_ordinal=500</b></action>. Then, click <action title='Run' onclick=\"microprofileConfigCallBack.saveTabbedEditorButton(event)\"><b>Run</b></action> on the editor menu pane.",
@@ -501,7 +501,7 @@
                 "<li>Environment variables through <code>server.env</code> (default ordinal = 300)",
                 "<li>System properties through <code>bootstrap.properties</code> (default ordinal = 400)",
                 "</ul>",
-                "Try injecting various properties in the files in the editor. Any new properties added must be included in <code>CarTypes.java</code> using <code>@Inject @ConfigProperty (name=\"propertyName\");</code>. The <code>config_ordinal</code> value can be set in any of the properties files. "
+                "Use the editor to inject various properties into the files. Use <code>@Inject @ConfigProperty (name=\"propertyName\");</code> to include the new properties in the <code>CarTypes.java</code> file. You can set the <code>config_ordinal</code> in any of the properties files. "
             ],
             "content": [
                 {
