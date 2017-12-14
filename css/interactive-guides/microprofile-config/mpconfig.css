@@ -93,8 +93,8 @@
 
 .codeeditor {
     height: 100%;
+    overflow: auto;
     border-bottom: 1px solid black;
-    overflow: hidden;
 }
 
 .ordinalCardContainer {
