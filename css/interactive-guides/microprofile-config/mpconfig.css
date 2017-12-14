@@ -14,6 +14,10 @@
   table-layout: fixed;
 }
 
+.propsTable, .propsTable td, .propsTable tr, .propsTable th:focus {
+  outline: none;
+},
+
 .propsTable td {
   text-overflow: ellipsis;
   overflow: hidden;
@@ -100,6 +104,10 @@
 .ordinalCardContainer {
     width: 100%;
     height: 150px;
+}
+
+.ordinalCardContainer:focus {
+    outline: none;
 }
 
 .ordinalCard {
