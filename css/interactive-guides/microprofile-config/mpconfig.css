@@ -80,7 +80,6 @@
 
 #guide_content .codeeditor .CodeMirror {
     height: 100%;
-    border-bottom: none;
 }
 
 #guide_content .editorContainer{
@@ -89,12 +88,12 @@
 
 #guide_content .teContainer .editorContainer{
     height: 423px;
+    border-bottom: 1px solid black;
 }
 
 .codeeditor {
     height: 100%;
-    border-bottom: 1px solid black;
-    overflow: hidden;
+    /* overflow: hidden; */
 }
 
 .ordinalCardContainer {
