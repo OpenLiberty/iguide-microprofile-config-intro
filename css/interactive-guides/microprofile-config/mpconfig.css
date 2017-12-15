@@ -32,8 +32,9 @@
   cursor: pointer;
 }
 
-#guide_content tr.propertyRow:hover {
-  background-color: #F4BD9B;
+#guide_content tr.propertyRow:hover, #guide_content tr.propertyRow:hover td{
+ background-color: #F4BD9B ;
+ outline: none;
 }
 
 .carSite {
