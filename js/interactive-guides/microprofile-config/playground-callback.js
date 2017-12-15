@@ -190,16 +190,16 @@ var playground = function(){
             var propsTable = this.root.find('.propsTable');
             propsTable.attr('aria-label', mpconfigMessages.propsTableLabel);
             propsTable.empty();
-            propsTable.append('<tr><th tabindex="0">Property</th><th tabindex="0">Value</th><th tabindex="0">Source</th></tr></table>'); //adding the column headers
+            propsTable.append('<tr><th tabindex="0" aria-label="Property" scope="column">Property</th><th tabindex="0" aria-label="Value" scope="column">Value</th><th tabindex="0" aria-label="Source" scope="column">Source</th></tr></table>'); //adding the column headers
 
             for (var key in props) {
                 if (props[key].ordinal < 0) {
                     this.__displayErrorMessage(utils.formatString(mpconfigMessages.valueRequired, [key]));
                 } else {
-                    var prop = $('<tr class="propertyRow">');
+                    var prop = $('<tr class="propertyRow" tabindex="0" aria-label="' + mpconfigMessages.propsTableClickable + '">');
                     prop.append('<td title="'+ key + '" tabindex="0">' + key + '</td>');
                     prop.append('<td title="'+ props[key].value + '" tabindex="0">' + props[key].value + '</td>');
-                    prop.append('<td title="'+ this.__getFileName(props[key].source) + '" tabindex="0" aria-label="' + mpconfigMessages.propsTableClickable + '">' + this.__getFileName(props[key].source) + '</td>');
+                    prop.append('<td title="'+ this.__getFileName(props[key].source) + '" tabindex="0">' + this.__getFileName(props[key].source) + '</td>');
                     propsTable.append(prop);
                 }
             }
@@ -222,6 +222,7 @@ var playground = function(){
                       thisPlayground.__focusOnSourceTab(this);
                     }
                 });
+
             });
         },
 
@@ -257,6 +258,15 @@ var playground = function(){
                     // Change the background color to always match the card
                     card.css('background-color', configSource.bgcolor);
 
+                    //adding aria-labels to ordinal cards
+                    var cardFile = card.find('.ordinalCardFileName').html();
+                    var cardOrdinal = card.find('.ordinalCardOrdinal').html();
+                    var cardInfo = cardFile;
+                      if (cardOrdinal){
+                        cardInfo += " " + cardOrdinal;
+                      }
+                    card.attr('aria-label', cardInfo);
+
                     // Create a closure to keep track of each configSource so it doesn't use the last one for each card.
                     var closure = function(configSource){
                         // Add onClick listener to focus the correct tab once clicked
@@ -266,7 +276,7 @@ var playground = function(){
                             contentManager.focusTabbedEditorByName(STEP_NAME, configSource.fileName);
                         });
                         card.on('keypress', function(event){
-                            if(event.which === 13){
+                            if(event.which === 13) {
                                 event.preventDefault();
                                 event.stopPropagation();
                                 contentManager.focusTabbedEditorByName(STEP_NAME, configSource.fileName);

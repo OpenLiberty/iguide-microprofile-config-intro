@@ -14,18 +14,27 @@
   table-layout: fixed;
 }
 
+.propsTable, .propsTable tr:focus {
+  outline: none;
+}
+
 .propsTable td {
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
 }
 
+.propsTable td:focus, .propsTable th:focus {
+  outline: 2px solid #F4BD9B;
+}
+
 .propertyRow {
   cursor: pointer;
 }
 
-#guide_content tr.propertyRow:hover {
-  background-color: #F4BD9B;
+#guide_content tr.propertyRow:hover, #guide_content tr.propertyRow:hover td{
+ background-color: #F4BD9B ;
+ outline: none;
 }
 
 .carSite {
@@ -102,16 +111,21 @@
     height: 150px;
 }
 
+.ordinalCardContainer:focus {
+    outline: none;
+}
+
 .ordinalCard {
-    position: absolute;
-    height: 35px;
-    width: 185px;
-    color: black;
-    text-align: center;
-    font-size: 9px;
-    padding: 5px 10px;
-    border: .5px solid black;
-    transition: .25s all;
+   position: absolute;
+   height: 35px;
+   width: 65%;
+   max-width: 185px;
+   color: black;
+   text-align: center;
+   font-size: 9px;
+   padding: 5px 10px;
+   border: .5px solid black;
+   transition: .25s all;
 }
 
 .ordinalCard:hover, .ordinalCard:focus {
