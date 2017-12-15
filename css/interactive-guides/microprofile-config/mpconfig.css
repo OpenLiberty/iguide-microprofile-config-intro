@@ -14,9 +14,9 @@
   table-layout: fixed;
 }
 
-.propsTable, .propsTable td, .propsTable tr, .propsTable th:focus {
+.propsTable, .propsTable tr:focus {
   outline: none;
-},
+}
 
 .propsTable td {
   text-overflow: ellipsis;
@@ -111,15 +111,16 @@
 }
 
 .ordinalCard {
-    position: absolute;
-    height: 35px;
-    width: 185px;
-    color: black;
-    text-align: center;
-    font-size: 9px;
-    padding: 5px 10px;
-    border: .5px solid black;
-    transition: .25s all;
+   position: absolute;
+   height: 35px;
+   width: 65%;
+   max-width: 185px;
+   color: black;
+   text-align: center;
+   font-size: 9px;
+   padding: 5px 10px;
+   border: .5px solid black;
+   transition: .25s all;
 }
 
 .ordinalCard:hover, .ordinalCard:focus {

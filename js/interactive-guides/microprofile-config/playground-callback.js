@@ -259,9 +259,11 @@ var playground = function(){
                     card.css('background-color', configSource.bgcolor);
 
                     //adding aria-labels to ordinal cards
-                    var cardInfo = card.find('.ordinalCardFileName').html();
-                      if (card.find('.ordinalCardOrdinal').html()){
-                        cardInfo += " " + card.find('.ordinalCardOrdinal').html();
+                    var cardFile = card.find('.ordinalCardFileName').html();
+                    var cardOrdinal = card.find('.ordinalCardOrdinal').html();
+                    var cardInfo = cardFile;
+                      if (cardOrdinal){
+                        cardInfo += " " + cardOrdinal;
                       }
                     card.attr('aria-label', cardInfo);
 
