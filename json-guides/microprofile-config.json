@@ -11,16 +11,16 @@
             "title": "What you'll learn",
             "guide_duration" : "25 minutes",
             "description": [
-              "Explore how to inject configuration data into a microservice without repackaging the application each time the underlying runtime environment changes.  <a href='https://microprofile.io/' target='_blank'>MicroProfile</a> makes building configurable microservices easy with its <a href='https://github.com/eclipse/microprofile-config' target='_blank'>MicroProfile Config</a> feature. Your application combines  application configuration properties from multiple sources are combined into a single set and accesses the properties from a single API by your application.<br>",
-              "Using the MicroProfile Config API, the sample application illustrates how a configuration property can be assigned a value in multiple configuration sources. Each source is assigned a priority.  The value from the source with the highest priority takes precedence over that from a lower priority.  This method allows code to run unchanged under different configurations for development, test, quality assurance, and production environments since an existing configuration value can easily be overridden as the need arises."
+              "Explore how to inject configuration data into a microservice without repackaging the application each time the underlying runtime environment changes. <a href='https://microprofile.io/' target='_blank'>MicroProfile</a> makes building configurable microservices easy with its <a href='https://github.com/eclipse/microprofile-config' target='_blank'>MicroProfile Config</a> feature. Your application combines application configuration properties from multiple sources into a single set and accesses the properties from a single API by your application.<br>",
+              "Using the MicroProfile Config API, the sample application illustrates how a configuration property can be assigned a value in multiple configuration sources. Each source is assigned a priority. The value from the source with the highest priority takes precedence over that from a lower priority. This method allows code to run unchanged under different configurations for development, test, quality assurance, and production environments since an existing configuration value can easily be overridden as the need arises."
             ],
             "sections" : [
                 {
                   "name": "backgroundConcepts",
                   "title": "Background concepts",
                   "description": [
-                    "MicroProfile Config uses Contexts and Dependency Injection <b><i>(CDI)</i></b> to inject configuration property values directly into an application without requiring user code to retrieve them.  The injected values are defined as <b><i>static</i></b> because they are set only at application startup.<br>",
-                    "The API combines configuration values from multiple sources, each known as a <b><i>ConfigSource</b></i>.  Each ConfigSource has a specified priority, defined by its <b><i>ordinal</i></b> value. A higher ordinal means that the values taken from this ConfigSource will override values from ConfigSources with a lower ordinal value. <br><br>MicroProfile Config has 3 default ConfigSources:",
+                    "MicroProfile Config uses Contexts and Dependency Injection <b><i>(CDI)</i></b> to inject configuration property values directly into an application without requiring user code to retrieve them. The injected values are defined as <b><i>static</i></b> because they are set only at application startup.<br>",
+                    "The API combines configuration values from multiple sources, each known as a <b><i>ConfigSource</b></i>. Each ConfigSource has a specified priority, defined by its <b><i>ordinal</i></b> value. A higher ordinal means that the values taken from this ConfigSource will override values from ConfigSources with a lower ordinal value. <br><br>MicroProfile Config has 3 default ConfigSources:",
                     "<ul><li>All <code>META-INF/microprofile-config.properties</code> found on the classpath (default ordinal = 100).</li><li>Environment variables (default ordinal = 300).</li><li>System properties (default ordinal = 400).</li></ul>",
                     "Specify an optional default value from annotations. The optional default value applies if the program does not find configuration values in any of the ConfigSources."
                   ],
@@ -37,7 +37,7 @@
             "name": "ExampleScenario",
             "title": "Example: DevOps pipeline",
             "description": [
-                "Imagine that you're developing and deploying a DisplayCarTypes microservice for displaying the types of cars that are currently available for purchase from your business.   This microservice has a dependency on another microservice called ObtainCarTypes which provides the currently available list.  As you develop your DisplayCarTypes microservice, you need to ensure that it works correctly when it interacts with the ObtainCarTypes microservice.  For stability and security reasons we don't want to test against the production version of ObtainCarTypes during the development pipeline.  This leads to running four instances of the ObtainCarTypes microservice that are to be used at the different stages of the devOps pipeline:",
+                "Imagine that you're developing and deploying a DisplayCarTypes microservice for displaying the types of cars that are currently available for purchase from your business. This microservice has a dependency on another microservice called ObtainCarTypes, which provides the currently available list. As you develop your DisplayCarTypes microservice, you need to ensure that it works correctly when it interacts with the ObtainCarTypes microservice. For stability and security reasons we don't want to test against the production version of ObtainCarTypes during the development pipeline. This leads to running four instances of the ObtainCarTypes microservice that are to be used at the different stages of the devOps pipeline:",
                 "",
                 "<div class=\"devOpsPipeline\"><center><img src=\"/guides/iguide-microprofile-config/html/interactive-guides/microprofile-config/images/intro.svg\" alt=\"DisplayCarTypes microservice can connect to one of the ObtainCarTypes instances: Development on port 9080, Test on port 9081, Quality Assurance on port 9082, Production on port 9083\"></center></div>",
                 "As you progress through this guide, you will set a configuration property for the port value to specify which of the four ObtainCarTypes instances the DisplayCarTypes microservice should connect to. "]
@@ -92,7 +92,7 @@
             "name": "ConfigureViaInject",
             "title": "Injecting configuration through @ConfigProperty annotation",
             "description": [
-                "After you modify your <code>server.xml</code> file to <a href='#enabling-microprofile-config'>include the mpConfig feature</a>, inject a single configuration property value can be injected directly into your code with the <code>@Inject</code> and the <code>@ConfigProperty</code> annotations. The injected value is static and does not change after the application starts.",
+                "After you modify your <code>server.xml</code> file to <a href='#enabling-microprofile-config'>include the mpConfig feature</a>, inject a single configuration property value directly into your code with the <code>@Inject</code> and the <code>@ConfigProperty</code> annotations. The injected value is static and does not change after the application starts.",
                 "",
                 "Specify a value in the runtime environment for mandatory configuration properties. Properties are mandatory when the annotation does not specify an optional default value. When the mandatory configuration property value is not found in any of the ConfigSources, a <code>DeploymentException</code> is thrown during application startup, causing the application to fail to start."
             ],
@@ -143,7 +143,7 @@
             "title": "Providing optional default values",
             "TOCIndent": 1,
             "description": [
-                "You can specify a default value for a configuration property using the <b>defaultValue</b> parameter in the <code>@ConfigProperty</code> annotation.  This value is used when a value is not specified in any MicroProfile Config configuration source.<br>"
+                "You can specify a default value for a configuration property using the <b>defaultValue</b> parameter in the <code>@ConfigProperty</code> annotation. This value is used when a value is not specified in any MicroProfile Config configuration source.<br>"
             ],
             "instruction": [
                 "Change the <code>@ConfigProperty</code> annotation on line 6 to the following code or click <action title='Provide default value using ConfigProperty annotation' onclick=\"microprofileConfigCallBack.addInjectDefaultConfigButton(event)\"><b>@Inject @ConfigProperty(name=\"port\",\n defaultValue=\"9080\")</b></action>. Then, click <action title='Run' onclick=\"microprofileConfigCallBack.saveTabbedEditorButton(event)\"><b>Run</b></action> on the editor menu pane.",
@@ -253,7 +253,7 @@
             "name": "ConfigureAsEnvVar",
             "title": "Configuring with an environment variable",
             "description": [
-                "In Open Liberty, you can use <code>server.env</code> files at the installation and server levels to specify environment variables. The installation level file is located at <code>${wlp.install.dir}/etc/server.env</code>, and the server level is located at <code>${server.config.dir}/server.env</code>. If both files exist, the contents of the two files are merged. If the same environment variable is in both files, the value in the server level file takes precedence over the value in the installation level file. Use the <code>${server.config.dir}/server.env</code> file to configure the <code>port</code> environment variable.",
+                "In Open Liberty, you can use <code>server.env</code> files at the installation and server levels to specify environment variables. The installation level file is located at <code>${wlp.install.dir}/etc/server.env</code>, and the server level file is located at <code>${server.config.dir}/server.env</code>. If both files exist, the contents of the two files are merged. If the same environment variable is in both files, the value in the server level file takes precedence over the value in the installation level file. Use the <code>${server.config.dir}/server.env</code> file to configure the <code>port</code> environment variable.",
                 "",
                 "Environment variables can also be set using the command line.",
                 "",
