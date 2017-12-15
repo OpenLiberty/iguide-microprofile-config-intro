@@ -24,6 +24,10 @@
   white-space: nowrap;
 }
 
+.propsTable td:focus, .propsTable th:focus {
+  outline: 2px solid #F4BD9B;
+}
+
 .propertyRow {
   cursor: pointer;
 }
