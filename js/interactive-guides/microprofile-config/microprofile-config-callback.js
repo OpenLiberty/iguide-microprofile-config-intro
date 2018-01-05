@@ -317,11 +317,11 @@ var microprofileConfigCallBack = (function() {
         var annotationParams = null;
         try {
             // match
-            // public class CarTypes {
+            // public class InventoryConfig {
             //   <space or newline here>
             // @Inject @ConfigProperty(name=\"port\", defaultValue=\"9080\")
-            // private Integer port;
-            var contentToMatch = "[\\s\\S]*public class CarTypes {\\s*@Inject\\s*@ConfigProperty\\s*\\(([\\s\\S]*)\\)\\s*private Integer port;";
+            // private int port;
+            var contentToMatch = "[\\s\\S]*public class InventoryConfig {\\s*@Inject\\s*@ConfigProperty\\s*\\(([\\s\\S]*)\\)\\s*private int port;";
             var regExpToMatch = new RegExp(contentToMatch, "g");
             var groups = regExpToMatch.exec(content);
 
@@ -493,9 +493,9 @@ var microprofileConfigCallBack = (function() {
         contentManager.resetTabbedEditorContents(stepName, configEditorFileName);
         var content = contentManager.getTabbedEditorContents(stepName, configEditorFileName);
 
-        contentManager.replaceTabbedEditorContents(stepName, configEditorFileName, 6, 6, injectConfig);
+        contentManager.replaceTabbedEditorContents(stepName, configEditorFileName, 9, 9, injectConfig);
         var readOnlyLines = [];
-        readOnlyLines.push({from: 1, to: 5}, {from: 8, to: 10});
+        readOnlyLines.push({from: 1, to: 8}, {from: 10, to: 15});
         contentManager.markEditorReadOnlyLines(stepName, readOnlyLines);
     };
 
@@ -586,7 +586,7 @@ var microprofileConfigCallBack = (function() {
         }
     };
 
-    var configEditorFileName = "CarTypes.java";
+    var configEditorFileName = "InventoryConfig.java";
     var __addInjectConfigToEditor = function(stepName) {
         var injectConfig = "    @Inject @ConfigProperty(name=\"port\")";
         if (!stepName) {
@@ -596,9 +596,9 @@ var microprofileConfigCallBack = (function() {
         contentManager.resetTabbedEditorContents(stepName, configEditorFileName);
         var content = contentManager.getTabbedEditorContents(stepName, configEditorFileName);
 
-        contentManager.replaceTabbedEditorContents(stepName, configEditorFileName, 6, 6, injectConfig);
+        contentManager.replaceTabbedEditorContents(stepName, configEditorFileName, 9, 9, injectConfig);
         var readOnlyLines = [];
-        readOnlyLines.push({from: 1, to: 5}, {from: 7, to: 9});
+        readOnlyLines.push({from: 1, to: 8}, {from: 12, to: 15});
         contentManager.markEditorReadOnlyLines(stepName, readOnlyLines);
     };
 

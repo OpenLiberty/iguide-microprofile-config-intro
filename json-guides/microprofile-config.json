@@ -37,10 +37,10 @@
             "name": "ExampleScenario",
             "title": "Example: DevOps pipeline",
             "description": [
-                "Imagine that you're developing and deploying a DisplayCarTypes microservice so that you can display the types of cars that are currently available for purchase from your business. This microservice has a dependency on another microservice called ObtainCarTypes, which provides the currently available list. As you develop your DisplayCarTypes microservice, you need to ensure that it works correctly when it interacts with the ObtainCarTypes microservice. For stability and security reasons, you don't want to test against the production version of ObtainCarTypes during the development pipeline. Instead, you run four instances of the ObtainCarTypes microservice, one for each stage of the devOps pipeline as shown in the following diagram:",
+                "Imagine that you're developing and deploying a DisplayInventoryConfig microservice so that you can display the types of cars that are currently available for purchase from your business. This microservice has a dependency on another microservice called ObtainInventoryConfig, which provides the currently available list. As you develop your DisplayInventoryConfig microservice, you need to ensure that it works correctly when it interacts with the ObtainInventoryConfig microservice. For stability and security reasons, you don't want to test against the production version of ObtainInventoryConfig during the development pipeline. Instead, you run four instances of the ObtainInventoryConfig microservice, one for each stage of the devOps pipeline as shown in the following diagram:",
                 "",
-                "<div class=\"devOpsPipeline\"><center><img src=\"/guides/iguide-microprofile-config/html/interactive-guides/microprofile-config/images/intro.svg\" alt=\"DisplayCarTypes microservice can connect to one of the ObtainCarTypes instances: Development on port 9080, Test on port 9081, Quality Assurance on port 9082, Production on port 9083\"></center></div>",
-                "As you progress through this guide, you will set a configuration property for the port value to specify which of the four ObtainCarTypes instances the DisplayCarTypes microservice should connect to. "]
+                "<div class=\"devOpsPipeline\"><center><img src=\"/guides/iguide-microprofile-config/html/interactive-guides/microprofile-config/images/intro.svg\" alt=\"DisplayInventoryConfig microservice can connect to one of the ObtainInventoryConfig instances: Development on port 9080, Test on port 9081, Quality Assurance on port 9082, Production on port 9083\"></center></div>",
+                "As you progress through this guide, you will set a configuration property for the port value to specify which of the four ObtainInventoryConfig instances the DisplayInventoryConfig microservice should connect to. "]
         },
         {
             "name": "EnableMPConfig",
@@ -97,35 +97,41 @@
                 "You can specify a value in the runtime environment for mandatory configuration properties. Properties are mandatory when the annotation does not specify an optional default value. When the mandatory configuration property value is not found in any of the ConfigSources, a <code>DeploymentException</code> is thrown during application startup, causing the application to fail to start."
             ],
             "instruction": [
-                "To inject a mandatory <code>port</code> configuration property into the code, add the following <code>@Inject</code> and <code>@ConfigProperty</code> annotations to line 6 before declaring the <code>private Integer port</code>, or click  <action title='Inject a ConfigProperty' onclick='microprofileConfigCallBack.addInjectConfigButton(event)'><b>@Inject @ConfigProperty(name=\"port\")</b></action>. Then, click <action title='Run' onclick=\"microprofileConfigCallBack.saveTabbedEditorButton(event)\"><b>Run</b></action> on the editor menu pane to see the exception occur."
+                "To inject a mandatory <code>port</code> configuration property into the code, add the following <code>@Inject</code> and <code>@ConfigProperty</code> annotations to line 9 before declaring the <code>private int port</code>, or click  <action title='Inject a ConfigProperty' onclick='microprofileConfigCallBack.addInjectConfigButton(event)'><b>@Inject @ConfigProperty(name=\"port\")</b></action>. Then, click <action title='Run' onclick=\"microprofileConfigCallBack.saveTabbedEditorButton(event)\"><b>Run</b></action> on the editor menu pane to see the exception occur."
             ],
             "content":[
                 {
                     "displayType":"tabbedEditor",
-                    "activeTab": "CarTypes.java",
+                    "activeTab": "InventoryConfig.java",
                     "editorList": [
                         {
                             "displayType":"fileEditor",
-                            "fileName": "CarTypes.java",
+                            "fileName": "InventoryConfig.java",
                             "preload": [
-                                "package com.car.types;",
+                                "package io.openliberty.guides.mpconfig;",
+                                "",
                                 "import javax.inject.Inject;",
+                                "import javax.enterprise.context.ApplicationScoped;",
                                 "import org.eclipse.microprofile.config.inject.ConfigProperty;",
                                 "",
-                                "public class CarTypes {",
+                                "@applicationscoped",
+                                "public class InventoryConfig {",
                                 "",
-                                "    private Integer port;",
+                                "    private int port;",
                                 "",
+                                "    public int getPort() {",
+                                "      return port;",
+                                "    }",
                                 "}"
                             ],
                             "readonly": [
                                 {
                                     "from": "1",
-                                    "to": "5"
+                                    "to": "8"
                                 },
                                 {
-                                    "from": "7",
-                                    "to": "9"
+                                    "from": "12",
+                                    "to": "15"
                                 }
                             ],
                             "save": false,
@@ -147,35 +153,41 @@
             ],
             "instruction": [
                 "Change the <code>@ConfigProperty</code> annotation on line 6 to the following code, or click <action title='Provide default value using ConfigProperty annotation' onclick=\"microprofileConfigCallBack.addInjectDefaultConfigButton(event)\"><b>@Inject @ConfigProperty(name=\"port\",\n defaultValue=\"9080\")</b></action>. Then, click <action title='Run' onclick=\"microprofileConfigCallBack.saveTabbedEditorButton(event)\"><b>Run</b></action> on the editor menu pane.",
-                "Type the following URL into the browser that follows, or click <action title='URL' onclick=\"microprofileConfigCallBack.populateURL(event, 'InjectWithDefaultValue')\"><b>https://mycarvendor.openliberty.io/car-types</b></action> and then press <action title='Enter' onclick=\"microprofileConfigCallBack.enterButtonURL(event, 'InjectWithDefaultValue')\"><b>Enter</b></action>. The development port (9080) of the ObtainCarTypes microservice returns the values <code>carA</code> and <code>carB</code>."
+                "Type the following URL into the browser that follows, or click <action title='URL' onclick=\"microprofileConfigCallBack.populateURL(event, 'InjectWithDefaultValue')\"><b>https://mycarvendor.openliberty.io/car-types</b></action> and then press <action title='Enter' onclick=\"microprofileConfigCallBack.enterButtonURL(event, 'InjectWithDefaultValue')\"><b>Enter</b></action>. The development port (9080) of the ObtainInventoryConfig microservice returns the values <code>carA</code> and <code>carB</code>."
             ],
             "content":[
                 {
                     "displayType":"tabbedEditor",
-                    "activeTab": "CarTypes.java",
+                    "activeTab": "InventoryConfig.java",
                     "editorList": [
                         {
                             "displayType":"fileEditor",
-                            "fileName": "CarTypes.java",
+                            "fileName": "InventoryConfig.java",
                             "preload": [
-                                "package com.car.types;",
+                                "package io.openliberty.guides.mpconfig;",
+                                "",
                                 "import javax.inject.Inject;",
+                                "import javax.enterprise.context.ApplicationScoped;",
                                 "import org.eclipse.microprofile.config.inject.ConfigProperty;",
                                 "",
-                                "public class CarTypes {",
+                                "@applicationscoped",
+                                "public class InventoryConfig {",
                                 "    @Inject @ConfigProperty(name=\"port\")",
-                                "    private Integer port;",
+                                "    private int port;",
                                 "",
+                                "    public int getPort() {",
+                                "      return port;",
+                                "    }",
                                 "}"
                             ],
                             "readonly": [
                                {
                                     "from": "1",
-                                    "to": "5"
+                                    "to": "8"
                                },
                                {
-                                    "from": "7",
-                                    "to": "9"
+                                    "from": "10",
+                                    "to": "15"
                                }
                             ],
                             "save": false,
@@ -201,7 +213,7 @@
             ],
             "instruction": [
                 "In <code>/META-INF/microprofile-config.properties</code>, add the following on line 1, or click <action title='Configure port in microprofile-config.properties' onclick=\"microprofileConfigCallBack.addPropToConfigPropsButton(event)\"><b>port=9081</b></action>. Then, click <action title='Run' onclick=\"microprofileConfigCallBack.saveTabbedEditorButton(event)\"><b>Run</b></action> on the editor menu pane.",
-                "Click <action title='Refresh' onclick=\"microprofileConfigCallBack.refreshBrowserButton(event)\"><b>Refresh</b></action> in the following browser to see that the port value in the <code>/META-INF/microprofile-config.properties</code> file is used. The test port (9081) of the ObtainCarTypes microservice returns the values <code>typeA</code>, <code>typeB</code>, and <code>typeC</code>. <br/>"
+                "Click <action title='Refresh' onclick=\"microprofileConfigCallBack.refreshBrowserButton(event)\"><b>Refresh</b></action> in the following browser to see that the port value in the <code>/META-INF/microprofile-config.properties</code> file is used. The test port (9081) of the ObtainInventoryConfig microservice returns the values <code>typeA</code>, <code>typeB</code>, and <code>typeC</code>. <br/>"
             ],
             "content":[
                 {
@@ -211,18 +223,24 @@
                     "editorList": [
                       {
                         "displayType":"fileEditor",
-                        "fileName": "CarTypes.java",
+                        "fileName": "InventoryConfig.java",
                         "preload": [
-                              "package com.car.types;",
-                              "import javax.inject.Inject;",
-                              "import org.eclipse.microprofile.config.inject.ConfigProperty;",
-                              "",
-                              "public class CarTypes {",
+                            "package io.openliberty.guides.mpconfig;",
+                            "",
+                            "import javax.inject.Inject;",
+                            "import javax.enterprise.context.ApplicationScoped;",
+                            "import org.eclipse.microprofile.config.inject.ConfigProperty;",
+                            "",
+                            "@applicationscoped",
+                            "public class InventoryConfig {",
                               "    @Inject",
                               "    @ConfigProperty(name=\"port\", ",
                               "                   defaultValue=\"9080\")",
-                              "    private Integer port;",
+                              "    private int port;",
                               "",
+                              "    public int getPort() {",
+                              "      return port;",
+                              "    }",
                               "}"
                         ],
                         "readonly": true,
@@ -261,7 +279,7 @@
             ],
             "instruction": [
               "In <code>server.env</code>, add the following on line 1, or click <action title='Configure port in server.env' onclick=\"microprofileConfigCallBack.addPropToServerEnvButton(event)\"><b>port=9082</b></action>. Then, click <action title='Run' onclick=\"microprofileConfigCallBack.saveTabbedEditorButton(event)\"><b>Run</b></action> on the editor menu pane.",
-              "Click <action title='Refresh' onclick=\"microprofileConfigCallBack.refreshBrowserButton(event)\"><b>Refresh</b></action> in the following browser to see that the port value in the server.env file is used. The quality assurance port (9082) of the ObtainCarTypes microservice returns the values <code>SUV</code>, <code>Crossover</code>, <code>Coupe</code>, and <code>Truck</code>.<br/>"
+              "Click <action title='Refresh' onclick=\"microprofileConfigCallBack.refreshBrowserButton(event)\"><b>Refresh</b></action> in the following browser to see that the port value in the server.env file is used. The quality assurance port (9082) of the ObtainInventoryConfig microservice returns the values <code>SUV</code>, <code>Crossover</code>, <code>Coupe</code>, and <code>Truck</code>.<br/>"
             ],
             "content":[
               {
@@ -271,18 +289,24 @@
                 "editorList": [
                   {
                     "displayType":"fileEditor",
-                    "fileName": "CarTypes.java",
+                    "fileName": "InventoryConfig.java",
                     "preload": [
-                          "package com.car.types;",
-                          "import javax.inject.Inject;",
-                          "import org.eclipse.microprofile.config.inject.ConfigProperty;",
-                          "",
-                          "public class CarTypes {",
+                        "package io.openliberty.guides.mpconfig;",
+                        "",
+                        "import javax.inject.Inject;",
+                        "import javax.enterprise.context.ApplicationScoped;",
+                        "import org.eclipse.microprofile.config.inject.ConfigProperty;",
+                        "",
+                        "@applicationscoped",
+                        "public class InventoryConfig {",
                           "    @Inject",
                           "    @ConfigProperty(name=\"port\", ",
-                          "                    defaultValue=\"9080\")",
-                          "    private Integer port;",
+                          "                   defaultValue=\"9080\")",
+                          "    private int port;",
                           "",
+                          "    public int getPort() {",
+                          "      return port;",
+                          "    }",
                           "}"
                     ],
                     "readonly": true,
@@ -336,7 +360,7 @@
             ],
             "instruction": [
                 "Add the following port value on line 1 of <code>bootstrap.properties</code>, or click <action title='Configure port in System Properties' onclick=\"microprofileConfigCallBack.addPropToSystemPropertiesButton(event)\"><b>port=9083</b></action>. Then, click <action title='Run' onclick=\"microprofileConfigCallBack.saveTabbedEditorButton(event)\"><b>Run</b></action> on the editor menu pane.",
-                "Click <action title='Refresh' onclick=\"microprofileConfigCallBack.refreshBrowserButton(event)\"><b>Refresh</b></action> in the following browser to see that the port value in the <code>bootstrap.properties</code> file is used. The production port (9083) of the ObtainCarTypes microservice returns values <code>SUV</code>, <code>Crossover</code>, <code>Coupe</code>, <code>Truck</code>, and <code>Convertible</code>.<br/>"
+                "Click <action title='Refresh' onclick=\"microprofileConfigCallBack.refreshBrowserButton(event)\"><b>Refresh</b></action> in the following browser to see that the port value in the <code>bootstrap.properties</code> file is used. The production port (9083) of the ObtainInventoryConfig microservice returns values <code>SUV</code>, <code>Crossover</code>, <code>Coupe</code>, <code>Truck</code>, and <code>Convertible</code>.<br/>"
             ],
             "content":[
                 {
@@ -346,20 +370,25 @@
                   "editorList": [
                     {
                       "displayType":"fileEditor",
-                      "fileName": "CarTypes.java",
+                      "fileName": "InventoryConfig.java",
                       "preload": [
-                            "package com.car.types;",
-                            "import javax.inject.Inject;",
-                            "import org.eclipse.microprofile.config.inject.ConfigProperty;",
-                            "",
-                            "public class CarTypes {",
-                            "",
-                            "    @Inject",
-                            "    @ConfigProperty(name=\"port\", ",
-                            "                   defaultValue=\"9080\")",
-                            "    private Integer port;",
-                            "",
-                            "}"
+                        "package io.openliberty.guides.mpconfig;",
+                        "",
+                        "import javax.inject.Inject;",
+                        "import javax.enterprise.context.ApplicationScoped;",
+                        "import org.eclipse.microprofile.config.inject.ConfigProperty;",
+                        "",
+                        "@applicationscoped",
+                        "public class InventoryConfig {",
+                          "    @Inject",
+                          "    @ConfigProperty(name=\"port\", ",
+                          "                   defaultValue=\"9080\")",
+                          "    private int port;",
+                          "",
+                          "    public int getPort() {",
+                          "      return port;",
+                          "    }",
+                          "}"
                       ],
                       "readonly": true,
                       "save": false
@@ -418,7 +447,7 @@
             ],
             "instruction": [
                 "On line 2 of the <code>/META-INF/microprofile-config.properties</code> file add the following, or click <action title='Changing the ordinal of microprofile-config.properties' onclick=\"microprofileConfigCallBack.addConfigOrdinalToPropsButton(event)\"><b>config_ordinal=500</b></action>. Then, click <action title='Run' onclick=\"microprofileConfigCallBack.saveTabbedEditorButton(event)\"><b>Run</b></action> on the editor menu pane.",
-                "Click <action title='Refresh' onclick=\"microprofileConfigCallBack.refreshBrowserButton(event)\"><b>Refresh</b></action> in the following browser to see that the port value in the <code>/META-INF/microprofile-config.properties</code> file is used instead of the one defined in the <code>bootstrap.properties</code> file. The test port (9081) of the ObtainCarTypes microservice returns the values typeA, typeB, and typeC."
+                "Click <action title='Refresh' onclick=\"microprofileConfigCallBack.refreshBrowserButton(event)\"><b>Refresh</b></action> in the following browser to see that the port value in the <code>/META-INF/microprofile-config.properties</code> file is used instead of the one defined in the <code>bootstrap.properties</code> file. The test port (9081) of the ObtainInventoryConfig microservice returns the values typeA, typeB, and typeC."
             ],
             "content":[
               {
@@ -428,19 +457,24 @@
                 "editorList": [
                   {
                     "displayType":"fileEditor",
-                    "fileName": "CarTypes.java",
+                    "fileName": "InventoryConfig.java",
                     "preload": [
-                          "package com.car.types;",
-                          "import javax.inject.Inject;",
-                          "import org.eclipse.microprofile.config.inject.ConfigProperty;",
-                          "",
-                          "public class CarTypes {",
-                          "",
+                        "package io.openliberty.guides.mpconfig;",
+                        "",
+                        "import javax.inject.Inject;",
+                        "import javax.enterprise.context.ApplicationScoped;",
+                        "import org.eclipse.microprofile.config.inject.ConfigProperty;",
+                        "",
+                        "@applicationscoped",
+                        "public class InventoryConfig {",
                           "    @Inject",
                           "    @ConfigProperty(name=\"port\", ",
-                          "                    defaultValue=\"9080\")",
-                          "    private Integer port;",
+                          "                   defaultValue=\"9080\")",
+                          "    private int port;",
                           "",
+                          "    public int getPort() {",
+                          "      return port;",
+                          "    }",
                           "}"
                     ],
                     "readonly": true,
@@ -496,12 +530,12 @@
                 "Now that you've learned the various ways of defining configuration properties, you can see how they all work together.",
                 "<br>To review, here are the four places to inject properties:",
                 "<ul>",
-                "<li>Java annotations <code>@Inject @ConfigProperty</code> with <code>defaultValue</code> in <code>CarTypes.java</code> (no ordinal)",
+                "<li>Java annotations <code>@Inject @ConfigProperty</code> with <code>defaultValue</code> in <code>InventoryConfig.java</code> (no ordinal)",
                 "<li>Properties file through <code>/META-INF/microprofile-config.properties</code> (default ordinal = 100)",
                 "<li>Environment variables through <code>server.env</code> (default ordinal = 300)",
                 "<li>System properties through <code>bootstrap.properties</code> (default ordinal = 400)",
                 "</ul>",
-                "Use the editor to inject various properties into the files. Use <code>@Inject @ConfigProperty (name=\"propertyName\");</code> to include the new properties in the <code>CarTypes.java</code> file. You can set the <code>config_ordinal</code> in any of the properties files. The following diagrams show the file ordinal priority and the property values being used:"
+                "Use the editor to inject various properties into the files. Use <code>@Inject @ConfigProperty (name=\"propertyName\");</code> to include the new properties in the <code>InventoryConfig.java</code> file. You can set the <code>config_ordinal</code> in any of the properties files. The following diagrams show the file ordinal priority and the property values being used:"
             ],
             "content": [
                 {
@@ -509,24 +543,30 @@
                     "editorList": [
                         {
                             "displayType": "fileEditor",
-                            "fileName": "CarTypes.java",
+                            "fileName": "InventoryConfig.java",
                             "preload": [
-                                "package com.car.types;",
+                                "package io.openliberty.guides.mpconfig;",
+                                "",
                                 "import javax.inject.Inject;",
+                                "import javax.enterprise.context.ApplicationScoped;",
                                 "import org.eclipse.microprofile.config.inject.ConfigProperty;",
                                 "",
-                                "public class CarTypes {",
-                                "",
-                                "    @Inject @ConfigProperty(name=\"port\", ",
-                                "                            defaultValue=\"9080\")",
-                                "    private Integer port;",
-                                "",
-                                "}"
+                                "@applicationscoped",
+                                "public class InventoryConfig {",
+                                  "    @Inject",
+                                  "    @ConfigProperty(name=\"port\", ",
+                                  "                   defaultValue=\"9080\")",
+                                  "    private int port;",
+                                  "",
+                                  "    public int getPort() {",
+                                  "      return port;",
+                                  "    }",
+                                  "}"
                             ],
                             "readonly": [
                                 {
                                     "from": "1",
-                                    "to": "5"
+                                    "to": "8"
                                 }
                             ],
                             "callback": "(function test(editor) {microprofileConfigCallBack.updatePlaygroundProperties(editor);})",
