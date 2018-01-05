@@ -520,9 +520,12 @@ var microprofileConfigCallBack = (function() {
     var __listenToBrowserForInjectDefaultConfig = function(webBrowser) {
         var setBrowserContent = function(currentURL) {
             if (contentManager.getCurrentInstructionIndex(webBrowser.getStepName()) === 1) {
-                webBrowser.setBrowserContent("/guides/iguide-microprofile-config/html/interactive-guides/microprofile-config/download-from-injection.html");
-                webBrowser.setBrowserStatusBar("Retrieved data from Development on port 9080.");
-                contentManager.markCurrentInstructionComplete(webBrowser.getStepName());
+                // Check if the url is correct before loading content
+                if(webBrowser.getURL() === "https://mycarvendor.openliberty.io/car-types"){
+                    webBrowser.setBrowserContent("/guides/iguide-microprofile-config/html/interactive-guides/microprofile-config/download-from-injection.html");
+                    webBrowser.setBrowserStatusBar("Retrieved data from Development on port 9080.");
+                    contentManager.markCurrentInstructionComplete(webBrowser.getStepName());
+                }                
             }
         }
         // Cannot use contentManager.hideBrowser as the browser is still going thru initialization

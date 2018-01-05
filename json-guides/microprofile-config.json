@@ -21,8 +21,8 @@
                   "description": [
                     "MicroProfile Config uses Contexts and Dependency Injection <b><i>(CDI)</i></b> to inject configuration property values directly into an application without requiring user code to retrieve them. The injected values are defined as <b><i>static</i></b> because they are set only at application startup.<br>",
                     "The API combines configuration values from multiple sources, each known as a <b><i>ConfigSource</b></i>. Each ConfigSource has a specified priority, defined by its <b><i>ordinal</i></b> value. A higher ordinal means that the values taken from this ConfigSource will override values from ConfigSources with a lower ordinal value. <br><br>MicroProfile Config has 3 default ConfigSources:",
-                    "<ul><li>All <code>META-INF/microprofile-config.properties</code> found on the classpath (default ordinal = 100).</li><li>Environment variables (default ordinal = 300).</li><li>System properties (default ordinal = 400).</li></ul>",
-                    "An optional default value can be specified from annotations. The optional default value applies if the application does not find configuration values in any of the ConfigSources. The priority of each ConfigSource and the optional default value is shown in the following diagram:"
+                    "<ul><li>All <code>META-INF/microprofile-config.properties</code> found on the class path (default ordinal = 100).</li><li>Environment variables (default ordinal = 300).</li><li>System properties (default ordinal = 400).</li></ul>",
+                    "An optional default value can be specified using Java annotations. The optional default value applies if the application does not find configuration values in any of the ConfigSources. The priority of each ConfigSource and the optional default value is shown in the following diagram:"
                   ],
                   "content": [
                     {
@@ -253,11 +253,11 @@
             "name": "ConfigureAsEnvVar",
             "title": "Configuring with an environment variable",
             "description": [
-                "In Open Liberty, you can use <code>server.env</code> files at the installation and server levels to specify environment variables. The installation level file is located at <code>${wlp.install.dir}/etc/server.env</code>, and the server level file is located at <code>${server.config.dir}/server.env</code>. If both files exist, the contents of the two files are merged. If the same environment variable is in both files, the value in the server level file takes precedence over the value in the installation level file. Use the <code>${server.config.dir}/server.env</code> file to configure the <code>port</code> environment variable.",
+                "In Open Liberty, you can use <code>server.env</code> files at the installation and server levels to specify environment variables. The installation level file is located at <code>${wlp.install.dir}/etc/server.env</code>, and the server level file is located at <code>${server.config.dir}/server.env</code>. If both files exist, the contents of the two files are merged. If the same environment variable is in both files, the value in the server level file takes precedence over the value in the installation level file.",
                 "",
                 "Environment variables can also be set using the command line.",
                 "",
-                "The <code>server.env</code> file contains the environment settings with a default ordinal value of 300 which is higher than the default value of 100 for the <code>/META-INF/microprofile-config.properties</code> file. Thus, the <code>port</code> property value in <code>server.env</code> is used."
+                "Use the <code>${server.config.dir}/server.env</code> file to configure the <code>port</code> environment variable. The <code>server.env</code> file contains the environment settings with a default ordinal value of 300 which is higher than the default ordinal value of 100 for the <code>/META-INF/microprofile-config.properties</code> file. Thus, the <code>port</code> property value in <code>server.env</code> is used."
             ],
             "instruction": [
               "In <code>server.env</code>, add the following on line 1, or click <action title='Configure port in server.env' onclick=\"microprofileConfigCallBack.addPropToServerEnvButton(event)\"><b>port=9082</b></action>. Then, click <action title='Run' onclick=\"microprofileConfigCallBack.saveTabbedEditorButton(event)\"><b>Run</b></action> on the editor menu pane.",
@@ -518,7 +518,7 @@
                                 "public class CarTypes {",
                                 "",
                                 "    @Inject @ConfigProperty(name=\"port\", ",
-                                "                            defaultValue=\"9080\");",
+                                "                            defaultValue=\"9080\")",
                                 "    private Integer port;",
                                 "",
                                 "}"
