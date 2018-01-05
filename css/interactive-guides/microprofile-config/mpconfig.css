@@ -108,7 +108,7 @@
 
 .ordinalCardContainer {
     width: 100%;
-    height: 150px;
+    height: 130px;
 }
 
 .ordinalCardContainer:focus {
@@ -141,25 +141,25 @@
 
 .ordinal-0 {
     z-index: 1;
-    top: 100px;
+    top: 65px;
     left: 5%;
 }
 
 .ordinal-1 {
     z-index: 2;
-    top: 80px;
+    top: 45px;
     left: 15%;
 }
 
 .ordinal-2 {
     z-index: 3;
-    top: 60px;
+    top: 25px;
     left: 25%;
 }
 
 .ordinal-3 {
     z-index: 4;
-    top: 40px;
+    top: 5px;
     left: 42%;
 
 }
