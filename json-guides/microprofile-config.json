@@ -11,7 +11,7 @@
             "title": "What you'll learn",
             "guide_duration" : "25 minutes",
             "description": [
-              "Explore how to inject configuration data into a microservice without repackaging the application each time the underlying runtime environment changes. <a href='https://microprofile.io/' target='_blank'>MicroProfile</a> makes building configurable microservices easy with its <a href='https://github.com/eclipse/microprofile-config' target='_blank'>MicroProfile Config</a> feature. Your application combines application configuration properties from multiple sources into a single set and accesses the properties from a single API by your application.<br>",
+              "Explore how to inject configuration data into a microservice without repackaging the application each time the underlying runtime environment changes. <a href='https://microprofile.io/' target='_blank'>MicroProfile</a> makes building configurable microservices easy with its <a href='https://github.com/eclipse/microprofile-config' target='_blank'>MicroProfile Config</a> feature. Application configuration properties from multiple sources are combined into a single set of configuration properties and accessed from a single API by your application.<br>",
               "Using the MicroProfile Config API, the sample application illustrates how a configuration property can be assigned a value in multiple configuration sources. Each source is assigned a priority. The value from the source with the highest priority takes precedence over that from a lower priority. This method allows code to run unchanged under different configurations for development, test, quality assurance, and production environments since an existing configuration value can easily be overridden as the need arises."
             ],
             "sections" : [
@@ -21,8 +21,8 @@
                   "description": [
                     "MicroProfile Config uses Contexts and Dependency Injection <b><i>(CDI)</i></b> to inject configuration property values directly into an application without requiring user code to retrieve them. The injected values are defined as <b><i>static</i></b> because they are set only at application startup.<br>",
                     "The API combines configuration values from multiple sources, each known as a <b><i>ConfigSource</b></i>. Each ConfigSource has a specified priority, defined by its <b><i>ordinal</i></b> value. A higher ordinal means that the values taken from this ConfigSource will override values from ConfigSources with a lower ordinal value. <br><br>MicroProfile Config has 3 default ConfigSources:",
-                    "<ul><li>All <code>META-INF/microprofile-config.properties</code> found on the classpath (default ordinal = 100).</li><li>Environment variables (default ordinal = 300).</li><li>System properties (default ordinal = 400).</li></ul>",
-                    "An optional default value can be specified from annotations. The optional default value applies if the application does not find configuration values in any of the ConfigSources. The priority of each ConfigSource and the optional default value is shown in the following diagram:"
+                    "<ul><li>All <code>META-INF/microprofile-config.properties</code> found on the class path (default ordinal = 100).</li><li>Environment variables (default ordinal = 300).</li><li>System properties (default ordinal = 400).</li></ul>",
+                    "An optional default value can be specified using Java annotations. The optional default value applies if the application does not find configuration values in any of the ConfigSources. The priority of each ConfigSource and the optional default value is shown in the following diagram:"
                   ],
                   "content": [
                     {
@@ -37,7 +37,7 @@
             "name": "ExampleScenario",
             "title": "Example: DevOps pipeline",
             "description": [
-                "Imagine that you're developing and deploying a DisplayCarTypes microservice so that you can display the types of cars that are currently available for purchase from your business. This microservice has a dependency on another microservice called ObtainCarTypes, which provides the currently available list. As you develop your DisplayCarTypes microservice, you need to ensure that it works correctly when it interacts with the ObtainCarTypes microservice. For stability and security reasons, you don't want to test against the production version of ObtainCarTypes during the development pipeline. Instead, you can run four instances of the ObtainCarTypes microservice to use at different stages of the devOps pipeline as shown in the following diagram:",
+                "Imagine that you're developing and deploying a DisplayCarTypes microservice so that you can display the types of cars that are currently available for purchase from your business. This microservice has a dependency on another microservice called ObtainCarTypes, which provides the currently available list. As you develop your DisplayCarTypes microservice, you need to ensure that it works correctly when it interacts with the ObtainCarTypes microservice. For stability and security reasons, you don't want to test against the production version of ObtainCarTypes during the development pipeline. Instead, you run four instances of the ObtainCarTypes microservice, one for each stage of the devOps pipeline as shown in the following diagram:",
                 "",
                 "<div class=\"devOpsPipeline\"><center><img src=\"/guides/iguide-microprofile-config/html/interactive-guides/microprofile-config/images/intro.svg\" alt=\"DisplayCarTypes microservice can connect to one of the ObtainCarTypes instances: Development on port 9080, Test on port 9081, Quality Assurance on port 9082, Production on port 9083\"></center></div>",
                 "As you progress through this guide, you will set a configuration property for the port value to specify which of the four ObtainCarTypes instances the DisplayCarTypes microservice should connect to. "]
@@ -49,7 +49,7 @@
                 "Begin by enabling the MicroProfile Config 1.1 feature in your <code>server.xml</code> file. This feature allows you to use the MicroProfile Config API to externalize configuration data."
             ],
             "instruction": [
-              "Add the following element declaration inside the featureManager element of the <code>server.xml</code> file or click <action tabindex='0' role='button' title='Enable MicroProfile Config' aria-label='Enable MicroProfile Config' onkeypress=\"microprofileConfigCallBack.addMicroProfileConfigFeatureButton(event)\" onclick=\"microprofileConfigCallBack.addMicroProfileConfigFeatureButton(event)\"><b>&lt;feature&gtmpConfig-1.1&lt;/feature&gt;</b></action>. Then, click <action tabindex='0' role='button' title='Save' aria-label='Save' onkeypress=\"microprofileConfigCallBack.saveTabbedEditorButton(event)\" onclick=\"microprofileConfigCallBack.saveTabbedEditorButton(event)\"><b>Save</b></action> on the editor menu pane."
+              "Add the following element declaration inside the featureManager element of the <code>server.xml</code> file, or click <action tabindex='0' role='button' title='Enable MicroProfile Config' aria-label='Enable MicroProfile Config' onkeypress=\"microprofileConfigCallBack.addMicroProfileConfigFeatureButton(event)\" onclick=\"microprofileConfigCallBack.addMicroProfileConfigFeatureButton(event)\"><b>&lt;feature&gtmpConfig-1.1&lt;/feature&gt;</b></action>. Then, click <action tabindex='0' role='button' title='Save' aria-label='Save' onkeypress=\"microprofileConfigCallBack.saveTabbedEditorButton(event)\" onclick=\"microprofileConfigCallBack.saveTabbedEditorButton(event)\"><b>Save</b></action> on the editor menu pane."
             ],
             "content":[
               {
@@ -94,10 +94,10 @@
             "description": [
                 "After you modify your <code>server.xml</code> file to <a href='#enabling-microprofile-config'>include the mpConfig feature</a>, inject a single configuration property value directly into your code with the <code>@Inject</code> and the <code>@ConfigProperty</code> annotations. The injected value is static and does not change after the application starts.",
                 "",
-                "Specify a value in the runtime environment for mandatory configuration properties. Properties are mandatory when the annotation does not specify an optional default value. When the mandatory configuration property value is not found in any of the ConfigSources, a <code>DeploymentException</code> is thrown during application startup, causing the application to fail to start."
+                "You can specify a value in the runtime environment for mandatory configuration properties. Properties are mandatory when the annotation does not specify an optional default value. When the mandatory configuration property value is not found in any of the ConfigSources, a <code>DeploymentException</code> is thrown during application startup, causing the application to fail to start."
             ],
             "instruction": [
-                "To inject a mandatory <code>port</code> configuration property into the code, add the following <code>@Inject</code> and <code>@ConfigProperty</code> annotations to line 6 before declaring the <code>private Integer port</code> or click  <action title='Inject a ConfigProperty' onclick='microprofileConfigCallBack.addInjectConfigButton(event)'><b>@Inject @ConfigProperty(name=\"port\")</b></action>. Then, click <action title='Run' onclick=\"microprofileConfigCallBack.saveTabbedEditorButton(event)\"><b>Run</b></action> on the editor menu pane to see the exception occur."
+                "To inject a mandatory <code>port</code> configuration property into the code, add the following <code>@Inject</code> and <code>@ConfigProperty</code> annotations to line 6 before declaring the <code>private Integer port</code>, or click  <action title='Inject a ConfigProperty' onclick='microprofileConfigCallBack.addInjectConfigButton(event)'><b>@Inject @ConfigProperty(name=\"port\")</b></action>. Then, click <action title='Run' onclick=\"microprofileConfigCallBack.saveTabbedEditorButton(event)\"><b>Run</b></action> on the editor menu pane to see the exception occur."
             ],
             "content":[
                 {
@@ -146,7 +146,7 @@
                 "You can specify a default value for a configuration property using the <b>defaultValue</b> parameter in the <code>@ConfigProperty</code> annotation. This value is used when a value is not specified in any MicroProfile Config configuration source.<br>"
             ],
             "instruction": [
-                "Change the <code>@ConfigProperty</code> annotation on line 6 to the following code or click <action title='Provide default value using ConfigProperty annotation' onclick=\"microprofileConfigCallBack.addInjectDefaultConfigButton(event)\"><b>@Inject @ConfigProperty(name=\"port\",\n defaultValue=\"9080\")</b></action>. Then, click <action title='Run' onclick=\"microprofileConfigCallBack.saveTabbedEditorButton(event)\"><b>Run</b></action> on the editor menu pane.",
+                "Change the <code>@ConfigProperty</code> annotation on line 6 to the following code, or click <action title='Provide default value using ConfigProperty annotation' onclick=\"microprofileConfigCallBack.addInjectDefaultConfigButton(event)\"><b>@Inject @ConfigProperty(name=\"port\",\n defaultValue=\"9080\")</b></action>. Then, click <action title='Run' onclick=\"microprofileConfigCallBack.saveTabbedEditorButton(event)\"><b>Run</b></action> on the editor menu pane.",
                 "Type the following URL into the browser that follows, or click <action title='URL' onclick=\"microprofileConfigCallBack.populateURL(event, 'InjectWithDefaultValue')\"><b>https://mycarvendor.openliberty.io/car-types</b></action> and then press <action title='Enter' onclick=\"microprofileConfigCallBack.enterButtonURL(event, 'InjectWithDefaultValue')\"><b>Enter</b></action>. The development port (9080) of the ObtainCarTypes microservice returns the values <code>carA</code> and <code>carB</code>."
             ],
             "content":[
@@ -195,12 +195,12 @@
             "name": "ConfigurePropsFile",
             "title": "Configuring with the properties file",
             "description": [
-                "You can provide the <code>/META-INF/microprofile-config.properties</code> file as part of your packaged application. The <code>/META-INF/microprofile-config.properties</code> file may be created in multiple locations, but you must specify these file locations in your class path. Do not specify the same configuration property in multiple <code>/META-INF/microprofile-config.properties</code> files that have the same ordinal value, or the application returns an indeterministic property value.",
+                "You can provide the <code>/META-INF/microprofile-config.properties</code> file as part of your packaged application. The <code>/META-INF/microprofile-config.properties</code> file may be created in multiple locations, but you must specify these file locations in your class path. Do not specify the same configuration property in multiple <code>/META-INF/microprofile-config.properties</code> files that have the same ordinal value, or the application returns an indeterminate property value.",
                 "",
                 "The properties file contains settings with a default ordinal of 100, which overrides the injected default values with the same key so the <code>port</code> property value in the <code>microprofile-config.properties</code> file is used."
             ],
             "instruction": [
-                "In <code>/META-INF/microprofile-config.properties</code>, add the following on line 1 or click <action title='Configure port in microprofile-config.properties' onclick=\"microprofileConfigCallBack.addPropToConfigPropsButton(event)\"><b>port=9081</b></action>. Then, click <action title='Run' onclick=\"microprofileConfigCallBack.saveTabbedEditorButton(event)\"><b>Run</b></action> on the editor menu pane.",
+                "In <code>/META-INF/microprofile-config.properties</code>, add the following on line 1, or click <action title='Configure port in microprofile-config.properties' onclick=\"microprofileConfigCallBack.addPropToConfigPropsButton(event)\"><b>port=9081</b></action>. Then, click <action title='Run' onclick=\"microprofileConfigCallBack.saveTabbedEditorButton(event)\"><b>Run</b></action> on the editor menu pane.",
                 "Click <action title='Refresh' onclick=\"microprofileConfigCallBack.refreshBrowserButton(event)\"><b>Refresh</b></action> in the following browser to see that the port value in the <code>/META-INF/microprofile-config.properties</code> file is used. The test port (9081) of the ObtainCarTypes microservice returns the values <code>typeA</code>, <code>typeB</code>, and <code>typeC</code>. <br/>"
             ],
             "content":[
@@ -253,14 +253,14 @@
             "name": "ConfigureAsEnvVar",
             "title": "Configuring with an environment variable",
             "description": [
-                "In Open Liberty, you can use <code>server.env</code> files at the installation and server levels to specify environment variables. The installation level file is located at <code>${wlp.install.dir}/etc/server.env</code>, and the server level file is located at <code>${server.config.dir}/server.env</code>. If both files exist, the contents of the two files are merged. If the same environment variable is in both files, the value in the server level file takes precedence over the value in the installation level file. Use the <code>${server.config.dir}/server.env</code> file to configure the <code>port</code> environment variable.",
+                "In Open Liberty, you can use <code>server.env</code> files at the installation and server levels to specify environment variables. The installation level file is located at <code>${wlp.install.dir}/etc/server.env</code>, and the server level file is located at <code>${server.config.dir}/server.env</code>. If both files exist, the contents of the two files are merged. If the same environment variable is in both files, the value in the server level file takes precedence over the value in the installation level file.",
                 "",
                 "Environment variables can also be set using the command line.",
                 "",
-                "The <code>server.env</code> file contains the environment settings with a default ordinal value of 300 which is higher than the default value of 100 for the <code>/META-INF/microprofile-config.properties</code> file. Thus, the <code>port</code> property value in <code>server.env</code> is used."
+                "Use the <code>${server.config.dir}/server.env</code> file to configure the <code>port</code> environment variable. The <code>server.env</code> file contains the environment settings with a default ordinal value of 300 which is higher than the default ordinal value of 100 for the <code>/META-INF/microprofile-config.properties</code> file. Thus, the <code>port</code> property value in <code>server.env</code> is used."
             ],
             "instruction": [
-              "In <code>server.env</code>, add the following on line 1 or click <action title='Configure port in server.env' onclick=\"microprofileConfigCallBack.addPropToServerEnvButton(event)\"><b>port=9082</b></action>. Then, click <action title='Run' onclick=\"microprofileConfigCallBack.saveTabbedEditorButton(event)\"><b>Run</b></action> on the editor menu pane.",
+              "In <code>server.env</code>, add the following on line 1, or click <action title='Configure port in server.env' onclick=\"microprofileConfigCallBack.addPropToServerEnvButton(event)\"><b>port=9082</b></action>. Then, click <action title='Run' onclick=\"microprofileConfigCallBack.saveTabbedEditorButton(event)\"><b>Run</b></action> on the editor menu pane.",
               "Click <action title='Refresh' onclick=\"microprofileConfigCallBack.refreshBrowserButton(event)\"><b>Refresh</b></action> in the following browser to see that the port value in the server.env file is used. The quality assurance port (9082) of the ObtainCarTypes microservice returns the values <code>SUV</code>, <code>Crossover</code>, <code>Coupe</code>, and <code>Truck</code>.<br/>"
             ],
             "content":[
@@ -335,7 +335,7 @@
                 "In this example, use the <code>${server.config.dir}/bootstrap.properties</code> file to configure the <code>port</code> system property."
             ],
             "instruction": [
-                "Add the following port value on line 1 of <code>bootstrap.properties</code> or click <action title='Configure port in System Properties' onclick=\"microprofileConfigCallBack.addPropToSystemPropertiesButton(event)\"><b>port=9083</b></action>. Then, click <action title='Run' onclick=\"microprofileConfigCallBack.saveTabbedEditorButton(event)\"><b>Run</b></action> on the editor menu pane.",
+                "Add the following port value on line 1 of <code>bootstrap.properties</code>, or click <action title='Configure port in System Properties' onclick=\"microprofileConfigCallBack.addPropToSystemPropertiesButton(event)\"><b>port=9083</b></action>. Then, click <action title='Run' onclick=\"microprofileConfigCallBack.saveTabbedEditorButton(event)\"><b>Run</b></action> on the editor menu pane.",
                 "Click <action title='Refresh' onclick=\"microprofileConfigCallBack.refreshBrowserButton(event)\"><b>Refresh</b></action> in the following browser to see that the port value in the <code>bootstrap.properties</code> file is used. The production port (9083) of the ObtainCarTypes microservice returns values <code>SUV</code>, <code>Crossover</code>, <code>Coupe</code>, <code>Truck</code>, and <code>Convertible</code>.<br/>"
             ],
             "content":[
@@ -414,11 +414,11 @@
             "description": [
                 "You can override the default ordinal value of a ConfigSource by adding the <code>config_ordinal</code> property to your configuration source file. The configuration source with the highest ordinal value takes precedence.",
                 "",
-                "Adding <code>config_ordinal</code> to <code>/META-INF/microprofile-config.properties</code> with a value of 500 increases its ordinal value. The <code>config_ordinal</code> now overrides the port value from <code>bootstrap.properties</code>, which has a default ordinal of 400."
+                "Adding <code>config_ordinal</code> to <code>/META-INF/microprofile-config.properties</code> with a value of 500 increases its ordinal value. The port value from <code>/META-INF/microprofile-config.properties</code> now overrides the port value from <code>bootstrap.properties</code>, which has a default ordinal of 400."
             ],
             "instruction": [
-                "On line 2 of the <code>/META-INF/microprofile-config.properties</code> file add or click <action title='Changing the ordinal of microprofile-config.properties' onclick=\"microprofileConfigCallBack.addConfigOrdinalToPropsButton(event)\"><b>config_ordinal=500</b></action>. Then, click <action title='Run' onclick=\"microprofileConfigCallBack.saveTabbedEditorButton(event)\"><b>Run</b></action> on the editor menu pane.",
-                "Click <action title='Refresh' onclick=\"microprofileConfigCallBack.refreshBrowserButton(event)\"><b>Refresh</b></action> in the following browser to see that the <code>port</code> in the <code>/META-INF/microprofile-config.properties</code> file is used instead of the one defined in the <code>bootstrap.properties</code> file. The test port (9081) of the ObtainCarTypes microservice returns the values typeA, typeB, and typeC."
+                "On line 2 of the <code>/META-INF/microprofile-config.properties</code> file add the following, or click <action title='Changing the ordinal of microprofile-config.properties' onclick=\"microprofileConfigCallBack.addConfigOrdinalToPropsButton(event)\"><b>config_ordinal=500</b></action>. Then, click <action title='Run' onclick=\"microprofileConfigCallBack.saveTabbedEditorButton(event)\"><b>Run</b></action> on the editor menu pane.",
+                "Click <action title='Refresh' onclick=\"microprofileConfigCallBack.refreshBrowserButton(event)\"><b>Refresh</b></action> in the following browser to see that the port value in the <code>/META-INF/microprofile-config.properties</code> file is used instead of the one defined in the <code>bootstrap.properties</code> file. The test port (9081) of the ObtainCarTypes microservice returns the values typeA, typeB, and typeC."
             ],
             "content":[
               {
@@ -518,7 +518,7 @@
                                 "public class CarTypes {",
                                 "",
                                 "    @Inject @ConfigProperty(name=\"port\", ",
-                                "                            defaultValue=\"9080\");",
+                                "                            defaultValue=\"9080\")",
                                 "    private Integer port;",
                                 "",
                                 "}"
