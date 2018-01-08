@@ -541,7 +541,7 @@ var microprofileConfigCallBack = (function() {
                 editor.closeEditorErrorBox(stepName);
                 contentManager.markCurrentInstructionComplete(stepName);
                 contentManager.setPodContentWithRightSlide(stepName,
-                    "<p  style='font-size: 13px; margin-top: 30px; word-wrap: break-word; line-height: inherit;' >The following exception occurs during application startup because no default value is set:<br/><br/> <span style='color:red'>[ERROR ] CWMCG5003E</span>: The [BackedAnnotatedField] @Inject @ConfigProperty private io.openliberty.guides.mpconfig.InventoryConfig.port InjectionPoint dependency was not resolved. Error: java.util.NoSuchElementException: CWMCG0015E: The property port was not found in the configuration." +
+                    "<p  style='font-size: 13px; margin-top: 30px; word-wrap: break-word; line-height: inherit;' >The following exception occurs during application startup because no default value is set:<br/><br/> <span style='color:red'>[ERROR   ] CWMCG5003E</span>: The [BackedAnnotatedField] @Inject @ConfigProperty private io.openliberty.guides.mpconfig.InventoryConfig.port InjectionPoint dependency was not resolved. Error: java.util.NoSuchElementException: CWMCG0015E: The property port was not found in the configuration. at com.ibm.ws.microprofile.config.impl.AbstractConfig.getValue(AbstractConfig.java:129) at [internal classes]" +
                     "</p>"
                 );
             } else {
