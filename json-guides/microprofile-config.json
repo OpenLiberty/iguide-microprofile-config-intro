@@ -612,7 +612,7 @@
             "name": "WhatNext",
             "title": "Great work!  You're done!",
             "description": ["You learned how to use MicroProfile Config to separate configuration from code by using injection, configuring with properties files, configuring with environment variables, and configuring with system properties. You also learned the default ordinals for each of these configuration sources and how to override them.",
-                            "<p> <a >Download the sample MicroProfile Config application on github</a>.</p>"
+                            "<p> <a href='https://github.com/OpenLiberty/iguide-microprofile-config/blob/dev/finish/sampleapp_mpconfig.zip'>Download the sample MicroProfile Config application on github</a>.</p>"
                            ]
         }
 
