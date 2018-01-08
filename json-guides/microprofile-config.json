@@ -278,7 +278,7 @@
                 "Use the <code>${server.config.dir}/server.env</code> file to configure the <code>port</code> environment variable. The <code>server.env</code> file contains the environment settings with a default ordinal value of 300 which is higher than the default ordinal value of 100 for the <code>/META-INF/microprofile-config.properties</code> file. Thus, the <code>port</code> property value in <code>server.env</code> is used."
             ],
             "instruction": [
-              "In <code>server.env</code>, add the following on line 1, or click <action title='Configure port in server.env' onclick=\"microprofileConfigCallBack.addPropToServerEnvButton(event)\"><b>port=9082</b></action>. Then, click <action title='Run' onclick=\"microprofileConfigCallBack.saveTabbedEditorButton(event)\"><b>Run</b></action> on the editor menu pane.",
+              "In <code>server.env</code>, add the following on line 1, or click <action title='Configure port in server.env' onclick=\"microprofileConfigCallBack.addPropToServerEnvButton(event)\"><b>port=9082</b></action>. Then, click <action title='Run' onclick=\"microprofileConfigCallBack.saveTabbedEditorButton(event)\"><b>Run</b></action> on the editor menu pane to save the file and restart the server.",
               "Click <action title='Refresh' onclick=\"microprofileConfigCallBack.refreshBrowserButton(event)\"><b>Refresh</b></action> in the following browser to see that the port value in the server.env file is used. The quality assurance port (9082) of the ObtainCarTypes microservice returns the values <code>SUV</code>, <code>Crossover</code>, <code>Coupe</code>, and <code>Truck</code>.<br/>"
             ],
             "content":[
@@ -359,7 +359,7 @@
                 "In this example, use the <code>${server.config.dir}/bootstrap.properties</code> file to configure the <code>port</code> system property."
             ],
             "instruction": [
-                "Add the following port value on line 1 of <code>bootstrap.properties</code>, or click <action title='Configure port in System Properties' onclick=\"microprofileConfigCallBack.addPropToSystemPropertiesButton(event)\"><b>port=9083</b></action>. Then, click <action title='Run' onclick=\"microprofileConfigCallBack.saveTabbedEditorButton(event)\"><b>Run</b></action> on the editor menu pane.",
+                "Add the following port value on line 1 of <code>bootstrap.properties</code>, or click <action title='Configure port in System Properties' onclick=\"microprofileConfigCallBack.addPropToSystemPropertiesButton(event)\"><b>port=9083</b></action>. Then, click <action title='Run' onclick=\"microprofileConfigCallBack.saveTabbedEditorButton(event)\"><b>Run</b></action> on the editor menu pane to save the file and restart the server.",
                 "Click <action title='Refresh' onclick=\"microprofileConfigCallBack.refreshBrowserButton(event)\"><b>Refresh</b></action> in the following browser to see that the port value in the <code>bootstrap.properties</code> file is used. The production port (9083) of the ObtainCarTypes microservice returns values <code>SUV</code>, <code>Crossover</code>, <code>Coupe</code>, <code>Truck</code>, and <code>Convertible</code>.<br/>"
             ],
             "content":[
