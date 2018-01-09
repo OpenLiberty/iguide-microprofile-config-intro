@@ -593,7 +593,7 @@ var microprofileConfigCallBack = (function() {
 
         contentManager.replaceTabbedEditorContents(stepName, configEditorFileName, 9, 9, injectConfig);
         var readOnlyLines = [];
-        readOnlyLines.push({from: 1, to: 8}, {from: 12, to: 15});
+        readOnlyLines.push({from: 1, to: 8}, {from: 10, to: 15});
         contentManager.markEditorReadOnlyLines(stepName, readOnlyLines);
     };
 

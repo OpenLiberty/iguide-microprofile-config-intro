@@ -130,7 +130,7 @@
                                     "to": "8"
                                 },
                                 {
-                                    "from": "12",
+                                    "from": "10",
                                     "to": "15"
                                 }
                             ],
@@ -152,7 +152,7 @@
                 "You can specify a default value for a configuration property using the <b>defaultValue</b> parameter in the <code>@ConfigProperty</code> annotation. This value is used when a value is not specified in any MicroProfile Config configuration source.<br>"
             ],
             "instruction": [
-                "Change the <code>@ConfigProperty</code> annotation on line 6 to the following code, or click <action title='Provide default value using ConfigProperty annotation' onclick=\"microprofileConfigCallBack.addInjectDefaultConfigButton(event)\"><b>@Inject @ConfigProperty(name=\"port\",\n defaultValue=\"9080\")</b></action>. Then, click <action title='Run' onclick=\"microprofileConfigCallBack.saveTabbedEditorButton(event)\"><b>Run</b></action> on the editor menu pane.",
+                "Change the <code>@ConfigProperty</code> annotation on line 9 to the following code, or click <action title='Provide default value using ConfigProperty annotation' onclick=\"microprofileConfigCallBack.addInjectDefaultConfigButton(event)\"><b>@Inject @ConfigProperty(name=\"port\",\n defaultValue=\"9080\")</b></action>. Then, click <action title='Run' onclick=\"microprofileConfigCallBack.saveTabbedEditorButton(event)\"><b>Run</b></action> on the editor menu pane.",
                 "Type the following URL into the browser that follows, or click <action title='URL' onclick=\"microprofileConfigCallBack.populateURL(event, 'InjectWithDefaultValue')\"><b>https://mycarvendor.openliberty.io/car-types</b></action> and then press <action title='Enter' onclick=\"microprofileConfigCallBack.enterButtonURL(event, 'InjectWithDefaultValue')\"><b>Enter</b></action>. The development port (9080) of the ObtainCarTypes microservice returns the values <code>carA</code> and <code>carB</code>."
             ],
             "content":[
