@@ -1,6 +1,6 @@
 var playground = function(){
     var STEP_NAME = 'DefaultPlayground';
-    var JAVA_FILE = 'CarTypes.java';
+    var JAVA_FILE = 'InventoryConfig.java';
     var PROP_FILE = '/META-INF/microprofile-config.properties';
     var ENV_FILE = 'server.env';
     var SYS_FILE = 'bootstrap.properties';

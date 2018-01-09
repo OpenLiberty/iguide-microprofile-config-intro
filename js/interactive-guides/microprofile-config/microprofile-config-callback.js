@@ -317,11 +317,11 @@ var microprofileConfigCallBack = (function() {
         var annotationParams = null;
         try {
             // match
-            // public class CarTypes {
+            // public class InventoryConfig {
             //   <space or newline here>
             // @Inject @ConfigProperty(name=\"port\", defaultValue=\"9080\")
-            // private Integer port;
-            var contentToMatch = "[\\s\\S]*public class CarTypes {\\s*@Inject\\s*@ConfigProperty\\s*\\(([\\s\\S]*)\\)\\s*private Integer port;";
+            // private int port;
+            var contentToMatch = "[\\s\\S]*public class InventoryConfig {\\s*@Inject\\s*@ConfigProperty\\s*\\(([\\s\\S]*)\\)\\s*private int port;";
             var regExpToMatch = new RegExp(contentToMatch, "g");
             var groups = regExpToMatch.exec(content);
 
@@ -493,9 +493,9 @@ var microprofileConfigCallBack = (function() {
         contentManager.resetTabbedEditorContents(stepName, configEditorFileName);
         var content = contentManager.getTabbedEditorContents(stepName, configEditorFileName);
 
-        contentManager.replaceTabbedEditorContents(stepName, configEditorFileName, 6, 6, injectConfig);
+        contentManager.replaceTabbedEditorContents(stepName, configEditorFileName, 9, 9, injectConfig);
         var readOnlyLines = [];
-        readOnlyLines.push({from: 1, to: 5}, {from: 8, to: 10});
+        readOnlyLines.push({from: 1, to: 8}, {from: 10, to: 15});
         contentManager.markEditorReadOnlyLines(stepName, readOnlyLines);
     };
 
@@ -541,12 +541,7 @@ var microprofileConfigCallBack = (function() {
                 editor.closeEditorErrorBox(stepName);
                 contentManager.markCurrentInstructionComplete(stepName);
                 contentManager.setPodContentWithRightSlide(stepName,
-                    "<p  style='font-size: 13px; margin-top: 30px; word-wrap: break-word; line-height: inherit;' >The following exception occurs during application startup because no default value is set:<br/><br/> <span style='color:red'>[ERROR ] CWWKZ0002E</span>: An exception occurred while starting the application io.openliberty.guides.microprofile.mpconfig." +
-                    " The exception message is com.ibm.ws.container.service.state.StateChangeException:" +
-                    "org.jboss.weld.exceptions.DeploymentException: WELD-001408: Unsatisfied dependencies for type Integer with qualifiers @configproperty " +
-                    "at injection point [BackedAnnotatedField] @Inject @configproperty private " +
-                    "io.openliberty.guides.microprofile.InventoryConfig.port " +
-                    "at io.openliberty.guides.microprofile.InventoryConfig.port(InventoryConfig.java:0)" +
+                    "<p  style='font-size: 13px; margin-top: 30px; word-wrap: break-word; line-height: inherit;' >The following exception occurs during application startup because no default value is set:<br/><br/> <span style='color:red'>[ERROR   ] CWMCG5003E</span>: The [BackedAnnotatedField] @Inject @ConfigProperty private io.openliberty.guides.mpconfig.InventoryConfig.port InjectionPoint dependency was not resolved. Error: java.util.NoSuchElementException: CWMCG0015E: The property port was not found in the configuration. at com.ibm.ws.microprofile.config.impl.AbstractConfig.getValue(AbstractConfig.java:129) at [internal classes]" +
                     "</p>"
                 );
             } else {
@@ -586,7 +581,7 @@ var microprofileConfigCallBack = (function() {
         }
     };
 
-    var configEditorFileName = "CarTypes.java";
+    var configEditorFileName = "InventoryConfig.java";
     var __addInjectConfigToEditor = function(stepName) {
         var injectConfig = "    @Inject @ConfigProperty(name=\"port\")";
         if (!stepName) {
@@ -596,9 +591,9 @@ var microprofileConfigCallBack = (function() {
         contentManager.resetTabbedEditorContents(stepName, configEditorFileName);
         var content = contentManager.getTabbedEditorContents(stepName, configEditorFileName);
 
-        contentManager.replaceTabbedEditorContents(stepName, configEditorFileName, 6, 6, injectConfig);
+        contentManager.replaceTabbedEditorContents(stepName, configEditorFileName, 9, 9, injectConfig);
         var readOnlyLines = [];
-        readOnlyLines.push({from: 1, to: 5}, {from: 7, to: 9});
+        readOnlyLines.push({from: 1, to: 8}, {from: 10, to: 15});
         contentManager.markEditorReadOnlyLines(stepName, readOnlyLines);
     };
 
