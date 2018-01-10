@@ -18,7 +18,7 @@ The properties file can be found within
 It sets the port value to 9081.
 
 The server.env and bootstrap.properties files can be found within the mpConfigServer directory
-at <extract-directory>\displayCarTypes\target\liberty\wlp\user\servers\mpConfigServer.  They 
+at <extract-directory>\displayCarTypes\target\liberty\wlp\usr\servers\mpConfigServer.  They 
 set the port value to 9082 (in server.env) and 9083 (in bootstrap.properties).
 
 To execute the sample application, visit the following URL from your browser:
