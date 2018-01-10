@@ -1,6 +1,6 @@
 # iguide-microprofile-config
 
-Link to the guide on Openliberty.io: Will update when the guide is live.
+Link to the guide on Openliberty.io: https://openliberty.io/guides/microprofile-config-intro.html
 
 This repo provides an interactive guide on the Openliberty.io website that users can interact with 
 and learn more about different concepts related to Open Liberty.
