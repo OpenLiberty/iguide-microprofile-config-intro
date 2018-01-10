@@ -1,2 +1,4 @@
 /.apt_generated/
 **/_site
+**/target
+**/.settings
