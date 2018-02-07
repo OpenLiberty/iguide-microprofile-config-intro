@@ -1,6 +1,6 @@
 To use the sample application, extract the sampleapp_mpconfig.zip file to your 
 local directory. The application is broken into two services, a displayCarTypes 
-service and a obtainCarTypes service. 
+service and an obtainCarTypes service. 
 
 Run the Maven command 'mvn install' from the directory that contains the 
 extracted .zip files to build the project and install it to your local directory. 
