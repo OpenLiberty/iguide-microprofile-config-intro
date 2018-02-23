@@ -20,7 +20,7 @@ script: >
 
     body='{
       "request": {
-      "message": "Override the commit message: This is an api request from iguide-microprofile-config",
+      "message": "Build request: iguide-microprofile-config",
       "branch": "development"
       }}'
     curl -s -X POST \
