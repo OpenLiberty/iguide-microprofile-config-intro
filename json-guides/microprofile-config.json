@@ -354,7 +354,8 @@
             "description": [
                 "Configuration variables can be retrieved from the Java system properties, which have a default ordinal of 400. Open Liberty adds properties from the server’s <code>bootstrap.properties</code> and <code>jvm.options</code> files to the Java system properties. You can create and configure the <code>jvm.options</code> file in multiple locations within your Open Liberty installation directory.",
                 "",
-                "The following list shows the different locations where Open Liberty checks for <code>jvm.options</code> files: <ol><li><code>${wlp.install.dir}/usr/shared/jvm.options</code></li><li><code>${server.config.dir}/configDropins/defaults/jvm.options</code></li> <li><code>${server.config.dir}/jvm.options</code></li> <li><code>${server.config.dir}/configDropins/overrides/jvm.options</code></li></ol>",
+                "The following list shows the different locations where Open Liberty checks for <code>jvm.options</code> files:",
+                "<ol><li><code>${wlp.install.dir}/usr/shared/jvm.options</code></li><li><code>${server.config.dir}/configDropins/defaults/jvm.options</code></li> <li><code>${server.config.dir}/jvm.options</code></li> <li><code>${server.config.dir}/configDropins/overrides/jvm.options</code></li></ol>",
                 "The contents of these files are merged. The latter files take precedence in the case of duplicate properties. If none of these files are present, then the <code>${wlp.install.dir}/etc/jvm.options</code> file is used. If a property exists in both <code>bootstrap.properties</code> and <code>jvm.options</code>, then the value from <code>jvm.options</code> takes precedence.",
                 "",
                 "In this example, use the <code>${server.config.dir}/bootstrap.properties</code> file to configure the <code>port</code> system property."
