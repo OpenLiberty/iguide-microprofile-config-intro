@@ -7,10 +7,10 @@ extracted .zip files to build the project and install it to your local directory
 This creates the 'displayCarTypes/target/liberty' directory that contains your 
 liberty server, mpConfigServer, and it starts the server. 
 
-To stop and start the server, run the following commands from 
-<extract-directory>/displayCarTypes/target/liberty/wlp/bin: 
-      server stop mpConfigServer 
-      server start mpConfigServer 
+To start and stop the server, issue the following commands from the
+<extract-directory> directory:
+      mvn liberty:start-server
+      mvn liberty:stop-server
 
 The <extract-directory>/displayCarTypes/src directory contains the 
 InventoryConfig.java file as shown throughout this guide.  This file is where the 
