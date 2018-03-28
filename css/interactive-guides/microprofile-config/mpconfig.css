@@ -133,8 +133,7 @@
     font-size: 11px;
     height: 40px;
     width: 195px;
-    border: none;
-    box-shadow: 0px 0px 0px 2px #E3700D;
+    border: 2px solid #E3700D;
     cursor: pointer;
     outline: none;
 }
