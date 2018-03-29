@@ -89,11 +89,12 @@ var playground = function(){
                     var name = nameRegexp.exec(inlineProperties);
                     var defaultValue = defaultValueRegexp.exec(inlineProperties);
                     if (name) {
+                        var nameString = this.__sanitizeString(name[1]);
                         //index 1 is the regex substring match which contains the value of the match
                         if (defaultValue) {
-                            this.playgroundAddConfig(name[1], defaultValue[1], FILETYPES.inject);
+                            this.playgroundAddConfig(nameString, this.__sanitizeString(defaultValue[1]), FILETYPES.inject);
                         } else {
-                            this.playgroundAddConfig(name[1], '', FILETYPES.inject);
+                            this.playgroundAddConfig(nameString, '', FILETYPES.inject);
                         }
                     }
                 }
@@ -126,8 +127,8 @@ var playground = function(){
                 var match = null;
                 var ordinal;
                 while ((match = regex.exec(fileContent)) !== null) {
-                    var key = match[1].trim();
-                    var value = match[2];
+                    var key = this.__sanitizeString(match[1].trim());
+                    var value = this.__sanitizeString(match[2]);
                     if (key === 'config_ordinal') {
                         //TODO: what if ordinal has already been set? (multiple config_ordinal keys)
                         ordinal = value;
@@ -142,6 +143,14 @@ var playground = function(){
                 }
                 this.__storeStagedProperties(filetype, ordinal);
             }
+        },
+
+        /**
+         * Remove injection codes within the string
+         */
+
+        __sanitizeString: function(string) {
+            return $($.parseHTML(string)).text();
         },
 
         /**
