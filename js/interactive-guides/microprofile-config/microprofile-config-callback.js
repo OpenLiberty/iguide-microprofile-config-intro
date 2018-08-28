@@ -641,7 +641,6 @@ var microprofileConfigCallBack = (function() {
         listenToBrowserForSystemPropConfig: __listenToBrowserForSystemPropConfig,
         listenToBrowserForInjectDefaultConfig:  __listenToBrowserForInjectDefaultConfig,
         listenToEditorTabChange: __listenToEditorTabChange,
-        listenToEditorForInjectConfig: __listenToEditorForInjectConfig,
         addPropToConfigProps: __addPropToConfigProps,       
         addPropToConfigPropsButton: __addPropToConfigPropsButton, 
         addPropToServerEnvButton: __addPropToServerEnvButton,
