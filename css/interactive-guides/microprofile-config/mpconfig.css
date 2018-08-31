@@ -42,7 +42,7 @@
     padding-top: 32px;
     text-align: center;
     margin: 0;
-    font-family: arial;
+    font-family: Asap;
     background:#323752;
     color: #ffffff;
 }
@@ -55,7 +55,7 @@
 .carSiteTitle {
     text-align: center;
     font-size: 18px;
-    font-family: Asap-medium;
+    font-weight: 500;    
 }
 
 .flexContainer {
@@ -74,7 +74,7 @@
 }
 
 .cardText {
-    font-family:Asap-SemiBold;
+    font-weight: 600;
     font-size:16px;
     color:#333851;
     letter-spacing:0;
@@ -89,7 +89,6 @@
 
 #guide_content .codeeditor .CodeMirror {
     height: 100%;
-    border-bottom: none;
 }
 
 #guide_content .editorContainer{
@@ -98,12 +97,6 @@
 
 #guide_content .teContainer .editorContainer{
     height: 423px;
-}
-
-.codeeditor {
-    height: 100%;
-    overflow: auto;
-    border-bottom: 1px solid black;
 }
 
 .ordinalCardContainer {
