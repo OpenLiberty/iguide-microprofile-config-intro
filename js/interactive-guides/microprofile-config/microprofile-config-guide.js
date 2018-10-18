@@ -10,12 +10,10 @@
  *******************************************************************************/
 $(document).ready(function() {
     var iguideJsonName = "/guides/iguide-microprofile-config/json-guides/microprofile-config.json";
-    // var iguideJsonName = "/guides/iguide-circuit-breaker/json-guides/circuit-breaker.json";
     var iguideContextRoot = "MicroprofileConfig";
-    // var iguideContextRoot = "CircuitBreaker";
 
     jsonGuide.getAGuide(iguideJsonName).done(function() {
       blueprint.create(iguideContextRoot);
-      $(ID.toc_guide_title).hide();
+      //$(ID.toc_guide_title).hide();
     });
   });

@@ -5,6 +5,51 @@
     "duration": "25 minutes",
     "audience": "developer",
     "repo": "https://github.com/OpenLiberty/iguide-microprofile-config",
+    "defaultWidgets": [
+        {   
+            "displayType": "webBrowser",
+            "url": "https://mycarvendor.openliberty.io/car-types",
+            "browserContent": "/guides/iguide-microprofile-config/html/interactive-guides/microprofile-config/welcome.html",
+            "enable": false
+        },
+        {   
+            "displayType": "tabbedEditor",
+            "enable": false,
+            "editorList": [
+            {
+                "displayType": "fileEditor",
+                "fileName": "server.xml",
+                "preload": [
+                    "<?xml version=\"1.0\"?>",
+                    "<server description=\"Sample Liberty server\">",
+                    "   <featureManager>",
+                    "      <feature>cdi-1.2</feature>",
+                    "      <feature>jaxrs-2.0</feature>",
+                    "",
+                    "   </featureManager>",
+                    "   <httpEndpoint host=\"*\" id=\"defaultHttpEndpoint\" httpsPort=\"${default.https.port}\"",
+                    "   httpPort=\"{default.http.port}\"/>",
+                    "</server>"
+                ],
+                "save": true
+            }
+            ]
+        }
+    ],
+    "configWidgets": [
+        {   
+            "displayType": "webBrowser",
+            "height": "300px"
+        },
+        {   
+            "displayType": "pod",
+            "height": "200px"
+        },
+        {
+            "displayType": "tabbedEditor",
+            "height": "400px"
+        }  
+    ],
     "steps": [
         {
             "name": "Intro",
@@ -23,13 +68,8 @@
                     "The API combines configuration values from multiple sources, each known as a <b><i>ConfigSource</b></i>. Each ConfigSource has a specified priority, defined by its <b><i>ordinal</i></b> value. A higher ordinal means that the values taken from this ConfigSource will override values from ConfigSources with a lower ordinal value.",
                     "MicroProfile Config has 3 default ConfigSources:",
                     "<ul><li>All <code>META-INF/microprofile-config.properties</code> found on the class path (default ordinal = 100).</li><li>Environment variables (default ordinal = 300).</li><li>System properties (default ordinal = 400).</li></ul>",
-                    "An optional default value can be specified using Java annotations. The optional default value applies if the application does not find configuration values in any of the ConfigSources. The priority of each ConfigSource and the optional default value is shown in the following diagram:"
-                  ],
-                  "content": [
-                    {
-                      "content": "<div class='ordinalPriorities'><img src='/guides/iguide-microprofile-config/html/interactive-guides/microprofile-config/images/ordinalPriorities.svg' alt='Ordinal Priorities'></div>",
-                      "displayType": "pod"
-                    }
+                    "An optional default value can be specified using Java annotations. The optional default value applies if the application does not find configuration values in any of the ConfigSources. The priority of each ConfigSource and the optional default value is shown in the following diagram:",
+                    "<div class='ordinalPriorities'><img src='/guides/iguide-microprofile-config/html/interactive-guides/microprofile-config/images/ordinalPriorities.svg' alt='Ordinal Priorities'></div>"
                   ]
                 }
             ]
@@ -41,7 +81,39 @@
                 "Imagine that you're developing and deploying a DisplayCarTypes microservice so that you can display the types of cars that are currently available for purchase from your business. This microservice has a dependency on another microservice called ObtainCarTypes, which provides the currently available list. As you develop your DisplayCarTypes microservice, you need to ensure that it works correctly when it interacts with the ObtainCarTypes microservice. For stability and security reasons, you don't want to test against the production version of ObtainCarTypes during the development pipeline. Instead, you run four instances of the ObtainCarTypes microservice, one for each stage of the devOps pipeline as shown in the following diagram:",
                 "",
                 "<div class=\"devOpsPipeline\"><center><img src=\"/guides/iguide-microprofile-config/html/interactive-guides/microprofile-config/images/intro.svg\" alt=\"DisplayCarTypes microservice can connect to one of the ObtainCarTypes instances: Development on port 9080, Test on port 9081, Quality Assurance on port 9082, Production on port 9083\"></center></div>",
-                "As you progress through this guide, you will set a configuration property for the port value to specify which of the four ObtainCarTypes instances the DisplayCarTypes microservice should connect to. "]
+                "As you progress through this guide, you will set a configuration property for the port value to specify which of the four ObtainCarTypes instances the DisplayCarTypes microservice should connect to. "
+            ],
+            "content": [
+                {   
+                    "displayType": "webBrowser",
+                    "url": "https://mycarvendor.openliberty.io/car-types",
+                    "browserContent": "/guides/iguide-microprofile-config/html/interactive-guides/microprofile-config/welcome.html",
+                    "enable": false
+                },
+                {   
+                    "displayType": "tabbedEditor",
+                    "enable": false,
+                    "editorList": [
+                    {
+                        "displayType": "fileEditor",
+                        "fileName": "server.xml",
+                        "preload": [
+                            "<?xml version=\"1.0\"?>",
+                            "<server description=\"Sample Liberty server\">",
+                            "   <featureManager>",
+                            "      <feature>cdi-1.2</feature>",
+                            "      <feature>jaxrs-2.0</feature>",
+                            "",
+                            "   </featureManager>",
+                            "   <httpEndpoint host=\"*\" id=\"defaultHttpEndpoint\" httpsPort=\"${default.https.port}\"",
+                            "   httpPort=\"{default.http.port}\"/>",
+                            "</server>"
+                        ],
+                        "save": true
+                    }
+                    ]
+                }
+            ]
         },
         {
             "name": "EnableMPConfig",
@@ -50,11 +122,18 @@
                 "Begin by enabling the MicroProfile Config 1.1 feature in your <code>server.xml</code> file. This feature allows you to use the MicroProfile Config API to externalize configuration data."
             ],
             "instruction": [
-              "Add the following element declaration inside the featureManager element of the <code>server.xml</code> file, or click <action tabindex='0' role='button' title='Enable MicroProfile Config' aria-label='Enable MicroProfile Config' onkeypress=\"microprofileConfigCallBack.addMicroProfileConfigFeatureButton(event)\" onclick=\"microprofileConfigCallBack.addMicroProfileConfigFeatureButton(event)\"><b>&lt;feature&gtmpConfig-1.1&lt;/feature&gt;</b></action>. Then, click <action tabindex='0' role='button' title='Save' aria-label='Save' onkeypress=\"microprofileConfigCallBack.saveTabbedEditorButton(event)\" onclick=\"microprofileConfigCallBack.saveTabbedEditorButton(event)\"><b>Save</b></action> on the editor menu pane."
+              "Add the following element declaration inside the featureManager element of the <code>server.xml</code> file, or click <action tabindex='0' role='button' title='Enable MicroProfile Config' aria-label='Enable MicroProfile Config' onkeypress=\"microprofileConfigCallBack.addMicroProfileConfigFeatureButton(event)\" onclick=\"microprofileConfigCallBack.addMicroProfileConfigFeatureButton(event)\">&lt;feature&gtmpConfig-1.1&lt;/feature&gt;</action>. Then, click <action tabindex='0' role='button' title='Save' aria-label='Save' onkeypress=\"microprofileConfigCallBack.saveTabbedEditorButton(event)\" onclick=\"microprofileConfigCallBack.saveTabbedEditorButton(event)\">Save</action> on the editor menu pane."
             ],
             "content":[
-              {
+                {   
+                    "displayType": "webBrowser",
+                    "url": "https://mycarvendor.openliberty.io/car-types",
+                    "browserContent": "/guides/iguide-microprofile-config/html/interactive-guides/microprofile-config/welcome.html",
+                    "enable": false
+                },
+                {
                   "displayType":"tabbedEditor",
+                  "active": true,
                   "activeTab": "server.xml",
                   "editorList": [
                     {
@@ -82,6 +161,11 @@
                               "to": "10"
                           }
                         ],
+                        "writable": [
+                            {
+                                "line": "6"
+                            }
+                        ],
                         "save": true,
                         "callback": "(function test(editor) {microprofileConfigCallBack.listenToEditorForFeatureInServerXML(editor); })"
                     }
@@ -98,11 +182,18 @@
                 "You can specify a value in the runtime environment for mandatory configuration properties. Properties are mandatory when the annotation does not specify an optional default value. When the mandatory configuration property value is not found in any of the ConfigSources, a <code>NoSuchElementException</code> is thrown during application startup."
             ],
             "instruction": [
-                "To inject a mandatory <code>port</code> configuration property into the code, add the following <code>@Inject</code> and <code>@ConfigProperty</code> annotations to line 9 before declaring the <code>private int port</code>, or click  <action title='Inject a ConfigProperty' onclick='microprofileConfigCallBack.addInjectConfigButton(event)'><b>@Inject @ConfigProperty(name=\"port\")</b></action>. Then, click <action title='Run' onclick=\"microprofileConfigCallBack.saveTabbedEditorButton(event)\"><b>Run</b></action> on the editor menu pane to see the exception occur."
+                "To inject a mandatory <code>port</code> configuration property into the code, add the following <code>@Inject</code> and <code>@ConfigProperty</code> annotations to line 9 before declaring the <code>private int port</code>, or click  <action title='Inject a ConfigProperty' onclick='microprofileConfigCallBack.addInjectConfigButton(event)'>@Inject @ConfigProperty(name=\"port\")</action>. Then, click <action title='Run' onclick=\"microprofileConfigCallBack.saveTabbedEditorButton(event)\">Run</action> on the editor menu pane to see the exception occur."
             ],
             "content":[
+                {   
+                    "displayType": "webBrowser",
+                    "url": "https://mycarvendor.openliberty.io/car-types",
+                    "browserContent": "/guides/iguide-microprofile-config/html/interactive-guides/microprofile-config/welcome.html",
+                    "enable": false
+                },
                 {
                     "displayType":"tabbedEditor",
+                    "active": true,
                     "activeTab": "InventoryConfig.java",
                     "editorList": [
                         {
@@ -135,13 +226,15 @@
                                     "to": "15"
                                 }
                             ],
+                            "writable": [
+                                {
+                                    "line": "9"
+                                }
+                            ],
                             "save": false,
                             "callback": "(function test(editor) {microprofileConfigCallBack.listenToEditorForInjectConfig(editor); })"
                         }
                     ]
-                },
-                {
-                    "displayType":"pod"
                 }
             ]
         },
@@ -153,12 +246,20 @@
                 "You can specify a default value for a configuration property using the <b>defaultValue</b> parameter in the <code>@ConfigProperty</code> annotation. This value is used when a value is not specified in any MicroProfile Config configuration source."
             ],
             "instruction": [
-                "Change the <code>@ConfigProperty</code> annotation on line 9 to the following code, or click <action title='Provide default value using ConfigProperty annotation' onclick=\"microprofileConfigCallBack.addInjectDefaultConfigButton(event)\"><b>@Inject @ConfigProperty(name=\"port\",\n defaultValue=\"9080\")</b></action>. Then, click <action title='Run' onclick=\"microprofileConfigCallBack.saveTabbedEditorButton(event)\"><b>Run</b></action> on the editor menu pane.",
-                "Type the following URL into the browser that follows, or click <action title='URL' onclick=\"microprofileConfigCallBack.populateURL(event, 'InjectWithDefaultValue')\"><b>https://mycarvendor.openliberty.io/car-types</b></action> and then press <action title='Enter' onclick=\"microprofileConfigCallBack.enterButtonURL(event, 'InjectWithDefaultValue')\"><b>Enter</b></action>. The development port (9080) of the ObtainCarTypes microservice returns the values <code>carA</code> and <code>carB</code>."
+                "Change the <code>@ConfigProperty</code> annotation on line 9 to the following code, or click <action title='Provide default value using ConfigProperty annotation' onclick=\"microprofileConfigCallBack.addInjectDefaultConfigButton(event)\">@Inject @ConfigProperty(name=\"port\",\n defaultValue=\"9080\")</action>. Then, click <action title='Run' onclick=\"microprofileConfigCallBack.saveTabbedEditorButton(event)\">Run</action> on the editor menu pane.",
+                "Type the following URL into the browser that follows, or click <action title='URL' onclick=\"microprofileConfigCallBack.populateURL(event, 'InjectWithDefaultValue')\">https://mycarvendor.openliberty.io/car-types</action> and then press <action title='Enter' onclick=\"microprofileConfigCallBack.enterButtonURL(event, 'InjectWithDefaultValue')\">Enter</action>. The development port (9080) of the ObtainCarTypes microservice returns the values <code>carA</code> and <code>carB</code>."
             ],
             "content":[
                 {
+                    "displayType":"webBrowser",
+                    "url": "",
+                    "browserContent": "",
+                    "callback": "(function test(webBrowser) {microprofileConfigCallBack.listenToBrowserForInjectDefaultConfig(webBrowser); })",
+                    "enable": true
+                },
+                {
                     "displayType":"tabbedEditor",
+                    "active": true,
                     "activeTab": "InventoryConfig.java",
                     "editorList": [
                         {
@@ -191,16 +292,15 @@
                                     "to": "15"
                                }
                             ],
+                            "writable": [
+                                {
+                                    "line": "9"
+                                }
+                            ],
                             "save": false,
                             "callback": "(function test(editor) {microprofileConfigCallBack.listenToEditorForInjectDefaultConfig(editor); })"
                         }
                     ]                    
-                },
-                {
-                    "displayType":"webBrowser",
-                    "url": "",
-                    "browserContent": "",
-                    "callback": "(function test(webBrowser) {microprofileConfigCallBack.listenToBrowserForInjectDefaultConfig(webBrowser); })"
                 }
             ]
         },
@@ -213,12 +313,20 @@
                 "The properties file contains settings with a default ordinal of 100, which overrides the injected default values with the same key so the <code>port</code> property value in the <code>microprofile-config.properties</code> file is used."
             ],
             "instruction": [
-                "In <code>/META-INF/microprofile-config.properties</code>, add the following on line 1, or click <action title='Configure port in microprofile-config.properties' onclick=\"microprofileConfigCallBack.addPropToConfigPropsButton(event)\"><b>port=9081</b></action>. Then, click <action title='Run' onclick=\"microprofileConfigCallBack.saveTabbedEditorButton(event)\"><b>Run</b></action> on the editor menu pane.",
-                "Click <action title='Refresh' onclick=\"microprofileConfigCallBack.refreshBrowserButton(event)\"><b>Refresh</b></action> in the following browser to see that the port value in the <code>/META-INF/microprofile-config.properties</code> file is used. The test port (9081) of the ObtainCarTypes microservice returns the values <code>typeA</code>, <code>typeB</code>, and <code>typeC</code>."
+                "In <code>/META-INF/microprofile-config.properties</code>, add the following on line 1, or click <action title='Configure port in microprofile-config.properties' onclick=\"microprofileConfigCallBack.addPropToConfigPropsButton(event)\">port=9081</action>. Then, click <action title='Run' onclick=\"microprofileConfigCallBack.saveTabbedEditorButton(event)\">Run</action> on the editor menu pane.",
+                "Click <action title='Refresh' onclick=\"microprofileConfigCallBack.refreshBrowserButton(event)\">Refresh</action> in the following browser to see that the port value in the <code>/META-INF/microprofile-config.properties</code> file is used. The test port (9081) of the ObtainCarTypes microservice returns the values <code>typeA</code>, <code>typeB</code>, and <code>typeC</code>."
             ],
             "content":[
                 {
+                    "displayType":"webBrowser",
+                    "url": "https://mycarvendor.openliberty.io/car-types",
+                    "browserContent": "/guides/iguide-microprofile-config/html/interactive-guides/microprofile-config/download-from-injection.html",
+                    "statusBarText": "Retrieved data from Development on port 9080.",
+                    "callback": "(function test(webBrowser) {microprofileConfigCallBack.listenToBrowserForPropFileConfig(webBrowser); })"
+                },
+                {
                     "displayType": "tabbedEditor",
+                    "active": true,
                     "activeTab": "META-INF/microprofile-config.properties",
                     "callback": "(function test(tabbedEditor) {microprofileConfigCallBack.listenToEditorTabChange(tabbedEditor, 0, 'META-INF/microprofile-config.properties'); })",
                     "editorList": [
@@ -255,17 +363,15 @@
                         "preload": [
                             ""
                         ],
+                        "writable": [
+                            {
+                                "line": "1"
+                            }
+                        ],
                         "callback": "(function test(editor) {microprofileConfigCallBack.listenToEditorForPropConfig(editor); })"
                       }
                     ]
-              },
-              {
-                "displayType":"webBrowser",
-                "url": "https://mycarvendor.openliberty.io/car-types",
-                "browserContent": "/guides/iguide-microprofile-config/html/interactive-guides/microprofile-config/download-from-injection.html",
-                "statusBarText": "Retrieved data from Development on port 9080.",
-                "callback": "(function test(webBrowser) {microprofileConfigCallBack.listenToBrowserForPropFileConfig(webBrowser); })"
-              }
+                }
             ]
         },
         {
@@ -279,12 +385,20 @@
                 "Use the <code>${server.config.dir}/server.env</code> file to configure the <code>port</code> environment variable. The <code>server.env</code> file contains the environment settings with a default ordinal value of 300 which is higher than the default ordinal value of 100 for the <code>/META-INF/microprofile-config.properties</code> file. Thus, the <code>port</code> property value in <code>server.env</code> is used."
             ],
             "instruction": [
-              "In <code>server.env</code>, add the following on line 1, or click <action title='Configure port in server.env' onclick=\"microprofileConfigCallBack.addPropToServerEnvButton(event)\"><b>port=9082</b></action>. Then, click <action title='Run' onclick=\"microprofileConfigCallBack.saveTabbedEditorButton(event)\"><b>Run</b></action> on the editor menu pane to save the file and restart the server.",
-              "Click <action title='Refresh' onclick=\"microprofileConfigCallBack.refreshBrowserButton(event)\"><b>Refresh</b></action> in the following browser to see that the port value in the server.env file is used. The quality assurance port (9082) of the ObtainCarTypes microservice returns the values <code>SUV</code>, <code>Crossover</code>, <code>Coupe</code>, and <code>Truck</code>."
+              "In <code>server.env</code>, add the following on line 1, or click <action title='Configure port in server.env' onclick=\"microprofileConfigCallBack.addPropToServerEnvButton(event)\">port=9082</action>. Then, click <action title='Run' onclick=\"microprofileConfigCallBack.saveTabbedEditorButton(event)\">Run</action> on the editor menu pane to save the file and restart the server.",
+              "Click <action title='Refresh' onclick=\"microprofileConfigCallBack.refreshBrowserButton(event)\">Refresh</b></action> in the following browser to see that the port value in the server.env file is used. The quality assurance port (9082) of the ObtainCarTypes microservice returns the values <code>SUV</code>, <code>Crossover</code>, <code>Coupe</code>, and <code>Truck</code>."
             ],
             "content":[
+                {
+                    "displayType":"webBrowser",
+                    "url": "https://mycarvendor.openliberty.io/car-types",
+                    "browserContent": "/guides/iguide-microprofile-config/html/interactive-guides/microprofile-config/download-from-properties-file.html",
+                    "statusBarText": "Retrieved data from Test on port 9081.",
+                    "callback": "(function test(webBrowser) {microprofileConfigCallBack.listenToBrowserForServerEnvConfig(webBrowser); })"
+                },
               {
                 "displayType": "tabbedEditor",
+                "active": true,
                 "activeTab": "server.env",
                 "callback": "(function test(tabbedEditor) {microprofileConfigCallBack.listenToEditorTabChange(tabbedEditor, 0, 'server.env'); })",
                 "editorList": [
@@ -328,23 +442,15 @@
                     "preload": [
                       ""
                     ],
-                    "readonly": [
-                      {
-                        "from": "1",
-                        "to": "1"
-                      }
+                    "writable": [
+                        {
+                            "line": "1"
+                        }
                     ],
                     "save": false,
                     "callback": "(function test(editor) {microprofileConfigCallBack.listenToEditorForServerEnv(editor); })"
                   }
                 ]
-              },
-              {
-                "displayType":"webBrowser",
-                "url": "https://mycarvendor.openliberty.io/car-types",
-                "browserContent": "/guides/iguide-microprofile-config/html/interactive-guides/microprofile-config/download-from-properties-file.html",
-                "statusBarText": "Retrieved data from Test on port 9081.",
-                "callback": "(function test(webBrowser) {microprofileConfigCallBack.listenToBrowserForServerEnvConfig(webBrowser); })"
               }
             ]
         },
@@ -361,12 +467,20 @@
                 "In this example, use the <code>${server.config.dir}/bootstrap.properties</code> file to configure the <code>port</code> system property."
             ],
             "instruction": [
-                "Add the following port value on line 1 of <code>bootstrap.properties</code>, or click <action title='Configure port in System Properties' onclick=\"microprofileConfigCallBack.addPropToSystemPropertiesButton(event)\"><b>port=9083</b></action>. Then, click <action title='Run' onclick=\"microprofileConfigCallBack.saveTabbedEditorButton(event)\"><b>Run</b></action> on the editor menu pane to save the file and restart the server.",
-                "Click <action title='Refresh' onclick=\"microprofileConfigCallBack.refreshBrowserButton(event)\"><b>Refresh</b></action> in the following browser to see that the port value in the <code>bootstrap.properties</code> file is used. The production port (9083) of the ObtainCarTypes microservice returns values <code>SUV</code>, <code>Crossover</code>, <code>Coupe</code>, <code>Truck</code>, and <code>Convertible</code>."
+                "Add the following port value on line 1 of <code>bootstrap.properties</code>, or click <action title='Configure port in System Properties' onclick=\"microprofileConfigCallBack.addPropToSystemPropertiesButton(event)\">port=9083</action>. Then, click <action title='Run' onclick=\"microprofileConfigCallBack.saveTabbedEditorButton(event)\">Run</action> on the editor menu pane to save the file and restart the server.",
+                "Click <action title='Refresh' onclick=\"microprofileConfigCallBack.refreshBrowserButton(event)\">Refresh</action> in the following browser to see that the port value in the <code>bootstrap.properties</code> file is used. The production port (9083) of the ObtainCarTypes microservice returns values <code>SUV</code>, <code>Crossover</code>, <code>Coupe</code>, <code>Truck</code>, and <code>Convertible</code>."
             ],
             "content":[
                 {
+                    "displayType":"webBrowser",
+                    "url": "https://mycarvendor.openliberty.io/car-types",
+                    "browserContent": "/guides/iguide-microprofile-config/html/interactive-guides/microprofile-config/download-from-property-in-server-env.html",
+                    "statusBarText": "Retrieved data from Quality Assurance on port 9082.",
+                    "callback": "(function test(webBrowser) {microprofileConfigCallBack.listenToBrowserForSystemPropConfig(webBrowser); })"
+                },
+                {
                   "displayType": "tabbedEditor",
+                  "active": true,
                   "activeTab": "bootstrap.properties",
                   "callback": "(function test(tabbedEditor) {microprofileConfigCallBack.listenToEditorTabChange(tabbedEditor, 0, 'bootstrap.properties'); })",
                   "editorList": [
@@ -419,23 +533,15 @@
                         "preload": [
                               ""
                         ],
-                        "readonly": [
+                        "writable": [
                             {
-                                "from": "1",
-                                "to": "5"
+                                "line": "1"
                             }
                         ],
                         "save": false,
                         "callback": "(function test(editor) {microprofileConfigCallBack.listenToEditorForSystemProperties(editor); })"
                     }
                   ]
-                },
-                {
-                  "displayType":"webBrowser",
-                  "url": "https://mycarvendor.openliberty.io/car-types",
-                  "browserContent": "/guides/iguide-microprofile-config/html/interactive-guides/microprofile-config/download-from-property-in-server-env.html",
-                  "statusBarText": "Retrieved data from Quality Assurance on port 9082.",
-                  "callback": "(function test(webBrowser) {microprofileConfigCallBack.listenToBrowserForSystemPropConfig(webBrowser); })"
                 }
             ]
         },
@@ -448,12 +554,20 @@
                 "Adding <code>config_ordinal</code> to <code>/META-INF/microprofile-config.properties</code> with a value of 500 increases its ordinal value. The port value from <code>/META-INF/microprofile-config.properties</code> now overrides the port value from <code>bootstrap.properties</code>, which has a default ordinal of 400."
             ],
             "instruction": [
-                "On line 2 of the <code>/META-INF/microprofile-config.properties</code> file add the following, or click <action title='Changing the ordinal of microprofile-config.properties' onclick=\"microprofileConfigCallBack.addConfigOrdinalToPropsButton(event)\"><b>config_ordinal=500</b></action>. Then, click <action title='Run' onclick=\"microprofileConfigCallBack.saveTabbedEditorButton(event)\"><b>Run</b></action> on the editor menu pane.",
-                "Click <action title='Refresh' onclick=\"microprofileConfigCallBack.refreshBrowserButton(event)\"><b>Refresh</b></action> in the following browser to see that the port value in the <code>/META-INF/microprofile-config.properties</code> file is used instead of the one defined in the <code>bootstrap.properties</code> file. The test port (9081) of the ObtainCarTypes microservice returns the values typeA, typeB, and typeC."
+                "On line 2 of the <code>/META-INF/microprofile-config.properties</code> file add the following, or click <action title='Changing the ordinal of microprofile-config.properties' onclick=\"microprofileConfigCallBack.addConfigOrdinalToPropsButton(event)\">config_ordinal=500</action>. Then, click <action title='Run' onclick=\"microprofileConfigCallBack.saveTabbedEditorButton(event)\">Run</action> on the editor menu pane.",
+                "Click <action title='Refresh' onclick=\"microprofileConfigCallBack.refreshBrowserButton(event)\">Refresh</action> in the following browser to see that the port value in the <code>/META-INF/microprofile-config.properties</code> file is used instead of the one defined in the <code>bootstrap.properties</code> file. The test port (9081) of the ObtainCarTypes microservice returns the values typeA, typeB, and typeC."
             ],
             "content":[
+                {
+                    "displayType":"webBrowser",
+                    "url": "https://mycarvendor.openliberty.io/car-types",
+                    "browserContent": "/guides/iguide-microprofile-config/html/interactive-guides/microprofile-config/download-from-property-in-system-props.html",
+                    "statusBarText": "Retrieved data from Production on port 9083.",
+                    "callback": "(function test(webBrowser) {microprofileConfigCallBack.listenToBrowserForPropFileConfig(webBrowser); })"
+                },
               {
                 "displayType": "tabbedEditor",
+                "active": true,
                 "activeTab": "META-INF/microprofile-config.properties",
                 "callback": "(function test(tabbedEditor) {microprofileConfigCallBack.listenToEditorTabChange(tabbedEditor, 0, 'META-INF/microprofile-config.properties'); })",
                 "editorList": [
@@ -487,13 +601,19 @@
                     "fileName": "META-INF/microprofile-config.properties",
                     "save": false,
                     "preload": [
-                        "port=9081"
+                        "port=9081",
+                        ""
                     ],
                     "readonly": [
                       {
                         "from": "1",
                         "to": "1"
                       }
+                    ],
+                    "writable": [
+                        {
+                            "line": "2"
+                        }
                     ],
                     "callback": "(function test(editor) {microprofileConfigCallBack.listenToEditorForOrdinalChange(editor); })"
                   },
@@ -515,13 +635,6 @@
                     "readonly": true,
                     "save": false                 }
                 ]
-              },
-              {
-                "displayType":"webBrowser",
-                "url": "https://mycarvendor.openliberty.io/car-types",
-                "browserContent": "/guides/iguide-microprofile-config/html/interactive-guides/microprofile-config/download-from-property-in-system-props.html",
-                "statusBarText": "Retrieved data from Production on port 9083.",
-                "callback": "(function test(webBrowser) {microprofileConfigCallBack.listenToBrowserForPropFileConfig(webBrowser); })"
               }
             ]
         },
@@ -541,7 +654,21 @@
             ],
             "content": [
                 {
+                    "displayType":"webBrowser",
+                    "url": "https://mycarvendor.openliberty.io/car-types",
+                    "browserContent": "/guides/iguide-microprofile-config/html/interactive-guides/microprofile-config/download-from-property-in-system-props.html",
+                    "statusBarText": "Retrieved data from Production on port 9083.",
+                    "callback": "(function test(webBrowser) {microprofileConfigCallBack.listenToBrowserForPropFileConfig(webBrowser); })",
+                    "enable": false
+                },
+                {
+                    "displayType": "pod",
+                    "content": "/guides/iguide-microprofile-config/html/interactive-guides/microprofile-config/playground.html",
+                    "callback": "(function(pod) {microprofileConfigCallBack.createPlayground(pod, 'DefaultPlayground')})"
+                },
+                {
                     "displayType": "tabbedEditor",
+                    "active": true,
                     "editorList": [
                         {
                             "displayType": "fileEditor",
@@ -602,11 +729,6 @@
                             "save": false
                         }
                     ]
-                },
-                {
-                    "displayType": "pod",
-                    "content": "/guides/iguide-microprofile-config/html/interactive-guides/microprofile-config/playground.html",
-                    "callback": "(function(pod) {microprofileConfigCallBack.createPlayground(pod, 'DefaultPlayground')})"
                 }
             ]
         },

@@ -12,10 +12,18 @@
   width: 100%;
   font-size: 12px;
   table-layout: fixed;
+  margin-left: 30px;
+  @media (max-width: 570px) {
+    margin-left: 0px;
+  }
 }
 
 .propsTable, .propsTable tr:focus {
   outline: none;
+}
+
+.propsTable tr:nth-of-type(even) {
+    background: #f8f8f7;
 }
 
 .propsTable td {

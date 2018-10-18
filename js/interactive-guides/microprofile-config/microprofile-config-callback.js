@@ -528,8 +528,6 @@ var microprofileConfigCallBack = (function() {
                 }                
             }
         }
-        // Cannot use contentManager.hideBrowser as the browser is still going thru initialization
-        webBrowser.contentRootElement.addClass("hidden");
         webBrowser.addUpdatedURLListener(setBrowserContent);
     };
 
