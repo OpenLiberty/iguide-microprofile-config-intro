@@ -65,10 +65,10 @@ var microprofileConfigCallBack = (function() {
             var content = contentManager.getTabbedEditorContents(stepName, propsFileName);
             if (__checkConfigPropsFile(content)) {
                 editor.closeEditorErrorBox(stepName);
-                var index = contentManager.getCurrentInstructionIndex();
+                var index = contentManager.getCurrentInstructionIndex(stepName);
                 if(index === 0){
                     contentManager.markCurrentInstructionComplete(stepName);
-                    contentManager.updateWithNewInstructionNoMarkComplete(stepName);
+                    //contentManager.updateWithNewInstructionNoMarkComplete(stepName);
                 }
             } else {
                 // display error and provide link to fix it
@@ -103,10 +103,10 @@ var microprofileConfigCallBack = (function() {
             if (__checkServerEnvContent(content)) {
                 editor.closeEditorErrorBox(stepName);
 
-                var index = contentManager.getCurrentInstructionIndex();
+                var index = contentManager.getCurrentInstructionIndex(stepName);
                 if(index === 0){
                     contentManager.markCurrentInstructionComplete(stepName);
-                    contentManager.updateWithNewInstructionNoMarkComplete(stepName);
+                    //contentManager.updateWithNewInstructionNoMarkComplete(stepName);
                 }
             } else {
                 // display error and provide link to fix it
@@ -123,10 +123,10 @@ var microprofileConfigCallBack = (function() {
             if (__checkSystemPropsContent(content)) {
                 editor.closeEditorErrorBox(stepName);
 
-                var index = contentManager.getCurrentInstructionIndex();
+                var index = contentManager.getCurrentInstructionIndex(stepName);
                 if(index === 0){
                     contentManager.markCurrentInstructionComplete(stepName);
-                    contentManager.updateWithNewInstructionNoMarkComplete(stepName);
+                    //contentManager.updateWithNewInstructionNoMarkComplete(stepName);
                 }
             } else {
                 // display error and provide link to fix it
@@ -146,10 +146,10 @@ var microprofileConfigCallBack = (function() {
             if (__checkConfigOrdinalProp(content)) {
                 editor.closeEditorErrorBox(stepName);
 
-                var index = contentManager.getCurrentInstructionIndex();
+                var index = contentManager.getCurrentInstructionIndex(stepName);
                 if(index === 0){
                     contentManager.markCurrentInstructionComplete(stepName);
-                    contentManager.updateWithNewInstructionNoMarkComplete(stepName);
+                    //contentManager.updateWithNewInstructionNoMarkComplete(stepName);
                 }
             } else {
                 // display error and provide link to fix it
@@ -160,39 +160,45 @@ var microprofileConfigCallBack = (function() {
     };
 
 
-    var __addPropToConfigProps = function() {
-        var stepName = stepContent.getCurrentStepName();
+    var __addPropToConfigProps = function(stepName) {
+        if (stepName === undefined) {
+            stepName = stepContent.getCurrentStepName();
+        }
         // reset content every time property is added through the button so as to clear out any manual editing
         contentManager.resetTabbedEditorContents(stepName, propsFileName);
         contentManager.replaceTabbedEditorContents(stepName, propsFileName, 1, 1, propsFileConfig);
     };
 
-    var __addPropToConfigPropsButton = function(event) {
+    var __addPropToConfigPropsButton = function(event, stepName) {
         if (event.type === "click" ||
            (event.type === "keypress" && (event.which === 13 || event.which === 32))) {
             // Click or 'Enter' or 'Space' key event...
-            __addPropToConfigProps();
+            __addPropToConfigProps(stepName);
         }
     };
 
-    var __addConfigOrdinalToProps = function() {
-        var stepName = stepContent.getCurrentStepName();
+    var __addConfigOrdinalToProps = function(stepName) {
+        if (stepName === undefined) {
+            stepName = stepContent.getCurrentStepName();
+        }
         var configOrdinal = "config_ordinal=500";
         // reset content every time property is added through the button so as to clear out any manual editing
         contentManager.resetTabbedEditorContents(stepName, propsFileName );
         contentManager.replaceTabbedEditorContents(stepName, propsFileName, 2, 2, configOrdinal);
     };
 
-    var __addConfigOrdinalToPropsButton = function(event) {
+    var __addConfigOrdinalToPropsButton = function(event, stepName) {
         if (event.type === "click" ||
            (event.type === "keypress" && (event.which === 13 || event.which === 32))) {
             // Click or 'Enter' or 'Space' key event...
-            __addConfigOrdinalToProps();
+            __addConfigOrdinalToProps(stepName);
         }
     };
 
-    var __addPropToServerEnv = function() {
-        var stepName = stepContent.getCurrentStepName();
+    var __addPropToServerEnv = function(stepName) {
+        if (stepName === undefined) {
+            stepName = stepContent.getCurrentStepName();
+        }
         // reset content every time property is added through the button so as to clear out any manual editing
         contentManager.resetTabbedEditorContents(stepName, serverEnvFileName);
         contentManager.replaceTabbedEditorContents(stepName, serverEnvFileName, 1, 1, serverEnvDownloadUrlConfig);
@@ -200,18 +206,20 @@ var microprofileConfigCallBack = (function() {
 
     var systemPropsFileName = "bootstrap.properties";
     var systemPropsDownloadUrlConfig = "port=9083";
-    var __addPropToSystemProperties = function() {
-        var stepName = stepContent.getCurrentStepName();
+    var __addPropToSystemProperties = function(stepName) {
+        if (stepName === undefined) {
+            stepName = stepContent.getCurrentStepName();
+        }
         // reset content every time property is added through the button so as to clear out any manual editing
         contentManager.resetTabbedEditorContents(stepName, systemPropsFileName);
         contentManager.replaceTabbedEditorContents(stepName, systemPropsFileName, 1, 1, systemPropsDownloadUrlConfig);
     };
 
-    var __addPropToSystemPropertiesButton = function(event) {
+    var __addPropToSystemPropertiesButton = function(event, stepName) {
         if (event.type === "click" ||
            (event.type === "keypress" && (event.which === 13 || event.which === 32))) {
             // Click or 'Enter' or 'Space' key event...
-            __addPropToSystemProperties();
+            __addPropToSystemProperties(stepName);
         }
     };
 
@@ -248,27 +256,32 @@ var microprofileConfigCallBack = (function() {
         webBrowser.addUpdatedURLListener(setBrowserContent);
     };
 
-    var __addPropToServerEnvButton = function(event) {
+    var __addPropToServerEnvButton = function(event, stepName) {
         if (event.type === "click" ||
            (event.type === "keypress" && (event.which === 13 || event.which === 32))) {
             // Click or 'Enter' or 'Space' key event...
-            __addPropToServerEnv();
+            __addPropToServerEnv(stepName);
         }
     };
 
-    var __refreshBrowserButton = function(event) {
+    var __refreshBrowserButton = function(event, stepName) {
         if (event.type === "click" ||
            (event.type === "keypress" && (event.which === 13 || event.which === 32))) {
            // Click or 'Enter' or 'Space' key event...
-           contentManager.refreshBrowser(stepContent.getCurrentStepName());
+           if (stepName === undefined) {
+               stepName = stepContent.getCurrentStepName();
+           }
+           contentManager.refreshBrowser(stepName);
         }
     };
 
-    var __saveTabbedEditorButton = function(event) {
+    var __saveTabbedEditorButton = function(event, stepName) {
         if (event.type === "click" ||
            (event.type === "keypress" && (event.which === 13 || event.which === 32))) {
             // Click or 'Enter' or 'Space' key event...
-            var stepName = stepContent.getCurrentStepName();
+            if (stepName === undefined) {
+                stepName = stepContent.getCurrentStepName();
+            }
             var editorFileName;
             if(stepName === "EnableMPConfig") {
                 editorFileName = "server.xml";
@@ -375,10 +388,10 @@ var microprofileConfigCallBack = (function() {
                 contentManager.showBrowser(stepName, 0);
                 contentManager.addRightSlideClassToBrowser(stepName, 0);
 
-                var index = contentManager.getCurrentInstructionIndex();
+                var index = contentManager.getCurrentInstructionIndex(stepName);
                 if(index === 0){
                     contentManager.markCurrentInstructionComplete(stepName);
-                    contentManager.updateWithNewInstructionNoMarkComplete(stepName);
+                    //contentManager.updateWithNewInstructionNoMarkComplete(stepName);
                 }
             } else {
                 // display error and provide link to fix it
@@ -391,10 +404,11 @@ var microprofileConfigCallBack = (function() {
     var serverXmlFileName = "server.xml";
     var __listenToEditorForFeatureInServerXML = function(editor) {      
       var __saveServerXML = function() {
-        var stepName = stepContent.getCurrentStepName();
+        //var stepName = stepContent.getCurrentStepName();
+        var stepName = editor.getStepName();
         var content = contentManager.getTabbedEditorContents(stepName, serverXmlFileName);
         if (__checkMicroProfileConfigFeatureContent(content)) {
-            var stepName = stepContent.getCurrentStepName();
+            //var stepName = stepContent.getCurrentStepName();
             contentManager.markCurrentInstructionComplete(stepName);
         } else {
             // display error to fix it
@@ -457,36 +471,37 @@ var microprofileConfigCallBack = (function() {
         return isConfigFeatureThere;
     };
 
-    var __addMicroProfileConfigFeatureButton = function(event) {
+    var __addMicroProfileConfigFeatureButton = function(event, stepName) {
       if (event.type === "click" ||
          (event.type === "keypress" && (event.which === 13 || event.which === 32))) {
           // Click or 'Enter' or 'Space' key event...
-          __addMicroProfileConfigFeature();
+          __addMicroProfileConfigFeature(stepName);
       }
     };
 
-    var __addMicroProfileConfigFeature = function() {
-
+    var __addMicroProfileConfigFeature = function(stepName) {
+        if (stepName === undefined) {
+            stepName = stepContent.getCurrentStepName();
+         }
         var ConfigFeature = "      <feature>mpConfig-1.1</feature>";
-        var stepName = stepContent.getCurrentStepName();
         // reset content every time feature is added through the button to clear manual editing
         contentManager.resetTabbedEditorContents(stepName, serverXmlFileName);
         var content = contentManager.getTabbedEditorContents(stepName, serverXmlFileName);
         contentManager.replaceTabbedEditorContents(stepName, serverXmlFileName, 6, 6, ConfigFeature);
     };
 
-    var __addInjectDefaultConfigButton = function(event) {
+    var __addInjectDefaultConfigButton = function(event, stepName) {
         if (event.type === "click" ||
         (event.type === "keypress" && (event.which === 13 || event.which === 32))) {
             // Click or 'Enter' or 'Space' key event...
-            __addInjectDefaultConfigToEditor();
+            __addInjectDefaultConfigToEditor(stepName);
         }
     };
     
     var __addInjectDefaultConfigToEditor = function(stepName) {
         var injectConfig = "    @Inject @ConfigProperty(name=\"port\", \n" +
                            "                            defaultValue=\"9080\")";
-        if (!stepName) {
+        if (stepName === undefined) {
            stepName = stepContent.getCurrentStepName();
         }
         // reset content every time property is added through the button so as to clear out any manual editing
@@ -571,18 +586,18 @@ var microprofileConfigCallBack = (function() {
         return annotationIsThere;
     };
 
-    var __addInjectConfigButton = function(event) {
+    var __addInjectConfigButton = function(event, stepName) {
         if (event.type === "click" ||
         (event.type === "keypress" && (event.which === 13 || event.which === 32))) {
             // Click or 'Enter' or 'Space' key event...
-            __addInjectConfigToEditor();
+            __addInjectConfigToEditor(stepName);
         }
     };
 
     var configEditorFileName = "InventoryConfig.java";
     var __addInjectConfigToEditor = function(stepName) {
         var injectConfig = "    @Inject @ConfigProperty(name=\"port\")";
-        if (!stepName) {
+        if (stepName === undefined) {
            stepName = stepContent.getCurrentStepName();
         }
         // reset content every time property is added through the button so as to clear out any manual editing
