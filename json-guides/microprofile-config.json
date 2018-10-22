@@ -148,7 +148,7 @@
                           "",
                           "   </featureManager>",
                           "   <httpEndpoint host=\"*\" id=\"defaultHttpEndpoint\" httpsPort=\"${default.https.port}\"",
-                          "   httpPort=\"{default.http.port}\"/>",
+                          "   httpPort=\"${default.http.port}\"/>",
                           "</server>"
                         ],
                         "readonly": [
