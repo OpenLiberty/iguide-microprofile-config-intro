@@ -2,9 +2,9 @@
     text-align: center; /* Align the image in the center of the div */
 }
 
-.ordinalPriorities > img {
-    width: 75%;
-    min-width: 350px;
+.ordinalPriorities > img,
+.devOpsPipeline > img  {
+    width: 100%;
     max-width: 550px;
 }
 
@@ -12,10 +12,15 @@
   width: 100%;
   font-size: 12px;
   table-layout: fixed;
+  margin-left: 30px;
 }
 
 .propsTable, .propsTable tr:focus {
   outline: none;
+}
+
+.propsTable tr:nth-of-type(even) {
+    background: #f8f8f7;
 }
 
 .propsTable td {
@@ -83,20 +88,7 @@
 }
 
 .devOpsPipeline {
-    float: center;
     text-align: center;
-}
-
-#guide_content .codeeditor .CodeMirror {
-    height: 100%;
-}
-
-#guide_content .editorContainer{
-    height: 448px;
-}
-
-#guide_content .teContainer .editorContainer{
-    height: 423px;
 }
 
 .ordinalCardContainer {
@@ -154,4 +146,15 @@
     top: 5px;
     left: 42%;
 
+}
+
+p.errorSyntaxCss {
+    margin: 0px;
+    padding: 30px;
+    word-wrap: break-word;
+    line-height: inherit;
+}
+
+@media (max-width: 570px) {
+    margin-left: 0px;
 }
