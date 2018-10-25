@@ -2,9 +2,9 @@
     text-align: center; /* Align the image in the center of the div */
 }
 
-.ordinalPriorities > img {
-    width: 75%;
-    min-width: 350px;
+.ordinalPriorities > img,
+.devOpsPipeline > img  {
+    width: 100%;
     max-width: 550px;
 }
 
@@ -88,7 +88,6 @@
 }
 
 .devOpsPipeline {
-    float: center;
     text-align: center;
 }
 
@@ -147,6 +146,13 @@
     top: 5px;
     left: 42%;
 
+}
+
+p.errorSyntaxCss {
+    margin: 0px;
+    padding: 30px;
+    word-wrap: break-word;
+    line-height: inherit;
 }
 
 @media (max-width: 570px) {
