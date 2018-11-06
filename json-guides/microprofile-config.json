@@ -323,7 +323,7 @@
             ],
             "instruction": [
                 "In <code>/META-INF/microprofile-config.properties</code>, add the following on line 1, or click <action title='Configure port in microprofile-config.properties' onclick=\"microprofileConfigCallBack.addPropToConfigPropsButton(event, 'ConfigurePropsFile')\">port=9081</action>.<br>Then, click <action title='Run' onclick=\"microprofileConfigCallBack.saveTabbedEditorButton(event, 'ConfigurePropsFile')\">Run</action> on the editor menu pane.",
-                "Click <action title='Refresh' onclick=\"microprofileConfigCallBack.refreshBrowserButton(event, 'ConfigurePropsFile')\">Refresh</action> in the following browser to see that the port value in the <code>/META-INF/microprofile-config.properties</code> file is used. The test port (9081) of the ObtainCarTypes microservice returns the values <code>typeA</code>, <code>typeB</code>, and <code>typeC</code>."
+                "Click <action title='Refresh' onclick=\"microprofileConfigCallBack.refreshBrowserButton(event, 'ConfigurePropsFile')\">Refresh</action> in the browser to see that the port value in the <code>/META-INF/microprofile-config.properties</code> file is used. The test port (9081) of the ObtainCarTypes microservice returns the values <code>typeA</code>, <code>typeB</code>, and <code>typeC</code>."
             ],
             "content":[
                 {
@@ -413,7 +413,7 @@
             ],
             "instruction": [
               "In <code>server.env</code>, add the following on line 1, or click <action title='Configure port in server.env' onclick=\"microprofileConfigCallBack.addPropToServerEnvButton(event, 'ConfigureAsEnvVar')\">port=9082</action>.<br>Then, click <action title='Run' onclick=\"microprofileConfigCallBack.saveTabbedEditorButton(event, 'ConfigureAsEnvVar')\">Run</action> on the editor menu pane to save the file and restart the server.",
-              "Click <action title='Refresh' onclick=\"microprofileConfigCallBack.refreshBrowserButton(event, 'ConfigureAsEnvVar')\">Refresh</action> in the following browser to see that the port value in the server.env file is used. The quality assurance port (9082) of the ObtainCarTypes microservice returns the values <code>SUV</code>, <code>Crossover</code>, <code>Coupe</code>, and <code>Truck</code>."
+              "Click <action title='Refresh' onclick=\"microprofileConfigCallBack.refreshBrowserButton(event, 'ConfigureAsEnvVar')\">Refresh</action> in the browser to see that the port value in the server.env file is used. The quality assurance port (9082) of the ObtainCarTypes microservice returns the values <code>SUV</code>, <code>Crossover</code>, <code>Coupe</code>, and <code>Truck</code>."
             ],
             "content":[
                 {
@@ -513,7 +513,7 @@
             ],
             "instruction": [
                 "Add the following port value on line 1 of <code>bootstrap.properties</code>, or click <action title='Configure port in System Properties' onclick=\"microprofileConfigCallBack.addPropToSystemPropertiesButton(event,'ConfigureAsSysProp')\">port=9083</action>.<br>Then, click <action title='Run' onclick=\"microprofileConfigCallBack.saveTabbedEditorButton(event, 'ConfigureAsSysProp')\">Run</action> on the editor menu pane to save the file and restart the server.",
-                "Click <action title='Refresh' onclick=\"microprofileConfigCallBack.refreshBrowserButton(event, 'ConfigureAsSysProp')\">Refresh</action> in the following browser to see that the port value in the <code>bootstrap.properties</code> file is used. The production port (9083) of the ObtainCarTypes microservice returns values <code>SUV</code>, <code>Crossover</code>, <code>Coupe</code>, <code>Truck</code>, and <code>Convertible</code>."
+                "Click <action title='Refresh' onclick=\"microprofileConfigCallBack.refreshBrowserButton(event, 'ConfigureAsSysProp')\">Refresh</action> in the browser to see that the port value in the <code>bootstrap.properties</code> file is used. The production port (9083) of the ObtainCarTypes microservice returns values <code>SUV</code>, <code>Crossover</code>, <code>Coupe</code>, <code>Truck</code>, and <code>Convertible</code>."
             ],
             "content":[
                 {
@@ -618,7 +618,7 @@
             ],
             "instruction": [
                 "On line 2 of the <code>/META-INF/microprofile-config.properties</code> file add the following, or click <action title='Changing the ordinal of microprofile-config.properties' onclick=\"microprofileConfigCallBack.addConfigOrdinalToPropsButton(event, 'UpdateOrdinal')\">config_ordinal=500</action>.<br>Then, click <action title='Run' onclick=\"microprofileConfigCallBack.saveTabbedEditorButton(event, 'UpdateOrdinal')\">Run</action> on the editor menu pane.",
-                "Click <action title='Refresh' onclick=\"microprofileConfigCallBack.refreshBrowserButton(event, 'UpdateOrdinal')\">Refresh</action> in the following browser to see that the port value in the <code>/META-INF/microprofile-config.properties</code> file is used instead of the one defined in the <code>bootstrap.properties</code> file. The test port (9081) of the ObtainCarTypes microservice returns the values typeA, typeB, and typeC."
+                "Click <action title='Refresh' onclick=\"microprofileConfigCallBack.refreshBrowserButton(event, 'UpdateOrdinal')\">Refresh</action> in the browser to see that the port value in the <code>/META-INF/microprofile-config.properties</code> file is used instead of the one defined in the <code>bootstrap.properties</code> file. The test port (9081) of the ObtainCarTypes microservice returns the values typeA, typeB, and typeC."
             ],
             "content":[
                 {
