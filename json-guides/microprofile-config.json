@@ -31,7 +31,7 @@
                     "   httpPort=\"{default.http.port}\"/>",
                     "</server>"
                 ],
-                "save": true
+                "save": false
             }
             ]
         }
@@ -82,6 +82,40 @@
                 "",
                 "<div class=\"devOpsPipeline\"><img src=\"/guides/iguide-microprofile-config/html/interactive-guides/microprofile-config/images/intro.svg\" alt=\"DisplayCarTypes microservice can connect to one of the ObtainCarTypes instances: Development on port 9080, Test on port 9081, Quality Assurance on port 9082, Production on port 9083\"></div>",
                 "As you progress through this guide, you will set a configuration property for the port value to specify which of the four ObtainCarTypes instances the DisplayCarTypes microservice should connect to. "
+<<<<<<< HEAD
+=======
+            ],
+            "content": [
+                {   
+                    "displayType": "webBrowser",
+                    "url": "https://mycarvendor.openliberty.io/car-types",
+                    "browserContent": "/guides/iguide-microprofile-config/html/interactive-guides/microprofile-config/welcome.html",
+                    "enable": false
+                },
+                {   
+                    "displayType": "tabbedEditor",
+                    "enable": false,
+                    "editorList": [
+                    {
+                        "displayType": "fileEditor",
+                        "fileName": "server.xml",
+                        "preload": [
+                            "<?xml version=\"1.0\"?>",
+                            "<server description=\"Sample Liberty server\">",
+                            "   <featureManager>",
+                            "      <feature>cdi-1.2</feature>",
+                            "      <feature>jaxrs-2.0</feature>",
+                            "",
+                            "   </featureManager>",
+                            "   <httpEndpoint host=\"*\" id=\"defaultHttpEndpoint\" httpsPort=\"${default.https.port}\"",
+                            "   httpPort=\"{default.http.port}\"/>",
+                            "</server>"
+                        ],
+                        "save": false
+                    }
+                    ]
+                }
+>>>>>>> changes save to run
             ]
         },
         {
@@ -91,7 +125,7 @@
                 "Begin by enabling the MicroProfile Config 1.1 feature in your <code>server.xml</code> file. This feature allows you to use the MicroProfile Config API to externalize configuration data."
             ],
             "instruction": [
-              "Add the following element declaration inside the featureManager element of the <code>server.xml</code> file, or click <action tabindex='0' role='button' title='Enable MicroProfile Config' aria-label='Enable MicroProfile Config' onkeypress=\"microprofileConfigCallBack.addMicroProfileConfigFeatureButton(event, 'EnableMPConfig')\" onclick=\"microprofileConfigCallBack.addMicroProfileConfigFeatureButton(event, 'EnableMPConfig')\">&lt;feature&gtmpConfig-1.1&lt;/feature&gt;</action>.<br>Then, click <action tabindex='0' role='button' title='Save' aria-label='Save' onkeypress=\"microprofileConfigCallBack.saveTabbedEditorButton(event, 'EnableMPConfig')\" onclick=\"microprofileConfigCallBack.saveTabbedEditorButton(event, 'EnableMPConfig')\">Save</action> on the editor menu pane."
+              "Add the following element declaration inside the featureManager element of the <code>server.xml</code> file, or click <action tabindex='0' role='button' title='Enable MicroProfile Config' aria-label='Enable MicroProfile Config' onkeypress=\"microprofileConfigCallBack.addMicroProfileConfigFeatureButton(event, 'EnableMPConfig')\" onclick=\"microprofileConfigCallBack.addMicroProfileConfigFeatureButton(event, 'EnableMPConfig')\">&lt;feature&gtmpConfig-1.1&lt;/feature&gt;</action>.<br>Then, click <action tabindex='0' role='button' title='Run' aria-label='Run' onkeypress=\"microprofileConfigCallBack.saveTabbedEditorButton(event, 'EnableMPConfig')\" onclick=\"microprofileConfigCallBack.saveTabbedEditorButton(event, 'EnableMPConfig')\">Run</action> on the editor menu pane."
             ],
             "content":[
                 {   
@@ -135,7 +169,7 @@
                                 "line": "6"
                             }
                         ],
-                        "save": true,
+                        "save": false,
                         "callback": "(function test(editor) {microprofileConfigCallBack.listenToEditorForFeatureInServerXML(editor); })"
                     }
                   ]                
