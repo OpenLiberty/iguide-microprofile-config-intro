@@ -82,37 +82,6 @@
                 "",
                 "<div class=\"devOpsPipeline\"><img src=\"/guides/iguide-microprofile-config/html/interactive-guides/microprofile-config/images/intro.svg\" alt=\"DisplayCarTypes microservice can connect to one of the ObtainCarTypes instances: Development on port 9080, Test on port 9081, Quality Assurance on port 9082, Production on port 9083\"></div>",
                 "As you progress through this guide, you will set a configuration property for the port value to specify which of the four ObtainCarTypes instances the DisplayCarTypes microservice should connect to. "
-            ],
-            "content": [
-                {   
-                    "displayType": "webBrowser",
-                    "url": "https://mycarvendor.openliberty.io/car-types",
-                    "browserContent": "/guides/iguide-microprofile-config/html/interactive-guides/microprofile-config/welcome.html",
-                    "enable": false
-                },
-                {   
-                    "displayType": "tabbedEditor",
-                    "enable": false,
-                    "editorList": [
-                    {
-                        "displayType": "fileEditor",
-                        "fileName": "server.xml",
-                        "preload": [
-                            "<?xml version=\"1.0\"?>",
-                            "<server description=\"Sample Liberty server\">",
-                            "   <featureManager>",
-                            "      <feature>cdi-1.2</feature>",
-                            "      <feature>jaxrs-2.0</feature>",
-                            "",
-                            "   </featureManager>",
-                            "   <httpEndpoint host=\"*\" id=\"defaultHttpEndpoint\" httpsPort=\"${default.https.port}\"",
-                            "   httpPort=\"{default.http.port}\"/>",
-                            "</server>"
-                        ],
-                        "save": true
-                    }
-                    ]
-                }
             ]
         },
         {
@@ -237,6 +206,24 @@
                             ],
                             "save": false,
                             "callback": "(function test(editor) {microprofileConfigCallBack.listenToEditorForInjectConfig(editor); })"
+                        },
+                        {
+                            "displayType": "fileEditor",
+                            "fileName": "server.xml",
+                            "preload": [
+                                "<?xml version=\"1.0\"?>",
+                                "<server description=\"Sample Liberty server\">",
+                                "   <featureManager>",
+                                "      <feature>cdi-1.2</feature>",
+                                "      <feature>jaxrs-2.0</feature>",
+                                "      <feature>mpConfig-1.1</feature>",
+                                "   </featureManager>",
+                                "   <httpEndpoint host=\"*\" id=\"defaultHttpEndpoint\" httpsPort=\"${default.https.port}\"",
+                                "   httpPort=\"${default.http.port}\"/>",
+                                "</server>"
+                            ],
+                            "save": false,
+                            "readonly": true
                         }
                     ]
                 }
@@ -303,6 +290,24 @@
                             ],
                             "save": false,
                             "callback": "(function test(editor) {microprofileConfigCallBack.listenToEditorForInjectDefaultConfig(editor); })"
+                        },
+                        {
+                            "displayType": "fileEditor",
+                            "fileName": "server.xml",
+                            "preload": [
+                                "<?xml version=\"1.0\"?>",
+                                "<server description=\"Sample Liberty server\">",
+                                "   <featureManager>",
+                                "      <feature>cdi-1.2</feature>",
+                                "      <feature>jaxrs-2.0</feature>",
+                                "      <feature>mpConfig-1.1</feature>",
+                                "   </featureManager>",
+                                "   <httpEndpoint host=\"*\" id=\"defaultHttpEndpoint\" httpsPort=\"${default.https.port}\"",
+                                "   httpPort=\"${default.http.port}\"/>",
+                                "</server>"
+                            ],
+                            "save": false,
+                            "readonly": true
                         }
                     ]                    
                 }
@@ -373,6 +378,24 @@
                             }
                         ],
                         "callback": "(function test(editor) {microprofileConfigCallBack.listenToEditorForPropConfig(editor); })"
+                      },
+                      {
+                        "displayType": "fileEditor",
+                        "fileName": "server.xml",
+                        "preload": [
+                            "<?xml version=\"1.0\"?>",
+                            "<server description=\"Sample Liberty server\">",
+                            "   <featureManager>",
+                            "      <feature>cdi-1.2</feature>",
+                            "      <feature>jaxrs-2.0</feature>",
+                            "      <feature>mpConfig-1.1</feature>",
+                            "   </featureManager>",
+                            "   <httpEndpoint host=\"*\" id=\"defaultHttpEndpoint\" httpsPort=\"${default.https.port}\"",
+                            "   httpPort=\"${default.http.port}\"/>",
+                            "</server>"
+                        ],
+                        "save": false,
+                        "readonly": true
                       }
                     ]
                 }
@@ -453,6 +476,24 @@
                     ],
                     "save": false,
                     "callback": "(function test(editor) {microprofileConfigCallBack.listenToEditorForServerEnv(editor); })"
+                  },
+                  {
+                    "displayType": "fileEditor",
+                    "fileName": "server.xml",
+                    "preload": [
+                        "<?xml version=\"1.0\"?>",
+                        "<server description=\"Sample Liberty server\">",
+                        "   <featureManager>",
+                        "      <feature>cdi-1.2</feature>",
+                        "      <feature>jaxrs-2.0</feature>",
+                        "      <feature>mpConfig-1.1</feature>",
+                        "   </featureManager>",
+                        "   <httpEndpoint host=\"*\" id=\"defaultHttpEndpoint\" httpsPort=\"${default.https.port}\"",
+                        "   httpPort=\"${default.http.port}\"/>",
+                        "</server>"
+                    ],
+                    "save": false,
+                    "readonly": true
                   }
                 ]
               }
@@ -544,6 +585,24 @@
                         ],
                         "save": false,
                         "callback": "(function test(editor) {microprofileConfigCallBack.listenToEditorForSystemProperties(editor); })"
+                    },
+                    {
+                        "displayType": "fileEditor",
+                        "fileName": "server.xml",
+                        "preload": [
+                            "<?xml version=\"1.0\"?>",
+                            "<server description=\"Sample Liberty server\">",
+                            "   <featureManager>",
+                            "      <feature>cdi-1.2</feature>",
+                            "      <feature>jaxrs-2.0</feature>",
+                            "      <feature>mpConfig-1.1</feature>",
+                            "   </featureManager>",
+                            "   <httpEndpoint host=\"*\" id=\"defaultHttpEndpoint\" httpsPort=\"${default.https.port}\"",
+                            "   httpPort=\"${default.http.port}\"/>",
+                            "</server>"
+                        ],
+                        "save": false,
+                        "readonly": true
                     }
                   ]
                 }
@@ -637,7 +696,26 @@
                         "port=9083"
                      ],
                     "readonly": true,
-                    "save": false                 }
+                    "save": false                 
+                  },
+                  {
+                    "displayType": "fileEditor",
+                    "fileName": "server.xml",
+                    "preload": [
+                        "<?xml version=\"1.0\"?>",
+                        "<server description=\"Sample Liberty server\">",
+                        "   <featureManager>",
+                        "      <feature>cdi-1.2</feature>",
+                        "      <feature>jaxrs-2.0</feature>",
+                        "      <feature>mpConfig-1.1</feature>",
+                        "   </featureManager>",
+                        "   <httpEndpoint host=\"*\" id=\"defaultHttpEndpoint\" httpsPort=\"${default.https.port}\"",
+                        "   httpPort=\"${default.http.port}\"/>",
+                        "</server>"
+                    ],
+                    "save": false,
+                    "readonly": true
+                  }
                 ]
               }
             ]
