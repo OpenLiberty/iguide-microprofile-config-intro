@@ -161,6 +161,7 @@ var microprofileConfigCallBack = (function() {
             stepName = stepContent.getCurrentStepName();
         }
         // reset content every time property is added through the button so as to clear out any manual editing
+        contentManager.focusTabbedEditorByName(stepName, propsFileName);
         contentManager.resetTabbedEditorContents(stepName, propsFileName);
         contentManager.replaceTabbedEditorContents(stepName, propsFileName, 1, 1, propsFileConfig);
     };
@@ -179,6 +180,7 @@ var microprofileConfigCallBack = (function() {
         }
         var configOrdinal = "config_ordinal=500";
         // reset content every time property is added through the button so as to clear out any manual editing
+        contentManager.focusTabbedEditorByName(stepName, propsFileName);
         contentManager.resetTabbedEditorContents(stepName, propsFileName );
         contentManager.replaceTabbedEditorContents(stepName, propsFileName, 2, 2, configOrdinal);
     };
@@ -196,6 +198,7 @@ var microprofileConfigCallBack = (function() {
             stepName = stepContent.getCurrentStepName();
         }
         // reset content every time property is added through the button so as to clear out any manual editing
+        contentManager.focusTabbedEditorByName(stepName, serverEnvFileName);
         contentManager.resetTabbedEditorContents(stepName, serverEnvFileName);
         contentManager.replaceTabbedEditorContents(stepName, serverEnvFileName, 1, 1, serverEnvDownloadUrlConfig);
     };    
@@ -207,6 +210,7 @@ var microprofileConfigCallBack = (function() {
             stepName = stepContent.getCurrentStepName();
         }
         // reset content every time property is added through the button so as to clear out any manual editing
+        contentManager.focusTabbedEditorByName(stepName, systemPropsFileName);
         contentManager.resetTabbedEditorContents(stepName, systemPropsFileName);
         contentManager.replaceTabbedEditorContents(stepName, systemPropsFileName, 1, 1, systemPropsDownloadUrlConfig);
     };
@@ -296,30 +300,6 @@ var microprofileConfigCallBack = (function() {
                 contentManager.saveTabbedEditor(stepName, editorFileName);
             }
         }
-    };
-
-    var __listenToEditorTabChange = function(tabbedEditor, instructionIndexToMarkUnavailable, fileNameToCheck) {
-        var __handleInstruction = function() {
-            var instructionId = '#' + stepContent.getCurrentStepName() + '-instruction-' + instructionIndexToMarkUnavailable;
-            if (!contentManager.isInstructionComplete(stepContent.getCurrentStepName(), instructionIndexToMarkUnavailable)) {
-                var newActiveTabFileName = tabbedEditor.getActiveTabFileName();
-                var instr = $(instructionId);
-                if (newActiveTabFileName !== fileNameToCheck) {
-                    // "Dim" out non-completed instructions when moving to a readonly editor tab
-                    if (instr.length > 0) {
-                        // Make it dim temporarily
-                        instr.addClass('unavailable');
-                    }
-                } else {
-                    if (instr.length > 0) {
-                        // Make it available again
-                        instr.removeClass('unavailable');
-                    }
-                }
-            }
-        };
-
-        tabbedEditor.addActiveTabChangeListener(__handleInstruction);
     };
 
     var __getInjectionConfigContent = function(content) {
@@ -643,7 +623,6 @@ var microprofileConfigCallBack = (function() {
         listenToBrowserForServerEnvConfig: __listenToBrowserForServerEnvConfig,
         listenToBrowserForSystemPropConfig: __listenToBrowserForSystemPropConfig,
         listenToBrowserForInjectDefaultConfig:  __listenToBrowserForInjectDefaultConfig,
-        listenToEditorTabChange: __listenToEditorTabChange,
         addPropToConfigProps: __addPropToConfigProps,       
         addPropToConfigPropsButton: __addPropToConfigPropsButton, 
         addPropToServerEnvButton: __addPropToServerEnvButton,

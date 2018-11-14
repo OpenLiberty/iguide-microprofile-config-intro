@@ -368,7 +368,6 @@
                     "displayType": "tabbedEditor",
                     "active": true,
                     "activeTab": "META-INF/microprofile-config.properties",
-                    "callback": "(function test(tabbedEditor) {microprofileConfigCallBack.listenToEditorTabChange(tabbedEditor, 0, 'META-INF/microprofile-config.properties'); })",
                     "editorList": [
                       {
                         "displayType":"fileEditor",
@@ -458,7 +457,6 @@
                 "displayType": "tabbedEditor",
                 "active": true,
                 "activeTab": "server.env",
-                "callback": "(function test(tabbedEditor) {microprofileConfigCallBack.listenToEditorTabChange(tabbedEditor, 0, 'server.env'); })",
                 "editorList": [
                   {
                     "displayType":"fileEditor",
@@ -558,7 +556,6 @@
                   "displayType": "tabbedEditor",
                   "active": true,
                   "activeTab": "bootstrap.properties",
-                  "callback": "(function test(tabbedEditor) {microprofileConfigCallBack.listenToEditorTabChange(tabbedEditor, 0, 'bootstrap.properties'); })",
                   "editorList": [
                     {
                       "displayType":"fileEditor",
@@ -663,7 +660,6 @@
                 "displayType": "tabbedEditor",
                 "active": true,
                 "activeTab": "META-INF/microprofile-config.properties",
-                "callback": "(function test(tabbedEditor) {microprofileConfigCallBack.listenToEditorTabChange(tabbedEditor, 0, 'META-INF/microprofile-config.properties'); })",
                 "editorList": [
                   {
                     "displayType":"fileEditor",
