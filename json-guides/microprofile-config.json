@@ -82,8 +82,6 @@
                 "",
                 "<div class=\"devOpsPipeline\"><img src=\"/guides/iguide-microprofile-config/html/interactive-guides/microprofile-config/images/intro.svg\" alt=\"DisplayCarTypes microservice can connect to one of the ObtainCarTypes instances: Development on port 9080, Test on port 9081, Quality Assurance on port 9082, Production on port 9083\"></div>",
                 "As you progress through this guide, you will set a configuration property for the port value to specify which of the four ObtainCarTypes instances the DisplayCarTypes microservice should connect to. "
-<<<<<<< HEAD
-=======
             ],
             "content": [
                 {   
@@ -115,7 +113,6 @@
                     }
                     ]
                 }
->>>>>>> changes save to run
             ]
         },
         {
