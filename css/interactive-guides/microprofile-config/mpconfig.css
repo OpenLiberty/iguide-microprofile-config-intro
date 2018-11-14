@@ -9,7 +9,7 @@
 }
 
 .propsTable {
-  width: 100%;
+  width: calc(100% - 30px);
   font-size: 12px;
   table-layout: fixed;
   margin-left: 30px;
@@ -93,7 +93,7 @@
 
 .ordinalCardContainer {
     width: 100%;
-    height: 130px;
+    height: 180px;
 }
 
 .ordinalCardContainer:focus {
@@ -103,8 +103,7 @@
 .ordinalCard {
    position: absolute;
    height: 35px;
-   width: 65%;
-   max-width: 185px;
+   width: 32%;
    color: black;
    text-align: center;
    font-size: 9px;
@@ -117,7 +116,7 @@
     z-index: 6;
     font-size: 11px;
     height: 40px;
-    width: 195px;
+    width: 34%;
     border: 2px solid #E3700D;
     cursor: pointer;
     outline: none;
@@ -125,26 +124,26 @@
 
 .ordinal-0 {
     z-index: 1;
-    top: 65px;
+    top: 115px;
     left: 5%;
 }
 
 .ordinal-1 {
     z-index: 2;
-    top: 45px;
+    top: 95px;
     left: 15%;
 }
 
 .ordinal-2 {
     z-index: 3;
-    top: 25px;
+    top: 75px;
     left: 25%;
 }
 
 .ordinal-3 {
     z-index: 4;
-    top: 5px;
-    left: 42%;
+    top: 55px;
+    left: 35%;
 
 }
 
@@ -156,5 +155,18 @@ p.errorSyntaxCss {
 }
 
 @media (max-width: 570px) {
-    margin-left: 0px;
+    .propsTable {
+        margin-left: 0px;
+        width: 100%;
+    }
+
+    .ordinalCard {
+        width: 65%;
+        max-width: 185px;
+    }
+
+    .ordinalCard:hover, .ordinalCard:focus {
+        width: 65%;
+        max-width: 195px;
+    }
 }

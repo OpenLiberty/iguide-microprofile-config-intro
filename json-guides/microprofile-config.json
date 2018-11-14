@@ -43,7 +43,7 @@
         },
         {   
             "displayType": "pod",
-            "height": "200px"
+            "height": "250px"
         },
         {
             "displayType": "tabbedEditor",
@@ -732,17 +732,19 @@
                 "<li>Environment variables through <code>server.env</code> (default ordinal = 300)",
                 "<li>System properties through <code>bootstrap.properties</code> (default ordinal = 400)",
                 "</ul>",
-                "Use the editor to inject various properties into the files. Use <code>@Inject @ConfigProperty (name=\"propertyName\");</code> to include the new properties in the <code>InventoryConfig.java</code> file. You can set the <code>config_ordinal</code> in any of the properties files. The following diagrams show the file ordinal priority and the property values being used:"
+                "You can add new properties and override the default ordinal value of the properties files."
             ],
+            "instruction": [
+                "Use the editor to inject new properties into the files. Use <code>@Inject @ConfigProperty (name=\"propertyName\");</code> to include the new properties in the <code>InventoryConfig.java</code> file. Use <code>propertyName=propertyValue</code> to add the new properties in any of the properties files. <br><br><b>Add</b> the <code>config_ordinal</code> property to override the default ordinal value in any of the properties files. <br><br>Click <b>Run</b> to see the file ordinal priority and the property values being used."
+              ],
             "content": [
                 {
                     "displayType":"webBrowser",
                     "url": "https://mycarvendor.openliberty.io/car-types",
                     "browserContent": "/guides/iguide-microprofile-config/html/interactive-guides/microprofile-config/download-from-property-in-system-props.html",
                     "statusBarText": "Retrieved data from Production on port 9083.",
-                    "callback": "(function test(webBrowser) {microprofileConfigCallBack.listenToBrowserForPropFileConfig(webBrowser); })",
                     "enable": false
-                },
+                },                            
                 {
                     "displayType": "pod",
                     "content": "/guides/iguide-microprofile-config/html/interactive-guides/microprofile-config/playground.html",
