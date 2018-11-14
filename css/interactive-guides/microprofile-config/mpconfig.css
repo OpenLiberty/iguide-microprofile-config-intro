@@ -103,8 +103,7 @@
 .ordinalCard {
    position: absolute;
    height: 35px;
-   width: 65%;
-   max-width: 185px;
+   width: 32%;
    color: black;
    text-align: center;
    font-size: 9px;
@@ -117,7 +116,7 @@
     z-index: 6;
     font-size: 11px;
     height: 40px;
-    width: 195px;
+    width: 34%;
     border: 2px solid #E3700D;
     cursor: pointer;
     outline: none;
@@ -159,5 +158,15 @@ p.errorSyntaxCss {
     .propsTable {
         margin-left: 0px;
         width: 100%;
+    }
+
+    .ordinalCard {
+        width: 65%;
+        max-width: 185px;
+    }
+
+    .ordinalCard:hover, .ordinalCard:focus {
+        width: 65%;
+        max-width: 195px;
     }
 }
