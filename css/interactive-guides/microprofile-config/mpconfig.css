@@ -15,13 +15,12 @@
   margin-left: 5px;
   margin-right: 5px;
   background: #fff;
-  margin-bottom:1.25em;
   border:solid 1px #dedede;
 }
 
 .propsTableWrapper { /* wrapper for scrollbar */
     max-height: 70px;
-    display: inline-block;
+    display: block;
     overflow-y: auto;
 }
 
@@ -31,10 +30,6 @@
 
 .propsTable tr:nth-of-type(even) {
     background: #f8f8f7;
-}
-
-.propsTable tr:nth-of-type(even) td:last-child {
-    padding-right: 100vw;
 }
 
 .propsTable td {
