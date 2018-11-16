@@ -9,14 +9,20 @@
 }
 
 .propsTable {
-  width: calc(100% - 60px);
+  width: calc(100% - 10px);
   font-size: 12px;
   table-layout: fixed;
-  margin-left: 30px;
-  margin-right: 30px;
+  margin-left: 5px;
+  margin-right: 5px;
   background: #fff;
   margin-bottom:1.25em;
-  border:solid 1px #dedede
+  border:solid 1px #dedede;
+}
+
+.propsTableWrapper { /* wrapper for scrollbar */
+    max-height: 70px;
+    display: inline-block;
+    overflow-y: auto;
 }
 
 .propsTable, .propsTable tr:focus {
@@ -25,6 +31,10 @@
 
 .propsTable tr:nth-of-type(even) {
     background: #f8f8f7;
+}
+
+.propsTable tr:nth-of-type(even) td:last-child {
+    padding-right: 100vw;
 }
 
 .propsTable td {
@@ -101,7 +111,7 @@
 
 .ordinalCardContainer {
     width: 100%;
-    height: 180px;
+    height: 150px;
 }
 
 .ordinalCardContainer:focus {
@@ -132,25 +142,25 @@
 
 .ordinal-0 {
     z-index: 1;
-    top: 115px;
+    top: 85px;
     left: calc((100% - 32%)/5);
 }
 
 .ordinal-1 {
     z-index: 2;
-    top: 95px;
+    top: 65px;
     left: calc((100% - 32%)/5 * 2);
 }
 
 .ordinal-2 {
     z-index: 3;
-    top: 75px;
+    top: 45px;
     left: calc((100% - 32%)/5 * 3);
 }
 
 .ordinal-3 {
     z-index: 4;
-    top: 55px;
+    top: 25px;
     left: calc((100% - 32%)/5 * 4);
 }
 
@@ -166,6 +176,10 @@ p.errorSyntaxCss {
         margin-left: 0px;
         margin-right: 0px;
         width: 100%;
+    }
+
+    .propsTableWrapper {
+        display: table;  /* no scrollbar for single column view */
     }
 }
 
