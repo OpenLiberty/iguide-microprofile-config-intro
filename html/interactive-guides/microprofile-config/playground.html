@@ -12,23 +12,33 @@
  <html>
 
 <head>
+        <script type="text/javascript"> 
+            var script = document.createElement('script');
+            
+            script.onload = function() {
+                var guideRootDir = "/guides/iguide-microprofile-config/js/interactive-guides/microprofile-config/nls/"
+                retrieveExternalizedStrings(guideRootDir);
+            };
+            script.src = '/guides/iguides-common/js/interactive-guides/externalized-string.js';
+            document.getElementsByTagName('head')[0].appendChild(script);
+        </script>  
 </head>
 <body>
-    <div class="ordinalCardContainer" aria-label="File Ordinals" tabindex=0>
+    <div class="ordinalCardContainer" data-externalizedAriaLabel="FILE_ORDINALS" tabindex=0>
     <div class="ordinal-inject ordinalCard" tabindex=0>
             <div class="ordinalCardFileName">InventoryConfig.java</div>
         </div>
         <div class="ordinal-propFile ordinalCard" tabindex=0>
             <div class="ordinalCardFileName">microprofile-config.properties</div>
-            <div class="ordinalCardOrdinal">Ordinal = 100</div>
+            <div class="ordinalCardOrdinal" data-externalizedString="ORDINAL">100</div>
         </div>
         <div class="ordinal-envVar ordinalCard" tabindex=0>
                 <div class="ordinalCardFileName">server.env</div>
-                <div class="ordinalCardOrdinal">Ordinal = 300</div>
+                <div class="ordinalCardOrdinal" data-externalizedString="ORDINAL">300</div>
             </div>
         <div class="ordinal-sysProp ordinalCard" tabindex=0>
             <div class="ordinalCardFileName">bootstrap.properties</div>
-            <div class="ordinalCardOrdinal">Ordinal = 400</div>
+            <div class="ordinalCardOrdinal" data-externalizedString="ORDINAL"> 400</div>
         </div>
 
     </div>

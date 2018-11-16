@@ -13,26 +13,36 @@
 <head>
     <link href="https://fonts.googleapis.com/css?family=Asap:400,500,600" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="/guides/iguide-microprofile-config/css/interactive-guides/microprofile-config/mpconfig.css">
+    <script type="text/javascript"> 
+        var script = document.createElement('script');
+        
+        script.onload = function() {
+            var guideRootDir = "/guides/iguide-microprofile-config/js/interactive-guides/microprofile-config/nls/"
+            retrieveExternalizedStrings(guideRootDir);
+        };
+        script.src = '/guides/iguides-common/js/interactive-guides/externalized-string.js';
+        document.getElementsByTagName('head')[0].appendChild(script);
+    </script>  
 </head>
 <body class="carSite">
     <img class="carLogo" src="/guides/iguide-microprofile-config/html/interactive-guides/microprofile-config/images/img-car.svg" alt="car logo" />
-    <p class="carSiteTitle">Car Inventory</p>
+    <p class="carSiteTitle" data-externalizedString="CAR_INVENTORY"></p>
 
     <div class="flexContainer">
         <div class="card">
-            <span class="cardText">SUV</span>        
+            <span class="cardText" data-externalizedString="SUV"></span>        
         </div>
         <div class="card">
-            <span class="cardText">Crossover</span>        
+            <span class="cardText" data-externalizedString="CROSSOVER"></span>        
         </div>
         <div class="card">
-            <span class="cardText">Coupe</span>        
+            <span class="cardText" data-externalizedString="COUPE"></span>        
         </div>
         <div class="card">
-            <span class="cardText">Truck</span>        
+            <span class="cardText" data-externalizedString="TRUCK"></span>        
         </div>
         <div class="card">
-            <span class="cardText">Convertible</span>        
+            <span class="cardText" data-externalizedString="CONVERTIBLE"></span>        
         </div>
     </div>
     

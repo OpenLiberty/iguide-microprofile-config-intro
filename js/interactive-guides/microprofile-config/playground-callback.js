@@ -10,6 +10,8 @@ var playground = function(){
     var properties = {};
     var staging = [];
     var fileOrdinals = {};
+    //var mpconfigMessages = microprofileConfigMessages.returnMessages();
+   
 
     var _playground = function(root, stepName) {
         this.root = root;
@@ -172,7 +174,7 @@ var playground = function(){
                 if (this.getProperty(key) !== null) {
                     this.playgroundAddConfig(key, value, source, ordinal);
                 } else {
-                    var message = utils.formatString(mpconfigMessages.injectionRequired, [key]);
+                    var message = utils.formatString(mpconfigMessages.INJECTION_REQUIRED, [key]);
                     this.__displayErrorMessage(message);
                 }
             }
@@ -197,15 +199,15 @@ var playground = function(){
 
             //create a table to display properties
             var propsTable = this.root.find('.propsTable');
-            propsTable.attr('aria-label', mpconfigMessages.propsTableLabel);
+            propsTable.attr('aria-label', mpconfigMessages.PROPS_TABLE_LABEL);
             propsTable.empty();
             propsTable.append('<tr><th tabindex="0" aria-label="Property" scope="column">Property</th><th tabindex="0" aria-label="Value" scope="column">Value</th><th tabindex="0" aria-label="Source" scope="column">Source</th></tr></table>'); //adding the column headers
 
             for (var key in props) {
                 if (props[key].ordinal < 0) {
-                    this.__displayErrorMessage(utils.formatString(mpconfigMessages.valueRequired, [key]));
+                    this.__displayErrorMessage(utils.formatString(mpconfigMessages.VALUE_REQUIRED, [key]));
                 } else {
-                    var prop = $('<tr class="propertyRow" tabindex="0" aria-label="' + mpconfigMessages.propsTableClickable + '">');
+                    var prop = $('<tr class="propertyRow" tabindex="0" aria-label="' + mpconfigMessages.PROPS_TABLE_CLICKABLE + '">');
                     prop.append('<td title="'+ key + '" tabindex="0">' + key + '</td>');
                     prop.append('<td title="'+ props[key].value + '" tabindex="0">' + props[key].value + '</td>');
                     prop.append('<td title="'+ this.__getFileName(props[key].source) + '" tabindex="0">' + this.__getFileName(props[key].source) + '</td>');
