@@ -28,14 +28,21 @@ var microprofileConfigMessages = (function() {
             TRUCK: microprofile_config_messages.TRUCK,
             CONVERTIBLE: microprofile_config_messages.CONVERTIBLE,
             FILE_ORDINALS: microprofile_config_messages.FILE_ORDINALS,
-            ORDINAL: microprofile_config_messages.ORDINAL,
+            ORDINAL100: microprofile_config_messages.ORDINAL100,
+            ORDINAL300: microprofile_config_messages.ORDINAL300,
+            ORDINAL400: microprofile_config_messages.ORDINAL400,
             RETRIEVED_DATA: microprofile_config_messages.RETRIEVED_DATA,
             RETRIEVED_DATA_QA: microprofile_config_messages.RETRIEVED_DATA_QA,
             RETRIEVED_DATA_PROD: microprofile_config_messages.RETRIEVED_DATA_PROD,
             RETRIEVED_DATA_DEV: microprofile_config_messages.RETRIEVED_DATA_DEV,
-            RETRYING_MESSAGE: microprofile_config_messages.RETRYING_MESSAGE
-         
-           
+            RETRYING_MESSAGE: microprofile_config_messages.RETRYING_MESSAGE,
+            CAR_LOGO: microprofile_config_messages.CAR_LOGO,
+            PROPERTY: microprofile_config_messages.PROPERTY,
+            SOURCE: microprofile_config_messages.SOURCE,
+            VALUE: microprofile_config_messages.VALUE,
+            EXCEPTION1: microprofile_config_messages.EXCEPTION1,
+            EXCEPTION2: microprofile_config_messages.EXCEPTION2,
+            EXCEPTION3: microprofile_config_messages.EXCEPTION3       
         };
     };
   

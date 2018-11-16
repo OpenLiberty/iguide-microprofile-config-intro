@@ -15,10 +15,19 @@ var microprofile_config_messages = {
     TRUCK: "Truck",
     CONVERTIBLE: "Convertible",
     FILE_ORDINALS: "File Ordinals",
-    ORDINAL: "Ordinal = ",
+    ORDINAL100: "Ordinal = 100",
+    ORDINAL300: "Ordinal = 300",
+    ORDINAL400: "Ordinal = 400",
     RETRIEVED_DATA: "Retrieved data from Test on port 9081.",
     RETRIEVED_DATA_QA: "Retrieved data from Quality Assurance on port 9082.",
     RETRIEVED_DATA_PROD: "Retrieved data from Production on port 9083.",
     RETRIEVED_DATA_DEV: "Retrieved data from Development on port 9080.",
-    RETRYING_MESSAGE: "Unable to prepopulate the config sources. Click run on the editor to retrieve the values. Retrying"
+    RETRYING_MESSAGE: "Unable to prepopulate the config sources. Click run on the editor to retrieve the values. Retrying",
+    CAR_LOGO: "car logo",
+    PROPERTY: "Property",
+    SOURCE: "Source",
+    VALUE: "Value",
+    EXCEPTION1: "The following exception occurs during application startup because no default value is set:<br><br>", 
+    EXCEPTION2: "[ERROR   ] ",
+    EXCEPTION3: ": The [BackedAnnotatedField] @Inject @ConfigProperty private io.openliberty.guides.mpconfig.InventoryConfig.port InjectionPoint dependency was not resolved. Error: java.util.NoSuchElementException: CWMCG0015E: The property port was not found in the configuration. at com.ibm.ws.microprofile.config.impl.AbstractConfig.getValue(AbstractConfig.java:129) at [internal classes]" 
 } ;

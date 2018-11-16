@@ -521,7 +521,7 @@ var microprofileConfigCallBack = (function() {
                 // the code in resizeStepWidgets will un-hide the pod.
                 stepContent.resizeStepWidgets(stepWidgets, "pod", true);
                 contentManager.setPodContentWithSlideUp(stepName,
-                    "<p  class='errorSyntaxCss'>The following exception occurs during application startup because no default value is set:<br><br> <span style='color:red'>[ERROR   ] CWMCG5003E</span>: The [BackedAnnotatedField] @Inject @ConfigProperty private io.openliberty.guides.mpconfig.InventoryConfig.port InjectionPoint dependency was not resolved. Error: java.util.NoSuchElementException: CWMCG0015E: The property port was not found in the configuration. at com.ibm.ws.microprofile.config.impl.AbstractConfig.getValue(AbstractConfig.java:129) at [internal classes]" +
+                    "<p  class='errorSyntaxCss'>" +  mpconfigMessages.EXCEPTION1 +  "<span style='color:red'>" + mpconfigMessages.EXCEPTION2 + " CWMCG5003E</span>" +  mpconfigMessages.EXCEPTION3 +
                     "</p>"
                 );
                 // Unfortunately, making the pod the active widget allowed our disabled browser
