@@ -10,7 +10,7 @@ var playground = function(){
     var properties = {};
     var staging = [];
     var fileOrdinals = {};
-    //var mpconfigMessages = microprofileConfigMessages.returnMessages();
+    var mpconfigMessages = microprofileConfigMessages.returnMessages();
    
 
     var _playground = function(root, stepName) {

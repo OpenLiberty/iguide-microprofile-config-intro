@@ -10,7 +10,7 @@
 *******************************************************************************/
 var microprofileConfigCallBack = (function() {
 
- //   var mpconfigMessages = microprofileConfigMessages.returnMessages();
+    var mpconfigMessages = microprofileConfigMessages.returnMessages();
     var propsFileConfig = "port=9081";
     var propsFileName = "META-INF/microprofile-config.properties";
     
