@@ -1,4 +1,4 @@
-var mpconfigMessages = {
+var microprofile_config_messages = {
     INJECTION_REQUIRED: 'The property <b>{0}</b> needs to be set with @Inject in InventoryConfig.java',
     VALUE_REQUIRED: 'NoSuchElementException: <b>{0}</b> must be assigned a value.',
     PROPS_TABLE_LABEL: 'Config properties table.',
