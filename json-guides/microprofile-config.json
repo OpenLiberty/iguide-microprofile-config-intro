@@ -8,7 +8,7 @@
     "defaultWidgets": [
         {   
             "displayType": "webBrowser",
-            "url": "https://mycarvendor.openliberty.io/car-inventory",
+            "url": "https://mycarvendor.openliberty.io/car-types",
             "browserContent": "/guides/iguide-microprofile-config/html/interactive-guides/microprofile-config/welcome.html",
             "enable": false
         },
@@ -127,7 +127,7 @@
             "content":[
                 {   
                     "displayType": "webBrowser",
-                    "url": "https://mycarvendor.openliberty.io/car-inventory",
+                    "url": "https://mycarvendor.openliberty.io/car-types",
                     "browserContent": "/guides/iguide-microprofile-config/html/interactive-guides/microprofile-config/welcome.html",
                     "enable": false
                 },
@@ -187,7 +187,7 @@
             "content":[
                 {   
                     "displayType": "webBrowser",
-                    "url": "https://mycarvendor.openliberty.io/car-inventory",
+                    "url": "https://mycarvendor.openliberty.io/car-types",
                     "browserContent": "/guides/iguide-microprofile-config/html/interactive-guides/microprofile-config/welcome.html",
                     "enable": false
                 },
