@@ -21,21 +21,28 @@ InventoryConfig.java file as shown throughout this guide.  This file is where th
 port configuration property value is injected into the code. The variable has the 
 default value of '9080'. 
 
-The properties file can be found in 
-<extract-directory>/displayCarTypes/src/main/webapp/META-INF/microprofile-config.properties. 
-It sets the port value to 9081. 
-
-The server.env and bootstrap.properties files can be found within the 
-mpConfigServer configuration directory at 
-<extract-directory>/displayCarTypes/src/main/liberty/config. 
-They set the port value to 9082 (in server.env) and 9083 (in bootstrap.properties). 
-
-You can edit the /META-INF/microprofile-config.properties file, the server.env 
-file, or the bootstrap.properties file to change the port values or change the 
+# Configuration
+You can edit any of the following three files to change the port values or change the 
 config_ordinal of the configuration source. To save the changes on the Liberty 
 server, run the Maven command 'mvn package' from the directory that contains 
-the extracted sampleapp_mpconfig.zip files. 
+the extracted sampleapp_mpconfig.zip files.
 
+## microprofile-config.properties
+This properties file can be found in the directory 
+<extract-directory>/displayCarTypes/src/main/webapp/META-INF/.
+The default port value is 9081. 
+
+## server.env
+The server.env file can be found in the directory  
+<extract-directory>/displayCarTypes/src/main/liberty/config.
+The default port value is 9082.  
+
+## bootstrap.properties
+The bootstrap.properties file can be found in the directory  
+<extract-directory>/displayCarTypes/src/main/liberty/config.
+The default port value is 9083. 
+
+## Inject Port Configuration
 The injected port configuration value is static. Changes to these files only 
 take effect at application startup. To restart the application, restart 
 the mpConfigServer, as indicated above. 
