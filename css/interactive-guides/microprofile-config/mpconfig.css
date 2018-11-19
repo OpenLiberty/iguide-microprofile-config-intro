@@ -55,7 +55,6 @@
 
 .carSite {
     border-top: 3px solid #ffb000;
-    padding-top: 32px;
     text-align: center;
     margin: 0;
     font-family: Asap;
@@ -74,9 +73,18 @@
     font-weight: 500;    
 }
 
+.topFlexContainer {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+}
+
 .flexContainer {
     display: flex;
     flex-wrap: wrap;
+    width: 100%;
 }
 
 .card {
