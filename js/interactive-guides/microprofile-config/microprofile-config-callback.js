@@ -69,6 +69,9 @@ var microprofileConfigCallBack = (function() {
                 editor.closeEditorErrorBox(stepName);
                 var index = contentManager.getCurrentInstructionIndex(stepName);
                 if(index === 0){
+                    var stepBrowser = contentManager.getBrowser(stepName);
+                    stepBrowser.contentRootElement.trigger("click");
+    
                     contentManager.markCurrentInstructionComplete(stepName);
                 }
             } else {
@@ -106,6 +109,9 @@ var microprofileConfigCallBack = (function() {
 
                 var index = contentManager.getCurrentInstructionIndex(stepName);
                 if(index === 0){
+                    var stepBrowser = contentManager.getBrowser(stepName);
+                    stepBrowser.contentRootElement.trigger("click");
+    
                     contentManager.markCurrentInstructionComplete(stepName);
                 }
             } else {
@@ -125,6 +131,9 @@ var microprofileConfigCallBack = (function() {
 
                 var index = contentManager.getCurrentInstructionIndex(stepName);
                 if(index === 0){
+                    var stepBrowser = contentManager.getBrowser(stepName);
+                    stepBrowser.contentRootElement.trigger("click");
+    
                     contentManager.markCurrentInstructionComplete(stepName);
                 }
             } else {
@@ -147,6 +156,9 @@ var microprofileConfigCallBack = (function() {
 
                 var index = contentManager.getCurrentInstructionIndex(stepName);
                 if(index === 0){
+                    var stepBrowser = contentManager.getBrowser(stepName);
+                    stepBrowser.contentRootElement.trigger("click");
+    
                     contentManager.markCurrentInstructionComplete(stepName);
                 }
             } else {
@@ -228,6 +240,7 @@ var microprofileConfigCallBack = (function() {
     var __listenToBrowserForPropFileConfig = function(webBrowser) {
         var setBrowserContent = function(currentURL) {
             if (contentManager.getCurrentInstructionIndex(webBrowser.getStepName()) === 1) {
+                webBrowser.contentRootElement.trigger("click");
                 webBrowser.setBrowserContent("/guides/iguide-microprofile-config/html/interactive-guides/microprofile-config/download-from-properties-file.html");
                 webBrowser.setBrowserStatusBar(mpconfigMessages.RETRIEVED_DATA);
                 contentManager.markCurrentInstructionComplete(webBrowser.getStepName());
@@ -239,6 +252,7 @@ var microprofileConfigCallBack = (function() {
     var __listenToBrowserForServerEnvConfig = function(webBrowser) {
         var setBrowserContent = function(currentURL) {
             if (contentManager.getCurrentInstructionIndex(webBrowser.getStepName()) === 1) {
+                webBrowser.contentRootElement.trigger("click");
                 webBrowser.setBrowserContent("/guides/iguide-microprofile-config/html/interactive-guides/microprofile-config/download-from-property-in-server-env.html");
                 webBrowser.setBrowserStatusBar(mpconfigMessages.RETRIEVED_DATA_QA);
                 contentManager.markCurrentInstructionComplete(webBrowser.getStepName());
@@ -250,6 +264,7 @@ var microprofileConfigCallBack = (function() {
     var __listenToBrowserForSystemPropConfig = function(webBrowser) {
         var setBrowserContent = function(currentURL) {
             if (contentManager.getCurrentInstructionIndex(webBrowser.getStepName()) === 1) {
+                webBrowser.contentRootElement.trigger("click");
                 webBrowser.setBrowserContent("/guides/iguide-microprofile-config/html/interactive-guides/microprofile-config/download-from-property-in-system-props.html");
                 webBrowser.setBrowserStatusBar(mpconfigMessages.RETRIEVED_DATA_PROD);
                 contentManager.markCurrentInstructionComplete(webBrowser.getStepName());
@@ -363,6 +378,9 @@ var microprofileConfigCallBack = (function() {
             var content = contentManager.getTabbedEditorContents(stepName, configEditorFileName);
             if (__checkDefaultInjectionEditorContent(content)) {
                 editor.closeEditorErrorBox(stepName);
+                var stepBrowser = contentManager.getBrowser(stepName);
+                stepBrowser.contentRootElement.trigger("click");
+
                 contentManager.markCurrentInstructionComplete(stepName);
             } else {
                 // display error and provide link to fix it
@@ -495,6 +513,8 @@ var microprofileConfigCallBack = (function() {
 
     var __listenToBrowserForInjectDefaultConfig = function(webBrowser) {
         var setBrowserContent = function(currentURL) {
+            webBrowser.contentRootElement.trigger("click");
+
             // Check if URL is correct before loading content
             if(webBrowser.getURL() === "https://mycarvendor.openliberty.io/car-types"){
                 var instructionIdx = contentManager.getCurrentInstructionIndex(webBrowser.getStepName());
