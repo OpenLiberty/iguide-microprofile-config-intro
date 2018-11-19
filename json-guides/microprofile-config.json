@@ -39,7 +39,8 @@
     "configWidgets": [
         {   
             "displayType": "webBrowser",
-            "height": "300px"
+            "height": "300px",
+            "singleColumnHeight": "450px"
         },
         {   
             "displayType": "pod",
