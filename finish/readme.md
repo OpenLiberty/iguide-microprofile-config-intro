@@ -17,32 +17,32 @@ show all 5 car types, SUV, Crossover, Coupe, Truck, and Convertible, since the b
 contains the port value 9083. 
 
 The <extract-directory>/displayCarTypes/src directory contains the 
-InventoryConfig.java file as shown throughout this guide.  This file is where the 
-port configuration property value is injected into the code. The variable has the 
-default value of '9080'. 
+InventoryConfig.java file as shown throughout this guide.  This file is where 
+the port configuration property and its value are injected into the code.
+The variable has the default value of '9080'. 
 
 # Configuration
-You can edit any of the following three files to change the port values or change the 
-config_ordinal of the configuration source. To save the changes on the Liberty 
-server, run the Maven command 'mvn package' from the directory that contains 
-the extracted sampleapp_mpconfig.zip files.
+You can edit any of the following three files to change the port values or 
+add the config_ordinal property to override the ordinal value of the configuration source. 
+The configuration source with the highest ordinal value takes precedence.
+To save the changes on the Liberty server, run the Maven command 'mvn package' 
+from the directory that contains the extracted sampleapp_mpconfig.zip files.
+
+The injected port configuration value is static. Changes to these files only 
+take effect at application startup. To restart the application, restart 
+the mpConfigServer, as indicated above.
 
 ## microprofile-config.properties
-This properties file can be found in the directory 
+This properties file can be found in  
 <extract-directory>/displayCarTypes/src/main/webapp/META-INF/.
 The default port value is 9081. 
 
 ## server.env
-The server.env file can be found in the directory  
+The server.env file can be found in   
 <extract-directory>/displayCarTypes/src/main/liberty/config.
 The default port value is 9082.  
 
 ## bootstrap.properties
-The bootstrap.properties file can be found in the directory  
+The bootstrap.properties file can be found in 
 <extract-directory>/displayCarTypes/src/main/liberty/config.
 The default port value is 9083. 
-
-## Inject Port Configuration
-The injected port configuration value is static. Changes to these files only 
-take effect at application startup. To restart the application, restart 
-the mpConfigServer, as indicated above. 
