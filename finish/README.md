@@ -9,8 +9,7 @@ to build the project and install it in your local repository. The command create
 `displayCarTypes/target/liberty` directory that contains your Liberty server, mpConfigServer, 
 and starts the server in the background.
 
-To stop the running server, run the Maven command `mvn liberty:stop-server`. To start
-the mpConfigServer, run the Maven command `mvn liberty:start-server`.
+To stop the running server, run the Maven command `mvn liberty:stop-server` in the <extract-directory>/displayCarTypes directory. To start the mpConfigServer, run the Maven command `mvn liberty:start-server` in the <extract-directory>/displayCarTypes directory.
 
 To access the sample application, visit the http://localhost:9080/car-types URL. Initially, this will 
 show all 5 car types, SUV, Crossover, Coupe, Truck, and Convertible, since the bootstrap.properties
