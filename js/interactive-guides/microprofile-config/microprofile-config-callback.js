@@ -10,8 +10,10 @@
 *******************************************************************************/
 var microprofileConfigCallBack = (function() {
 
+    var mpconfigMessages = microprofileConfigMessages.returnMessages();
     var propsFileConfig = "port=9081";
     var propsFileName = "META-INF/microprofile-config.properties";
+    
     /*
     *  Checks that the correct content was entered in META-INF/microprofile-config.properties
     */
@@ -67,6 +69,9 @@ var microprofileConfigCallBack = (function() {
                 editor.closeEditorErrorBox(stepName);
                 var index = contentManager.getCurrentInstructionIndex(stepName);
                 if(index === 0){
+                    var stepBrowser = contentManager.getBrowser(stepName);
+                    stepBrowser.contentRootElement.trigger("click");
+    
                     contentManager.markCurrentInstructionComplete(stepName);
                 }
             } else {
@@ -104,6 +109,9 @@ var microprofileConfigCallBack = (function() {
 
                 var index = contentManager.getCurrentInstructionIndex(stepName);
                 if(index === 0){
+                    var stepBrowser = contentManager.getBrowser(stepName);
+                    stepBrowser.contentRootElement.trigger("click");
+    
                     contentManager.markCurrentInstructionComplete(stepName);
                 }
             } else {
@@ -123,6 +131,9 @@ var microprofileConfigCallBack = (function() {
 
                 var index = contentManager.getCurrentInstructionIndex(stepName);
                 if(index === 0){
+                    var stepBrowser = contentManager.getBrowser(stepName);
+                    stepBrowser.contentRootElement.trigger("click");
+    
                     contentManager.markCurrentInstructionComplete(stepName);
                 }
             } else {
@@ -145,6 +156,9 @@ var microprofileConfigCallBack = (function() {
 
                 var index = contentManager.getCurrentInstructionIndex(stepName);
                 if(index === 0){
+                    var stepBrowser = contentManager.getBrowser(stepName);
+                    stepBrowser.contentRootElement.trigger("click");
+    
                     contentManager.markCurrentInstructionComplete(stepName);
                 }
             } else {
@@ -226,8 +240,9 @@ var microprofileConfigCallBack = (function() {
     var __listenToBrowserForPropFileConfig = function(webBrowser) {
         var setBrowserContent = function(currentURL) {
             if (contentManager.getCurrentInstructionIndex(webBrowser.getStepName()) === 1) {
+                webBrowser.contentRootElement.trigger("click");
                 webBrowser.setBrowserContent("/guides/iguide-microprofile-config/html/interactive-guides/microprofile-config/download-from-properties-file.html");
-                webBrowser.setBrowserStatusBar("Retrieved data from Test on port 9081.");
+                webBrowser.setBrowserStatusBar(mpconfigMessages.RETRIEVED_DATA);
                 contentManager.markCurrentInstructionComplete(webBrowser.getStepName());
             }
         }
@@ -237,8 +252,9 @@ var microprofileConfigCallBack = (function() {
     var __listenToBrowserForServerEnvConfig = function(webBrowser) {
         var setBrowserContent = function(currentURL) {
             if (contentManager.getCurrentInstructionIndex(webBrowser.getStepName()) === 1) {
+                webBrowser.contentRootElement.trigger("click");
                 webBrowser.setBrowserContent("/guides/iguide-microprofile-config/html/interactive-guides/microprofile-config/download-from-property-in-server-env.html");
-                webBrowser.setBrowserStatusBar("Retrieved data from Quality Assurance on port 9082.");
+                webBrowser.setBrowserStatusBar(mpconfigMessages.RETRIEVED_DATA_QA);
                 contentManager.markCurrentInstructionComplete(webBrowser.getStepName());
             }
         }
@@ -248,8 +264,9 @@ var microprofileConfigCallBack = (function() {
     var __listenToBrowserForSystemPropConfig = function(webBrowser) {
         var setBrowserContent = function(currentURL) {
             if (contentManager.getCurrentInstructionIndex(webBrowser.getStepName()) === 1) {
+                webBrowser.contentRootElement.trigger("click");
                 webBrowser.setBrowserContent("/guides/iguide-microprofile-config/html/interactive-guides/microprofile-config/download-from-property-in-system-props.html");
-                webBrowser.setBrowserStatusBar("Retrieved data from Production on port 9083.");
+                webBrowser.setBrowserStatusBar(mpconfigMessages.RETRIEVED_DATA_PROD);
                 contentManager.markCurrentInstructionComplete(webBrowser.getStepName());
             }
         }
@@ -361,6 +378,9 @@ var microprofileConfigCallBack = (function() {
             var content = contentManager.getTabbedEditorContents(stepName, configEditorFileName);
             if (__checkDefaultInjectionEditorContent(content)) {
                 editor.closeEditorErrorBox(stepName);
+                var stepBrowser = contentManager.getBrowser(stepName);
+                stepBrowser.contentRootElement.trigger("click");
+
                 contentManager.markCurrentInstructionComplete(stepName);
             } else {
                 // display error and provide link to fix it
@@ -493,12 +513,14 @@ var microprofileConfigCallBack = (function() {
 
     var __listenToBrowserForInjectDefaultConfig = function(webBrowser) {
         var setBrowserContent = function(currentURL) {
+            webBrowser.contentRootElement.trigger("click");
+
             // Check if URL is correct before loading content
             if(webBrowser.getURL() === "https://mycarvendor.openliberty.io/car-types"){
                 var instructionIdx = contentManager.getCurrentInstructionIndex(webBrowser.getStepName());
                 if (instructionIdx === 1) {
                     webBrowser.setBrowserContent("/guides/iguide-microprofile-config/html/interactive-guides/microprofile-config/download-from-injection.html");
-                    webBrowser.setBrowserStatusBar("Retrieved data from Development on port 9080.");
+                    webBrowser.setBrowserStatusBar(mpconfigMessages.RETRIEVED_DATA_DEV);
                     contentManager.markCurrentInstructionComplete(webBrowser.getStepName());
                 }
             }
@@ -519,7 +541,7 @@ var microprofileConfigCallBack = (function() {
                 // the code in resizeStepWidgets will un-hide the pod.
                 stepContent.resizeStepWidgets(stepWidgets, "pod", true);
                 contentManager.setPodContentWithSlideUp(stepName,
-                    "<p  class='errorSyntaxCss'>The following exception occurs during application startup because no default value is set:<br><br> <span style='color:red'>[ERROR   ] CWMCG5003E</span>: The [BackedAnnotatedField] @Inject @ConfigProperty private io.openliberty.guides.mpconfig.InventoryConfig.port InjectionPoint dependency was not resolved. Error: java.util.NoSuchElementException: CWMCG0015E: The property port was not found in the configuration. at com.ibm.ws.microprofile.config.impl.AbstractConfig.getValue(AbstractConfig.java:129) at [internal classes]" +
+                    "<p  class='errorSyntaxCss'>" +  mpconfigMessages.EXCEPTION1 +  "<span style='color:red'>" + mpconfigMessages.EXCEPTION2 + " CWMCG5003E</span>" +  mpconfigMessages.EXCEPTION3 +
                     "</p>"
                 );
                 // Unfortunately, making the pod the active widget allowed our disabled browser
@@ -593,7 +615,7 @@ var microprofileConfigCallBack = (function() {
                 try {
                     pg.repopulatePlaygroundConfigs();
                 } catch (e) {
-                    console.log("Unable to prepopulate the config sources. Click run on the editor to retrieve the values. Retrying");
+                    console.log(mpconfigMessages.RETRYING_MESSAGE);
                     populateContents();
                 }            
             }, 250);
