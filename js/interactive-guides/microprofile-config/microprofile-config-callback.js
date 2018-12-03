@@ -486,6 +486,9 @@ var microprofileConfigCallBack = (function() {
     };
     
     var __addInjectDefaultConfigToEditor = function(stepName) {
+        // Put the BankService.java editor into focus.
+        contentManager.focusTabbedEditorByName(stepName, configEditorFileName);
+
         var injectConfig = "    @Inject @ConfigProperty(name=\"port\", \n" +
                            "                            defaultValue=\"9080\")";
         if (stepName === undefined) {
@@ -588,6 +591,9 @@ var microprofileConfigCallBack = (function() {
 
     var configEditorFileName = "InventoryConfig.java";
     var __addInjectConfigToEditor = function(stepName) {
+        // Put the BankService.java editor into focus.
+        contentManager.focusTabbedEditorByName(stepName, configEditorFileName);
+
         var injectConfig = "    @Inject @ConfigProperty(name=\"port\")";
         if (stepName === undefined) {
            stepName = stepContent.getCurrentStepName();
