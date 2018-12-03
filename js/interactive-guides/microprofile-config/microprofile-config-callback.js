@@ -68,6 +68,7 @@ var microprofileConfigCallBack = (function() {
             if (__checkConfigPropsFile(content)) {
                 editor.closeEditorErrorBox(stepName);
                 var index = contentManager.getCurrentInstructionIndex(stepName);
+                editor.addCodeUpdated();
                 if(index === 0){
                     var stepBrowser = contentManager.getBrowser(stepName);
                     stepBrowser.contentRootElement.trigger("click");
@@ -108,6 +109,7 @@ var microprofileConfigCallBack = (function() {
                 editor.closeEditorErrorBox(stepName);
 
                 var index = contentManager.getCurrentInstructionIndex(stepName);
+                editor.addCodeUpdated();
                 if(index === 0){
                     var stepBrowser = contentManager.getBrowser(stepName);
                     stepBrowser.contentRootElement.trigger("click");
@@ -130,6 +132,7 @@ var microprofileConfigCallBack = (function() {
                 editor.closeEditorErrorBox(stepName);
 
                 var index = contentManager.getCurrentInstructionIndex(stepName);
+                editor.addCodeUpdated();
                 if(index === 0){
                     var stepBrowser = contentManager.getBrowser(stepName);
                     stepBrowser.contentRootElement.trigger("click");
@@ -155,6 +158,7 @@ var microprofileConfigCallBack = (function() {
                 editor.closeEditorErrorBox(stepName);
 
                 var index = contentManager.getCurrentInstructionIndex(stepName);
+                editor.addCodeUpdated();
                 if(index === 0){
                     var stepBrowser = contentManager.getBrowser(stepName);
                     stepBrowser.contentRootElement.trigger("click");
@@ -378,6 +382,7 @@ var microprofileConfigCallBack = (function() {
             var content = contentManager.getTabbedEditorContents(stepName, configEditorFileName);
             if (__checkDefaultInjectionEditorContent(content)) {
                 editor.closeEditorErrorBox(stepName);
+                editor.addCodeUpdated();
                 var stepBrowser = contentManager.getBrowser(stepName);
                 stepBrowser.contentRootElement.trigger("click");
 
@@ -396,6 +401,7 @@ var microprofileConfigCallBack = (function() {
         var stepName = editor.getStepName();
         var content = contentManager.getTabbedEditorContents(stepName, serverXmlFileName);
         if (__checkMicroProfileConfigFeatureContent(content)) {
+            editor.addCodeUpdated();
             contentManager.markCurrentInstructionComplete(stepName);
         } else {
             // display error to fix it
@@ -537,6 +543,7 @@ var microprofileConfigCallBack = (function() {
             var content = contentManager.getTabbedEditorContents(stepName, configEditorFileName);
             if (__checkInjectionEditorContent(content)) {
                 editor.closeEditorErrorBox(stepName);
+                editor.addCodeUpdated();
                 contentManager.markCurrentInstructionComplete(stepName);
                 var stepWidgets = stepContent.getStepWidgets(stepName);
                 // The pod is currently hidden.  Resize the stepWidgets so the pod will be shown.
@@ -634,6 +641,7 @@ var microprofileConfigCallBack = (function() {
 
     var updatePlaygroundProperties = function(editor) {
         var __populateProperties = function(editorInstance, editor) {
+            editorInstance.addCodeUpdated();
             var pg = contentManager.getPlayground(editorInstance.getStepName());
             pg.repopulatePlaygroundConfigs();
         };
