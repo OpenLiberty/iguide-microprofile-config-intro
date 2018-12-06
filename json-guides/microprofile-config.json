@@ -840,8 +840,15 @@
         {
             "name": "WhatNext",
             "title": "Great work!  You're done!",
-            "description": ["You learned how to use MicroProfile Config to separate configuration from code by using injection, configuring with properties files, configuring with environment variables, and configuring with system properties. You also learned the default ordinals for each of these configuration sources and how to override them.",
-                            "<p> <a href='https://github.com/OpenLiberty/iguide-microprofile-config/blob/dev/finish/sampleapp_mpconfig.zip'>Download the sample MicroProfile Config application on github</a>.</p>"
+            "description": ["You learned how to use MicroProfile Config to separate configuration from code by using injection, configuring with properties files, configuring with environment variables, and configuring with system properties. You also learned the default ordinals for each of these configuration sources and how to override them."
+                           ]
+        },
+        {
+            "name": "RelatedLinks",
+            "title": "Related links",
+            "description": ["Learn more about <b>MicroProfile</b>.",
+                            "<p> <a target='_blank' rel='noopener noreferrer' href='http://microprofile.io/' >See the MicroProfile specs.</a></p>",
+                            "<p> <a target='_blank' rel='noopener noreferrer' href='https://openliberty.io/docs/ref/microprofile/' >View MicroProfile API.</a></p>"
                            ]
         }
 
