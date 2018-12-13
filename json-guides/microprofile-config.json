@@ -4,7 +4,7 @@
     "description": "Use MicroProfile Config to separate configuration from code",
     "duration": "25 minutes",
     "audience": "developer",
-    "repo": "https://github.com/OpenLiberty/iguide-microprofile-config",
+    "repo": "https://github.com/OpenLiberty/iguide-microprofile-config-intro",
     "steps": [
         {
             "name": "Intro",
@@ -27,7 +27,7 @@
                   ],
                   "content": [
                     {
-                      "content": "<div class='ordinalPriorities'><img src='/guides/iguide-microprofile-config/html/interactive-guides/microprofile-config/images/ordinalPriorities.svg' alt='Ordinal Priorities'></div>",
+                      "content": "<div class='ordinalPriorities'><img src='/guides/iguide-microprofile-config-intro/html/interactive-guides/microprofile-config/images/ordinalPriorities.svg' alt='Ordinal Priorities'></div>",
                       "displayType": "pod"
                     }
                   ]
@@ -40,7 +40,7 @@
             "description": [
                 "Imagine that you're developing and deploying a DisplayCarTypes microservice so that you can display the types of cars that are currently available for purchase from your business. This microservice has a dependency on another microservice called ObtainCarTypes, which provides the currently available list. As you develop your DisplayCarTypes microservice, you need to ensure that it works correctly when it interacts with the ObtainCarTypes microservice. For stability and security reasons, you don't want to test against the production version of ObtainCarTypes during the development pipeline. Instead, you run four instances of the ObtainCarTypes microservice, one for each stage of the devOps pipeline as shown in the following diagram:",
                 "",
-                "<div class=\"devOpsPipeline\"><center><img src=\"/guides/iguide-microprofile-config/html/interactive-guides/microprofile-config/images/intro.svg\" alt=\"DisplayCarTypes microservice can connect to one of the ObtainCarTypes instances: Development on port 9080, Test on port 9081, Quality Assurance on port 9082, Production on port 9083\"></center></div>",
+                "<div class=\"devOpsPipeline\"><center><img src=\"/guides/iguide-microprofile-config-intro/html/interactive-guides/microprofile-config/images/intro.svg\" alt=\"DisplayCarTypes microservice can connect to one of the ObtainCarTypes instances: Development on port 9080, Test on port 9081, Quality Assurance on port 9082, Production on port 9083\"></center></div>",
                 "As you progress through this guide, you will set a configuration property for the port value to specify which of the four ObtainCarTypes instances the DisplayCarTypes microservice should connect to. "]
         },
         {
@@ -262,7 +262,7 @@
               {
                 "displayType":"webBrowser",
                 "url": "https://mycarvendor.openliberty.io/car-types",
-                "browserContent": "/guides/iguide-microprofile-config/html/interactive-guides/microprofile-config/download-from-injection.html",
+                "browserContent": "/guides/iguide-microprofile-config-intro/html/interactive-guides/microprofile-config/download-from-injection.html",
                 "statusBarText": "Retrieved data from Development on port 9080.",
                 "callback": "(function test(webBrowser) {microprofileConfigCallBack.listenToBrowserForPropFileConfig(webBrowser); })"
               }
@@ -342,7 +342,7 @@
               {
                 "displayType":"webBrowser",
                 "url": "https://mycarvendor.openliberty.io/car-types",
-                "browserContent": "/guides/iguide-microprofile-config/html/interactive-guides/microprofile-config/download-from-properties-file.html",
+                "browserContent": "/guides/iguide-microprofile-config-intro/html/interactive-guides/microprofile-config/download-from-properties-file.html",
                 "statusBarText": "Retrieved data from Test on port 9081.",
                 "callback": "(function test(webBrowser) {microprofileConfigCallBack.listenToBrowserForServerEnvConfig(webBrowser); })"
               }
@@ -433,7 +433,7 @@
                 {
                   "displayType":"webBrowser",
                   "url": "https://mycarvendor.openliberty.io/car-types",
-                  "browserContent": "/guides/iguide-microprofile-config/html/interactive-guides/microprofile-config/download-from-property-in-server-env.html",
+                  "browserContent": "/guides/iguide-microprofile-config-intro/html/interactive-guides/microprofile-config/download-from-property-in-server-env.html",
                   "statusBarText": "Retrieved data from Quality Assurance on port 9082.",
                   "callback": "(function test(webBrowser) {microprofileConfigCallBack.listenToBrowserForSystemPropConfig(webBrowser); })"
                 }
@@ -519,7 +519,7 @@
               {
                 "displayType":"webBrowser",
                 "url": "https://mycarvendor.openliberty.io/car-types",
-                "browserContent": "/guides/iguide-microprofile-config/html/interactive-guides/microprofile-config/download-from-property-in-system-props.html",
+                "browserContent": "/guides/iguide-microprofile-config-intro/html/interactive-guides/microprofile-config/download-from-property-in-system-props.html",
                 "statusBarText": "Retrieved data from Production on port 9083.",
                 "callback": "(function test(webBrowser) {microprofileConfigCallBack.listenToBrowserForPropFileConfig(webBrowser); })"
               }
@@ -605,7 +605,7 @@
                 },
                 {
                     "displayType": "pod",
-                    "content": "/guides/iguide-microprofile-config/html/interactive-guides/microprofile-config/playground.html",
+                    "content": "/guides/iguide-microprofile-config-intro/html/interactive-guides/microprofile-config/playground.html",
                     "callback": "(function(pod) {microprofileConfigCallBack.createPlayground(pod, 'DefaultPlayground')})"
                 }
             ]
@@ -614,7 +614,7 @@
             "name": "WhatNext",
             "title": "Great work!  You're done!",
             "description": ["You learned how to use MicroProfile Config to separate configuration from code by using injection, configuring with properties files, configuring with environment variables, and configuring with system properties. You also learned the default ordinals for each of these configuration sources and how to override them.",
-                            "<p> <a href='https://github.com/OpenLiberty/iguide-microprofile-config/blob/dev/finish/sampleapp_mpconfig.zip'>Download the sample MicroProfile Config application on github</a>.</p>"
+                            "<p> <a href='https://github.com/OpenLiberty/iguide-microprofile-config-intro/blob/dev/finish/sampleapp_mpconfig.zip'>Download the sample MicroProfile Config application on github</a>.</p>"
                            ]
         }
 
