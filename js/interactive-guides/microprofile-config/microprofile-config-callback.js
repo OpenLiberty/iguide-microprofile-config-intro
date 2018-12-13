@@ -245,7 +245,7 @@ var microprofileConfigCallBack = (function() {
         var setBrowserContent = function(currentURL) {
             if (contentManager.getCurrentInstructionIndex(webBrowser.getStepName()) === 1) {
                 webBrowser.contentRootElement.trigger("click");
-                webBrowser.setBrowserContent("/guides/iguide-microprofile-config/html/interactive-guides/microprofile-config/download-from-properties-file.html");
+                webBrowser.setBrowserContent("/guides/iguide-microprofile-config-intro/html/interactive-guides/microprofile-config/download-from-properties-file.html");
                 webBrowser.setBrowserStatusBar(mpconfigMessages.RETRIEVED_DATA);
                 contentManager.markCurrentInstructionComplete(webBrowser.getStepName());
             }
@@ -257,7 +257,7 @@ var microprofileConfigCallBack = (function() {
         var setBrowserContent = function(currentURL) {
             if (contentManager.getCurrentInstructionIndex(webBrowser.getStepName()) === 1) {
                 webBrowser.contentRootElement.trigger("click");
-                webBrowser.setBrowserContent("/guides/iguide-microprofile-config/html/interactive-guides/microprofile-config/download-from-property-in-server-env.html");
+                webBrowser.setBrowserContent("/guides/iguide-microprofile-config-intro/html/interactive-guides/microprofile-config/download-from-property-in-server-env.html");
                 webBrowser.setBrowserStatusBar(mpconfigMessages.RETRIEVED_DATA_QA);
                 contentManager.markCurrentInstructionComplete(webBrowser.getStepName());
             }
@@ -269,7 +269,7 @@ var microprofileConfigCallBack = (function() {
         var setBrowserContent = function(currentURL) {
             if (contentManager.getCurrentInstructionIndex(webBrowser.getStepName()) === 1) {
                 webBrowser.contentRootElement.trigger("click");
-                webBrowser.setBrowserContent("/guides/iguide-microprofile-config/html/interactive-guides/microprofile-config/download-from-property-in-system-props.html");
+                webBrowser.setBrowserContent("/guides/iguide-microprofile-config-intro/html/interactive-guides/microprofile-config/download-from-property-in-system-props.html");
                 webBrowser.setBrowserStatusBar(mpconfigMessages.RETRIEVED_DATA_PROD);
                 contentManager.markCurrentInstructionComplete(webBrowser.getStepName());
             }
@@ -528,7 +528,7 @@ var microprofileConfigCallBack = (function() {
             if(webBrowser.getURL() === "https://mycarvendor.openliberty.io/car-types"){
                 var instructionIdx = contentManager.getCurrentInstructionIndex(webBrowser.getStepName());
                 if (instructionIdx === 1) {
-                    webBrowser.setBrowserContent("/guides/iguide-microprofile-config/html/interactive-guides/microprofile-config/download-from-injection.html");
+                    webBrowser.setBrowserContent("/guides/iguide-microprofile-config-intro/html/interactive-guides/microprofile-config/download-from-injection.html");
                     webBrowser.setBrowserStatusBar(mpconfigMessages.RETRIEVED_DATA_DEV);
                     contentManager.markCurrentInstructionComplete(webBrowser.getStepName());
                 }
