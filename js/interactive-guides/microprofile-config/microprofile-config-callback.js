@@ -218,7 +218,7 @@ var microprofileConfigCallBack = (function() {
     var __listenToBrowserForPropFileConfig = function(webBrowser) {
         var setBrowserContent = function(currentURL) {
             if (contentManager.getCurrentInstructionIndex(webBrowser.getStepName()) === 1) {
-                webBrowser.setBrowserContent("/guides/iguide-microprofile-config-intro/html/interactive-guides/microprofile-config/download-from-properties-file.html");
+                webBrowser.setBrowserContent("/guides/iguide-microprofile-config/html/interactive-guides/microprofile-config/download-from-properties-file.html");
                 webBrowser.setBrowserStatusBar("Retrieved data from Test on port 9081.");
                 contentManager.markCurrentInstructionComplete(webBrowser.getStepName());
             }
@@ -229,7 +229,7 @@ var microprofileConfigCallBack = (function() {
     var __listenToBrowserForServerEnvConfig = function(webBrowser) {
         var setBrowserContent = function(currentURL) {
             if (contentManager.getCurrentInstructionIndex(webBrowser.getStepName()) === 1) {
-                webBrowser.setBrowserContent("/guides/iguide-microprofile-config-intro/html/interactive-guides/microprofile-config/download-from-property-in-server-env.html");
+                webBrowser.setBrowserContent("/guides/iguide-microprofile-config/html/interactive-guides/microprofile-config/download-from-property-in-server-env.html");
                 webBrowser.setBrowserStatusBar("Retrieved data from Quality Assurance on port 9082.");
                 contentManager.markCurrentInstructionComplete(webBrowser.getStepName());
             }
@@ -240,7 +240,7 @@ var microprofileConfigCallBack = (function() {
     var __listenToBrowserForSystemPropConfig = function(webBrowser) {
         var setBrowserContent = function(currentURL) {
             if (contentManager.getCurrentInstructionIndex(webBrowser.getStepName()) === 1) {
-                webBrowser.setBrowserContent("/guides/iguide-microprofile-config-intro/html/interactive-guides/microprofile-config/download-from-property-in-system-props.html");
+                webBrowser.setBrowserContent("/guides/iguide-microprofile-config/html/interactive-guides/microprofile-config/download-from-property-in-system-props.html");
                 webBrowser.setBrowserStatusBar("Retrieved data from Production on port 9083.");
                 contentManager.markCurrentInstructionComplete(webBrowser.getStepName());
             }
@@ -522,7 +522,7 @@ var microprofileConfigCallBack = (function() {
             if (contentManager.getCurrentInstructionIndex(webBrowser.getStepName()) === 1) {
                 // Check if the url is correct before loading content
                 if(webBrowser.getURL() === "https://mycarvendor.openliberty.io/car-types"){
-                    webBrowser.setBrowserContent("/guides/iguide-microprofile-config-intro/html/interactive-guides/microprofile-config/download-from-injection.html");
+                    webBrowser.setBrowserContent("/guides/iguide-microprofile-config/html/interactive-guides/microprofile-config/download-from-injection.html");
                     webBrowser.setBrowserStatusBar("Retrieved data from Development on port 9080.");
                     contentManager.markCurrentInstructionComplete(webBrowser.getStepName());
                 }                
