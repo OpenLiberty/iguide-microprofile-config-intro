@@ -9,7 +9,7 @@
  *     IBM Corporation - initial API and implementation
  *******************************************************************************/
 $(document).ready(function() {
-    var iguideJsonName = "/guides/iguide-microprofile-config-intro/json-guides/microprofile-config.json";
+    var iguideJsonName = "/guides/iguide-microprofile-config/json-guides/microprofile-config.json";
     // var iguideJsonName = "/guides/iguide-circuit-breaker/json-guides/circuit-breaker.json";
     var iguideContextRoot = "MicroprofileConfig";
     // var iguideContextRoot = "CircuitBreaker";
