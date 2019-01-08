@@ -504,7 +504,7 @@ var microprofileConfigCallBack = (function() {
         contentManager.resetTabbedEditorContents(stepName, configEditorFileName);
         var content = contentManager.getTabbedEditorContents(stepName, configEditorFileName);
 
-        contentManager.replaceTabbedEditorContents(stepName, configEditorFileName, 9, 9, injectConfig);
+        contentManager.replaceTabbedEditorContents(stepName, configEditorFileName, 9, 10, injectConfig);
         var readOnlyLines = [];
         readOnlyLines.push({from: 1, to: 8}, {from: 10, to: 15});
         contentManager.markEditorReadOnlyLines(stepName, readOnlyLines);

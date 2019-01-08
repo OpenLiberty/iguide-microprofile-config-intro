@@ -133,7 +133,8 @@
                         ],
                         "writable": [
                             {
-                                "line": "6"
+                                "from": "6",
+                                "to": "6"
                             }
                         ],
                         "save": false,
@@ -202,7 +203,8 @@
                             ],
                             "writable": [
                                 {
-                                    "line": "9"
+                                    "from": "9",
+                                    "to": "9"
                                 }
                             ],
                             "save": false,
@@ -286,7 +288,8 @@
                             ],
                             "writable": [
                                 {
-                                    "line": "9"
+                                    "from": "9",
+                                    "to": "9"
                                 }
                             ],
                             "save": false,
@@ -374,7 +377,8 @@
                         ],
                         "writable": [
                             {
-                                "line": "1"
+                                "from": "1",
+                                "to": "1"
                             }
                         ],
                         "callback": "(function test(editor) {microprofileConfigCallBack.listenToEditorForPropConfig(editor); })"
@@ -470,7 +474,8 @@
                     ],
                     "writable": [
                         {
-                            "line": "1"
+                            "from": "1",
+                            "to": "1"
                         }
                     ],
                     "save": false,
@@ -578,7 +583,8 @@
                         ],
                         "writable": [
                             {
-                                "line": "1"
+                                "from": "1",
+                                "to": "1"
                             }
                         ],
                         "save": false,
@@ -672,7 +678,8 @@
                     ],
                     "writable": [
                         {
-                            "line": "2"
+                            "from": "2",
+                            "to": "2"
                         }
                     ],
                     "callback": "(function test(editor) {microprofileConfigCallBack.listenToEditorForOrdinalChange(editor); })"
@@ -770,6 +777,16 @@
                                 {
                                     "from": "1",
                                     "to": "8"
+                                },
+                                {
+                                    "from": "12",
+                                    "to": "17"
+                                }
+                            ],
+                            "writable": [
+                                {
+                                    "from": "9",
+                                    "to": "11"
                                 }
                             ],
                             "callback": "(function test(editor) {microprofileConfigCallBack.updatePlaygroundProperties(editor);})",
@@ -781,6 +798,12 @@
                             "preload": [
                                 "port=9081"
                             ],
+                            "writable": [
+                                {
+                                    "from": "1",
+                                    "to": "1"
+                                }
+                            ],
                             "callback": "(function test(editor) {microprofileConfigCallBack.updatePlaygroundProperties(editor);})",
                             "save": false
                         },
@@ -790,6 +813,12 @@
                             "preload": [
                                 "port=9082"
                             ],
+                            "writable": [
+                                {
+                                    "from": "1",
+                                    "to": "1"
+                                }
+                            ],
                             "callback": "(function test(editor) {microprofileConfigCallBack.updatePlaygroundProperties(editor);})",
                             "save": false
                         },
@@ -798,6 +827,12 @@
                             "fileName": "bootstrap.properties",
                             "preload": [
                                 "port=9083"
+                            ],
+                            "writable": [
+                                {
+                                    "from": "1",
+                                    "to": "1"
+                                }
                             ],
                             "callback": "(function test(editor) {microprofileConfigCallBack.updatePlaygroundProperties(editor);})",
                             "save": false
