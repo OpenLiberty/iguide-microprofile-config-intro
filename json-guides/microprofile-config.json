@@ -87,9 +87,9 @@
         },
         {
             "name": "EnableMPConfig",
-            "title": "Enabling MicroProfile Config",
+            "title": "Enabling MicroProfile Config in Open Liberty",
             "description": [
-                "Begin by enabling the MicroProfile Config 1.1 feature in your <code>server.xml</code> file. This feature allows you to use the MicroProfile Config API to externalize configuration data."
+                "Begin by enabling the MicroProfile Config 1.1 feature in the <code>server.xml</code> file of the Open Liberty server. This feature allows you to use the MicroProfile Config API to externalize configuration data."
             ],
             "instruction": [
               "Add the following element declaration inside the featureManager element of the <code>server.xml</code> file, or click <action tabindex='0' role='button' title='Enable MicroProfile Config' aria-label='Enable MicroProfile Config' onkeypress=\"microprofileConfigCallBack.addMicroProfileConfigFeatureButton(event, 'EnableMPConfig')\" onclick=\"microprofileConfigCallBack.addMicroProfileConfigFeatureButton(event, 'EnableMPConfig')\">&lt;feature&gtmpConfig-1.1&lt;/feature&gt;</action>.<br>Then, click <action tabindex='0' role='button' title='Run' aria-label='Run' onkeypress=\"microprofileConfigCallBack.saveTabbedEditorButton(event, 'EnableMPConfig')\" onclick=\"microprofileConfigCallBack.saveTabbedEditorButton(event, 'EnableMPConfig')\">Run</action> on the editor menu pane."
