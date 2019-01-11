@@ -30,8 +30,7 @@
                     "   <httpEndpoint host=\"*\" id=\"defaultHttpEndpoint\" httpsPort=\"${default.https.port}\"",
                     "   httpPort=\"{default.http.port}\"/>",
                     "</server>"
-                ],
-                "save": false
+                ]
             }
             ]
         }
@@ -137,7 +136,6 @@
                                 "to": "6"
                             }
                         ],
-                        "save": false,
                         "callback": "(function test(editor) {microprofileConfigCallBack.listenToEditorForFeatureInServerXML(editor); })"
                     }
                   ]                
@@ -207,7 +205,6 @@
                                     "to": "9"
                                 }
                             ],
-                            "save": false,
                             "callback": "(function test(editor) {microprofileConfigCallBack.listenToEditorForInjectConfig(editor); })"
                         },
                         {
@@ -225,7 +222,6 @@
                                 "   httpPort=\"${default.http.port}\"/>",
                                 "</server>"
                             ],
-                            "save": false,
                             "readonly": true
                         }
                     ]
@@ -292,7 +288,6 @@
                                     "to": "9"
                                 }
                             ],
-                            "save": false,
                             "callback": "(function test(editor) {microprofileConfigCallBack.listenToEditorForInjectDefaultConfig(editor); })"
                         },
                         {
@@ -310,7 +305,6 @@
                                 "   httpPort=\"${default.http.port}\"/>",
                                 "</server>"
                             ],
-                            "save": false,
                             "readonly": true
                         }
                     ]                    
@@ -364,14 +358,12 @@
                               "    }",
                               "}"
                         ],
-                        "readonly": true,
-                        "save": false
+                        "readonly": true
                       },
                       {
                         "displayType":"fileEditor",
                         "fileName": "META-INF/microprofile-config.properties",
                         "readonly": false,
-                        "save": false,
                         "preload": [
                             ""
                         ],
@@ -398,7 +390,6 @@
                             "   httpPort=\"${default.http.port}\"/>",
                             "</server>"
                         ],
-                        "save": false,
                         "readonly": true
                       }
                     ]
@@ -454,8 +445,7 @@
                           "    }",
                           "}"
                     ],
-                    "readonly": true,
-                    "save": false
+                    "readonly": true
                   },
                   {
                     "displayType":"fileEditor",
@@ -463,8 +453,7 @@
                     "preload": [
                         "port=9081"
                     ],
-                    "readonly": true,
-                    "save": false
+                    "readonly": true
                   },
                   {
                     "displayType":"fileEditor",
@@ -478,7 +467,6 @@
                             "to": "1"
                         }
                     ],
-                    "save": false,
                     "callback": "(function test(editor) {microprofileConfigCallBack.listenToEditorForServerEnv(editor); })"
                   },
                   {
@@ -496,7 +484,6 @@
                         "   httpPort=\"${default.http.port}\"/>",
                         "</server>"
                     ],
-                    "save": false,
                     "readonly": true
                   }
                 ]
@@ -554,8 +541,7 @@
                           "    }",
                           "}"
                       ],
-                      "readonly": true,
-                      "save": false
+                      "readonly": true
                     },
                     {
                       "displayType":"fileEditor",
@@ -563,8 +549,7 @@
                       "preload": [
                           "port=9081"
                       ],
-                      "readonly": true,
-                      "save": false
+                      "readonly": true
                     },
                     {
                       "displayType":"fileEditor",
@@ -572,8 +557,7 @@
                       "preload": [
                         "port=9082"
                       ],
-                      "readonly": true,
-                      "save": false
+                      "readonly": true
                     },
                     {
                         "displayType":"fileEditor",
@@ -587,7 +571,6 @@
                                 "to": "1"
                             }
                         ],
-                        "save": false,
                         "callback": "(function test(editor) {microprofileConfigCallBack.listenToEditorForSystemProperties(editor); })"
                     },
                     {
@@ -605,7 +588,6 @@
                             "   httpPort=\"${default.http.port}\"/>",
                             "</server>"
                         ],
-                        "save": false,
                         "readonly": true
                     }
                   ]
@@ -659,13 +641,11 @@
                           "    }",
                           "}"
                     ],
-                    "readonly": true,
-                    "save": false
+                    "readonly": true
                   },
                   {
                     "displayType":"fileEditor",
                     "fileName": "META-INF/microprofile-config.properties",
-                    "save": false,
                     "preload": [
                         "port=9081",
                         ""
@@ -690,8 +670,7 @@
                     "preload": [
                       "port=9082"
                     ],
-                    "readonly": true,
-                    "save": false
+                    "readonly": true
                   },
                   {
                     "displayType":"fileEditor",
@@ -699,8 +678,7 @@
                     "preload": [
                         "port=9083"
                      ],
-                    "readonly": true,
-                    "save": false                 
+                    "readonly": true              
                   },
                   {
                     "displayType": "fileEditor",
@@ -717,7 +695,6 @@
                         "   httpPort=\"${default.http.port}\"/>",
                         "</server>"
                     ],
-                    "save": false,
                     "readonly": true
                   }
                 ]
@@ -789,8 +766,7 @@
                                     "to": "11"
                                 }
                             ],
-                            "callback": "(function test(editor) {microprofileConfigCallBack.updatePlaygroundProperties(editor);})",
-                            "save": false
+                            "callback": "(function test(editor) {microprofileConfigCallBack.updatePlaygroundProperties(editor);})"
                         },
                         {
                             "displayType": "fileEditor",
@@ -804,8 +780,7 @@
                                     "to": "1"
                                 }
                             ],
-                            "callback": "(function test(editor) {microprofileConfigCallBack.updatePlaygroundProperties(editor);})",
-                            "save": false
+                            "callback": "(function test(editor) {microprofileConfigCallBack.updatePlaygroundProperties(editor);})"
                         },
                         {
                             "displayType": "fileEditor",
@@ -819,8 +794,7 @@
                                     "to": "1"
                                 }
                             ],
-                            "callback": "(function test(editor) {microprofileConfigCallBack.updatePlaygroundProperties(editor);})",
-                            "save": false
+                            "callback": "(function test(editor) {microprofileConfigCallBack.updatePlaygroundProperties(editor);})"
                         },
                         {
                             "displayType": "fileEditor",
@@ -834,8 +808,7 @@
                                     "to": "1"
                                 }
                             ],
-                            "callback": "(function test(editor) {microprofileConfigCallBack.updatePlaygroundProperties(editor);})",
-                            "save": false
+                            "callback": "(function test(editor) {microprofileConfigCallBack.updatePlaygroundProperties(editor);})"
                         }
                     ]
                 }
