@@ -10,7 +10,6 @@
 *******************************************************************************/
 var microprofileConfigCallBack = (function() {
 
-    var mpconfigMessages = microprofileConfigMessages.returnMessages();
     var propsFileConfig = "port=9081";
     var propsFileName = "META-INF/microprofile-config.properties";
     
@@ -245,8 +244,8 @@ var microprofileConfigCallBack = (function() {
         var setBrowserContent = function(currentURL) {
             if (contentManager.getCurrentInstructionIndex(webBrowser.getStepName()) === 1) {
                 webBrowser.contentRootElement.trigger("click");
-                webBrowser.setBrowserContent("/guides/iguide-microprofile-config/html/interactive-guides/microprofile-config/download-from-properties-file.html");
-                webBrowser.setBrowserStatusBar(mpconfigMessages.RETRIEVED_DATA);
+                webBrowser.setBrowserContent("/guides/iguide-microprofile-config/html/download-from-properties-file.html");
+                webBrowser.setBrowserStatusBar(microprofile_config_messages.RETRIEVED_DATA);
                 contentManager.markCurrentInstructionComplete(webBrowser.getStepName());
             }
         }
@@ -257,8 +256,8 @@ var microprofileConfigCallBack = (function() {
         var setBrowserContent = function(currentURL) {
             if (contentManager.getCurrentInstructionIndex(webBrowser.getStepName()) === 1) {
                 webBrowser.contentRootElement.trigger("click");
-                webBrowser.setBrowserContent("/guides/iguide-microprofile-config/html/interactive-guides/microprofile-config/download-from-property-in-server-env.html");
-                webBrowser.setBrowserStatusBar(mpconfigMessages.RETRIEVED_DATA_QA);
+                webBrowser.setBrowserContent("/guides/iguide-microprofile-config/html/download-from-property-in-server-env.html");
+                webBrowser.setBrowserStatusBar(microprofile_config_messages.RETRIEVED_DATA_QA);
                 contentManager.markCurrentInstructionComplete(webBrowser.getStepName());
             }
         }
@@ -269,8 +268,8 @@ var microprofileConfigCallBack = (function() {
         var setBrowserContent = function(currentURL) {
             if (contentManager.getCurrentInstructionIndex(webBrowser.getStepName()) === 1) {
                 webBrowser.contentRootElement.trigger("click");
-                webBrowser.setBrowserContent("/guides/iguide-microprofile-config/html/interactive-guides/microprofile-config/download-from-property-in-system-props.html");
-                webBrowser.setBrowserStatusBar(mpconfigMessages.RETRIEVED_DATA_PROD);
+                webBrowser.setBrowserContent("/guides/iguide-microprofile-config/html/download-from-property-in-system-props.html");
+                webBrowser.setBrowserStatusBar(microprofile_config_messages.RETRIEVED_DATA_PROD);
                 contentManager.markCurrentInstructionComplete(webBrowser.getStepName());
             }
         }
@@ -528,8 +527,8 @@ var microprofileConfigCallBack = (function() {
             if(webBrowser.getURL() === "https://mycarvendor.openliberty.io/car-types"){
                 var instructionIdx = contentManager.getCurrentInstructionIndex(webBrowser.getStepName());
                 if (instructionIdx === 1) {
-                    webBrowser.setBrowserContent("/guides/iguide-microprofile-config/html/interactive-guides/microprofile-config/download-from-injection.html");
-                    webBrowser.setBrowserStatusBar(mpconfigMessages.RETRIEVED_DATA_DEV);
+                    webBrowser.setBrowserContent("/guides/iguide-microprofile-config/html/download-from-injection.html");
+                    webBrowser.setBrowserStatusBar(microprofile_config_messages.RETRIEVED_DATA_DEV);
                     contentManager.markCurrentInstructionComplete(webBrowser.getStepName());
                 }
             }
@@ -551,7 +550,7 @@ var microprofileConfigCallBack = (function() {
                 // the code in resizeStepWidgets will un-hide the pod.
                 stepContent.resizeStepWidgets(stepWidgets, "pod", true);
                 contentManager.setPodContentWithSlideUp(stepName,
-                    "<p  class='errorSyntaxCss'>" +  mpconfigMessages.EXCEPTION1 +  "<span style='color:red'>" + mpconfigMessages.EXCEPTION2 + " CWMCG5003E</span>" +  mpconfigMessages.EXCEPTION3 +
+                    "<p  class='errorSyntaxCss'>" +  microprofile_config_messages.EXCEPTION1 +  "<span style='color:red'>" + microprofile_config_messages.EXCEPTION2 + " CWMCG5003E</span>" +  microprofile_config_messages.EXCEPTION3 +
                     "</p>"
                 );
                 // Unfortunately, making the pod the active widget allowed our disabled browser
@@ -628,7 +627,7 @@ var microprofileConfigCallBack = (function() {
                 try {
                     pg.repopulatePlaygroundConfigs();
                 } catch (e) {
-                    console.log(mpconfigMessages.RETRYING_MESSAGE);
+                    console.log(microprofile_config_messages.RETRYING_MESSAGE);
                     populateContents();
                 }            
             }, 250);
