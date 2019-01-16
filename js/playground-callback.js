@@ -10,7 +10,6 @@ var playground = function(){
     var properties = {};
     var staging = [];
     var fileOrdinals = {};
-    var mpconfigMessages = microprofileConfigMessages.returnMessages();
    
 
     var _playground = function(root, stepName) {
@@ -174,7 +173,7 @@ var playground = function(){
                 if (this.getProperty(key) !== null) {
                     this.playgroundAddConfig(key, value, source, ordinal);
                 } else {
-                    var message = utils.formatString(mpconfigMessages.INJECTION_REQUIRED, [key]);
+                    var message = utils.formatString(microprofile_config_messages.INJECTION_REQUIRED, [key]);
                     this.__displayErrorMessage(message);
                 }
             }
@@ -199,15 +198,15 @@ var playground = function(){
 
             //create a table to display properties
             var propsTable = this.root.find('.propsTable');
-            propsTable.attr('aria-label', mpconfigMessages.PROPS_TABLE_LABEL);
+            propsTable.attr('aria-label', microprofile_config_messages.PROPS_TABLE_LABEL);
             propsTable.empty();
-            propsTable.append('<tr><th tabindex="0" aria-label="' + mpconfigMessages.PROPERTY + '" scope="column">' + mpconfigMessages.PROPERTY + '</th><th tabindex="0" aria-label="' + mpconfigMessages.VALUE +  '"  scope="column">' + mpconfigMessages.VALUE + '</th><th tabindex="0" aria-label="' + mpconfigMessages.SOURCE + '"scope="column">' + mpconfigMessages.SOURCE + '</th></tr></table>'); //adding the column headers
+            propsTable.append('<tr><th tabindex="0" aria-label="' + microprofile_config_messages.PROPERTY + '" scope="column">' + microprofile_config_messages.PROPERTY + '</th><th tabindex="0" aria-label="' + microprofile_config_messages.VALUE +  '"  scope="column">' + microprofile_config_messages.VALUE + '</th><th tabindex="0" aria-label="' + microprofile_config_messages.SOURCE + '"scope="column">' + microprofile_config_messages.SOURCE + '</th></tr></table>'); //adding the column headers
 
             for (var key in props) {
                 if (props[key].ordinal < 0) {
-                    this.__displayErrorMessage(utils.formatString(mpconfigMessages.VALUE_REQUIRED, [key]));
+                    this.__displayErrorMessage(utils.formatString(microprofile_config_messages.VALUE_REQUIRED, [key]));
                 } else {
-                    var prop = $('<tr class="propertyRow" tabindex="0" aria-label="' + mpconfigMessages.PROPS_TABLE_CLICKABLE + '">');
+                    var prop = $('<tr class="propertyRow" tabindex="0" aria-label="' + microprofile_config_messages.PROPS_TABLE_CLICKABLE + '">');
                     prop.append('<td title="'+ key + '" tabindex="0">' + key + '</td>');
                     prop.append('<td title="'+ props[key].value + '" tabindex="0">' + props[key].value + '</td>');
                     prop.append('<td title="'+ this.__getFileName(props[key].source) + '" tabindex="0">' + this.__getFileName(props[key].source) + '</td>');
