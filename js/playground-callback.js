@@ -6,12 +6,13 @@ var playground = function(){
     var SYS_FILE = 'bootstrap.properties';
 
     var FILETYPES = {'inject':'inject', 'propFile':'propFile', 'envVar':'envVar', 'sysProp':'sysProp'};
+    var FILENAMES = {'inject': JAVA_FILE, 'propFile': PROP_FILE, 'envVar': ENV_FILE, 'sysProp': SYS_FILE};
 
     var properties = {};
     var staging = [];
     var fileOrdinals = {};
+    var hasError = false;
    
-
     var _playground = function(root, stepName) {
         this.root = root;
         this.stepName = stepName;
@@ -56,6 +57,8 @@ var playground = function(){
             this.__getSystemProperties(SYS_FILE);
             this.showProperties();
             this.updateFigure();
+
+            return hasError;
         },
 
         __getInjectionProperties: function(fileName) {
@@ -167,6 +170,8 @@ var playground = function(){
          * Used after parsing properties files and checked for existence of `config_ordinal`
          */
         __storeStagedProperties: function(source, ordinal) {
+            // use array to take care of multiple errors
+            var errors = [];
             for (var i in staging) {
                 var key = staging[i][0];
                 var value = staging[i][1];
@@ -174,8 +179,13 @@ var playground = function(){
                     this.playgroundAddConfig(key, value, source, ordinal);
                 } else {
                     var message = utils.formatString(microprofile_config_messages.INJECTION_REQUIRED, [key]);
-                    this.__displayErrorMessage(message);
+                    errors.push(message);
                 }
+            }
+            if (errors.length > 0) {
+                // convert errors in array to strings with line break
+                var errorMessages = errors.join("<br/>");
+                this.__displayErrorMessage(errorMessages, source);
             }
             staging = [];
         },
@@ -204,7 +214,7 @@ var playground = function(){
 
             for (var key in props) {
                 if (props[key].ordinal < 0) {
-                    this.__displayErrorMessage(utils.formatString(microprofile_config_messages.VALUE_REQUIRED, [key]));
+                    this.__displayErrorMessage(utils.formatString(microprofile_config_messages.VALUE_REQUIRED, [key]), props[key].source);
                 } else {
                     var prop = $('<tr class="propertyRow" tabindex="0" aria-label="' + microprofile_config_messages.PROPS_TABLE_CLICKABLE + '">');
                     prop.append('<td title="'+ key + '" tabindex="0">' + key + '</td>');
@@ -388,16 +398,12 @@ var playground = function(){
          * Displays error message across all the files in the tabbedEditor
          * TODO: possibly move this functionality into commons code, make sure to ignore readonly editors
          */
-        __displayErrorMessage: function(message) {
-            var javaEditor = this.__getEditorInstance(JAVA_FILE);
-            var propEditor = this.__getEditorInstance(PROP_FILE);
-            var envEditor = this.__getEditorInstance(ENV_FILE);
-            var sysEditor = this.__getEditorInstance(SYS_FILE);
-
-            javaEditor.createCustomErrorMessage(message);
-            propEditor.createCustomErrorMessage(message);
-            envEditor.createCustomErrorMessage(message);
-            sysEditor.createCustomErrorMessage(message);
+        __displayErrorMessage: function(message, source) {
+            var fileName = FILENAMES[source];
+            var editor = this.__getEditorInstance(fileName);
+            editor.createCustomErrorMessage(message);
+            contentManager.focusTabbedEditorByName(editor.stepName, fileName);
+            hasError = true;
         },
 
         /**
@@ -405,6 +411,7 @@ var playground = function(){
          * TODO: possibly move this functionality into commons code, make sure to ignore readonly editors
          */
         __clearErrorMessage: function() {
+            hasError = false;
             var javaEditor = this.__getEditorInstance(JAVA_FILE);
             var propEditor = this.__getEditorInstance(PROP_FILE);
             var envEditor = this.__getEditorInstance(ENV_FILE);

@@ -640,9 +640,10 @@ var microprofileConfigCallBack = (function() {
 
     var updatePlaygroundProperties = function(editor) {
         var __populateProperties = function(editorInstance, editor) {
-            editorInstance.addCodeUpdated();
             var pg = contentManager.getPlayground(editorInstance.getStepName());
-            pg.repopulatePlaygroundConfigs();
+            if (!pg.repopulatePlaygroundConfigs()) {
+                editorInstance.addCodeUpdated();
+            }
         };
         editor.addSaveListener(__populateProperties);
     };
