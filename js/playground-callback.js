@@ -402,8 +402,10 @@ var playground = function(){
             var fileName = FILENAMES[source];
             var editor = this.__getEditorInstance(fileName);
             editor.createCustomErrorMessage(message);
-            contentManager.focusTabbedEditorByName(editor.stepName, fileName);
-            hasError = true;
+            if (!hasError) {
+                contentManager.focusTabbedEditorByName(editor.stepName, fileName);
+                hasError = true;
+            }
         },
 
         /**
