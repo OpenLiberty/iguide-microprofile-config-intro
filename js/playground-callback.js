@@ -212,9 +212,11 @@ var playground = function(){
             propsTable.empty();
             propsTable.append('<tr><th tabindex="0" aria-label="' + microprofile_config_messages.PROPERTY + '" scope="column">' + microprofile_config_messages.PROPERTY + '</th><th tabindex="0" aria-label="' + microprofile_config_messages.VALUE +  '"  scope="column">' + microprofile_config_messages.VALUE + '</th><th tabindex="0" aria-label="' + microprofile_config_messages.SOURCE + '"scope="column">' + microprofile_config_messages.SOURCE + '</th></tr></table>'); //adding the column headers
 
+            // use array to take care of multiple errors
+            var errors = [];
             for (var key in props) {
                 if (props[key].ordinal < 0) {
-                    this.__displayErrorMessage(utils.formatString(microprofile_config_messages.VALUE_REQUIRED, [key]), props[key].source);
+                    errors.push(utils.formatString(microprofile_config_messages.VALUE_REQUIRED, [key]));
                 } else {
                     var prop = $('<tr class="propertyRow" tabindex="0" aria-label="' + microprofile_config_messages.PROPS_TABLE_CLICKABLE + '">');
                     prop.append('<td title="'+ key + '" tabindex="0">' + key + '</td>');
@@ -222,6 +224,11 @@ var playground = function(){
                     prop.append('<td title="'+ this.__getFileName(props[key].source) + '" tabindex="0">' + this.__getFileName(props[key].source) + '</td>');
                     propsTable.append(prop);
                 }
+            }
+            if (errors.length > 0) {
+                // convert errors in array to strings with line break
+                var errorMessages = errors.join("<br/>");
+                this.__displayErrorMessage(errorMessages, "inject", true);
             }
 
             //add on click event to each row in the properties table
@@ -398,12 +405,14 @@ var playground = function(){
          * Displays error message across all the files in the tabbedEditor
          * TODO: possibly move this functionality into commons code, make sure to ignore readonly editors
          */
-        __displayErrorMessage: function(message, source) {
+        __displayErrorMessage: function(message, source, showFirst) {
             var fileName = FILENAMES[source];
             var editor = this.__getEditorInstance(fileName);
             editor.createCustomErrorMessage(message);
-            contentManager.focusTabbedEditorByName(editor.stepName, fileName);
-            hasError = true;
+            if (!hasError || showFirst) {
+                contentManager.focusTabbedEditorByName(editor.stepName, fileName);
+                hasError = true;
+            }
         },
 
         /**
