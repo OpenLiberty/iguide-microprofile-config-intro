@@ -6,13 +6,13 @@ var playground = function(){
     var SYS_FILE = 'bootstrap.properties';
 
     var FILETYPES = {'inject':'inject', 'propFile':'propFile', 'envVar':'envVar', 'sysProp':'sysProp'};
+    var FILENAMES = {'inject': JAVA_FILE, 'propFile': PROP_FILE, 'envVar': ENV_FILE, 'sysProp': SYS_FILE};
 
     var properties = {};
     var staging = [];
     var fileOrdinals = {};
-    var mpconfigMessages = microprofileConfigMessages.returnMessages();
+    var hasError = false;
    
-
     var _playground = function(root, stepName) {
         this.root = root;
         this.stepName = stepName;
@@ -57,6 +57,8 @@ var playground = function(){
             this.__getSystemProperties(SYS_FILE);
             this.showProperties();
             this.updateFigure();
+
+            return hasError;
         },
 
         __getInjectionProperties: function(fileName) {
@@ -168,15 +170,22 @@ var playground = function(){
          * Used after parsing properties files and checked for existence of `config_ordinal`
          */
         __storeStagedProperties: function(source, ordinal) {
+            // use array to take care of multiple errors
+            var errors = [];
             for (var i in staging) {
                 var key = staging[i][0];
                 var value = staging[i][1];
                 if (this.getProperty(key) !== null) {
                     this.playgroundAddConfig(key, value, source, ordinal);
                 } else {
-                    var message = utils.formatString(mpconfigMessages.INJECTION_REQUIRED, [key]);
-                    this.__displayErrorMessage(message);
+                    var message = utils.formatString(microprofile_config_messages.INJECTION_REQUIRED, [key]);
+                    errors.push(message);
                 }
+            }
+            if (errors.length > 0) {
+                // convert errors in array to strings with line break
+                var errorMessages = errors.join("<br/>");
+                this.__displayErrorMessage(errorMessages, source);
             }
             staging = [];
         },
@@ -199,20 +208,27 @@ var playground = function(){
 
             //create a table to display properties
             var propsTable = this.root.find('.propsTable');
-            propsTable.attr('aria-label', mpconfigMessages.PROPS_TABLE_LABEL);
+            propsTable.attr('aria-label', microprofile_config_messages.PROPS_TABLE_LABEL);
             propsTable.empty();
-            propsTable.append('<tr><th tabindex="0" aria-label="' + mpconfigMessages.PROPERTY + '" scope="column">' + mpconfigMessages.PROPERTY + '</th><th tabindex="0" aria-label="' + mpconfigMessages.VALUE +  '"  scope="column">' + mpconfigMessages.VALUE + '</th><th tabindex="0" aria-label="' + mpconfigMessages.SOURCE + '"scope="column">' + mpconfigMessages.SOURCE + '</th></tr></table>'); //adding the column headers
+            propsTable.append('<tr><th tabindex="0" aria-label="' + microprofile_config_messages.PROPERTY + '" scope="column">' + microprofile_config_messages.PROPERTY + '</th><th tabindex="0" aria-label="' + microprofile_config_messages.VALUE +  '"  scope="column">' + microprofile_config_messages.VALUE + '</th><th tabindex="0" aria-label="' + microprofile_config_messages.SOURCE + '"scope="column">' + microprofile_config_messages.SOURCE + '</th></tr></table>'); //adding the column headers
 
+            // use array to take care of multiple errors
+            var errors = [];
             for (var key in props) {
                 if (props[key].ordinal < 0) {
-                    this.__displayErrorMessage(utils.formatString(mpconfigMessages.VALUE_REQUIRED, [key]));
+                    errors.push(utils.formatString(microprofile_config_messages.VALUE_REQUIRED, [key]));
                 } else {
-                    var prop = $('<tr class="propertyRow" tabindex="0" aria-label="' + mpconfigMessages.PROPS_TABLE_CLICKABLE + '">');
+                    var prop = $('<tr class="propertyRow" tabindex="0" aria-label="' + microprofile_config_messages.PROPS_TABLE_CLICKABLE + '">');
                     prop.append('<td title="'+ key + '" tabindex="0">' + key + '</td>');
                     prop.append('<td title="'+ props[key].value + '" tabindex="0">' + props[key].value + '</td>');
                     prop.append('<td title="'+ this.__getFileName(props[key].source) + '" tabindex="0">' + this.__getFileName(props[key].source) + '</td>');
                     propsTable.append(prop);
                 }
+            }
+            if (errors.length > 0) {
+                // convert errors in array to strings with line break
+                var errorMessages = errors.join("<br/>");
+                this.__displayErrorMessage(errorMessages, "inject", true);
             }
 
             //add on click event to each row in the properties table
@@ -389,16 +405,14 @@ var playground = function(){
          * Displays error message across all the files in the tabbedEditor
          * TODO: possibly move this functionality into commons code, make sure to ignore readonly editors
          */
-        __displayErrorMessage: function(message) {
-            var javaEditor = this.__getEditorInstance(JAVA_FILE);
-            var propEditor = this.__getEditorInstance(PROP_FILE);
-            var envEditor = this.__getEditorInstance(ENV_FILE);
-            var sysEditor = this.__getEditorInstance(SYS_FILE);
-
-            javaEditor.createCustomErrorMessage(message);
-            propEditor.createCustomErrorMessage(message);
-            envEditor.createCustomErrorMessage(message);
-            sysEditor.createCustomErrorMessage(message);
+        __displayErrorMessage: function(message, source, showFirst) {
+            var fileName = FILENAMES[source];
+            var editor = this.__getEditorInstance(fileName);
+            editor.createCustomErrorMessage(message);
+            if (!hasError || showFirst) {
+                contentManager.focusTabbedEditorByName(editor.stepName, fileName);
+                hasError = true;
+            }
         },
 
         /**
@@ -406,6 +420,7 @@ var playground = function(){
          * TODO: possibly move this functionality into commons code, make sure to ignore readonly editors
          */
         __clearErrorMessage: function() {
+            hasError = false;
             var javaEditor = this.__getEditorInstance(JAVA_FILE);
             var propEditor = this.__getEditorInstance(PROP_FILE);
             var envEditor = this.__getEditorInstance(ENV_FILE);
