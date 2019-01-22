@@ -64,20 +64,12 @@ var microprofileConfigCallBack = (function() {
         var __showWebBrowser = function() {
             var stepName = editor.getStepName();
             var content = contentManager.getTabbedEditorContents(stepName, propsFileName);
-            if (__checkConfigPropsFile(content)) {
-                editor.closeEditorErrorBox(stepName);
-                var index = contentManager.getCurrentInstructionIndex(stepName);
-                editor.addCodeUpdated();
-                if(index === 0){
-                    var stepBrowser = contentManager.getBrowser(stepName);
-                    stepBrowser.contentRootElement.trigger("click");
-    
-                    contentManager.markCurrentInstructionComplete(stepName);
-                }
-            } else {
-                // display error and provide link to fix it
-                editor.createErrorLinkForCallBack(true, __addPropToConfigProps);
-            }
+            // var updateSuccess = false;
+            // if (__checkConfigPropsFile(content)) {
+            //     updateSuccess = true;
+            // }
+            // utils.handleEditorSave(stepName, editor, updateSuccess, __addPropToConfigProps);
+            utils.validateContentAndSave(stepName, editor, content, __checkConfigPropsFile, __addPropToConfigProps);
         };
         editor.addSaveListener(__showWebBrowser);
     };
@@ -104,21 +96,12 @@ var microprofileConfigCallBack = (function() {
         var __showWebBrowser = function() {
             var stepName = editor.getStepName();
             var content = contentManager.getTabbedEditorContents(stepName, serverEnvFileName);
-            if (__checkServerEnvContent(content)) {
-                editor.closeEditorErrorBox(stepName);
-
-                var index = contentManager.getCurrentInstructionIndex(stepName);
-                editor.addCodeUpdated();
-                if(index === 0){
-                    var stepBrowser = contentManager.getBrowser(stepName);
-                    stepBrowser.contentRootElement.trigger("click");
-    
-                    contentManager.markCurrentInstructionComplete(stepName);
-                }
-            } else {
-                // display error and provide link to fix it
-                editor.createErrorLinkForCallBack(true, __addPropToServerEnv);
-            }
+            // var updateSuccess = false;
+            // if (__checkServerEnvContent(content)) {
+            //     updateSuccess = true;
+            // }
+            // utils.handleEditorSave(stepName, editor, updateSuccess, __addPropToServerEnv);
+            utils.validateContentAndSave(stepName, editor, content, __checkServerEnvContent, __addPropToServerEnv);
         };
         editor.addSaveListener(__showWebBrowser);
     };
@@ -127,21 +110,12 @@ var microprofileConfigCallBack = (function() {
         var __showWebBrowser = function() {
             var stepName = editor.getStepName();
             var content = contentManager.getTabbedEditorContents(stepName, systemPropsFileName);
-            if (__checkSystemPropsContent(content)) {
-                editor.closeEditorErrorBox(stepName);
-
-                var index = contentManager.getCurrentInstructionIndex(stepName);
-                editor.addCodeUpdated();
-                if(index === 0){
-                    var stepBrowser = contentManager.getBrowser(stepName);
-                    stepBrowser.contentRootElement.trigger("click");
-    
-                    contentManager.markCurrentInstructionComplete(stepName);
-                }
-            } else {
-                // display error and provide link to fix it
-                editor.createErrorLinkForCallBack(true, __addPropToSystemProperties);
-            }
+            // var updateSuccess = false;
+            // if (__checkSystemPropsContent(content)) {
+            //     updateSuccess = true;
+            // }
+            // utils.handleEditorSave(stepName, editor, updateSuccess, __addPropToSystemProperties);
+            utils.validateContentAndSave(stepName, editor, content, __checkSystemPropsContent, __addPropToSystemProperties);
         };
         editor.addSaveListener(__showWebBrowser);
     };
@@ -153,21 +127,12 @@ var microprofileConfigCallBack = (function() {
         var __showWebBrowser = function() {
             var stepName = editor.getStepName();
             var content = contentManager.getTabbedEditorContents(stepName, propsFileName);
-            if (__checkConfigOrdinalProp(content)) {
-                editor.closeEditorErrorBox(stepName);
-
-                var index = contentManager.getCurrentInstructionIndex(stepName);
-                editor.addCodeUpdated();
-                if(index === 0){
-                    var stepBrowser = contentManager.getBrowser(stepName);
-                    stepBrowser.contentRootElement.trigger("click");
-    
-                    contentManager.markCurrentInstructionComplete(stepName);
-                }
-            } else {
-                // display error and provide link to fix it
-		        editor.createErrorLinkForCallBack(true, __addConfigOrdinalToProps);
-            }
+            // var updateSuccess = false;
+            // if (__checkConfigOrdinalProp(content)) {
+            //     updateSuccess = true;
+            // }
+            //utils.handleEditorSave(stepName, editor, updateSuccess, __addConfigOrdinalToProps);
+            utils.validateContentAndSave(stepName, editor, content, __checkConfigOrdinalProp, __addConfigOrdinalToProps);
         };
         editor.addSaveListener(__showWebBrowser);
     };
@@ -379,17 +344,12 @@ var microprofileConfigCallBack = (function() {
         var __showWebBrowser = function() {
             var stepName = editor.getStepName();
             var content = contentManager.getTabbedEditorContents(stepName, configEditorFileName);
-            if (__checkDefaultInjectionEditorContent(content)) {
-                editor.closeEditorErrorBox(stepName);
-                editor.addCodeUpdated();
-                var stepBrowser = contentManager.getBrowser(stepName);
-                stepBrowser.contentRootElement.trigger("click");
-
-                contentManager.markCurrentInstructionComplete(stepName);
-            } else {
-                // display error and provide link to fix it
-                editor.createErrorLinkForCallBack(true, __addInjectDefaultConfigToEditor);
-            }
+            // var updateSuccess = false;
+            // if (__checkDefaultInjectionEditorContent(content)) {
+            //     updateSuccess = true;
+            // }
+            // utils.handleEditorSave(stepName, editor, updateSuccess, __addInjectDefaultConfigToEditor);
+            utils.validateContentAndSave(stepName, editor, content, __checkDefaultInjectionEditorContent, __addInjectDefaultConfigToEditor);
         };
         editor.addSaveListener(__showWebBrowser);
     };
@@ -399,14 +359,12 @@ var microprofileConfigCallBack = (function() {
       var __saveServerXML = function() {
         var stepName = editor.getStepName();
         var content = contentManager.getTabbedEditorContents(stepName, serverXmlFileName);
-        if (__checkMicroProfileConfigFeatureContent(content)) {
-            editor.closeEditorErrorBox(stepName);
-            editor.addCodeUpdated();
-            contentManager.markCurrentInstructionComplete(stepName);
-        } else {
-            // display error to fix it
-            editor.createErrorLinkForCallBack(true, __addMicroProfileConfigFeature);
-        }
+        // var updateSuccess = false;
+        // if (__checkMicroProfileConfigFeatureContent(content)) {
+        //     updateSuccess = true;
+        // }
+        // utils.handleEditorSave(stepName, editor, updateSuccess, __addMicroProfileConfigFeature);
+        utils.validateContentAndSave(stepName, editor, content, __checkMicroProfileConfigFeatureContent, __addMicroProfileConfigFeature);
       };
       editor.addSaveListener(__saveServerXML);
     };
@@ -541,25 +499,24 @@ var microprofileConfigCallBack = (function() {
         var __showPodWithDeploymentException = function() {
             var stepName = editor.getStepName();
             var content = contentManager.getTabbedEditorContents(stepName, configEditorFileName);
+            var updateSuccess = false;
             if (__checkInjectionEditorContent(content)) {
-                editor.closeEditorErrorBox(stepName);
-                editor.addCodeUpdated();
-                contentManager.markCurrentInstructionComplete(stepName);
-                var stepWidgets = stepContent.getStepWidgets(stepName);
-                // The pod is currently hidden.  Resize the stepWidgets so the pod will be shown.
-                // You must indicate to make the "pod" the activeWidget (parameter two) so that 
-                // the code in resizeStepWidgets will un-hide the pod.
-                stepContent.resizeStepWidgets(stepWidgets, "pod", true);
-
-                // Unfortunately, making the pod the active widget allowed our disabled browser
-                // to be full size because of the way the resizeStepWidgets was written.  Therefore,
-                // make the "tabbedEditor" the activeWidget now so that it remains full size since
-                // it should be seen, not the disabled browser.
-                stepContent.resizeStepWidgets(stepWidgets, "tabbedEditor");
-            } else {
-                // display error
-                editor.createErrorLinkForCallBack(true, __addInjectConfigToEditor);
+                updateSuccess = true;
+                var index = contentManager.getCurrentInstructionIndex(stepName);
+                if (index === 0) {
+                    var stepWidgets = stepContent.getStepWidgets(stepName);
+                    // The pod is currently hidden.  Resize the stepWidgets so the pod will be shown.
+                    // You must indicate to make the "pod" the activeWidget (parameter two) so that 
+                    // the code in resizeStepWidgets will un-hide the pod.
+                    stepContent.resizeStepWidgets(stepWidgets, "pod", true);
+                    // Unfortunately, making the pod the active widget allowed our disabled browser
+                    // to be full size because of the way the resizeStepWidgets was written.  Therefore,
+                    // make the "tabbedEditor" the activeWidget now so that it remains full size since
+                    // it should be seen, not the disabled browser.
+                    stepContent.resizeStepWidgets(stepWidgets, "tabbedEditor");
+                }
             }
+            utils.handleEditorSave(stepName, editor, updateSuccess, __addInjectConfigToEditor);
         };
         editor.addSaveListener(__showPodWithDeploymentException);
     };
