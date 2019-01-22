@@ -550,10 +550,7 @@ var microprofileConfigCallBack = (function() {
                 // You must indicate to make the "pod" the activeWidget (parameter two) so that 
                 // the code in resizeStepWidgets will un-hide the pod.
                 stepContent.resizeStepWidgets(stepWidgets, "pod", true);
-                contentManager.setPodContentWithSlideUp(stepName,
-                    "<p  class='errorSyntaxCss'>" +  microprofile_config_messages.EXCEPTION1 +  "<span style='color:red'>" + microprofile_config_messages.EXCEPTION2 + " CWMCG5003E</span>" +  microprofile_config_messages.EXCEPTION3 +
-                    "</p>"
-                );
+
                 // Unfortunately, making the pod the active widget allowed our disabled browser
                 // to be full size because of the way the resizeStepWidgets was written.  Therefore,
                 // make the "tabbedEditor" the activeWidget now so that it remains full size since
