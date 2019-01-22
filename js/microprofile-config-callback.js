@@ -400,6 +400,7 @@ var microprofileConfigCallBack = (function() {
         var stepName = editor.getStepName();
         var content = contentManager.getTabbedEditorContents(stepName, serverXmlFileName);
         if (__checkMicroProfileConfigFeatureContent(content)) {
+            editor.closeEditorErrorBox(stepName);
             editor.addCodeUpdated();
             contentManager.markCurrentInstructionComplete(stepName);
         } else {
