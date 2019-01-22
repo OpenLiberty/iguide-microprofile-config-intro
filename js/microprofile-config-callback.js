@@ -64,11 +64,6 @@ var microprofileConfigCallBack = (function() {
         var __showWebBrowser = function() {
             var stepName = editor.getStepName();
             var content = contentManager.getTabbedEditorContents(stepName, propsFileName);
-            // var updateSuccess = false;
-            // if (__checkConfigPropsFile(content)) {
-            //     updateSuccess = true;
-            // }
-            // utils.handleEditorSave(stepName, editor, updateSuccess, __addPropToConfigProps);
             utils.validateContentAndSave(stepName, editor, content, __checkConfigPropsFile, __addPropToConfigProps);
         };
         editor.addSaveListener(__showWebBrowser);
@@ -96,11 +91,6 @@ var microprofileConfigCallBack = (function() {
         var __showWebBrowser = function() {
             var stepName = editor.getStepName();
             var content = contentManager.getTabbedEditorContents(stepName, serverEnvFileName);
-            // var updateSuccess = false;
-            // if (__checkServerEnvContent(content)) {
-            //     updateSuccess = true;
-            // }
-            // utils.handleEditorSave(stepName, editor, updateSuccess, __addPropToServerEnv);
             utils.validateContentAndSave(stepName, editor, content, __checkServerEnvContent, __addPropToServerEnv);
         };
         editor.addSaveListener(__showWebBrowser);
@@ -110,11 +100,6 @@ var microprofileConfigCallBack = (function() {
         var __showWebBrowser = function() {
             var stepName = editor.getStepName();
             var content = contentManager.getTabbedEditorContents(stepName, systemPropsFileName);
-            // var updateSuccess = false;
-            // if (__checkSystemPropsContent(content)) {
-            //     updateSuccess = true;
-            // }
-            // utils.handleEditorSave(stepName, editor, updateSuccess, __addPropToSystemProperties);
             utils.validateContentAndSave(stepName, editor, content, __checkSystemPropsContent, __addPropToSystemProperties);
         };
         editor.addSaveListener(__showWebBrowser);
@@ -127,11 +112,6 @@ var microprofileConfigCallBack = (function() {
         var __showWebBrowser = function() {
             var stepName = editor.getStepName();
             var content = contentManager.getTabbedEditorContents(stepName, propsFileName);
-            // var updateSuccess = false;
-            // if (__checkConfigOrdinalProp(content)) {
-            //     updateSuccess = true;
-            // }
-            //utils.handleEditorSave(stepName, editor, updateSuccess, __addConfigOrdinalToProps);
             utils.validateContentAndSave(stepName, editor, content, __checkConfigOrdinalProp, __addConfigOrdinalToProps);
         };
         editor.addSaveListener(__showWebBrowser);
@@ -344,11 +324,6 @@ var microprofileConfigCallBack = (function() {
         var __showWebBrowser = function() {
             var stepName = editor.getStepName();
             var content = contentManager.getTabbedEditorContents(stepName, configEditorFileName);
-            // var updateSuccess = false;
-            // if (__checkDefaultInjectionEditorContent(content)) {
-            //     updateSuccess = true;
-            // }
-            // utils.handleEditorSave(stepName, editor, updateSuccess, __addInjectDefaultConfigToEditor);
             utils.validateContentAndSave(stepName, editor, content, __checkDefaultInjectionEditorContent, __addInjectDefaultConfigToEditor);
         };
         editor.addSaveListener(__showWebBrowser);
@@ -359,11 +334,6 @@ var microprofileConfigCallBack = (function() {
       var __saveServerXML = function() {
         var stepName = editor.getStepName();
         var content = contentManager.getTabbedEditorContents(stepName, serverXmlFileName);
-        // var updateSuccess = false;
-        // if (__checkMicroProfileConfigFeatureContent(content)) {
-        //     updateSuccess = true;
-        // }
-        // utils.handleEditorSave(stepName, editor, updateSuccess, __addMicroProfileConfigFeature);
         utils.validateContentAndSave(stepName, editor, content, __checkMicroProfileConfigFeatureContent, __addMicroProfileConfigFeature);
       };
       editor.addSaveListener(__saveServerXML);
