@@ -26,8 +26,5 @@ var microprofile_config_messages = {
     CAR_LOGO: "car logo",
     PROPERTY: "Property",
     SOURCE: "Source",
-    VALUE: "Value",
-    EXCEPTION1: "The following exception occurs during application startup because no default value is set:<br><br>", 
-    EXCEPTION2: "[ERROR   ] ",
-    EXCEPTION3: ": The [BackedAnnotatedField] @Inject @ConfigProperty private io.openliberty.guides.mpconfig.InventoryConfig.port InjectionPoint dependency was not resolved. Error: java.util.NoSuchElementException: CWMCG0015E: The property port was not found in the configuration. at com.ibm.ws.microprofile.config.impl.AbstractConfig.getValue(AbstractConfig.java:129) at [internal classes]" 
+    VALUE: "Value"
 } ;
