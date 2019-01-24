@@ -2,26 +2,42 @@
     text-align: center; /* Align the image in the center of the div */
 }
 
-.ordinalPriorities > img {
-    width: 75%;
-    min-width: 350px;
+.ordinalPriorities > img,
+.devOpsPipeline > img  {
+    width: 100%;
     max-width: 550px;
 }
 
 .propsTable {
-  width: 100%;
-  font-size: 12px;
-  table-layout: fixed;
+    width: 100%;
+    font-size: 12px;
+    table-layout: fixed;
+    background: #fff;
+    border:solid 1px #dedede;
+}
+
+.propsTableWrapper { /* wrapper for scrollbar */
+    max-height: 80px;
+    display: block;
+    overflow-y: auto;
 }
 
 .propsTable, .propsTable tr:focus {
   outline: none;
 }
 
+.propsTable tr:nth-of-type(even) {
+    background: #f8f8f7;
+}
+
 .propsTable td {
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
+}
+
+.propsTable tr th, .propsTable tr td {
+    padding: 0em 1.625em;
 }
 
 .propsTable td:focus, .propsTable th:focus {
@@ -39,7 +55,6 @@
 
 .carSite {
     border-top: 3px solid #ffb000;
-    padding-top: 32px;
     text-align: center;
     margin: 0;
     font-family: Asap;
@@ -58,9 +73,18 @@
     font-weight: 500;    
 }
 
+.topFlexContainer {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+}
+
 .flexContainer {
     display: flex;
     flex-wrap: wrap;
+    width: 100%;
 }
 
 .card {
@@ -83,25 +107,12 @@
 }
 
 .devOpsPipeline {
-    float: center;
     text-align: center;
-}
-
-#guide_content .codeeditor .CodeMirror {
-    height: 100%;
-}
-
-#guide_content .editorContainer{
-    height: 448px;
-}
-
-#guide_content .teContainer .editorContainer{
-    height: 423px;
 }
 
 .ordinalCardContainer {
     width: 100%;
-    height: 130px;
+    height: 150px;
 }
 
 .ordinalCardContainer:focus {
@@ -111,8 +122,7 @@
 .ordinalCard {
    position: absolute;
    height: 35px;
-   width: 65%;
-   max-width: 185px;
+   width: 32%;
    color: black;
    text-align: center;
    font-size: 9px;
@@ -123,9 +133,9 @@
 
 .ordinalCard:hover, .ordinalCard:focus {
     z-index: 6;
-    font-size: 11px;
+    font-size: 10px;
     height: 40px;
-    width: 195px;
+    width: 33%;
     border: 2px solid #E3700D;
     cursor: pointer;
     outline: none;
@@ -133,25 +143,90 @@
 
 .ordinal-0 {
     z-index: 1;
-    top: 65px;
-    left: 5%;
+    top: 85px;
+    left: calc((100% - 32%)/5);
 }
 
 .ordinal-1 {
     z-index: 2;
-    top: 45px;
-    left: 15%;
+    top: 65px;
+    left: calc((100% - 32%)/5 * 2);
 }
 
 .ordinal-2 {
     z-index: 3;
-    top: 25px;
-    left: 25%;
+    top: 45px;
+    left: calc((100% - 32%)/5 * 3);
 }
 
 .ordinal-3 {
     z-index: 4;
-    top: 5px;
-    left: 42%;
+    top: 25px;
+    left: calc((100% - 32%)/5 * 4);
+}
 
+p.errorSyntaxCss {
+    margin: 0px;
+    padding: 30px;
+    word-wrap: break-word;
+    line-height: inherit;
+}
+
+@media (max-width: 1170px) {
+    .propsTable {
+        margin-left: 0px;
+        margin-right: 0px;
+        width: 100%;
+    }
+
+    .propsTableWrapper {
+        display: table;  /* no scrollbar for single column view */
+    }
+}
+
+@media (max-width: 575px) {
+
+    .ordinalCard {
+        width: 65%;
+        max-width: 185px;
+    }
+
+    .ordinalCard:hover, .ordinalCard:focus {
+        width: 65%;
+        max-width: 195px;
+    }
+
+    .ordinal-0 {
+        left: 10%;
+    }
+
+    .ordinal-1 {
+        left: 20%;
+    }
+
+    .ordinal-2 {
+        left: 30%;
+    }
+
+    .ordinal-3 {
+        left: 40%;
+    }
+}
+
+@media (max-width: 415px) {
+    .ordinal-0 {
+        left: 5%;
+    }
+
+    .ordinal-1 {
+        left: 15%;
+    }
+
+    .ordinal-2 {
+        left: 25%;
+    }
+
+    .ordinal-3 {
+        left: 35%;
+    }
 }
