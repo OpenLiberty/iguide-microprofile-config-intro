@@ -129,16 +129,22 @@
    padding: 5px 10px;
    border: .5px solid black;
    transition: .25s all;
+   display: flex;
+   flex-flow: column;
+   justify-content: center;
+   overflow: hidden;
 }
 
 .ordinalCard:hover, .ordinalCard:focus {
     z-index: 6;
     font-size: 10px;
-    height: 40px;
+    height: auto;
     width: 33%;
     border: 2px solid #E3700D;
     cursor: pointer;
     outline: none;
+    overflow: visible;
+    min-height: 40px;
 }
 
 .ordinal-0 {
