@@ -78,7 +78,7 @@
     justify-content: center;
     flex-direction: column;
     align-items: center;
-    height: 100%;
+    height: calc(100% - 3px); /* factor in the border in carSite when calculating the browser height */ 
 }
 
 .flexContainer {
