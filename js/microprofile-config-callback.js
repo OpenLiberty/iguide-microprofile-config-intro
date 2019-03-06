@@ -369,7 +369,7 @@ var microprofileConfigCallBack = (function() {
           // </featureManager>
           // and capture groups to get content before <feature>jaxrs-2.0</feature>, the feature, and after
           // closing featureManager content tag.
-          var featureManagerToMatch = "([\\s\\S]*)<feature>jaxrs-2.0</feature>([\\s\\S]*)<\\/featureManager>([\\s\\S]*)";
+          var featureManagerToMatch = "([\\s\\S]*)<feature>jaxrs-2.0</feature>([\\s\\S]*)</featureManager>([\\s\\S]*)";
           var regExpToMatch = new RegExp(featureManagerToMatch, "g");
           var groups = regExpToMatch.exec(content);
           editorContents.beforeNewFeature = groups[1]; //includes <feature>jaxrs-2.0</feature>
@@ -401,7 +401,7 @@ var microprofileConfigCallBack = (function() {
          }
     };
 
-    var __checkMicroProfileConfigFeatureContent = function(content) {
+    var __checkMicroProfileConfigFeatureContent = function(editor, content) {
         var isConfigFeatureThere = false;
         var editorContentBreakdown = __getMicroProfileConfigFeatureContent(content);
         if (editorContentBreakdown.hasOwnProperty("features")) {
