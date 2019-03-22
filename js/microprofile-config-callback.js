@@ -64,7 +64,10 @@ var microprofileConfigCallBack = (function() {
         var __showWebBrowser = function() {
             var stepName = editor.getStepName();
             var content = contentManager.getTabbedEditorContents(stepName, propsFileName);
-            utils.validateContentAndSave(stepName, editor, content, __checkConfigPropsFile, __addPropToConfigProps);
+            var success = utils.validateContentAndSave(stepName, editor, content, __checkConfigPropsFile, __addPropToConfigProps);
+            if (success) {
+                utils.saveContentInEditor(editor, content, "port=9081");
+            }
         };
         editor.addSaveListener(__showWebBrowser);
     };
@@ -91,7 +94,10 @@ var microprofileConfigCallBack = (function() {
         var __showWebBrowser = function() {
             var stepName = editor.getStepName();
             var content = contentManager.getTabbedEditorContents(stepName, serverEnvFileName);
-            utils.validateContentAndSave(stepName, editor, content, __checkServerEnvContent, __addPropToServerEnv);
+            var success = utils.validateContentAndSave(stepName, editor, content, __checkServerEnvContent, __addPropToServerEnv);
+            if (success) {
+                utils.saveContentInEditor(editor, content, "port=9082");
+            }
         };
         editor.addSaveListener(__showWebBrowser);
     };
@@ -100,7 +106,10 @@ var microprofileConfigCallBack = (function() {
         var __showWebBrowser = function() {
             var stepName = editor.getStepName();
             var content = contentManager.getTabbedEditorContents(stepName, systemPropsFileName);
-            utils.validateContentAndSave(stepName, editor, content, __checkSystemPropsContent, __addPropToSystemProperties);
+            var success = utils.validateContentAndSave(stepName, editor, content, __checkSystemPropsContent, __addPropToSystemProperties);
+            if (success) {
+                utils.saveContentInEditor(editor, content, "port=9083");
+            }
         };
         editor.addSaveListener(__showWebBrowser);
     };
@@ -112,7 +121,10 @@ var microprofileConfigCallBack = (function() {
         var __showWebBrowser = function() {
             var stepName = editor.getStepName();
             var content = contentManager.getTabbedEditorContents(stepName, propsFileName);
-            utils.validateContentAndSave(stepName, editor, content, __checkConfigOrdinalProp, __addConfigOrdinalToProps);
+            var success = utils.validateContentAndSave(stepName, editor, content, __checkConfigOrdinalProp, __addConfigOrdinalToProps);
+            if (success) {
+                utils.saveContentInEditor(editor, content, "config_ordinal=500");
+            }
         };
         editor.addSaveListener(__showWebBrowser);
     };
@@ -324,7 +336,10 @@ var microprofileConfigCallBack = (function() {
         var __showWebBrowser = function() {
             var stepName = editor.getStepName();
             var content = contentManager.getTabbedEditorContents(stepName, configEditorFileName);
-            utils.validateContentAndSave(stepName, editor, content, __checkDefaultInjectionEditorContent, __addInjectDefaultConfigToEditor);
+            var success = utils.validateContentAndSave(stepName, editor, content, __checkDefaultInjectionEditorContent, __addInjectDefaultConfigToEditor);
+           if (success) {
+                utils.saveContentInEditor(editor, content, "@Inject\\s*@ConfigProperty\\s*(?:\\([^\\(\\)]*\\))");
+            }
         };
         editor.addSaveListener(__showWebBrowser);
     };
@@ -334,7 +349,11 @@ var microprofileConfigCallBack = (function() {
       var __saveServerXML = function() {
         var stepName = editor.getStepName();
         var content = contentManager.getTabbedEditorContents(stepName, serverXmlFileName);
-        utils.validateContentAndSave(stepName, editor, content, __checkMicroProfileConfigFeatureContent, __addMicroProfileConfigFeature);
+        var isConfigFeatureThere = __checkMicroProfileConfigFeatureContent(editor, content);
+        if (isConfigFeatureThere) {
+            utils.saveFeatureInContent(editor, content, "mpConfig-1.1");
+        }
+        utils.handleEditorSave(stepName, editor, isConfigFeatureThere, __addMicroProfileConfigFeature);
       };
       editor.addSaveListener(__saveServerXML);
     };
@@ -350,7 +369,7 @@ var microprofileConfigCallBack = (function() {
           // </featureManager>
           // and capture groups to get content before <feature>jaxrs-2.0</feature>, the feature, and after
           // closing featureManager content tag.
-          var featureManagerToMatch = "([\\s\\S]*)<feature>jaxrs-2.0</feature>([\\s\\S]*)<\\/featureManager>([\\s\\S]*)";
+          var featureManagerToMatch = "([\\s\\S]*)<feature>jaxrs-2.0</feature>([\\s\\S]*)</featureManager>([\\s\\S]*)";
           var regExpToMatch = new RegExp(featureManagerToMatch, "g");
           var groups = regExpToMatch.exec(content);
           editorContents.beforeNewFeature = groups[1]; //includes <feature>jaxrs-2.0</feature>
@@ -382,7 +401,7 @@ var microprofileConfigCallBack = (function() {
          }
     };
 
-    var __checkMicroProfileConfigFeatureContent = function(content) {
+    var __checkMicroProfileConfigFeatureContent = function(editor, content) {
         var isConfigFeatureThere = false;
         var editorContentBreakdown = __getMicroProfileConfigFeatureContent(content);
         if (editorContentBreakdown.hasOwnProperty("features")) {
@@ -485,6 +504,7 @@ var microprofileConfigCallBack = (function() {
                     // it should be seen, not the disabled browser.
                     stepContent.resizeStepWidgets(stepWidgets, "tabbedEditor");
                 }
+                utils.saveContentInEditor(editor, content, "@Inject\\s*@ConfigProperty\\s*(?:\\([^\\(\\)]*\\))");
             }
             utils.handleEditorSave(stepName, editor, updateSuccess, __addInjectConfigToEditor);
         };
