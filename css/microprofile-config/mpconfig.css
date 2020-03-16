@@ -112,7 +112,7 @@
 
 .ordinalCardContainer {
     width: 100%;
-    height: 150px;
+    height: 155px;
 }
 
 .ordinalCardContainer:focus {
@@ -122,7 +122,7 @@
 .ordinalCard {
    position: absolute;
    height: 35px;
-   width: 32%;
+   width: 25%;
    color: black;
    text-align: center;
    font-size: 9px;
@@ -136,10 +136,10 @@
 }
 
 .ordinalCard:hover, .ordinalCard:focus {
-    z-index: 6;
+    z-index: 7;
     font-size: 10px;
     height: auto;
-    width: 33%;
+    width: 26%;
     border: 2px solid #E3700D;
     cursor: pointer;
     outline: none;
@@ -149,26 +149,38 @@
 
 .ordinal-0 {
     z-index: 1;
-    top: 85px;
-    left: calc((100% - 32%)/5);
+    top: 95px;
+    left: calc((100% - 25%)/7);
 }
 
 .ordinal-1 {
     z-index: 2;
-    top: 65px;
-    left: calc((100% - 32%)/5 * 2);
+    top: 80px;
+    left: calc((100% - 25%)/7 * 2);
 }
 
 .ordinal-2 {
     z-index: 3;
-    top: 45px;
-    left: calc((100% - 32%)/5 * 3);
+    top: 65px;
+    left: calc((100% - 25%)/7 * 3);
 }
 
 .ordinal-3 {
     z-index: 4;
-    top: 25px;
-    left: calc((100% - 32%)/5 * 4);
+    top: 50px;
+    left: calc((100% - 25%)/7 * 4);
+}
+
+.ordinal-4 {
+    z-index: 5;
+    top: 35px;
+    left: calc((100% - 25%)/7 * 5);
+}
+
+.ordinal-5 {
+    z-index: 6;
+    top: 20px;
+    left: calc((100% - 25%)/7 * 6);
 }
 
 p.errorSyntaxCss {
@@ -193,33 +205,15 @@ p.errorSyntaxCss {
 @media (max-width: 575px) {
 
     .ordinalCard {
-        width: 65%;
-        max-width: 185px;
+        width: 42%;
+        max-width: 175px;
     }
 
     .ordinalCard:hover, .ordinalCard:focus {
-        width: 65%;
-        max-width: 195px;
+        width: 43%;
+        max-width: 185px;
     }
 
-    .ordinal-0 {
-        left: 10%;
-    }
-
-    .ordinal-1 {
-        left: 20%;
-    }
-
-    .ordinal-2 {
-        left: 30%;
-    }
-
-    .ordinal-3 {
-        left: 40%;
-    }
-}
-
-@media (max-width: 415px) {
     .ordinal-0 {
         left: 5%;
     }
@@ -234,5 +228,39 @@ p.errorSyntaxCss {
 
     .ordinal-3 {
         left: 35%;
+    }
+
+    .ordinal-4 {
+        left: 45%;
+    }
+
+    .ordinal-5 {
+        left: 55%
+    }
+}
+
+@media (max-width: 415px) {
+    .ordinal-0 {
+        left: 3%;
+    }
+
+    .ordinal-1 {
+        left: 13%;
+    }
+
+    .ordinal-2 {
+        left: 23%;
+    }
+
+    .ordinal-3 {
+        left: 33%;
+    }
+
+    .ordinal-4 {
+        left: 43%
+    }
+
+    .ordinal-5 {
+        left: 53%
     }
 }

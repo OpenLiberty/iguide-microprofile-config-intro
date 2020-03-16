@@ -42,11 +42,37 @@ var microprofileConfigCallBack = (function() {
         return match;
      };
 
+     var __checkServerXMLVariableElement = function(content) {
+        var match = false;
+        try {
+            if (content.match(/[\s\S]*\${default.http.port}"\/>\s*<\s*variable\s*name\s*=\s*"port"\s*value\s*=\s*"9084"\s*\/>\s*<webApplication[\s\S]*$/g)) {
+                match = true;
+            }
+        }
+        catch (e) {
+
+        }
+        return match;
+     };
+
+     var __checkServerXMLappPropertiesElement = function(content) {
+         var match = false;
+         try {
+             if (content.match(/[\s\S]*contextRoot="\/">\s*<\s*appProperties\s*>\s*<\s*property\s*name\s*=\s*"port"\s*value\s*=\s*"9085"\s*\/>\s*<\/\s*appProperties\s*>\s*<\/webApplication>[\s\S]*$/g)) {
+                 match = true;
+             }
+         }
+         catch (e) {
+
+         }
+         return match;
+     };
+
      var __checkConfigOrdinalProp = function(content) {
          var match = false;
          try {
 
-             if(content.match(/\s*port=9081\s*config_ordinal=500\s*$/g)){
+             if(content.match(/\s*port=9081\s*config_ordinal=700\s*$/g)){
                  match = true;
              }
          }
@@ -114,6 +140,31 @@ var microprofileConfigCallBack = (function() {
         editor.addSaveListener(__showWebBrowser);
     };
 
+    var serverXmlFileName = "server.xml";
+    var __listenToEditorForVariableElement = function(editor) {
+        var __showWebBrowser = function() {
+            var stepName = editor.getStepName();
+            var content = contentManager.getTabbedEditorContents(stepName, serverXmlFileName);
+            var success = utils.validateContentAndSave(stepName, editor, content, __checkServerXMLVariableElement, __addVariableToServerXML);
+            if (success) {
+                utils.saveContentInEditor(editor, content, '<variable\\s*name\\s*=\\s*\\"port\\"\\s*value\\s*=\\s*\\"9084\\"\\s*/>');
+            }
+        };
+        editor.addSaveListener(__showWebBrowser); 
+    };
+
+    var __listenToEditorForappPropertiesElement = function(editor) {
+        var __showWebBrowser = function() {
+            var stepName = editor.getStepName();
+            var content = contentManager.getTabbedEditorContents(stepName, serverXmlFileName);
+            var success = utils.validateContentAndSave(stepName, editor, content, __checkServerXMLappPropertiesElement, __addappPropertiesToServerXML);
+            if (success) {
+                utils.saveContentInEditor(editor, content, '<\\s*appProperties\\s*>\\s*<\\s*property\\s*name\\s*=\\s*\\"port\\"\\s*value\\s*=\\s*\\"9085\\"\\s*\\/>\\s*<\\/\\s*appProperties\\s*>');
+            }
+        };
+        editor.addSaveListener(__showWebBrowser);
+    };
+
     /*
     *  Adds a save listener to the editor for 'Changing ordinal of ConfigSource' step
     */
@@ -123,7 +174,7 @@ var microprofileConfigCallBack = (function() {
             var content = contentManager.getTabbedEditorContents(stepName, propsFileName);
             var success = utils.validateContentAndSave(stepName, editor, content, __checkConfigOrdinalProp, __addConfigOrdinalToProps);
             if (success) {
-                utils.saveContentInEditor(editor, content, "config_ordinal=500");
+                utils.saveContentInEditor(editor, content, "config_ordinal=700");
             }
         };
         editor.addSaveListener(__showWebBrowser);
@@ -152,7 +203,7 @@ var microprofileConfigCallBack = (function() {
         if (stepName === undefined) {
             stepName = stepContent.getCurrentStepName();
         }
-        var configOrdinal = "config_ordinal=500";
+        var configOrdinal = "config_ordinal=700";
         // reset content every time property is added through the button so as to clear out any manual editing
         contentManager.focusTabbedEditorByName(stepName, propsFileName);
         contentManager.resetTabbedEditorContents(stepName, propsFileName );
@@ -175,7 +226,15 @@ var microprofileConfigCallBack = (function() {
         contentManager.focusTabbedEditorByName(stepName, serverEnvFileName);
         contentManager.resetTabbedEditorContents(stepName, serverEnvFileName);
         contentManager.replaceTabbedEditorContents(stepName, serverEnvFileName, 1, 1, serverEnvDownloadUrlConfig);
-    };    
+    };
+
+    var __addPropToServerEnvButton = function(event, stepName) {
+        if (event.type === "click" ||
+           (event.type === "keypress" && (event.which === 13 || event.which === 32))) {
+            // Click or 'Enter' or 'Space' key event...
+            __addPropToServerEnv(stepName);
+        }
+    };
 
     var systemPropsFileName = "bootstrap.properties";
     var systemPropsDownloadUrlConfig = "port=9083";
@@ -197,15 +256,54 @@ var microprofileConfigCallBack = (function() {
         }
     };
 
+    var __addVariableToServerXML = function(stepName) {
+        if (stepName === undefined) {
+            stepName = stepContent.getCurrentStepName();
+        }
+        var portVariableElement = '   <variable name="port" value="9084"/>';
+        // reset content every time property is added through the button so as to clear out any manual editing
+        contentManager.focusTabbedEditorByName(stepName, serverXmlFileName);
+        contentManager.resetTabbedEditorContents(stepName, serverXmlFileName);
+        contentManager.replaceTabbedEditorContents(stepName, serverXmlFileName, 10, 10, portVariableElement);
+    };
+
+    var __addVariableToServerXMLButton = function(event, stepName) {
+        if (event.type === "click" ||
+           (event.type === "keypress" && (event.which === 13 || event.which === 32))) {
+            // Click or 'Enter' or 'Space' key event...
+            __addVariableToServerXML(stepName);
+        }
+    };
+
+    var __addappPropertiesToServerXML = function(stepName) {
+        if (stepName === undefined) {
+            stepName = stepContent.getCurrentStepName();
+        }
+        var portappPropertiesPropertyElement = '        <appProperties>\n           <property name="port" value="9085"/>\n        </appProperties>';
+        // reset content every time property is added through the button so as to clear out any manual editing
+        contentManager.focusTabbedEditorByName(stepName, serverXmlFileName);
+        contentManager.resetTabbedEditorContents(stepName, serverXmlFileName);
+        contentManager.replaceTabbedEditorContents(stepName, serverXmlFileName, 13, 15, portappPropertiesPropertyElement);
+        contentManager.scrollTabbedEditorToView(stepName, serverXmlFileName, 15);
+    };
+
+    var __addappPropertiesToServerXMLButton = function(event, stepName) {
+        if (event.type === "click" ||
+           (event.type === "keypress" && (event.which === 13 || event.which === 32))) {
+            // Click or 'Enter' or 'Space' key event...
+            __addappPropertiesToServerXML(stepName);
+        }
+    };
+
     var __listenToBrowserForPropFileConfig = function(webBrowser) {
         var setBrowserContent = function(currentURL) {
             if (contentManager.getCurrentInstructionIndex(webBrowser.getStepName()) === 1) {
                 webBrowser.contentRootElement.trigger("click");
                 webBrowser.setBrowserContent("/guides/iguide-microprofile-config-intro/html/download-from-properties-file.html");
-                webBrowser.setBrowserStatusBar(microprofile_config_messages.RETRIEVED_DATA);
+                webBrowser.setBrowserStatusBar(microprofile_config_messages.RETRIEVED_DATA_DEV);
                 contentManager.markCurrentInstructionComplete(webBrowser.getStepName());
             }
-        }
+        };
         webBrowser.addUpdatedURLListener(setBrowserContent);
     };
 
@@ -214,10 +312,10 @@ var microprofileConfigCallBack = (function() {
             if (contentManager.getCurrentInstructionIndex(webBrowser.getStepName()) === 1) {
                 webBrowser.contentRootElement.trigger("click");
                 webBrowser.setBrowserContent("/guides/iguide-microprofile-config-intro/html/download-from-property-in-server-env.html");
-                webBrowser.setBrowserStatusBar(microprofile_config_messages.RETRIEVED_DATA_QA);
+                webBrowser.setBrowserStatusBar(microprofile_config_messages.RETRIEVED_DATA_TEST);
                 contentManager.markCurrentInstructionComplete(webBrowser.getStepName());
             }
-        }
+        };
         webBrowser.addUpdatedURLListener(setBrowserContent);
     };
 
@@ -226,19 +324,35 @@ var microprofileConfigCallBack = (function() {
             if (contentManager.getCurrentInstructionIndex(webBrowser.getStepName()) === 1) {
                 webBrowser.contentRootElement.trigger("click");
                 webBrowser.setBrowserContent("/guides/iguide-microprofile-config-intro/html/download-from-property-in-system-props.html");
-                webBrowser.setBrowserStatusBar(microprofile_config_messages.RETRIEVED_DATA_PROD);
+                webBrowser.setBrowserStatusBar(microprofile_config_messages.RETRIEVED_DATA_QA);
                 contentManager.markCurrentInstructionComplete(webBrowser.getStepName());
             }
-        }
+        };
         webBrowser.addUpdatedURLListener(setBrowserContent);
     };
 
-    var __addPropToServerEnvButton = function(event, stepName) {
-        if (event.type === "click" ||
-           (event.type === "keypress" && (event.which === 13 || event.which === 32))) {
-            // Click or 'Enter' or 'Space' key event...
-            __addPropToServerEnv(stepName);
-        }
+    var __listenToBrowserForVariableElementConfig = function(webBrowser) {
+        var setBrowserContent = function(currentURL) {
+            if (contentManager.getCurrentInstructionIndex(webBrowser.getStepName()) === 1) {
+                webBrowser.contentRootElement.trigger("click");
+                webBrowser.setBrowserContent("/guides/iguide-microprofile-config-intro/html/download-from-variable-in-server-xml.html");
+                webBrowser.setBrowserStatusBar(microprofile_config_messages.RETRIEVED_DATA_STAGING);
+                contentManager.markCurrentInstructionComplete(webBrowser.getStepName());
+            }
+        };
+        webBrowser.addUpdatedURLListener(setBrowserContent);
+    };
+
+    var __listenToBrowserForappPropertiesConfig = function(webBrowser) {
+        var setBrowserContent = function(currentURL) {
+            if (contentManager.getCurrentInstructionIndex(webBrowser.getStepName()) === 1) {
+                webBrowser.contentRootElement.trigger("click");
+                webBrowser.setBrowserContent("/guides/iguide-microprofile-config-intro/html/download-from-appProperty-in-server-xml.html");
+                webBrowser.setBrowserStatusBar(microprofile_config_messages.RETRIEVED_DATA_PROD);
+                contentManager.markCurrentInstructionComplete(webBrowser.getStepName());
+            }
+        };
+        webBrowser.addUpdatedURLListener(setBrowserContent);
     };
 
     var __refreshBrowserButton = function(event, stepName) {
@@ -260,7 +374,8 @@ var microprofileConfigCallBack = (function() {
                 stepName = stepContent.getCurrentStepName();
             }
             var editorFileName;
-            if(stepName === "EnableMPConfig") {
+            if((stepName === "EnableMPConfig") || (stepName === "ConfigureAsVariableElement" ||
+                stepName === "ConfigureAsappPropElement")) {
                 editorFileName = "server.xml";
             } else if(stepName === "ConfigureViaInject"){
                 editorFileName = configEditorFileName;
@@ -321,7 +436,7 @@ var microprofileConfigCallBack = (function() {
             }
         }
         return allMatch;
-    }
+    };
 
     var __checkDefaultInjectionEditorContent = function(content) {
         var annotationIsThere = false;
@@ -344,14 +459,13 @@ var microprofileConfigCallBack = (function() {
         editor.addSaveListener(__showWebBrowser);
     };
 
-    var serverXmlFileName = "server.xml";
     var __listenToEditorForFeatureInServerXML = function(editor) {      
       var __saveServerXML = function() {
         var stepName = editor.getStepName();
         var content = contentManager.getTabbedEditorContents(stepName, serverXmlFileName);
         var isConfigFeatureThere = __checkMicroProfileConfigFeatureContent(editor, content);
         if (isConfigFeatureThere) {
-            utils.saveFeatureInContent(editor, content, "mpConfig-1.1");
+            utils.saveFeatureInContent(editor, content, "mpConfig-1.3");
         }
         utils.handleEditorSave(stepName, editor, isConfigFeatureThere, __addMicroProfileConfigFeature);
       };
@@ -388,9 +502,9 @@ var microprofileConfigCallBack = (function() {
          features = features.replace(/\s/g, ''); // Remove whitespace
          try {
             var featureMatches = features.match(/<feature>[\s\S]*?<\/feature>/g);
-            if (features.length === "<feature>mpConfig-1.1</feature>".length) {
-              //featureMatches should only contain the mpConfig-1.1 feature
-              if (featureMatches[0] === "<feature>mpConfig-1.1</feature>") {
+            if (features.length === "<feature>mpConfig-1.3</feature>".length) {
+              //featureMatches should only contain the mpConfig-1.3 feature
+              if (featureMatches[0] === "<feature>mpConfig-1.3</feature>") {
                 return true;
               }
             }
@@ -405,7 +519,7 @@ var microprofileConfigCallBack = (function() {
         var isConfigFeatureThere = false;
         var editorContentBreakdown = __getMicroProfileConfigFeatureContent(content);
         if (editorContentBreakdown.hasOwnProperty("features")) {
-          //verify that mpConfig-1.1 feature was added
+          //verify that mpConfig-1.3 feature was added
           isConfigFeatureThere =  __isConfigInFeatures(editorContentBreakdown.features);
         }
         return isConfigFeatureThere;
@@ -423,7 +537,7 @@ var microprofileConfigCallBack = (function() {
         if (stepName === undefined) {
             stepName = stepContent.getCurrentStepName();
          }
-        var ConfigFeature = "      <feature>mpConfig-1.1</feature>";
+        var ConfigFeature = "      <feature>mpConfig-1.3</feature>";
         // reset content every time feature is added through the button to clear manual editing
         contentManager.resetTabbedEditorContents(stepName, serverXmlFileName);
         var content = contentManager.getTabbedEditorContents(stepName, serverXmlFileName);
@@ -476,11 +590,11 @@ var microprofileConfigCallBack = (function() {
                 var instructionIdx = contentManager.getCurrentInstructionIndex(webBrowser.getStepName());
                 if (instructionIdx === 1) {
                     webBrowser.setBrowserContent("/guides/iguide-microprofile-config-intro/html/download-from-injection.html");
-                    webBrowser.setBrowserStatusBar(microprofile_config_messages.RETRIEVED_DATA_DEV);
+                    webBrowser.setBrowserStatusBar(microprofile_config_messages.RETRIEVED_DATA_PROTOTYPE);
                     contentManager.markCurrentInstructionComplete(webBrowser.getStepName());
                 }
             }
-        }
+        };
         webBrowser.addUpdatedURLListener(setBrowserContent);
     };
 
@@ -521,7 +635,7 @@ var microprofileConfigCallBack = (function() {
             }
         }
         return allMatch;
-    }
+    };
 
     var __checkInjectionEditorContent = function(content) {
         var annotationIsThere = false;
@@ -567,7 +681,7 @@ var microprofileConfigCallBack = (function() {
 
         var pg = playground.create(root, stepName);
         var populateContents = function() {
-            // Wait until all 4 editors have been loaded to call update the properties so the editors have time to load
+            // Wait until all 5 editors have been loaded to call update the properties so the editors have time to load
             setTimeout(function(){
                 try {
                     pg.repopulatePlaygroundConfigs();
@@ -576,7 +690,7 @@ var microprofileConfigCallBack = (function() {
                     populateContents();
                 }            
             }, 250);
-        }
+        };
         populateContents();
         root.playground = pg;
 
@@ -597,6 +711,8 @@ var microprofileConfigCallBack = (function() {
         listenToEditorForPropConfig: __listenToEditorForPropConfig,
         listenToEditorForServerEnv: __listenToEditorForServerEnv,
         listenToEditorForSystemProperties: __listenToEditorForSystemProperties,
+        listenToEditorForVariableElement: __listenToEditorForVariableElement,
+        listenToEditorForappPropertiesElement: __listenToEditorForappPropertiesElement,
         listenToEditorForOrdinalChange: __listenToEditorForOrdinalChange,
         listenToEditorForInjectDefaultConfig: __listenToEditorForInjectDefaultConfig,
         listenToEditorForInjectConfig: __listenToEditorForInjectConfig,
@@ -604,12 +720,13 @@ var microprofileConfigCallBack = (function() {
         listenToBrowserForServerEnvConfig: __listenToBrowserForServerEnvConfig,
         listenToBrowserForSystemPropConfig: __listenToBrowserForSystemPropConfig,
         listenToBrowserForInjectDefaultConfig:  __listenToBrowserForInjectDefaultConfig,
-        addPropToConfigProps: __addPropToConfigProps,       
+        listenToBrowserForVariableElementConfig: __listenToBrowserForVariableElementConfig,
+        listenToBrowserForappPropertiesConfig: __listenToBrowserForappPropertiesConfig,       
         addPropToConfigPropsButton: __addPropToConfigPropsButton, 
         addPropToServerEnvButton: __addPropToServerEnvButton,
-        addPropToSystemProperties: __addPropToSystemProperties,
         addPropToSystemPropertiesButton: __addPropToSystemPropertiesButton,
-        addConfigOrdinalToProps: __addConfigOrdinalToProps,
+        addVariableToServerXMLButton: __addVariableToServerXMLButton,
+        addappPropertiesToServerXMLButton: __addappPropertiesToServerXMLButton,
         addConfigOrdinalToPropsButton: __addConfigOrdinalToPropsButton,
         addInjectConfigButton: __addInjectConfigButton,
         addInjectDefaultConfigButton: __addInjectDefaultConfigButton,
@@ -617,7 +734,6 @@ var microprofileConfigCallBack = (function() {
         addMicroProfileConfigFeatureButton: __addMicroProfileConfigFeatureButton,
         refreshBrowserButton: __refreshBrowserButton,
         saveTabbedEditorButton: __saveTabbedEditorButton,
-        populateURL:  __populateURL,
         createPlayground: __createPlayground,
         updatePlaygroundProperties: updatePlaygroundProperties
     };
