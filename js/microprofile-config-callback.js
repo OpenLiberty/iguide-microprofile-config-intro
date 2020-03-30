@@ -279,7 +279,7 @@ var microprofileConfigCallBack = (function() {
         if (stepName === undefined) {
             stepName = stepContent.getCurrentStepName();
         }
-        var portappPropertiesPropertyElement = '        <appProperties>\n           <property name="port" value="9085"/>\n        </appProperties>';
+        var portappPropertiesPropertyElement = '      <appProperties>\n         <property name="port" value="9085"/>\n      </appProperties>';
         // reset content every time property is added through the button so as to clear out any manual editing
         contentManager.focusTabbedEditorByName(stepName, serverXmlFileName);
         contentManager.resetTabbedEditorContents(stepName, serverXmlFileName);
@@ -374,8 +374,8 @@ var microprofileConfigCallBack = (function() {
                 stepName = stepContent.getCurrentStepName();
             }
             var editorFileName;
-            if((stepName === "EnableMPConfig") || (stepName === "ConfigureAsVariableElement" ||
-                stepName === "ConfigureAsappPropElement")) {
+            if(stepName === "EnableMPConfig" || stepName === "ConfigureAsVariableElement" ||
+                stepName === "ConfigureAsappPropElement") {
                 editorFileName = "server.xml";
             } else if(stepName === "ConfigureViaInject"){
                 editorFileName = configEditorFileName;
