@@ -1138,7 +1138,7 @@
         {
             "name": "WhatNext",
             "title": "Great work!  You're done!",
-            "description": ["You learned how to use MicroProfile Config to separate configuration from code by using injection, configuring with properties files, environment variables, and system properties, and by providing values within the Liberty server.xml file. You also learned the default ordinals for each of these configuration sources and how to override them."
+            "description": ["You learned how to use MicroProfile Config to separate configuration from code by using injection and how to provide configuration values with properties files, environment variables, system properties, and the Liberty server.xml file. You also learned the default ordinals for each of these configuration sources and how to override them."
                            ]
         },
         {
