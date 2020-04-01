@@ -1,3 +1,3 @@
 {
-    "carTypes": ["SUV", "Crossover", "Coupe", "Truck", "Convertible"]
+    "carTypes": ["SUV", "Crossover", "Coupe", "Truck", "Convertible", "Van"]
 }
