@@ -4,9 +4,12 @@ var playground = function(){
     var PROP_FILE = '/META-INF/microprofile-config.properties';
     var ENV_FILE = 'server.env';
     var SYS_FILE = 'bootstrap.properties';
+    var SERVER_FILE = 'server.xml';
+var SERVER_FILE_ENV = 'server.xml - variable element';
+var SERVER_FILE_APP_PROP = 'sever.xml - appProperties element';
 
-    var FILETYPES = {'inject':'inject', 'propFile':'propFile', 'envVar':'envVar', 'sysProp':'sysProp'};
-    var FILENAMES = {'inject': JAVA_FILE, 'propFile': PROP_FILE, 'envVar': ENV_FILE, 'sysProp': SYS_FILE};
+    var FILETYPES = {'inject':'inject', 'propFile':'propFile', 'envVar':'envVar', 'sysProp':'sysProp', 'variableElement':'variableElement', 'appPropertiesElement': 'appPropertiesElement'};
+    var FILENAMES = {'inject': JAVA_FILE, 'propFile': PROP_FILE, 'envVar': ENV_FILE, 'sysProp': SYS_FILE, 'serverFile': SERVER_FILE};
 
     var properties = {};
     var staging = [];
@@ -23,7 +26,7 @@ var playground = function(){
          *
          * @param {String} key - the name of the property
          * @param {String} value - the value of the property
-         * @param {String} source - 'inject', 'propFile', 'envVar', 'sysProp'
+         * @param {String} source - 'inject', 'propFile', 'envVar', 'sysProp', 'variableElement', 'appPropertiesElement'
          * @param {*} ordinal (optional) - provided ordinal number. otherwise default based on source
          */
         playgroundAddConfig: function(key, value, source, ordinal) {
@@ -55,6 +58,7 @@ var playground = function(){
             this.__getPropertiesFileProperties(PROP_FILE);
             this.__getEnvironmentProperties(ENV_FILE);
             this.__getSystemProperties(SYS_FILE);
+            this.__getServerXMLelements(SERVER_FILE);
             this.showProperties();
             this.updateFigure();
 
@@ -82,9 +86,9 @@ var playground = function(){
             }
 
             // For each line, grab config value and properties
-            for (var i in lines) {
+            for (var l in lines) {
                 var lineRegexp = /\(.*(?=\))/;  //grab everything in between the parentheses
-                var propertyLine = lineRegexp.exec(lines[i]);
+                var propertyLine = lineRegexp.exec(lines[l]);
 
                 if (propertyLine) {
                     var inlineProperties = propertyLine[0];
@@ -149,6 +153,90 @@ var playground = function(){
             }
         },
 
+        __getServerXMLelements: function(fileName) {
+            var fileContent = contentManager.getTabbedEditorContents(STEP_NAME, fileName);
+
+            if (fileContent) {
+                var fileContentString = fileContent.substring(0).replace(/\n/g, ''); //remove newline characters
+                var errorConfigProps = [];  // Config props which are not injected in InventoryConfig.java
+
+                try {
+                    // Parse the server.xml contents to validate correct xml syntax
+                    var xmlDoc = $.parseXML(fileContentString);
+                    var $xml = $(xmlDoc);
+    
+                    var serverElement = $xml.find('server').get(0);
+                    var xmlVariables = {};
+                    var pg = this;
+                    $xml.find('variable').each(function() {
+                        if (serverElement === $(this).parent().get(0)) {
+                            var varname = $(this).attr('name').trim();
+                            if (varname) {
+                                var varvalue = $(this).attr('value');
+                                // Setting config_ordinal as <variable> element doesn't work
+                                // if (varname === 'config_ordinal') {
+                                //     pg.__setFileOrdinal(FILETYPES.variableElement, varvalue);
+                                // } else {
+                                if (varvalue) {
+                                    xmlVariables[varname] = varvalue;
+                                }
+                            }
+                        }
+                    });
+                    var variableElementOrdinal = this.__getFileOrdinal(FILETYPES.variableElement);
+                    for (var variable in xmlVariables) {
+                        if (this.getProperty(variable) !== null) {
+                            this.playgroundAddConfig(variable, xmlVariables[variable], FILETYPES.variableElement, variableElementOrdinal);
+                        } else {
+                            // Identify variables not injected in InventoryConfig.java
+                            errorConfigProps.push(variable);
+                        }
+                    }   
+    
+                    var xmlappProperties = {};
+                    $xml.find('appProperties').find('property').each(function() {
+                        var propname = $(this).attr('name');
+                        if (propname) {
+                            var propvalue = $(this).attr('value');
+                            // Setting config_ordinal as <property> element doesn't work
+                            // if (propname === 'config_ordinal') {
+                            //     pg.__setFileOrdinal(FILETYPES.appPropertiesElement, propvalue);
+                            // } else {
+                            if (propvalue) {
+                                xmlappProperties[propname] = propvalue;
+                            }
+                        }
+                    });
+                    var appPropertiesElementOrdinal = this.__getFileOrdinal(FILETYPES.appPropertiesElement);
+                    for (var property in xmlappProperties) {
+                        if (this.getProperty(property) !== null) {
+                            this.playgroundAddConfig(property, xmlappProperties[property], FILETYPES.appPropertiesElement, appPropertiesElementOrdinal);
+                        } else {
+                            if (!errorConfigProps.includes(property)) {
+                                // Combine with the variables not injected in InventoryConfig.java
+                                // to identify the UNIQUE props not injected in InventoryConfig.java
+                                errorConfigProps.push(property);
+                            }
+                        }
+                    }
+
+                    if (errorConfigProps.length > 0) {
+                        // There were config props defined in the server.xml that were
+                        // not yet injected in InventoryConfig.java with @Inject.
+                        var errorMessages = "";
+                        for (var x in errorConfigProps) {
+                            // Add config prop name to error message and concatenate with line break.
+                            errorMessages += utils.formatString(microprofile_config_messages.INJECTION_REQUIRED, [errorConfigProps[x]]) + "<br/>";
+                        }
+                        this.__displayErrorMessage(errorMessages, 'serverFile');
+                    }
+
+                } catch(e) {
+                    this.__displayErrorMessage(microprofile_config_messages.XML_FORMAT_ERROR, 'serverFile', true);
+                }              
+            }
+        },
+
         /**
          * Remove injection codes within the string
          */
@@ -178,8 +266,38 @@ var playground = function(){
                 if (this.getProperty(key) !== null) {
                     this.playgroundAddConfig(key, value, source, ordinal);
                 } else {
-                    var message = utils.formatString(microprofile_config_messages.INJECTION_REQUIRED, [key]);
-                    errors.push(message);
+                    var propFound = false;
+                    if (ENV_FILE === FILENAMES[source]) {
+                        // If the config property comes from an environment variable, then
+                        // characters in a config property name that are not alphanumeric
+                        // or the underscore character may be disallowed and may have
+                        // been replaced with the underscore character.  Loop through the
+                        // keys in our known properties replacing disallowed characters with 
+                        // an underscore and see if it matches the key set as an enironment
+                        // variable.  If not, try making it all UPPER case and see if there
+                        // is a match.  If not....post the INJECTION_REQUIRED message.
+                        var props = this.getProperties();
+                        for (var prop in props) {
+                            // Replace disallowed chars with underscore
+                            var tryKey = prop.replace(/[^\w]/g, '_');
+                            if (tryKey === key) {
+                                this.playgroundAddConfig(prop, value, source, ordinal);
+                                propFound = true;
+                                break;
+                            } else {
+                                var tryKey2 = tryKey.toUpperCase();
+                                if (tryKey2 === key) {
+                                    this.playgroundAddConfig(prop, value, source, ordinal);
+                                    propFound = true;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    if (!propFound) {
+                        var message = utils.formatString(microprofile_config_messages.INJECTION_REQUIRED, [key]);
+                        errors.push(message);
+                    }
                 }
             }
             if (errors.length > 0) {
@@ -253,7 +371,7 @@ var playground = function(){
             });
         },
 
-        /* Updates the 4 config source cards and sorts them by their ordinal value with the highest ordinal being on top. */
+        /* Updates the 6 config source cards and sorts them by their ordinal value with the highest ordinal being on top. */
         updateFigure: function(){
             var order = this.__getOrdinalObjects();
             // Sort the config objects by ordinal
@@ -275,7 +393,7 @@ var playground = function(){
                 // Find the card's span associated with this order
                 var card = $('.ordinal-' + order[i].filetype);
                 if(card.length > 0){
-                    card.removeClass('ordinal-0 ordinal-1 ordinal-2 ordinal-3');
+                    card.removeClass('ordinal-0 ordinal-1 ordinal-2 ordinal-3 ordinal-4 ordinal-5');
                     card.addClass('ordinal-' + i);
 
                     // Update the ordinal if there is one
@@ -309,7 +427,7 @@ var playground = function(){
                                 contentManager.focusTabbedEditorByName(STEP_NAME, configSource.fileName);
                             }
                         });
-                    }
+                    };
                     closure(configSource);
                 }
             }
@@ -335,6 +453,8 @@ var playground = function(){
             case FILETYPES.propFile: return '100';
             case FILETYPES.envVar: return '300';
             case FILETYPES.sysProp: return '400';
+            case FILETYPES.variableElement: return '500';
+            case FILETYPES.appPropertiesElement: return '600';
             default: return '0';
             }
         },
@@ -368,6 +488,8 @@ var playground = function(){
                 case FILETYPES.propFile: return PROP_FILE;
                 case FILETYPES.envVar: return ENV_FILE;
                 case FILETYPES.sysProp: return SYS_FILE;
+                case FILETYPES.variableElement: return SERVER_FILE;
+                case FILETYPES.appPropertiesElement: return SERVER_FILE;
                 default: return null;
             }
         },
@@ -375,10 +497,12 @@ var playground = function(){
         /* Returns the color for the ordinal card associated with the fileType passed in */
         __getCardColor: function(filetype) {
             switch(filetype) {
-                case FILETYPES.inject: return '#F0F2FD';
-                case FILETYPES.propFile: return '#E5EAFB';
-                case FILETYPES.envVar: return '#DAE1FA';
-                case FILETYPES.sysProp: return '#CDD6F9';
+                case FILETYPES.inject: return '#EAEDFF';
+                case FILETYPES.propFile: return '#E1E7FF';
+                case FILETYPES.envVar: return '#D9E1FF';
+                case FILETYPES.sysProp: return '#D0DBFF';
+                case FILETYPES.variableElement: return '#CCD7FF';
+                case FILETYPES.appPropertiesElement: return '#C4D0FF';
                 default: return null;
             }
         },
@@ -425,11 +549,13 @@ var playground = function(){
             var propEditor = this.__getEditorInstance(PROP_FILE);
             var envEditor = this.__getEditorInstance(ENV_FILE);
             var sysEditor = this.__getEditorInstance(SYS_FILE);
+            var serverEditor = this.__getEditorInstance(SERVER_FILE);
 
             javaEditor.closeEditorErrorBox();
             propEditor.closeEditorErrorBox();
             envEditor.closeEditorErrorBox();
             sysEditor.closeEditorErrorBox();
+            serverEditor.closeEditorErrorBox();
         }
     };
 
