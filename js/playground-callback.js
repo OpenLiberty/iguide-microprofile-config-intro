@@ -15,7 +15,7 @@ var SERVER_FILE_APP_PROP = 'sever.xml - appProperties element';
     var staging = [];
     var fileOrdinals = {};
     var hasError = false;
-   
+
     var _playground = function(root, stepName) {
         this.root = root;
         this.stepName = stepName;
@@ -164,7 +164,7 @@ var SERVER_FILE_APP_PROP = 'sever.xml - appProperties element';
                     // Parse the server.xml contents to validate correct xml syntax
                     var xmlDoc = $.parseXML(fileContentString);
                     var $xml = $(xmlDoc);
-    
+
                     var serverElement = $xml.find('server').get(0);
                     var xmlVariables = {};
                     var pg = this;
@@ -173,12 +173,12 @@ var SERVER_FILE_APP_PROP = 'sever.xml - appProperties element';
                             var varname = $(this).attr('name').trim();
                             if (varname) {
                                 var varvalue = $(this).attr('value');
-                                // Setting config_ordinal as <variable> element doesn't work
-                                // if (varname === 'config_ordinal') {
-                                //     pg.__setFileOrdinal(FILETYPES.variableElement, varvalue);
-                                // } else {
                                 if (varvalue) {
-                                    xmlVariables[varname] = varvalue;
+                                    if (varname === 'config_ordinal') {
+                                        pg.__setFileOrdinal(FILETYPES.variableElement, varvalue);
+                                    } else {
+                                        xmlVariables[varname] = varvalue;
+                                    }
                                 }
                             }
                         }
@@ -191,19 +191,19 @@ var SERVER_FILE_APP_PROP = 'sever.xml - appProperties element';
                             // Identify variables not injected in InventoryConfig.java
                             errorConfigProps.push(variable);
                         }
-                    }   
-    
+                    }
+
                     var xmlappProperties = {};
                     $xml.find('appProperties').find('property').each(function() {
                         var propname = $(this).attr('name');
                         if (propname) {
                             var propvalue = $(this).attr('value');
-                            // Setting config_ordinal as <property> element doesn't work
-                            // if (propname === 'config_ordinal') {
-                            //     pg.__setFileOrdinal(FILETYPES.appPropertiesElement, propvalue);
-                            // } else {
                             if (propvalue) {
-                                xmlappProperties[propname] = propvalue;
+                                if (propname === 'config_ordinal') {
+                                    pg.__setFileOrdinal(FILETYPES.appPropertiesElement, propvalue);
+                                } else {
+                                    xmlappProperties[propname] = propvalue;
+                                }
                             }
                         }
                     });
@@ -233,7 +233,7 @@ var SERVER_FILE_APP_PROP = 'sever.xml - appProperties element';
 
                 } catch(e) {
                     this.__displayErrorMessage(microprofile_config_messages.XML_FORMAT_ERROR, 'serverFile', true);
-                }              
+                }
             }
         },
 
@@ -272,8 +272,8 @@ var SERVER_FILE_APP_PROP = 'sever.xml - appProperties element';
                         // characters in a config property name that are not alphanumeric
                         // or the underscore character may be disallowed and may have
                         // been replaced with the underscore character.  Loop through the
-                        // keys in our known properties replacing disallowed characters with 
-                        // an underscore and see if it matches the key set as an enironment
+                        // keys in our known properties replacing disallowed characters with
+                        // an underscore and see if it matches the key set as an environment
                         // variable.  If not, try making it all UPPER case and see if there
                         // is a match.  If not....post the INJECTION_REQUIRED message.
                         var props = this.getProperties();

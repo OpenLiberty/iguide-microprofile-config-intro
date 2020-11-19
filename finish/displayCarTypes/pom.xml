@@ -138,7 +138,7 @@
                     <assemblyArtifact>
                         <groupId>io.openliberty</groupId>
                         <artifactId>openliberty-runtime</artifactId>
-                        <version>20.0.0.1</version>
+                        <version>20.0.0.11</version>
                         <type>zip</type>
                     </assemblyArtifact>
                     <serverName>mpConfigServer</serverName>
