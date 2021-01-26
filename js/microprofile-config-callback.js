@@ -1,5 +1,5 @@
 /*******************************************************************************
-* Copyright (c) 2017 IBM Corporation and others.
+* Copyright (c) 2017,2021 IBM Corporation and others.
 * All rights reserved. This program and the accompanying materials
 * are made available under the terms of the Eclipse Public License v1.0
 * which accompanies this distribution, and is available at
@@ -12,7 +12,7 @@ var microprofileConfigCallBack = (function() {
 
     var propsFileConfig = "port=9081";
     var propsFileName = "META-INF/microprofile-config.properties";
-    
+
     /*
     *  Checks that the correct content was entered in META-INF/microprofile-config.properties
     */
@@ -150,7 +150,7 @@ var microprofileConfigCallBack = (function() {
                 utils.saveContentInEditor(editor, content, '<variable\\s*name\\s*=\\s*\\"port\\"\\s*value\\s*=\\s*\\"9084\\"\\s*/>');
             }
         };
-        editor.addSaveListener(__showWebBrowser); 
+        editor.addSaveListener(__showWebBrowser);
     };
 
     var __listenToEditorForappPropertiesElement = function(editor) {
@@ -459,13 +459,13 @@ var microprofileConfigCallBack = (function() {
         editor.addSaveListener(__showWebBrowser);
     };
 
-    var __listenToEditorForFeatureInServerXML = function(editor) {      
+    var __listenToEditorForFeatureInServerXML = function(editor) {
       var __saveServerXML = function() {
         var stepName = editor.getStepName();
         var content = contentManager.getTabbedEditorContents(stepName, serverXmlFileName);
         var isConfigFeatureThere = __checkMicroProfileConfigFeatureContent(editor, content);
         if (isConfigFeatureThere) {
-            utils.saveFeatureInContent(editor, content, "mpConfig-1.3");
+            utils.saveFeatureInContent(editor, content, "mpConfig-1.4");
         }
         utils.handleEditorSave(stepName, editor, isConfigFeatureThere, __addMicroProfileConfigFeature);
       };
@@ -478,15 +478,15 @@ var microprofileConfigCallBack = (function() {
           // match
           // <?xml version="1.0"?>
           // ...
-          // <feature>jaxrs-2.0</feature>
+          // <feature>jaxrs-2.1</feature>
           //    <anything here>
           // </featureManager>
-          // and capture groups to get content before <feature>jaxrs-2.0</feature>, the feature, and after
+          // and capture groups to get content before <feature>jaxrs-2.1</feature>, the feature, and after
           // closing featureManager content tag.
-          var featureManagerToMatch = "([\\s\\S]*)<feature>jaxrs-2.0</feature>([\\s\\S]*)</featureManager>([\\s\\S]*)";
+          var featureManagerToMatch = "([\\s\\S]*)<feature>jaxrs-2.1</feature>([\\s\\S]*)</featureManager>([\\s\\S]*)";
           var regExpToMatch = new RegExp(featureManagerToMatch, "g");
           var groups = regExpToMatch.exec(content);
-          editorContents.beforeNewFeature = groups[1]; //includes <feature>jaxrs-2.0</feature>
+          editorContents.beforeNewFeature = groups[1]; //includes <feature>jaxrs-2.1</feature>
           editorContents.features = groups[2];
           editorContents.afterFeature = groups[3];
       }
@@ -502,9 +502,9 @@ var microprofileConfigCallBack = (function() {
          features = features.replace(/\s/g, ''); // Remove whitespace
          try {
             var featureMatches = features.match(/<feature>[\s\S]*?<\/feature>/g);
-            if (features.length === "<feature>mpConfig-1.3</feature>".length) {
-              //featureMatches should only contain the mpConfig-1.3 feature
-              if (featureMatches[0] === "<feature>mpConfig-1.3</feature>") {
+            if (features.length === "<feature>mpConfig-1.4</feature>".length) {
+              //featureMatches should only contain the mpConfig-1.4 feature
+              if (featureMatches[0] === "<feature>mpConfig-1.4</feature>") {
                 return true;
               }
             }
@@ -519,7 +519,7 @@ var microprofileConfigCallBack = (function() {
         var isConfigFeatureThere = false;
         var editorContentBreakdown = __getMicroProfileConfigFeatureContent(content);
         if (editorContentBreakdown.hasOwnProperty("features")) {
-          //verify that mpConfig-1.3 feature was added
+          //verify that mpConfig-1.4 feature was added
           isConfigFeatureThere =  __isConfigInFeatures(editorContentBreakdown.features);
         }
         return isConfigFeatureThere;
@@ -537,7 +537,7 @@ var microprofileConfigCallBack = (function() {
         if (stepName === undefined) {
             stepName = stepContent.getCurrentStepName();
          }
-        var ConfigFeature = "      <feature>mpConfig-1.3</feature>";
+        var ConfigFeature = "      <feature>mpConfig-1.4</feature>";
         // reset content every time feature is added through the button to clear manual editing
         contentManager.resetTabbedEditorContents(stepName, serverXmlFileName);
         var content = contentManager.getTabbedEditorContents(stepName, serverXmlFileName);
@@ -551,7 +551,7 @@ var microprofileConfigCallBack = (function() {
             __addInjectDefaultConfigToEditor(stepName);
         }
     };
-    
+
     var __addInjectDefaultConfigToEditor = function(stepName) {
         // Put the BankService.java editor into focus.
         contentManager.focusTabbedEditorByName(stepName, configEditorFileName);
@@ -609,7 +609,7 @@ var microprofileConfigCallBack = (function() {
                 if (index === 0) {
                     var stepWidgets = stepContent.getStepWidgets(stepName);
                     // The pod is currently hidden.  Resize the stepWidgets so the pod will be shown.
-                    // You must indicate to make the "pod" the activeWidget (parameter two) so that 
+                    // You must indicate to make the "pod" the activeWidget (parameter two) so that
                     // the code in resizeStepWidgets will un-hide the pod.
                     stepContent.resizeStepWidgets(stepWidgets, "pod", true);
                     // Unfortunately, making the pod the active widget allowed our disabled browser
@@ -688,7 +688,7 @@ var microprofileConfigCallBack = (function() {
                 } catch (e) {
                     console.log(microprofile_config_messages.RETRYING_MESSAGE);
                     populateContents();
-                }            
+                }
             }, 250);
         };
         populateContents();
@@ -721,8 +721,8 @@ var microprofileConfigCallBack = (function() {
         listenToBrowserForSystemPropConfig: __listenToBrowserForSystemPropConfig,
         listenToBrowserForInjectDefaultConfig:  __listenToBrowserForInjectDefaultConfig,
         listenToBrowserForVariableElementConfig: __listenToBrowserForVariableElementConfig,
-        listenToBrowserForappPropertiesConfig: __listenToBrowserForappPropertiesConfig,       
-        addPropToConfigPropsButton: __addPropToConfigPropsButton, 
+        listenToBrowserForappPropertiesConfig: __listenToBrowserForappPropertiesConfig,
+        addPropToConfigPropsButton: __addPropToConfigPropsButton,
         addPropToServerEnvButton: __addPropToServerEnvButton,
         addPropToSystemPropertiesButton: __addPropToSystemPropertiesButton,
         addVariableToServerXMLButton: __addVariableToServerXMLButton,
