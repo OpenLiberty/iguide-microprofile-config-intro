@@ -1,3 +1,13 @@
+/**
+  Copyright (c) 2017,2021 IBM Corporation and others.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+
+  Contributors:
+      IBM Corporation - initial API and implementation
+*/
 .ordinalPriorities {
     text-align: center; /* Align the image in the center of the div */
 }
@@ -54,7 +64,6 @@
 }
 
 .carSite {
-    border-top: 3px solid #ffb000;
     text-align: center;
     margin: 0;
     font-family: Asap;
@@ -70,7 +79,7 @@
 .carSiteTitle {
     text-align: center;
     font-size: 18px;
-    font-weight: 500;    
+    font-weight: 500;
 }
 
 .topFlexContainer {
@@ -78,7 +87,7 @@
     justify-content: center;
     flex-direction: column;
     align-items: center;
-    height: calc(100% - 3px); /* factor in the border in carSite when calculating the browser height */ 
+    height: calc(100% - 3px); /* factor in the border in carSite when calculating the browser height */
 }
 
 .flexContainer {
