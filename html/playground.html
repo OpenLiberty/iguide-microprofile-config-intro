@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!--
-  Copyright (c) 2017 IBM Corporation and others.
+  Copyright (c) 2017, 2021 IBM Corporation and others.
   All rights reserved. This program and the accompanying materials
   are made available under the terms of the Eclipse Public License v1.0
   which accompanies this distribution, and is available at
@@ -9,22 +9,24 @@
   Contributors:
       IBM Corporation - initial API and implementation
 -->
- <html>
+ <html lang="en">
 
 <head>
-        <script type="text/javascript"> 
+        <title>Config Source ordinal containers</title>
+        <script type="text/javascript">
             var script = document.createElement('script');
-            
+
             script.onload = function() {
                 var guideRootDir = "/guides/iguide-microprofile-config-intro/js/nls/microprofile-config/"
                 retrieveExternalizedStrings(guideRootDir);
             };
             script.src = '/guides/iguides-common/js/interactive-guides/externalized-string.js';
             document.getElementsByTagName('head')[0].appendChild(script);
-        </script>  
+        </script>
 </head>
 <body>
-    <div class="ordinalCardContainer" data-externalizedAriaLabel="FILE_ORDINALS" tabindex=0>
+  <main aria-labelledby="fileOrdinals">
+    <div id="fileOrdinals" class="ordinalCardContainer" data-externalizedAriaLabel="FILE_ORDINALS" tabindex=0>
         <div class="ordinal-inject ordinalCard" tabindex=0>
             <div class="ordinalCardFileName">InventoryConfig.java</div>
         </div>
@@ -54,4 +56,5 @@
         <table class="propsTable" tabindex="0" role="application">
         </table>
     </div>
+  </main>
 </body>
