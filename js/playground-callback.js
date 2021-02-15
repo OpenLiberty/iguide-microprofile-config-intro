@@ -328,7 +328,7 @@ var SERVER_FILE_APP_PROP = 'sever.xml - appProperties element';
             var propsTable = this.root.find('.propsTable');
             propsTable.attr('aria-label', microprofile_config_messages.PROPS_TABLE_LABEL);
             propsTable.empty();
-            propsTable.append('<tr><th tabindex="0" aria-label="' + microprofile_config_messages.PROPERTY + '" scope="column">' + microprofile_config_messages.PROPERTY + '</th><th tabindex="0" aria-label="' + microprofile_config_messages.VALUE +  '"  scope="column">' + microprofile_config_messages.VALUE + '</th><th tabindex="0" aria-label="' + microprofile_config_messages.SOURCE + '"scope="column">' + microprofile_config_messages.SOURCE + '</th></tr></table>'); //adding the column headers
+            propsTable.append('<tr><th tabindex="0" aria-label="' + microprofile_config_messages.PROPERTY + '" scope="col">' + microprofile_config_messages.PROPERTY + '</th><th tabindex="0" aria-label="' + microprofile_config_messages.VALUE +  '"  scope="col">' + microprofile_config_messages.VALUE + '</th><th tabindex="0" aria-label="' + microprofile_config_messages.SOURCE + '"scope="col">' + microprofile_config_messages.SOURCE + '</th></tr></table>'); //adding the column headers
 
             // use array to take care of multiple errors
             var errors = [];
