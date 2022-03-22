@@ -1,7 +1,7 @@
 # Setup
 
 To use the sample application, download and extract the [sampleapp_mpconfig.zip] 
-(https://github.com/OpenLiberty/iguide-microprofile-config/raw/master/finish/sampleapp_mpconfig.zip) 
+(https://github.com/OpenLiberty/iguide-microprofile-config/raw/prod/finish/sampleapp_mpconfig.zip)
 file to your local directory.
 
 Use the `mvn install` Maven command from the directory that contains the extracted .zip files 
