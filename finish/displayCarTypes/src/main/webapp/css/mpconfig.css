@@ -33,7 +33,7 @@
 .carSiteTitle {
     text-align: center;
     font-size: 18px;
-    font-family: Asap-medium;
+    font-family: "Asap";
     color: white;
     height: 30px;
     line-height: 30px;  /* vertically centers the text within the title */
@@ -73,7 +73,7 @@
 }
 
 .cardText {
-    font-family:Asap-SemiBold;
+    font-family: "Asap";
     font-size:16px;
     color:#333851;
     letter-spacing:0;
